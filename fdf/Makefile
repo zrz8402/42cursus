@@ -9,21 +9,25 @@ LIBFT  = ./lib/libft
 
 HEADERS  = -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 
+SRCDIR = ./src
+SRCS  = main.c read_map.c error.c
+OBJS = $(addprefix $(SRCDIR)/, $(SRCS:.c=.o))
+
 MLX_A  = $(LIBMLX)/build/libmlx42.a
 LIBFT_A  = $(LIBFT)/libft.a
-
-LIBS	= $(MLX_A) $(LIBFT_A) -ldl -lglfw -pthread -lm 
-
-SRCS  = src/main.c src/read_map.c src/error.c
-
-OBJS  = ${SRCS:.c=.o}
+LIBS	= $(MLX_A) $(LIBFT_A) -ldl -L"/opt/homebrew/opt/glfw/lib/" -lglfw -pthread -lm 
 
 all: $(NAME)
 
-$(NAME): $(MLX_A) $(LIBFT_A) $(OBJS)
+$(NAME): $(OBJS) $(MLX_A) $(LIBFT_A)
 	@echo "Linking object files to create executable: $(NAME)"
 	@$(CC) $(CFLAGS) $(HEADERS) $(OBJS) $(LIBS) -o $(NAME)
 	@echo "Executable created: $(NAME)"
+
+%.o: %.c
+	@echo "Compiling..."
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	@echo "Compile complete."
 
 $(MLX_A):
 	@echo "Building MLX library..."
@@ -34,11 +38,6 @@ $(LIBFT_A):
 	@echo "Building libft library..."
 	@make -C $(LIBFT)
 	@echo "libft library built successfully."
-
-%.o: %.c
-	@echo "Compiling: $(notdir $<)"
-	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
-	@echo "Compiled: $(notdir $<) to $@"
 
 clean:
 	@echo "Cleaning up object files..."

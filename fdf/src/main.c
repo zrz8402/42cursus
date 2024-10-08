@@ -1,5 +1,4 @@
 #include "fdf.h"
-#include "libft.h"
 
 int	main(int ac, char **av)
 {
@@ -11,5 +10,5 @@ int	main(int ac, char **av)
  	ft_memset(map, 0, sizeof(t_map));
  	printf("%s\n", av[1]);
  	init_map(map, av[1]);
-// 	printf("height: %d, width %d\n", map->height, map->width);
+	free(map);
 }

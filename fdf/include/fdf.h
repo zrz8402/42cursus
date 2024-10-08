@@ -14,10 +14,12 @@
 # define FDF_H
 
 # include <unistd.h>
-# include <fcntl.h>
-# include <string.h>
-# include <stdlib.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <math.h>
+# include "libft.h"
+# include "MLX42/MLX42.h"
 
 typedef struct s_point
 {
@@ -36,6 +38,12 @@ typedef	struct s_map
 	int	z_min;
 	int	z_max;
 }	t_map;
+
+typedef	struct fdf
+{
+	mlx_t	*mlx;
+}	t_fdf;
+
 
 void	init_map(t_map *map, char *fname);
 int	error(char *message);

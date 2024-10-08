@@ -1,5 +1,4 @@
 #include "fdf.h"
-#include "libft.h"
 
 int	get_width(char *line)
 {
@@ -8,7 +7,7 @@ int	get_width(char *line)
 	width = 0;
 	while (*line)
 	{
-		if (*line != ' ' && (!(*line + 1) || *(line + 1) == ' '))
+		if (*line != ' ' && (!*(line + 1) || *(line + 1) == ' '))
 			width++;
 		line++;
 	}
@@ -58,11 +57,15 @@ void	fill_map(t_map *map, char *fname)
 	while (line)
 	{
 		j = 0;
+		printf("\n%s\n", line);
+		map->num_arr[i] = malloc(sizeof(int) * map->width);
+		map->color_arr[i] = malloc(sizeof(int) * map->width);
 		strs = ft_split(line, ' ');
 		while (j < map->width)
 		{
 			map->num_arr[i][j] = ft_atoi(strs[j]);
-			
+			printf("%d ", map->num_arr[i][j]);
+			j++;
 		}
 		line = get_next_line(fd);
 	}
@@ -72,4 +75,5 @@ void	fill_map(t_map *map, char *fname)
 void	init_map(t_map *map, char *fname)
 {
 	get_dimension(map, fname);
+	fill_map(map, fname);
 }
