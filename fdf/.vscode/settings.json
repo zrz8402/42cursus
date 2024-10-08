@@ -1,3 +1,6 @@
 {
-    "cmake.sourceDirectory": "/Users/zz/Desktop/42cursus/fdf/lib/MLX42"
+	"cmake.sourceDirectory": "/Users/zz/Desktop/42cursus/fdf/lib/MLX42",
+	"files.associations": {
+		"INIT.C": "cpp"
+	}
 }

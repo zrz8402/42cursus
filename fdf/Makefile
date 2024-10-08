@@ -10,12 +10,12 @@ LIBFT  = ./lib/libft
 HEADERS  = -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 
 SRCDIR = ./src
-SRCS  = main.c read_map.c error.c
+SRCS  = main.c get_map.c utils.c
 OBJS = $(addprefix $(SRCDIR)/, $(SRCS:.c=.o))
 
 MLX_A  = $(LIBMLX)/build/libmlx42.a
 LIBFT_A  = $(LIBFT)/libft.a
-LIBS	= $(MLX_A) $(LIBFT_A) -ldl -L"/opt/homebrew/opt/glfw/lib/" -lglfw -pthread -lm 
+LIBS	= $(MLX_A) $(LIBFT_A) -ldl -lglfw -pthread -lm 
 
 all: $(NAME)
 

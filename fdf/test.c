@@ -111,3 +111,5 @@ int main() {
     return 0;
 }
 // cc test.c ./lib/MLX42/build/libmlx42.a -o test -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+
+//cc test.c ./lib/MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm -o test
