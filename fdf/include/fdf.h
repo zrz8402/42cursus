@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:11:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/11 15:48:55 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/11 17:20:53 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_point
 	int	x;
 	int	y;
 	int	z;
-	int	color;
+	int	c;
 	int	reverse;
 }	t_point;
 
@@ -46,6 +46,7 @@ typedef struct fdf
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	t_map		*map;
+	int			steep;
 }	t_fdf;
 
 //main.c 
@@ -68,15 +69,15 @@ int		ft_atoi_hex(char *s);
 int		error(char *message);
 
 // line.c
-int	get_rgb(int	first, int second, float percent, float intensity);
+int	rgb(int	first, int second, float percent, float intensity);
 int	get_color(int x, t_point sp, t_point ep, float intensity);
 void	put_pixel(t_fdf *fdf, int x, int y, int color);
-void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient, int steep);
+void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient);
 void	draw_line(t_fdf *fdf, t_point sp, t_point ep);
 
 // line_utils.c
 void	swap(int *a, int *b);
-int	iPartN(float n);
-float	fPartN(float n);
-float	rfPartN(float n);
+int	i_part(float n);
+float	f_part(float n);
+float	rf_part(float n);
 #endif

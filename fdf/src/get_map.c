@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:47:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/11 14:02:46 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/11 17:10:19 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	get_num_col(t_map *map, char *line, int i)
 			map->color_arr[i][j] = ft_atoi_hex(num_col[1]);
 		else
 			map->color_arr[i][j] = 0;
-
 		j++;
 	}
 	free(strs);

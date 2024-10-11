@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:11:07 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/11 13:07:39 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/11 17:20:26 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ void	swap(int *a, int *b)
 	*b = tmp;
 }
 
-int	iPartN(float n)
+int	i_part(float n)
 {
 	return ((int)n);
 }
 
-float	fPartN(float n)
+float	f_part(float n)
 {
-	return (n - iPartN(n));
+	return (n - i_part(n));
 }
 
-float	rfPartN(float n)
+float	rf_part(float n)
 {
-	return (1 - fPartN(n));
+	return (1 - f_part(n));
 }
