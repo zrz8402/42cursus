@@ -1,0 +1,64 @@
+/**
+ * Sets / puts a pixel onto an image.
+ * 
+ * NOTE: It is considered undefined behaviour when putting a pixel 
+ * beyond the bounds of an image.
+ * 
+ * @param[in] image The MLX instance handle.
+ * @param[in] x The X coordinate position.
+ * @param[in] y The Y coordinate position.
+ * @param[in] color The color value to put.
+ */
+void mlx_put_pixel(mlx_image_t* image, uint32_t x, uint32_t y, uint32_t color);
+
+
+/**
+ * Draws a new instance of an image, it will then share the same
+ * pixel buffer as the image.
+ * 
+ * NOTE: Keep in mind that the instance array gets reallocated, try
+ * to store the return value to the instance! 
+ * NOT the pointer! It will become invalid!
+ * 
+ * WARNING: Try to display as few images on the window as possible,
+ * drawing too many images will cause a loss in performance!
+ * 
+ * @param[in] mlx The MLX instance handle.
+ * @param[in] img The image to draw on the screen.
+ * @param[in] x The X position.
+ * @param[in] y The Y position.
+ * @return Index to the instance, or -1 on failure.
+ */
+int32_t mlx_image_to_window(mlx_t* mlx, mlx_image_t* img, int32_t x, int32_t y);
+
+/**
+ * Draws a string on an image and then outputs it to the window.
+ * 
+ * @param[in] mlx The MLX instance handle.
+ * @param[in] str The string to draw.
+ * @param[in] x The X location.
+ * @param[in] y The Y location.
+ * @return Image ptr to the string.
+ */
+mlx_image_t* mlx_put_string(mlx_t* mlx, const char* str, int32_t x, int32_t y);
+
+
+void    instruction(t_fdf *fdf)
+{
+    int x;
+    int y;
+
+    x = 30;
+    y = 0;
+    mlx_put_string(fdf->mlx, "Instructions", x, y += 20);
+    mlx_put_string(fdf->mlx, "Zoom:", x, y += 20);
+    mlx_put_string(fdf->mlx, "Move", x, y += 20);
+    mlx_put_string(fdf->mlx, "Flatten", x, y += 20);
+    mlx_put_string(fdf->mlx, "Rotate", x, y += 20);
+    mlx_put_string(fdf->mlx, "x-axis", x += 30, y += 20);
+    mlx_put_string(fdf->mlx, "y-axis", x += 30, y += 20);
+    mlx_put_string(fdf->mlx, "z-axis", x += 30, y += 20);
+    mlx_put_string(fdf->mlx, "Projection:", x, y += 20);
+    mlx_put_string(fdf->mlx, "ISO: I key", x += 30, y += 20);
+    mlx_put_string(fdf->mlx, "Parallel: P Key", x += 30, y += 20);
+}
