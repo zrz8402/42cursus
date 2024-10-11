@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:37:18 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/11 13:49:22 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/11 16:26:03 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,13 @@ void	put_pixel(t_fdf *fdf, int x, int y, int color)
 
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
-		i = (x + y * fdf->map->width) * 4;
-		fdf->img->pixels[i] = color;
-		fdf->img->pixels[i + 1] = color;
-		fdf->img->pixels[i + 2] = color;
+		i = (x + y * WIDTH) * 4;
+		fdf->img->pixels[i] = color >> 16 & 0xFF;
+		fdf->img->pixels[i + 1] = color >> 8 & 0xFF;
+		fdf->img->pixels[i + 2] = color & 0xFF;
+		fdf->img->pixels[i + 3] = 255;
+		// printf("(%d %d %d)", fdf->img->pixels[i], fdf->img->pixels[i + 1], fdf->img->pixels[i + 2]);
+		// printf("%d\n", color);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:11:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/11 13:36:18 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/11 15:48:55 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include "libft.h"
 # include "MLX42/MLX42.h"
 
-# define WIDTH 512
-# define HEIGHT 512
+# define WIDTH 1024
+# define HEIGHT 1024
 
 typedef struct s_point
 {
