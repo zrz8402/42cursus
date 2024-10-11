@@ -1,0 +1,84 @@
+/**
+ * Main MLX handle, carries important data in regards to the program.
+ * @param window The window itself.
+ * @param context Abstracted opengl data.
+ * @param width The width of the window.
+ * @param height The height of the window.
+ * @param delta_time The time difference between the previous frame 
+ * and the current frame.
+ */
+typedef struct mlx
+{
+	void*		window;
+	void*		context;
+	int32_t		width;
+	int32_t		height;
+	double		delta_time;
+}	mlx_t;
+
+mlx_t* mlx_init(int32_t width, int32_t height, const char* title, bool resize);
+
+
+
+/**
+ * An image with an individual buffer that can be rendered.
+ * Any value can be modified except the width/height and context.
+ * 
+ * @param width The width of the image.
+ * @param height The height of the image.
+ * @param pixels The literal pixel data.
+ * @param instances An instance carrying the X, Y and Z location data.
+ * @param count The element count of the instances array.
+ * @param enabled If true the image is drawn onto the screen, else it's not.
+ * @param context Abstracted OpenGL data.
+ */
+typedef struct mlx_image
+{
+	const uint32_t	width;
+	const uint32_t	height;
+	uint8_t*		pixels;
+	mlx_instance_t*	instances;
+	size_t			count;
+	bool			enabled;
+	void*			context;
+}	mlx_image_t;
+
+/**
+ * Draws a new instance of an image, it will then share the same
+ * pixel buffer as the image.
+ * 
+ * NOTE: Keep in mind that the instance array gets reallocated, try
+ * to store the return value to the instance! 
+ * NOT the pointer! It will become invalid!
+ * 
+ * WARNING: Try to display as few images on the window as possible,
+ * drawing too many images will cause a loss in performance!
+ * 
+ * @param[in] mlx The MLX instance handle.
+ * @param[in] img The image to draw on the screen.
+ * @param[in] x The X position.
+ * @param[in] y The Y position.
+ * @return Index to the instance, or -1 on failure.
+ */
+int32_t mlx_image_to_window(mlx_t* mlx, mlx_image_t* img, int32_t x, int32_t y);
+
+
+/**
+ * Initializes the rendering of MLX, this function won't return until
+ * mlx_close_window is called, meaning it will loop until the user requests that
+ * the window should close.
+ * 
+ * @param[in] mlx The MLX instance handle.
+ */
+void mlx_loop(mlx_t* mlx);
+
+/**
+ * Draws a string on an image and then outputs it to the window.
+ * 
+ * @param[in] mlx The MLX instance handle.
+ * @param[in] str The string to draw.
+ * @param[in] x The X location.
+ * @param[in] y The Y location.
+ * @return Image ptr to the string.
+ */
+mlx_image_t* mlx_put_string(mlx_t* mlx, const char* str, int32_t x, int32_t y);

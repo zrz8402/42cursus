@@ -10,7 +10,7 @@ LIBFT  = ./lib/libft
 HEADERS  = -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 
 SRCDIR = ./src
-SRCS  = main.c get_map.c utils.c
+SRCS  = main.c get_map.c utils.c line.c line_utils.c draw.c
 OBJS = $(addprefix $(SRCDIR)/, $(SRCS:.c=.o))
 
 MLX_A  = $(LIBMLX)/build/libmlx42.a

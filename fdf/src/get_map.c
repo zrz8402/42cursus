@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:47:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/08 16:21:26 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/11 14:02:46 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,20 @@ void	get_dimension(t_map *map, char *fname)
 void	get_num_col(t_map *map, char *line, int i)
 {
 	char	**strs;
+	char	**num_col;
 	int		j;
 
 	j = 0;
 	strs = ft_split(line, ' ');
 	while (j < map->width)
 	{
-		map->num_arr[i][j] = ft_atoi(strs[j]);
-		free(strs[j]);
-		while (*strs[j] && *strs[j] != ',')
-			strs[j]++;
-		if (!*strs[j])
-			map->color_arr[i][j] = 0;
+		num_col = ft_split(strs[j], ',');
+		map->num_arr[i][j] = ft_atoi(num_col[0]);
+		if (num_col[1])
+			map->color_arr[i][j] = ft_atoi_hex(num_col[1]);
 		else
-		{
-			strs[j]++;
-			map->color_arr[i][j] = ft_atoi_hex(strs[j]);
-		}
+			map->color_arr[i][j] = 0;
+
 		j++;
 	}
 	free(strs);

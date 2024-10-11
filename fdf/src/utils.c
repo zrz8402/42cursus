@@ -6,21 +6,20 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:48:32 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/08 17:11:50 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/11 12:28:45 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_fdf	*init_fdf(char *fname)
+t_fdf	*init_fdf(t_map *map)
 {
 	t_fdf	*fdf;
 
 	fdf = (t_fdf *)malloc(sizeof(t_fdf));
-	fdf->mlx = mlx_init(WIDTH, HEIGHT, fname, true);
+	fdf->mlx = mlx_init(WIDTH, HEIGHT, "FDF", true);
 	fdf->img = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
-	fdf->map = NULL;
-	printf("%s\n", fname);
+	fdf->map = map;
 	return (fdf);
 }
 
@@ -29,6 +28,7 @@ int	error(char *message)
 	printf("%s\n", message);
 	exit(1);
 }
+
 int	ft_atoi_hex(char *s)
 {
 	int	result;
