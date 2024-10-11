@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:11:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/11 17:20:53 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/11 17:23:14 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct fdf
 int32_t	main(int ac, char **av);
 
 // get_map.c
-int	get_width(char *line);
+int		get_width(char *line);
 void	get_dimension(t_map *map, char *fname);
 	// validatation to be improved
 void	get_num_col(t_map *map, char *line, int i);
@@ -69,15 +69,15 @@ int		ft_atoi_hex(char *s);
 int		error(char *message);
 
 // line.c
-int	rgb(int	first, int second, float percent, float intensity);
-int	get_color(int x, t_point sp, t_point ep, float intensity);
+int		srgb(int first, int second, float percent, float intensity);
+int		get_color(int x, t_point sp, t_point ep, float intensity);
 void	put_pixel(t_fdf *fdf, int x, int y, int color);
 void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient);
 void	draw_line(t_fdf *fdf, t_point sp, t_point ep);
 
 // line_utils.c
 void	swap(int *a, int *b);
-int	i_part(float n);
+int		i_part(float n);
 float	f_part(float n);
 float	rf_part(float n);
 #endif
