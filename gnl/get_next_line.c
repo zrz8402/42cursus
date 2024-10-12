@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:13:26 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/09/29 14:53:08 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/12 10:20:06 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,18 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int main(void)
-{
-	int fd;
-	char *line;
+// int main(void)
+// {
+// 	int fd;
+// 	char *line;
 
-	fd = open("get_next_line.h", O_RDONLY);
-	line = get_next_line(fd);
-	printf("%s", line);
-	line = get_next_line(fd);
-	printf("%s\n", line);
-	line = get_next_line(fd);
-	printf("%s\n", line);
-	free(line);
-	close(fd);
-}
+// 	fd = open("get_next_line.h", O_RDONLY);
+// 	line = get_next_line(fd);
+// 	printf("%s", line);
+// 	line = get_next_line(fd);
+// 	printf("%s\n", line);
+// 	line = get_next_line(fd);
+// 	printf("%s\n", line);
+// 	free(line);
+// 	close(fd);
+// }

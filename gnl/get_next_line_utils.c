@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:13:50 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/09/29 11:32:53 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/12 10:55:48 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,18 @@ char	*ft_substr(char *s, int start, int len)
 {
 	char	*substr;
 	int		s_len;
-	int		sub_len;
 	int		i;
 
-	if (!s)
+	if (!s || start >= ft_strlen(s))
 		return (NULL);
 	s_len = ft_strlen(s);
-	if (start >= s_len)
-		return (NULL);
-	if (s_len - start > len)
-		sub_len = len;
-	else
-		sub_len = s_len - start;
-	substr = malloc(sub_len + 1);
+	if (len > s_len - start)
+		len = s_len - start;
+	substr = malloc(len + 1);
 	if (!substr)
 		return (0);
 	i = 0;
-	while (i < sub_len)
+	while (i < len)
 	{
 		substr[i] = s[i + start];
 		i++;
