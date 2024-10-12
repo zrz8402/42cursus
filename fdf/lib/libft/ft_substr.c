@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 14:06:08 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/12 10:17:19 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/12 15:44:45 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	s_len;
 	size_t	i;
 
-	if (!s)
+	if (!s || start >= ft_strlen(s))
 		return (NULL);
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
 	s_len = ft_strlen(s);
 	if (len > s_len - start)
 		len = s_len - start;

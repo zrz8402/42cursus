@@ -1,7 +1,7 @@
 NAME  = fdf
 
 CC    = cc
-CFLAGS  = -Wall -Werror -Wextra -Wunreachable-code -Ofast
+CFLAGS  = -Wunreachable-code -Ofast
 RM    = rm -rf
 
 LIBMLX  = ./lib/MLX42

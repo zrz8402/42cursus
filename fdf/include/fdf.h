@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:11:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/12 13:33:13 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/12 18:22:48 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ typedef struct fdf
 int32_t	main(int ac, char **av);
 
 // get_map.c
-int		get_width(char *line);
-void	get_dimension(t_map *map, char *fname);
-	// validatation to be improved
-void	get_num_col(t_map *map, char *line, int i);
-void	fill_map(t_map *map, char *fname);
+// undefined behavior from get_next_line
+// leaks when the file isn't fully read
+static int	get_width(char *line);
+static void	get_dimension(t_map *map, char *fname);
+static void	get_num_col(t_map *map, char *line, int i);
+static void	fill_map(t_map *map, char *fname);
 t_map	*get_map(char *fname);
 
 //draw.c
@@ -65,8 +66,10 @@ void	draw(t_map *map, t_fdf *fdf);
 
 //utils.c
 t_fdf	*init_fdf(t_map *map);
+void	error(char *message);
 int		ft_atoi_hex(char *s);
-int		error(char *message);
+void	free_map(t_map *map);
+void	free_arr(char **s);
 
 // line.c
 int		rgb(int first, int second, float percent, float intensity);
@@ -80,4 +83,5 @@ void	swap(int *a, int *b);
 int		ipt(float n);
 float	fpt(float n);
 float	rfpt(float n);
+
 #endif

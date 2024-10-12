@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:44:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/12 13:44:26 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/12 18:13:53 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	draw(t_map *map, t_fdf *fdf)
 	int	x;
 	int	y;
 
-	//background(fdf);
 	y = 0;
 	while (y < map->height && y >= 0)
 	{
@@ -80,5 +79,4 @@ void	draw(t_map *map, t_fdf *fdf)
 		y++;
 	}
 	mlx_image_to_window(fdf->mlx, fdf->img, 0, 0);
-	//instruction(fdf);
 }

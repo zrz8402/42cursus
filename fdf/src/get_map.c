@@ -6,27 +6,30 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:47:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/12 13:56:52 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/12 18:16:50 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	get_width(char *line)
+static int	get_width(char *line)
 {
 	int	width;
+	int	i;
 
 	width = 0;
-	while (*line)
+	i = 0;
+	while (line[i])
 	{
-		if (*line != ' ' && (!*(line + 1) || *(line + 1) == ' '))
+		if (line[i] != ' ' && line[i] != '\n'
+			&& (i == 0 || (line[i - 1] == ' ')))
 			width++;
-		line++;
+		i++;
 	}
 	return (width);
 }
 
-void	get_dimension(t_map *map, char *fname)
+static void	get_dimension(t_map *map, char *fname)
 {
 	int		fd;
 	char	*line;
@@ -34,24 +37,24 @@ void	get_dimension(t_map *map, char *fname)
 
 	fd = open(fname, O_RDONLY);
 	if (fd < 0)
-		error("Error opening file");
+		return (free_map(map), error("Error opening file"));
 	line = get_next_line(fd);
 	if (!line)
-		error("Empty map");
+		return (free_map(map), error("Empty map"));
 	map->width = get_width(line);
 	while (line)
 	{
 		len = get_width(line);
 		free(line);
 		if (len != map->width)
-			error("Wrong map format");
+			return (free_map(map), error("Wrong map format"));
 		map->height++;
 		line = get_next_line(fd);
 	}
 	close(fd);
 }
 
-void	get_num_col(t_map *map, char *line, int i)
+static void	get_num_col(t_map *map, char *line, int i)
 {
 	char	**strs;
 	char	**num_col;
@@ -68,11 +71,12 @@ void	get_num_col(t_map *map, char *line, int i)
 		else
 			map->color_arr[i][j] = 0;
 		j++;
+		free_arr(num_col);
 	}
-	free(strs);
+	free_arr(strs);
 }
 
-void	fill_map(t_map *map, char *fname)
+static void	fill_map(t_map *map, char *fname)
 {
 	int		fd;
 	char	*line;
@@ -80,7 +84,7 @@ void	fill_map(t_map *map, char *fname)
 
 	fd = open(fname, O_RDONLY);
 	if (fd < 0)
-		error("Error opening file");
+		return (free_map(map), error("Error opening file"));
 	map->num_arr = malloc(sizeof(int *) * map->height);
 	map->color_arr = malloc(sizeof(int *) * map->height);
 	line = get_next_line(fd);

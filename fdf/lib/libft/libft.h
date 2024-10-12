@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 14:51:31 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/09/29 13:28:23 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/12 14:56:40 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-// get_next_line(), don't print '\n'
 char	*get_next_line(int fd);
 
 int		ft_isalpha(int c);
