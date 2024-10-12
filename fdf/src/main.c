@@ -6,18 +6,12 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:48:26 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/11 17:13:01 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/12 10:06:44 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <string.h>
-
-void	ft_error(void)
-{
-	puts(mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
-}
 
 int32_t	main(int ac, char **av)
 {

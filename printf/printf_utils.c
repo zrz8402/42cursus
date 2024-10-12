@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   printf_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/26 14:06:08 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/12 10:17:19 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/09/11 10:17:37 by ruzhang           #+#    #+#             */
+/*   Updated: 2024/10/12 10:08:01 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_strlen(const char *s)
 {
-	char	*substr;
-	size_t	s_len;
-	size_t	i;
+	int	i;
 
-	if (!s)
-		return (NULL);
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	s_len = ft_strlen(s);
-	if (len > s_len - start)
-		len = s_len - start;
-	substr = malloc(len + 1);
-	if (!substr)
-		return (0);
 	i = 0;
-	while (i < len)
-	{
-		substr[i] = s[i + start];
+	while (s[i])
 		i++;
-	}
-	substr[i] = '\0';
-	return (substr);
+	return (i);
+}
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	len;
+
+	len = ft_strlen(s);
+	write(fd, s, len);
 }
