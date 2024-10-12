@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:37:18 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/11 17:21:35 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/12 13:55:40 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ int	rgb(int first, int second, float perc, float intensity)
 	return ((int)((first + (second - first) * perc) * intensity));
 }
 
-int	get_color(int x, t_point sp, t_point ep, float intensity)
+int	get_c(int x, t_point sp, t_point ep, float intensity)
 {
 	int		r;
 	int		g;
 	int		b;
+	int		a;
 	float	perc;
 
+	a = 255;
 	perc = abs(x - sp.x) / abs(ep.x - sp.x);
 	if (sp.reverse)
 	{
@@ -39,21 +41,8 @@ int	get_color(int x, t_point sp, t_point ep, float intensity)
 		g = rgb((sp.c >> 8 & 0xFF), (ep.c >> 8 & 0xFF), perc, intensity);
 		b = rgb((sp.c & 0xFF), (ep.c & 0xFF), perc, intensity);
 	}
-	return (r << 16 | g << 8 | b);
-}
-
-void	put_pixel(t_fdf *fdf, int x, int y, int color)
-{
-	int	i;
-
-	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-	{
-		i = (x + y * WIDTH) * 4;
-		fdf->img->pixels[i] = color >> 16 & 0xFF;
-		fdf->img->pixels[i + 1] = color >> 8 & 0xFF;
-		fdf->img->pixels[i + 2] = color & 0xFF;
-		fdf->img->pixels[i + 3] = 255;
-	}
+	a *= intensity;
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient)
@@ -63,22 +52,22 @@ void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient)
 
 	x = sp.x;
 	y = (float)sp.y;
-	if (fdf->steep > 1)
+	if (fdf->steep)
 	{
-		while (x < ep.x)
+		while (x <= ep.x)
 		{
-			put_pixel(fdf, i_part(y), x, get_color(x, sp, ep, rf_part(y)));
-			put_pixel(fdf, i_part(y) + 1, x, get_color(x, sp, ep, f_part(y)));
+			mlx_put_pixel(fdf->img, ipt(y), x, get_c(x, sp, ep, rfpt(y)));
+			mlx_put_pixel(fdf->img, ipt(y) + 1, x, get_c(x, sp, ep, fpt(y)));
 			x++;
 			y += gradient;
 		}
 	}
 	else
 	{
-		while (x < ep.x)
+		while (x <= ep.x)
 		{
-			put_pixel(fdf, x, i_part(y), get_color(x, sp, ep, rf_part(y)));
-			put_pixel(fdf, x, i_part(y) + 1, get_color(x, sp, ep, f_part(y)));
+			mlx_put_pixel(fdf->img, x, ipt(y), get_c(x, sp, ep, rfpt(y)));
+			mlx_put_pixel(fdf->img, x, ipt(y) + 1, get_c(x, sp, ep, fpt(y)));
 			x++;
 			y += gradient;
 		}
@@ -90,7 +79,7 @@ void	draw_line(t_fdf *fdf, t_point sp, t_point ep)
 	float	gradient;
 
 	fdf->steep = abs(ep.y - sp.y) > abs(ep.x - sp.x);
-	if (fdf->steep > 1)
+	if (fdf->steep)
 	{
 		swap(&sp.x, &sp.y);
 		swap(&ep.x, &ep.y);
@@ -104,6 +93,6 @@ void	draw_line(t_fdf *fdf, t_point sp, t_point ep)
 	if (sp.x == ep.x)
 		gradient = 1.f;
 	else
-		gradient = (ep.y - sp.x) / (ep.x - sp.x);
+		gradient = (ep.y - sp.y) / (ep.x - sp.x);
 	plot(fdf, sp, ep, gradient);
 }

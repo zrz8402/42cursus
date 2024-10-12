@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:44:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/12 09:56:33 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/12 13:44:26 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_point	point(t_map *map, int x, int y)
 	point.y = y;
 	point.z = map->num_arr[y][x];
 	point.c = map->color_arr[y][x];
+	point.reverse = 0;
 	return (point);
 }
 
@@ -65,14 +66,14 @@ void	draw(t_map *map, t_fdf *fdf)
 
 	//background(fdf);
 	y = 0;
-	while (y < map->height)
+	while (y < map->height && y >= 0)
 	{
 		x = 0;
-		while (x < map->width)
+		while (x < map->width && x >= 0)
 		{
-			if (x < map->width - 1)
+			if (x != map->width - 1)
 				draw_line(fdf, point(map, x, y), point(map, x + 1, y));
-			if (y < map->height - 1)
+			if (y != map->height - 1)
 				draw_line(fdf, point(map, x, y), point(map, x, y + 1));
 			x++;
 		}

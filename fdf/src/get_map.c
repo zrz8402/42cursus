@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:47:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/11 17:10:19 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/12 13:56:52 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ t_map	*get_map(char *fname)
 	t_map	*map;
 
 	map = malloc(sizeof(t_map));
+	if (!map)
+		error("Error initiating map.");
 	ft_memset(map, 0, sizeof(t_map));
 	get_dimension(map, fname);
 	fill_map(map, fname);

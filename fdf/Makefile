@@ -24,7 +24,7 @@ $(NAME): $(OBJS) $(MLX_A) $(LIBFT_A)
 	@$(CC) $(CFLAGS) $(HEADERS) $(OBJS) $(LIBS) -o $(NAME)
 	@echo "Executable created: $(NAME)"
 
-%.o: %.c
+%.o: %.c Makefile
 	@echo "Compiling..."
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 	@echo "Compile complete."
@@ -42,14 +42,16 @@ $(LIBFT_A):
 clean:
 	@echo "Cleaning up object files..."
 	$(RM) $(OBJS)
-	@echo "Cleaning up MLX build directory..."
-	$(RM) $(LIBMLX)/build
 	@echo "Cleaning up libft build directory..."
-	make fclean -C $(LIBFT)
+	make clean -C $(LIBFT)
 
 fclean: clean
 	@echo "Removing executable: $(NAME)"
 	$(RM) $(NAME)
+	@echo "Cleaning up MLX build directory..."
+	$(RM) $(LIBMLX)/build
+	@echo "Cleaning up libft build directory..."
+	make fclean -C $(LIBFT)
 	@echo "Clean complete."
 
 re: fclean all
