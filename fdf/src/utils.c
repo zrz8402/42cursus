@@ -6,22 +6,11 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:48:32 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/12 18:46:09 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/13 16:28:41 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-t_fdf	*init_fdf(t_map *map)
-{
-	t_fdf	*fdf;
-
-	fdf = (t_fdf *)malloc(sizeof(t_fdf));
-	fdf->mlx = mlx_init(WIDTH, HEIGHT, "FDF", false);
-	fdf->img = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
-	fdf->map = map;
-	return (fdf);
-}
 
 void	error(char *message)
 {

@@ -62,8 +62,12 @@ void wuLine(t_data *data, int x0, int y0, int x1, int y1) {
 // Handle key press events
 void close_window(mlx_key_data_t keydata, void* param) {
     t_data *data = (t_data *)param; // Cast the param back to t_data*
-    if (keydata.key == 53) { // ESC key
+    if (keydata.key == 256) { // ESC key
+		// mlx_delete_image(data->mlx_ptr, data->img_ptr);
         mlx_terminate(data->mlx_ptr);
+		// free(data->img_ptr);
+		// free(data->mlx_ptr);
+		// free(data);
         exit(0);
     }
 }

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:44:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/12 18:13:53 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/13 18:50:52 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,15 @@ t_point	point(t_map *map, int x, int y)
 	return (point);
 }
 
-void	instruction(t_fdf *fdf)
+t_point	project(t_fdf *fdf, t_point point)
 {
 	int	x;
 	int	y;
 
-	x = 30;
-	y = 0;
-	mlx_put_string(fdf->mlx, "Instructions", x, y += 20);
-	mlx_put_string(fdf->mlx, "Zoom:", x, y += 20);
-	mlx_put_string(fdf->mlx, "Move", x, y += 20);
-	mlx_put_string(fdf->mlx, "Flatten", x, y += 20);
-	mlx_put_string(fdf->mlx, "Rotate", x, y += 20);
-	mlx_put_string(fdf->mlx, "x-axis", x + 30, y += 20);
-	mlx_put_string(fdf->mlx, "y-axis", x + 30, y += 20);
-	mlx_put_string(fdf->mlx, "z-axis", x + 30, y += 20);
-	mlx_put_string(fdf->mlx, "Projection:", x, y += 20);
-	mlx_put_string(fdf->mlx, "ISO: I key", x + 30, y += 20);
-	mlx_put_string(fdf->mlx, "Parallel: P Key", x + 30, y += 20);
-}
-
-void	background(t_fdf *fdf)
-{
-	int	i;
-
-	i = 0;
-	while (i < HEIGHT * WIDTH * 4)
-	{
-		fdf->img->pixels[i] = 0;
-		fdf->img->pixels[i + 1] = 0;
-		fdf->img->pixels[i + 2] = 0;
-		fdf->img->pixels[i + 3] = 255;
-		i += 4;
-	}
+	point.x *= fdf->camera->zoom;
+	point.y *= fdf->camera->zoom;
+	point.z *= fdf->camera->zoom;
+	return (point);
 }
 
 void	draw(t_map *map, t_fdf *fdf)
@@ -71,9 +47,9 @@ void	draw(t_map *map, t_fdf *fdf)
 		while (x < map->width && x >= 0)
 		{
 			if (x != map->width - 1)
-				draw_line(fdf, point(map, x, y), point(map, x + 1, y));
+				draw_line(fdf, project(fdf, point(map, x, y)), project(fdf, point(map, x + 1, y)));
 			if (y != map->height - 1)
-				draw_line(fdf, point(map, x, y), point(map, x, y + 1));
+				draw_line(fdf, project(fdf, point(map, x, y)), project(fdf, point(map, x, y + 1)));
 			x++;
 		}
 		y++;

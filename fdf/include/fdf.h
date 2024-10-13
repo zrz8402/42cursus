@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:11:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/12 18:22:48 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/13 18:24:03 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,54 @@
 
 # define WIDTH 1024
 # define HEIGHT 1024
+
+
+// close window
+# define KEY_ESCAPE 256
+
+// move map
+# define ARROW_RIGHT 262
+# define ARROW_LEFT 263
+# define ARROW_DOWN 264
+# define ARROW_UP 265
+
+// change projection: I-isometric, P-parallel
+# define KEY_I 73
+# define KEY_P 80
+
+// zoom
+# define KEY_MINUS 45
+# define KEY_PLUS 62
+# define KP_MINUS 333
+# define KP_PLUS 334
+
+// flatten
+# define KEY_LESS 44
+# define KEY_MORE 46
+
+// rotate
+# define KEY_1 49
+# define KEY_2 50
+# define KEY_3 51
+# define KEY_4 52
+# define KEY_5 53
+# define KEY_6 54
+# define KP_1 321
+# define KP_2 322
+# define KP_3 323
+# define KP_4 324
+# define KP_5 325
+# define KP_6 326
+
+
+# define MOUSE_SCROLL_UP 256
+# define MOUSE_SCROLL_DOWN 256
+
+typedef enum
+{
+	ISO,
+	PARALLEL,
+}	t_projection;
 
 typedef struct s_point
 {
@@ -41,12 +89,30 @@ typedef struct s_map
 	int	**color_arr;
 }	t_map;
 
+typedef struct s_camera
+{
+	int		zoom;
+	double	alpha; //rotate around x
+	double	belta; //rotate around y
+	double	gamma; //rotate around z
+	t_projection	projection;
+}	t_camera;
+
+typedef struct s_mouse
+{
+	int	x;
+	int	y;
+	int	is_pressed;
+}	t_mouse;
+
 typedef struct fdf
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	t_map		*map;
 	int			steep;
+	t_camera	*camera;
+	t_mouse		*mouse;
 }	t_fdf;
 
 //main.c 
@@ -83,5 +149,8 @@ void	swap(int *a, int *b);
 int		ipt(float n);
 float	fpt(float n);
 float	rfpt(float n);
+
+
+void	set_control(t_fdf *fdf);
 
 #endif
