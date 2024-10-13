@@ -64,7 +64,6 @@ void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient)
 	}
 	else
 	{
-		printf("%d %d\n",sp.x, ep.x);
 		while (x <= ep.x)
 		{
 			mlx_put_pixel(fdf->img, x, ipt(y), get_c(x, sp, ep, rfpt(y)));
