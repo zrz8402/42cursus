@@ -19,7 +19,7 @@ int	rgb(int first, int second, float perc, float intensity)
 	return ((int)((first + (second - first) * perc) * intensity));
 }
 
-int	get_c(int x, t_point sp, t_point ep, float intensity)
+uint32_t	get_c(int x, t_point sp, t_point ep, float intensity)
 {
 	int		r;
 	int		g;
@@ -28,7 +28,7 @@ int	get_c(int x, t_point sp, t_point ep, float intensity)
 	float	perc;
 
 	a = 255;
-	perc = abs(x - sp.x) / abs(ep.x - sp.x);
+	perc = (float)abs(x - sp.x) / abs(ep.x - sp.x);
 	if (sp.reverse)
 	{
 		r = rgb((ep.c >> 16 & 0xFF), (sp.c >> 16 & 0xFF), perc, intensity);
@@ -64,6 +64,7 @@ void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient)
 	}
 	else
 	{
+		printf("%d %d\n",sp.x, ep.x);
 		while (x <= ep.x)
 		{
 			mlx_put_pixel(fdf->img, x, ipt(y), get_c(x, sp, ep, rfpt(y)));
@@ -93,6 +94,6 @@ void	draw_line(t_fdf *fdf, t_point sp, t_point ep)
 	if (sp.x == ep.x)
 		gradient = 1.f;
 	else
-		gradient = (ep.y - sp.y) / (ep.x - sp.x);
+		gradient = (float)(ep.y - sp.y) / (ep.x - sp.x);
 	plot(fdf, sp, ep, gradient);
 }

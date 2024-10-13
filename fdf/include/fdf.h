@@ -139,7 +139,7 @@ void	free_arr(char **s);
 
 // line.c
 int		rgb(int first, int second, float percent, float intensity);
-int		get_c(int x, t_point sp, t_point ep, float intensity);
+uint32_t		get_c(int x, t_point sp, t_point ep, float intensity);
 void	put_pixel(t_fdf *fdf, int x, int y, int color);
 void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient);
 void	draw_line(t_fdf *fdf, t_point sp, t_point ep);

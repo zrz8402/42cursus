@@ -21,6 +21,7 @@ int32_t	main(int ac, char **av)
 	if (ac != 2)
 		exit(EXIT_FAILURE);
 	map = get_map(av[1]);
+	//printf("(%d %d)", map->width, map->height);
 	fdf = init_fdf(map);
 	draw(map, fdf);
 	//set_control(fdf);

@@ -25,7 +25,7 @@ t_camera	*init_camera(t_fdf *fdf)
 		free(fdf);
 		error("Error initiating camera");
 	}
-	camera->zoom = (WIDTH / fdf->map->width / 2);
+	camera->zoom = (20);
 	camera->alpha = 0;
 	camera->belta = 0;
 	camera->gamma = 0;

@@ -42,7 +42,7 @@ $(LIBFT_A):
 clean:
 	@echo "Cleaning up object files..."
 	$(RM) $(OBJS)
-	@echo "Cleaning up libft build directory..."
+	@echo "Cleaning up libft directory..."
 	make clean -C $(LIBFT)
 
 fclean: clean
@@ -50,7 +50,7 @@ fclean: clean
 	$(RM) $(NAME)
 	@echo "Cleaning up MLX build directory..."
 	$(RM) $(LIBMLX)/build
-	@echo "Cleaning up libft build directory..."
+	@echo "Cleaning up libft directory..."
 	make fclean -C $(LIBFT)
 	@echo "Clean complete."
 
