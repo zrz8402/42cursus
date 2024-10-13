@@ -66,10 +66,14 @@ static void	get_num_col(t_map *map, char *line, int i)
 	{
 		num_col = ft_split(strs[j], ',');
 		map->num_arr[i][j] = ft_atoi(num_col[0]);
+		if (map->z_min > map->num_arr[i][j])
+			map->z_min = map->num_arr[i][j];
+		if (map->z_max < map->num_arr[i][j])
+			map->z_max = map->num_arr[i][j];
 		if (num_col[1])
 			map->color_arr[i][j] = ft_atoi_hex(num_col[1]);
 		else
-			map->color_arr[i][j] = 0;
+			map->color_arr[i][j] = -1;
 		j++;
 		free_arr(num_col);
 	}
@@ -98,17 +102,13 @@ static void	fill_map(t_map *map, char *fname)
 		line = get_next_line(fd);
 		i++;
 	}
+	map->z_range = map->z_max - map->z_min;
 	close(fd);
 }
 
-t_map	*get_map(char *fname)
+t_map	*get_map(t_map *map, char *fname)
 {
-	t_map	*map;
-
-	map = malloc(sizeof(t_map));
-	if (!map)
-		error("Error initiating map.");
-	ft_memset(map, 0, sizeof(t_map));
+	map = init_map();
 	get_dimension(map, fname);
 	fill_map(map, fname);
 	return (map);

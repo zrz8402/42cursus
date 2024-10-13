@@ -12,6 +12,19 @@
 
 #include "fdf.h"
 
+int default_color(t_map *map, int altitude)
+{
+	int		rgb;
+	float	percent;
+
+	if (map->z_range == 0)
+		percent = 0.f;
+	else
+		percent = (float)altitude / (map->z_range);
+	rgb = (255 * percent);
+	return (rgb << 16 | rgb << 8 | rgb);
+}
+
 t_point	point(t_map *map, int x, int y)
 {
 	t_point	point;
@@ -19,7 +32,10 @@ t_point	point(t_map *map, int x, int y)
 	point.x = x;
 	point.y = y;
 	point.z = map->num_arr[y][x];
-	point.c = map->color_arr[y][x];
+	if (map->color_arr[y][x] < 0)
+		point.c = default_color(map, point.z);
+	else
+		point.c = map->color_arr[y][x];
 	point.reverse = 0;
 	return (point);
 }

@@ -12,6 +12,23 @@
 
 #include "fdf.h"
 
+t_map	*init_map(void)
+{
+	t_map	*map;
+
+	map = (t_map *)malloc(sizeof(t_map));
+	if (!map)
+		error("Error initiating map.");
+	map->width = 0;
+	map->height = 0;
+	map->num_arr = NULL;
+	map->color_arr = NULL;
+	map->z_min = FT_INT_MAX;
+	map->z_max = FT_INT_MIN;
+	map->z_range = 0;
+	return (map);
+}
+
 t_camera	*init_camera(t_fdf *fdf)
 {
 	t_camera	*camera;
@@ -25,7 +42,7 @@ t_camera	*init_camera(t_fdf *fdf)
 		free(fdf);
 		error("Error initiating camera");
 	}
-	camera->zoom = (20);
+	camera->zoom = WIDTH / fdf->map->width / 2;
 	camera->alpha = 0;
 	camera->belta = 0;
 	camera->gamma = 0;

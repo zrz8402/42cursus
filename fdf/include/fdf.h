@@ -24,7 +24,8 @@
 # define WIDTH 1024
 # define HEIGHT 1024
 
-
+# define FT_INT_MAX ((int)(~0U >> 1))
+# define FT_INT_MIN ((int)(~FT_INT_MAX))
 // close window
 # define KEY_ESCAPE 256
 
@@ -87,6 +88,9 @@ typedef struct s_map
 	int	height;
 	int	**num_arr;
 	int	**color_arr;
+	int	z_min;
+	int	z_max;
+	int	z_range;
 }	t_map;
 
 typedef struct s_camera
@@ -125,12 +129,13 @@ static int	get_width(char *line);
 static void	get_dimension(t_map *map, char *fname);
 static void	get_num_col(t_map *map, char *line, int i);
 static void	fill_map(t_map *map, char *fname);
-t_map	*get_map(char *fname);
+t_map	*get_map(t_map *map,char *fname);
 
 //draw.c
 void	draw(t_map *map, t_fdf *fdf);
 
 //utils.c
+t_map	*init_map(void);
 t_fdf	*init_fdf(t_map *map);
 void	error(char *message);
 int		ft_atoi_hex(char *s);
