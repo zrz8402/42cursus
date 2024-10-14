@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 16:28:21 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 16:59:33 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/14 18:04:55 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_camera	*init_camera(t_fdf *fdf)
 	camera->projection = ISO;
 	camera->x_offset = 0;
 	camera->y_offset = 0;
+	camera->z_divisor = 1;
 	return (camera);
 }
 

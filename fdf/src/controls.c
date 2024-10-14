@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:33:08 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 17:24:23 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/14 18:09:56 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@ void	key_press(mlx_key_data_t keycode, void *param)
 	if (keycode.key == 45 || keycode.key == 333
 			|| keycode.key == 62 || keycode.key == 334)
 		zoom(keycode.key, fdf);
+	else if (keycode.key >= 262 && keycode.key <= 265)
+		move(keycode.key, fdf);
+	else if ((keycode.key >= 49 && keycode.key <= 54)
+				&& (keycode.key >= 321 && keycode.key <= 326))
+		rotate(keycode.key, fdf);
+	else if (keycode.key == 44 || keycode.key == 46)
+		flatten(keycode.key, fdf);
+	else if (keycode.key == 73 || keycode.key == 80)
+		change_projection(keycode.key, fdf);
 }
 
 void	mouse_press(mouse_key_t button, void* param)

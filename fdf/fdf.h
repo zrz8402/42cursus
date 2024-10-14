@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:11:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 16:53:17 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/14 18:00:25 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_camera
 	t_projection	projection;
 	int		x_offset;
 	int		y_offset;
+	float	z_divisor;
 }	t_camera;
 
 typedef struct s_mouse
