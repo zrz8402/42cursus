@@ -1,6 +1,9 @@
 {
 	"cmake.sourceDirectory": "/Users/zz/Desktop/42cursus/fdf/lib/MLX42",
 	"files.associations": {
-		"INIT.C": "cpp"
+		"INIT.C": "cpp",
+		"random": "cpp",
+		"limits": "cpp",
+		"algorithm": "cpp"
 	}
 }

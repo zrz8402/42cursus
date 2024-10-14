@@ -6,13 +6,13 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:44:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/13 18:50:52 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/14 15:49:36 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int default_color(t_map *map, int altitude)
+int	default_color(t_map *map, int altitude)
 {
 	int		rgb;
 	float	percent;
@@ -48,11 +48,11 @@ t_point	project(t_fdf *fdf, t_point point)
 	point.x *= fdf->camera->zoom;
 	point.y *= fdf->camera->zoom;
 	point.z *= fdf->camera->zoom;
-	rotate_x(fdf);
-	rotate_y(fdf);
-	rotate_z(fdf);
+	rotate_x(&point.y, &point.z, fdf->camera->alpha);
+	rotate_y(&point.x, &point.z, fdf->camera->beta);
+	rotate_z(&point.x, &point.y, fdf->camera->gamma);
 	if (fdf->camera->projection == ISO)
-		iso(fdf);
+		iso(&point.x, &point.y, point.z);
 	point.x += fdf->camera->x_offset;
 	point.y += fdf->camera->y_offset;
 	return (point);
@@ -70,9 +70,11 @@ void	draw(t_map *map, t_fdf *fdf)
 		while (x < map->width && x >= 0)
 		{
 			if (x != map->width - 1)
-				draw_line(fdf, project(fdf, point(map, x, y)), project(fdf, point(map, x + 1, y)));
+				draw_line(fdf, project(fdf, point(map, x, y)),
+					project(fdf, point(map, x + 1, y)));
 			if (y != map->height - 1)
-				draw_line(fdf, project(fdf, point(map, x, y)), project(fdf, point(map, x, y + 1)));
+				draw_line(fdf, project(fdf, point(map, x, y)),
+					project(fdf, point(map, x, y + 1)));
 			x++;
 		}
 		y++;

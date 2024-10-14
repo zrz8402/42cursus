@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:48:26 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/13 17:42:59 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/14 15:49:47 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ int32_t	main(int ac, char **av)
 	map = get_map(map, av[1]);
 	fdf = init_fdf(map);
 	draw(map, fdf);
-	//set_control(fdf);
+	set_control(fdf);
 	mlx_loop(fdf->mlx);
 }

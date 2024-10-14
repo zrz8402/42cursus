@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:11:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/13 18:24:03 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/14 15:41:51 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@
 # include "libft.h"
 # include "MLX42/MLX42.h"
 
-# define WIDTH 1024
-# define HEIGHT 1024
+#  ifndef M_PI
+#   define M_PI 3.14159265358979323846
+#  endif
+# define WIDTH 2056
+# define HEIGHT 2056
 
 # define FT_INT_MAX ((int)(~0U >> 1))
 # define FT_INT_MIN ((int)(~FT_INT_MAX))
@@ -97,7 +100,7 @@ typedef struct s_camera
 {
 	int		zoom;
 	double	alpha; //rotate around x
-	double	belta; //rotate around y
+	double	beta; //rotate around y
 	double	gamma; //rotate around z
 	t_projection	projection;
 	int		x_offset;
@@ -124,7 +127,7 @@ typedef struct fdf
 //main.c 
 int32_t	main(int ac, char **av);
 
-// get_map.c
+// map.c
 // undefined behavior from get_next_line
 // leaks when the file isn't fully read
 static int	get_width(char *line);
@@ -157,6 +160,10 @@ int		ipt(float n);
 float	fpt(float n);
 float	rfpt(float n);
 
+void	rotate_x(int *y, int *z, double angle);
+void	rotate_y(int *x, int *z, double angle);
+void	rotate_z(int *x, int *y, double angle);
+void	iso(int *x, int *y, int z);
 
 void	set_control(t_fdf *fdf);
 
