@@ -42,11 +42,16 @@ t_camera	*init_camera(t_fdf *fdf)
 		free(fdf);
 		error("Error initiating camera");
 	}
-	camera->zoom = WIDTH / fdf->map->width / 2;
+	//camera->zoom = WIDTH / fdf->map->width / 2;
+	camera->zoom = 10;
 	camera->alpha = 0;
 	camera->belta = 0;
 	camera->gamma = 0;
 	camera->projection = ISO;
+	// camera->x_offset = 1;
+	// camera->y_offset = 1;
+	camera->x_offset = (WIDTH - fdf->map->width * camera->zoom) / 2;
+	camera->y_offset = (HEIGHT - fdf->map->height * camera->zoom) / 2;
 	return (camera);
 }
 

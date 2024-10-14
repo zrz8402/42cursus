@@ -68,6 +68,7 @@ void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient)
 		{
 			mlx_put_pixel(fdf->img, x, ipt(y), get_c(x, sp, ep, rfpt(y)));
 			mlx_put_pixel(fdf->img, x, ipt(y) + 1, get_c(x, sp, ep, fpt(y)));
+			//printf("(%d %d)", x, get_c(x, sp, ep, rfpt(y)));
 			x++;
 			y += gradient;
 		}

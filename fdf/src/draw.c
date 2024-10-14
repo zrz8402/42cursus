@@ -48,6 +48,13 @@ t_point	project(t_fdf *fdf, t_point point)
 	point.x *= fdf->camera->zoom;
 	point.y *= fdf->camera->zoom;
 	point.z *= fdf->camera->zoom;
+	rotate_x(fdf);
+	rotate_y(fdf);
+	rotate_z(fdf);
+	if (fdf->camera->projection == ISO)
+		iso(fdf);
+	point.x += fdf->camera->x_offset;
+	point.y += fdf->camera->y_offset;
 	return (point);
 }
 

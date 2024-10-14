@@ -100,6 +100,8 @@ typedef struct s_camera
 	double	belta; //rotate around y
 	double	gamma; //rotate around z
 	t_projection	projection;
+	int		x_offset;
+	int		y_offset;
 }	t_camera;
 
 typedef struct s_mouse

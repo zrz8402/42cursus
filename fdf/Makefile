@@ -7,7 +7,7 @@ RM    = rm -rf
 LIBMLX  = ./lib/MLX42
 LIBFT  = ./lib/libft
 
-HEADERS  = -I ./include -I $(LIBMLX)/include -I $(LIBFT)
+HEADERS  = -I . -I $(LIBMLX)/include -I $(LIBFT)
 
 SRCDIR = ./src
 SRCS  = main.c get_map.c utils.c line.c line_utils.c draw.c init.c
@@ -24,7 +24,7 @@ $(NAME): $(OBJS) $(MLX_A) $(LIBFT_A)
 	@$(CC) $(CFLAGS) $(HEADERS) $(OBJS) $(LIBS) -o $(NAME)
 	@echo "Executable created: $(NAME)"
 
-%.o: %.c Makefile
+%.o: %.c Makefile fdf.h
 	@echo "Compiling..."
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 	@echo "Compile complete."
@@ -41,17 +41,17 @@ $(LIBFT_A):
 
 clean:
 	@echo "Cleaning up object files..."
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 	@echo "Cleaning up libft directory..."
-	make clean -C $(LIBFT)
+	@make clean -C $(LIBFT)
 
 fclean: clean
 	@echo "Removing executable: $(NAME)"
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 	@echo "Cleaning up MLX build directory..."
 	$(RM) $(LIBMLX)/build
 	@echo "Cleaning up libft directory..."
-	make fclean -C $(LIBFT)
+	@make fclean -C $(LIBFT)
 	@echo "Clean complete."
 
 re: fclean all
