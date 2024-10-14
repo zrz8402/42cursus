@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:44:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 15:49:36 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/14 16:26:50 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ t_point	project(t_fdf *fdf, t_point point)
 	rotate_z(&point.x, &point.y, fdf->camera->gamma);
 	if (fdf->camera->projection == ISO)
 		iso(&point.x, &point.y, point.z);
-	point.x += fdf->camera->x_offset;
-	point.y += fdf->camera->y_offset;
+	point.x += WIDTH / 2 + fdf->camera->x_offset;
+	point.y += HEIGHT / 2 + fdf->camera->y_offset;
 	return (point);
 }
 

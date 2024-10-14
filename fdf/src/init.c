@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 16:28:21 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 15:50:44 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/14 16:59:33 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,15 @@ t_fdf	*init_fdf(t_map *map)
 
 void	free_fdf(t_fdf *fdf)
 {
-	if (fdf->img)
-		mlx_delete_image(fdf->mlx, fdf->img);
-	if (fdf->mlx)
-		mlx_terminate(fdf->mlx);
+	if (!fdf)
+		return ;
+	// if (fdf->img)
+	// 	mlx_delete_image(fdf->mlx, fdf->img);
 	if (fdf->map)
 		free_map(fdf->map);
 	if (fdf->camera)
 		free(fdf->camera);
+	if (fdf->mouse)
+		free(fdf->mouse);
 	free(fdf);
 }

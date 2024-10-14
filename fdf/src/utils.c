@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:48:32 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 14:20:26 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/14 16:56:07 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	free_map(t_map	*map)
 	int	i;
 
 	i = 0;
+	if (!map)
+		return ;
 	if (map->num_arr)
 	{
 		while (i < map->height)

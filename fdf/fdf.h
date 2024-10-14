@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:11:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 15:41:51 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/14 16:53:17 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,46 +29,46 @@
 
 # define FT_INT_MAX ((int)(~0U >> 1))
 # define FT_INT_MIN ((int)(~FT_INT_MAX))
-// close window
-# define KEY_ESCAPE 256
+// // close window
+// # define KEY_ESCAPE 256
 
-// move map
-# define ARROW_RIGHT 262
-# define ARROW_LEFT 263
-# define ARROW_DOWN 264
-# define ARROW_UP 265
+// // move map
+// # define ARROW_RIGHT 262
+// # define ARROW_LEFT 263
+// # define ARROW_DOWN 264
+// # define ARROW_UP 265
 
-// change projection: I-isometric, P-parallel
-# define KEY_I 73
-# define KEY_P 80
+// // change projection: I-isometric, P-parallel
+// # define KEY_I 73
+// # define KEY_P 80
 
-// zoom
-# define KEY_MINUS 45
-# define KEY_PLUS 62
-# define KP_MINUS 333
-# define KP_PLUS 334
+// // zoom
+// # define KEY_MINUS 45
+// # define KEY_PLUS 62
+// # define KP_MINUS 333
+// # define KP_PLUS 334
 
-// flatten
-# define KEY_LESS 44
-# define KEY_MORE 46
+// // flatten
+// # define KEY_LESS 44
+// # define KEY_MORE 46
 
-// rotate
-# define KEY_1 49
-# define KEY_2 50
-# define KEY_3 51
-# define KEY_4 52
-# define KEY_5 53
-# define KEY_6 54
-# define KP_1 321
-# define KP_2 322
-# define KP_3 323
-# define KP_4 324
-# define KP_5 325
-# define KP_6 326
+// // rotate
+// # define KEY_1 49
+// # define KEY_2 50
+// # define KEY_3 51
+// # define KEY_4 52
+// # define KEY_5 53
+// # define KEY_6 54
+// # define KP_1 321
+// # define KP_2 322
+// # define KP_3 323
+// # define KP_4 324
+// # define KP_5 325
+// # define KP_6 326
 
 
-# define MOUSE_SCROLL_UP 256
-# define MOUSE_SCROLL_DOWN 256
+// # define MOUSE_SCROLL_UP 256
+// # define MOUSE_SCROLL_DOWN 256
 
 typedef enum
 {
@@ -146,6 +146,7 @@ void	error(char *message);
 int		ft_atoi_hex(char *s);
 void	free_map(t_map *map);
 void	free_arr(char **s);
+void	free_fdf(t_fdf *fdf);
 
 // line.c
 int		rgb(int first, int second, float percent, float intensity);
@@ -166,5 +167,9 @@ void	rotate_z(int *x, int *y, double angle);
 void	iso(int *x, int *y, int z);
 
 void	set_control(t_fdf *fdf);
-
+void	key_press(mlx_key_data_t keycode, void *fdf);
+void	scroll(double xdelta, double ydelta, void* param);
+void	close_win(t_fdf *fdf);
+void	set_control(t_fdf *fdf);
+void	zoom(int key, t_fdf *fdf);
 #endif
