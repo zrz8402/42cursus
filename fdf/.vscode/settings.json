@@ -4,6 +4,9 @@
 		"INIT.C": "cpp",
 		"random": "cpp",
 		"limits": "cpp",
-		"algorithm": "cpp"
+		"algorithm": "cpp",
+		"mlx42.h": "c",
+		"stdio.h": "c",
+		"cstdlib": "c"
 	}
 }

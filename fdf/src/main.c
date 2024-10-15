@@ -6,12 +6,14 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:48:26 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/15 13:24:31 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/15 15:42:47 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <string.h>
+
+
 
 int32_t	main(int ac, char **av)
 {
@@ -31,7 +33,10 @@ int32_t	main(int ac, char **av)
 	if (!fdf.img)
 		error("Error initiating image");
 	draw(map, &fdf);
-	// //set_control(fdf);
+	hook_control(&fdf);
+	//mlx_key_hook(fdf.mlx, &key_press, &fdf);
+	// mlx_mouse_hook(fdf->mlx, &mouse_press, &fdf);
+	// mlx_scroll_hook(fdf->mlx, scroll, &fdf);
 	mlx_loop(fdf.mlx);
 	mlx_delete_image(fdf.mlx, fdf.img);
 	mlx_terminate(fdf.mlx);
