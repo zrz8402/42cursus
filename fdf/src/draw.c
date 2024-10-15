@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:44:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/15 13:25:21 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/15 17:31:20 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	draw(t_map *map, t_fdf *fdf)
 	int	y;
 
 	y = 0;
+	ft_memset(fdf->img->pixels, 0, HEIGHT * WIDTH * 4);
 	while (y < map->height && y >= 0)
 	{
 		x = 0;

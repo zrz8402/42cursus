@@ -20,38 +20,17 @@ void my_scrollhook(double xdelta, double ydelta, void* param)
 		puts("Sliiiide to the right!");
 }
 
-void my_keyhook(mlx_key_data_t keydata, void* param)
+int32_t	main(void)
 {
-	// If we PRESS the 'J' key, print "Hello".
-	if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)
-		puts("Hello ");
+	mlx_t* mlx;
 
-	// If we RELEASE the 'K' key, print "World".
-	if (keydata.key == MLX_KEY_K && keydata.action == MLX_RELEASE)
-		puts("World");
+	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
+		return (EXIT_FAILURE);
 
-	// If we HOLD the 'L' key, print "!".
-	if (keydata.key == MLX_KEY_L && keydata.action == MLX_REPEAT)
-		puts("!");
-}
-
-void	set(mlx_t *mlx)
-{
 	mlx_scroll_hook(mlx, &my_scrollhook, NULL);
-	mlx_key_hook(mlx, &my_keyhook, mlx);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
+	return (EXIT_SUCCESS);
 }
-
-// int32_t	main(void)
-// {
-// 	mlx_t* mlx;
-
-// 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-// 		return (EXIT_FAILURE);
-
-// 	mlx_scroll_hook(mlx, &my_scrollhook, NULL);
-// 	mlx_loop(mlx);
-// 	mlx_terminate(mlx);
-// 	return (EXIT_SUCCESS);
-// }
 
 //cc scroll.c ./lib/MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm -o test

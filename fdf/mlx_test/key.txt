@@ -13,7 +13,7 @@
 
 // zoom
 # define KEY_MINUS 45
-# define KEY_PLUS 62
+# define KEY_PLUS 61
 # define KP_MINUS 333
 # define KP_PLUS 334
 

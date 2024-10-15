@@ -1,8 +1,9 @@
-#include "./lib/MLX42/include/MLX42/MLX42.h"
+#include "../lib/MLX42/include/MLX42/MLX42.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -66,6 +67,44 @@ void close_window(mlx_key_data_t keydata, void* param) {
         mlx_close_window(data->mlx_ptr);
     }
 }
+
+void my_scrollhook(double xdelta, double ydelta, void* param)
+{
+	// Simple up or down detection.
+	if (ydelta > 0)
+		puts("Up!");
+	else if (ydelta < 0)
+		puts("Down!");
+	
+	// Can also detect a mousewheel that goes along the X (e.g: MX Master 3)
+	if (xdelta < 0)
+		puts("Sliiiide to the left!");
+	else if (xdelta > 0)
+		puts("Sliiiide to the right!");
+}
+
+void my_keyhook(mlx_key_data_t keydata, void* param)
+{
+	// If we PRESS the 'J' key, print "Hello".
+	if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)
+		puts("Hello ");
+
+	// If we RELEASE the 'K' key, print "World".
+	if (keydata.key == MLX_KEY_K && keydata.action == MLX_RELEASE)
+		puts("World");
+
+	// If we HOLD the 'L' key, print "!".
+	if (keydata.key == MLX_KEY_L && keydata.action == MLX_REPEAT)
+		puts("!");
+}
+
+void	set(t_data *data)
+{
+	mlx_scroll_hook(data->mlx_ptr, &my_scrollhook, NULL);
+	mlx_key_hook(data->mlx_ptr, &my_keyhook, NULL);
+	//mlx_key_hook(data->mlx_ptr, &close_window, &data);
+}
+
 int main() {
     t_data data;
 
@@ -99,8 +138,9 @@ int main() {
     }
 
     // Set the key press handler
-    mlx_key_hook(data.mlx_ptr, close_window, &data); // Use the updated close_window function
+    //mlx_key_hook(data.mlx_ptr, close_window, &data); // Use the updated close_window function
 
+	set(&data);
     // Start the event loop
     mlx_loop(data.mlx_ptr);
 
@@ -111,4 +151,4 @@ int main() {
 }
 // cc test.c ./lib/MLX42/build/libmlx42.a -o test -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
-//cc -fsanitize=address test.c ./lib/MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm -o test
+//cc -fsanitize=address test.c ../lib/MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm -o test

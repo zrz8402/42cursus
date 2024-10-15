@@ -1,7 +1,7 @@
 NAME  = fdf
 
 CC    = cc
-CFLAGS  = -Wunreachable-code -Ofast -g3 -fsanitize=address
+CFLAGS  = -Wunreachable-code -Ofast -g3 
 RM    = rm -rf
 
 LIBMLX  = ./lib/MLX42

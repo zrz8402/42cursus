@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   action.c                                           :+:      :+:    :+:   */
+/*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:01:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 18:17:18 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/15 18:41:25 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	zoom(int key, t_fdf *fdf)
 {
 	if (key == 45 || key == 333)
-		fdf->camera->zoom++;
-	else if (key == 62 || key == 334)
 		fdf->camera->zoom--;
+	else if (key == 61 || key == 334)
+		fdf->camera->zoom++;
 	if (fdf->camera->zoom < 1)
 		fdf->camera->zoom = 1;
 	draw(fdf->map, fdf);
