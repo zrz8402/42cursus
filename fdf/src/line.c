@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:37:18 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 13:11:38 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/15 14:20:41 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,20 @@ uint32_t	get_c(int x, t_point sp, t_point ep, float intensity)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
+void	put_pixel(t_fdf *fdf, int x, int y, uint32_t color)
+{
+	int	i;
+
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+	{
+		i = (x + y * WIDTH) * 4;
+		fdf->img->pixels[i] = color >> 24 & 0xFF;
+		fdf->img->pixels[i + 1] = color >> 16 & 0xFF;
+		fdf->img->pixels[i + 2] = color >> 8 & 0xFF;
+		fdf->img->pixels[i +3] = color & 0xFF;
+	}
+}
+
 void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient)
 {
 	int		x;
@@ -56,8 +70,8 @@ void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient)
 	{
 		while (x <= ep.x)
 		{
-			mlx_put_pixel(fdf->img, ipt(y), x, get_c(x, sp, ep, rfpt(y)));
-			mlx_put_pixel(fdf->img, ipt(y) + 1, x, get_c(x, sp, ep, fpt(y)));
+			put_pixel(fdf, ipt(y), x, get_c(x, sp, ep, rfpt(y)));
+			put_pixel(fdf, ipt(y) + 1, x, get_c(x, sp, ep, fpt(y)));
 			x++;
 			y += gradient;
 		}
@@ -66,8 +80,8 @@ void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient)
 	{
 		while (x <= ep.x)
 		{
-			mlx_put_pixel(fdf->img, x, ipt(y), get_c(x, sp, ep, rfpt(y)));
-			mlx_put_pixel(fdf->img, x, ipt(y) + 1, get_c(x, sp, ep, fpt(y)));
+			put_pixel(fdf, x, ipt(y), get_c(x, sp, ep, rfpt(y)));
+			put_pixel(fdf, x, ipt(y) + 1, get_c(x, sp, ep, fpt(y)));
 			x++;
 			y += gradient;
 		}

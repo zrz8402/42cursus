@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:48:26 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 16:45:58 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/15 13:24:31 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,25 @@
 
 int32_t	main(int ac, char **av)
 {
-	t_fdf	*fdf;
+	t_fdf	fdf;
 	t_map	*map;
 
 	if (ac < 2)
 		error("No arguement");
 	if (ac > 2)
 		error("Too many arguements");
-	map = get_map(map, av[1]);
-	fdf = init_fdf(map);
-	draw(map, fdf);
-	set_control(fdf);
-	mlx_loop(fdf->mlx);
-	mlx_close_window(fdf->mlx);
-	printf("haha");
+	map = get_map(av[1]);
+	init_fdf(map, &fdf);
+	fdf.mlx = mlx_init(WIDTH, HEIGHT, "FDF", false);
+	if (!fdf.mlx)
+		error("Error initiating MLX");
+	fdf.img = mlx_new_image(fdf.mlx, WIDTH, HEIGHT);
+	if (!fdf.img)
+		error("Error initiating image");
+	draw(map, &fdf);
+	// //set_control(fdf);
+	mlx_loop(fdf.mlx);
+	mlx_delete_image(fdf.mlx, fdf.img);
+	mlx_terminate(fdf.mlx);
+	free_fdf(&fdf);
 }

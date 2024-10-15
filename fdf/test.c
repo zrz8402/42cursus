@@ -63,6 +63,7 @@ void wuLine(t_data *data, int x0, int y0, int x1, int y1) {
 void close_window(mlx_key_data_t keydata, void* param) {
     t_data *data = (t_data *)param; // Cast the param back to t_data*
     if (keydata.key == 256) { // ESC key
+		mlx_delete_image(data->mlx_ptr, data->img_ptr);
         mlx_terminate(data->mlx_ptr);
         exit(0);
     }
@@ -112,4 +113,4 @@ int main() {
 }
 // cc test.c ./lib/MLX42/build/libmlx42.a -o test -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
-//cc test.c ./lib/MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm -o test
+//cc -fsanitize=address test.c ./lib/MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm -o test

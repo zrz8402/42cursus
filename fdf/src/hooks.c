@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   controls.c                                         :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 18:33:08 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 18:09:56 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/15 11:20:18 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	key_press(mlx_key_data_t keycode, void *param)
 		change_projection(keycode.key, fdf);
 }
 
-void	mouse_press(mouse_key_t button, void* param)
+void	mouse_press(mouse_key_t button, void *param)
 {
 	t_fdf *fdf;
 
@@ -42,7 +42,7 @@ void	mouse_press(mouse_key_t button, void* param)
 		return ;
 }
 
-void	scroll(double xdelta, double ydelta, void* param)
+void	scroll(double xdelta, double ydelta, void *param)
 {
 	t_fdf *fdf;
 
@@ -53,7 +53,7 @@ void	scroll(double xdelta, double ydelta, void* param)
 		zoom(62, fdf);
 }
 
-void	set_control(t_fdf *fdf)
+void	hook_control(t_fdf *fdf)
 {
 	mlx_key_hook(fdf->mlx, &key_press, &fdf);
 	mlx_mouse_hook(fdf->mlx, &mouse_press, &fdf);

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:11:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 18:00:25 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/15 13:56:15 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,56 +21,17 @@
 # include "libft.h"
 # include "MLX42/MLX42.h"
 
-#  ifndef M_PI
-#   define M_PI 3.14159265358979323846
-#  endif
-# define WIDTH 2056
-# define HEIGHT 2056
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
+
+# define WIDTH 1050
+# define HEIGHT 1050
 
 # define FT_INT_MAX ((int)(~0U >> 1))
 # define FT_INT_MIN ((int)(~FT_INT_MAX))
-// // close window
-// # define KEY_ESCAPE 256
 
-// // move map
-// # define ARROW_RIGHT 262
-// # define ARROW_LEFT 263
-// # define ARROW_DOWN 264
-// # define ARROW_UP 265
-
-// // change projection: I-isometric, P-parallel
-// # define KEY_I 73
-// # define KEY_P 80
-
-// // zoom
-// # define KEY_MINUS 45
-// # define KEY_PLUS 62
-// # define KP_MINUS 333
-// # define KP_PLUS 334
-
-// // flatten
-// # define KEY_LESS 44
-// # define KEY_MORE 46
-
-// // rotate
-// # define KEY_1 49
-// # define KEY_2 50
-// # define KEY_3 51
-// # define KEY_4 52
-// # define KEY_5 53
-// # define KEY_6 54
-// # define KP_1 321
-// # define KP_2 322
-// # define KP_3 323
-// # define KP_4 324
-// # define KP_5 325
-// # define KP_6 326
-
-
-// # define MOUSE_SCROLL_UP 256
-// # define MOUSE_SCROLL_DOWN 256
-
-typedef enum
+typedef	enum
 {
 	ISO,
 	PARALLEL,
@@ -98,14 +59,14 @@ typedef struct s_map
 
 typedef struct s_camera
 {
-	int		zoom;
-	double	alpha; //rotate around x
-	double	beta; //rotate around y
-	double	gamma; //rotate around z
+	int				zoom;
+	double			alpha;
+	double			beta;
+	double			gamma;
 	t_projection	projection;
-	int		x_offset;
-	int		y_offset;
-	float	z_divisor;
+	int				x_offset;
+	int				y_offset;
+	float			z_divisor;
 }	t_camera;
 
 typedef struct s_mouse
@@ -126,51 +87,63 @@ typedef struct fdf
 }	t_fdf;
 
 //main.c 
-int32_t	main(int ac, char **av);
+int32_t		main(int ac, char **av);
 
 // map.c
-// undefined behavior from get_next_line
-// leaks when the file isn't fully read
-static int	get_width(char *line);
-static void	get_dimension(t_map *map, char *fname);
-static void	get_num_col(t_map *map, char *line, int i);
-static void	fill_map(t_map *map, char *fname);
-t_map	*get_map(t_map *map,char *fname);
-
-//draw.c
-void	draw(t_map *map, t_fdf *fdf);
+// undefined behavior in get_next_line when file isn't read unitil the end
+t_map		*get_map(char *fname);
 
 //utils.c
-t_map	*init_map(void);
-t_fdf	*init_fdf(t_map *map);
-void	error(char *message);
-int		ft_atoi_hex(char *s);
-void	free_map(t_map *map);
-void	free_arr(char **s);
-void	free_fdf(t_fdf *fdf);
+void		error(char *message);
+int			ft_atoi_hex(char *s);
+void		free_map(t_map *map);
+void		free_arr(char **s);
+
+// init.c
+t_map		*init_map(void);
+t_camera	*init_camera(t_fdf *fdf);
+t_mouse		*init_mouse(t_fdf *fdf);
+void		init_fdf(t_map *map, t_fdf *fdf);
+void		free_fdf(t_fdf *fdf);
+
+//draw.c
+void		draw(t_map *map, t_fdf *fdf);
+int			default_color(t_map *map, int altitude);
+t_point		point(t_map *map, int x, int y);
+
+// project.c
+void		rotate_x(int *y, int *z, double angle);
+void		rotate_y(int *x, int *z, double angle);
+void		rotate_z(int *x, int *y, double angle);
+void		iso(int *x, int *y, int z);
+t_point		project(t_fdf *fdf, t_point point);
 
 // line.c
-int		rgb(int first, int second, float percent, float intensity);
-uint32_t		get_c(int x, t_point sp, t_point ep, float intensity);
-void	put_pixel(t_fdf *fdf, int x, int y, int color);
-void	plot(t_fdf *fdf, t_point sp, t_point ep, float gradient);
-void	draw_line(t_fdf *fdf, t_point sp, t_point ep);
+int			rgb(int first, int second, float percent, float intensity);
+uint32_t	get_c(int x, t_point sp, t_point ep, float intensity);
+void		plot(t_fdf *fdf, t_point sp, t_point ep, float gradient);
+void		draw_line(t_fdf *fdf, t_point sp, t_point ep);
 
 // line_utils.c
-void	swap(int *a, int *b);
-int		ipt(float n);
-float	fpt(float n);
-float	rfpt(float n);
+void		swap(int *a, int *b);
+int			ipt(float n);
+float		fpt(float n);
+float		rfpt(float n);
 
-void	rotate_x(int *y, int *z, double angle);
-void	rotate_y(int *x, int *z, double angle);
-void	rotate_z(int *x, int *y, double angle);
-void	iso(int *x, int *y, int z);
+// hooks.c
+void		key_press(mlx_key_data_t keycode, void *param);
+void		mouse_press(mouse_key_t button, void *param);
+void		scroll(double xdelta, double ydelta, void *param);
+void		hook_control(t_fdf *fdf);
 
-void	set_control(t_fdf *fdf);
-void	key_press(mlx_key_data_t keycode, void *fdf);
-void	scroll(double xdelta, double ydelta, void* param);
-void	close_win(t_fdf *fdf);
-void	set_control(t_fdf *fdf);
+// actions.c
 void	zoom(int key, t_fdf *fdf);
+void	move(int key, t_fdf *fdf);
+void	rotate(int key, t_fdf *fdf);
+void	flatten(int key, t_fdf *fdf);
+void	change_projection(int key, t_fdf *fdf);
+
+// instruction.c
+void	instruction(t_fdf *fdf);
+
 #endif

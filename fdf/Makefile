@@ -1,7 +1,7 @@
 NAME  = fdf
 
 CC    = cc
-CFLAGS  = -Wunreachable-code -Ofast -g3
+CFLAGS  = -Wunreachable-code -Ofast -g3 -fsanitize=address
 RM    = rm -rf
 
 LIBMLX  = ./lib/MLX42
@@ -10,9 +10,10 @@ LIBFT  = ./lib/libft
 HEADERS  = -I . -I $(LIBMLX)/include -I $(LIBFT)
 
 SRCDIR = ./src
-SRCS  = main.c map.c utils.c line.c line_utils.c \
-		draw.c init.c project.c controls.c \
-		action.c
+SRCS  = main.c map.c utils.c init.c \
+		draw.c project.c line.c line_utils.c \
+		hooks.c actions.c instruction.c		
+
 OBJS = $(addprefix $(SRCDIR)/, $(SRCS:.c=.o))
 
 MLX_A  = $(LIBMLX)/build/libmlx42.a

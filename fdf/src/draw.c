@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:44:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 16:26:50 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/15 13:25:21 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,6 @@ t_point	point(t_map *map, int x, int y)
 	else
 		point.c = map->color_arr[y][x];
 	point.reverse = 0;
-	return (point);
-}
-
-t_point	project(t_fdf *fdf, t_point point)
-{
-	int	x;
-	int	y;
-
-	point.x *= fdf->camera->zoom;
-	point.y *= fdf->camera->zoom;
-	point.z *= fdf->camera->zoom;
-	rotate_x(&point.y, &point.z, fdf->camera->alpha);
-	rotate_y(&point.x, &point.z, fdf->camera->beta);
-	rotate_z(&point.x, &point.y, fdf->camera->gamma);
-	if (fdf->camera->projection == ISO)
-		iso(&point.x, &point.y, point.z);
-	point.x += WIDTH / 2 + fdf->camera->x_offset;
-	point.y += HEIGHT / 2 + fdf->camera->y_offset;
 	return (point);
 }
 

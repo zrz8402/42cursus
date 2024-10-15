@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_map.c                                          :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:47:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/13 16:55:39 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/15 13:14:42 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,10 @@ static void	fill_map(t_map *map, char *fname)
 	close(fd);
 }
 
-t_map	*get_map(t_map *map, char *fname)
+t_map	*get_map(char *fname)
 {
+	t_map *map;
+
 	map = init_map();
 	get_dimension(map, fname);
 	fill_map(map, fname);
