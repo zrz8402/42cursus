@@ -7,7 +7,7 @@ RM    = rm -rf
 LIBMLX  = ./lib/MLX42
 LIBFT  = ./lib/libft
 
-HEADERS  = -I ./include -I $(LIBMLX)/include -I $(LIBFT)
+HEADERS  = -I . -I $(LIBMLX)/include -I $(LIBFT)
 
 SRCDIR = ./src
 SRCS  = main.c map.c utils.c init.c \
