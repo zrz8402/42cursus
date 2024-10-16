@@ -27,14 +27,13 @@ void	key_press(mlx_key_data_t keycode, void *param)
 		else if (keycode.key >= 262 && keycode.key <= 265)
 			move(keycode.key, fdf);
 		else if ((keycode.key >= 49 && keycode.key <= 54)
-					&& (keycode.key >= 321 && keycode.key <= 326))
+					|| (keycode.key >= 321 && keycode.key <= 326))
 			rotate(keycode.key, fdf);
 		else if (keycode.key == 44 || keycode.key == 46)
 			flatten(keycode.key, fdf);
 		else if (keycode.key == 73 || keycode.key == 80)
 			change_projection(keycode.key, fdf);
 	}
-	
 }
 
 // void	mouse_press(mlx_key_data_t keycode, void *param)

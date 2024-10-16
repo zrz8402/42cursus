@@ -39,17 +39,17 @@ void	move(int key, t_fdf *fdf)
 void	rotate(int key, t_fdf *fdf)
 {
 	if (key == 49)
-		fdf->camera->alpha += 0.1;
+		fdf->camera->alpha += 0.5;
 	else if (key == 50)
-		fdf->camera->alpha -= 0.1;
+		fdf->camera->alpha -= 0.5;
 	else if (key == 51)
-		fdf->camera->beta += 0.1;
+		fdf->camera->beta += 0.5;
 	else if (key == 52)
-		fdf->camera->beta -= 0.1;
+		fdf->camera->beta -= 0.5;
 	else if (key == 53)
-		fdf->camera->gamma += 0.1;
+		fdf->camera->gamma += 0.5;
 	else
-		fdf->camera->gamma -= 0.1;
+		fdf->camera->gamma -= 0.5;
 	draw(fdf->map, fdf);
 }
 
@@ -71,6 +71,11 @@ void	change_projection(int key, t_fdf *fdf)
 	if (key == 73)
 		fdf->camera->projection = ISO;
 	else
+	{
+		fdf->camera->alpha = 0;
+		fdf->camera->beta = 0;
+		fdf->camera->gamma = 0;
 		fdf->camera->projection = PARALLEL;
+	}
 	draw(fdf->map, fdf);
 }

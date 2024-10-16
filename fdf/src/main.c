@@ -30,12 +30,11 @@ int32_t	main(int ac, char **av)
 		error("Error initiating MLX");
 	fdf.img = mlx_new_image(fdf.mlx, WIDTH, HEIGHT);
 	if (!fdf.img)
-		error("Error initiating image");
+		error("Error creating image");
 	draw(map, &fdf);
 	mlx_key_hook(fdf.mlx, &key_press, &fdf);
-	mlx_mouse_hook(fdf.mlx, &mouse_press, &fdf);
+	// mlx_mouse_hook(fdf.mlx, &mouse_press, &fdf);
 	mlx_scroll_hook(fdf.mlx, &scroll, &fdf);
-	mlx_is_key_down()
 	mlx_loop(fdf.mlx);
 	mlx_delete_image(fdf.mlx, fdf.img);
 	mlx_terminate(fdf.mlx);
