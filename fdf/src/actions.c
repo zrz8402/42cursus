@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:01:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/16 14:37:35 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/16 18:31:26 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	flatten(int key, t_fdf *fdf)
 		fdf->camera->z_divisor *= 0.9;
 	if (fdf->camera->z_divisor < 0.01)
 		fdf->camera->z_divisor = 0.01;
+	else if (fdf->camera->z_divisor >= (fdf->map->z_range * 2))
+		fdf->camera->z_divisor = fdf->map->z_range * 2;
 	draw(fdf->map, fdf);
 }
 

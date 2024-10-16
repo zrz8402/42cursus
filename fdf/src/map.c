@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:47:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/16 15:01:33 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/16 18:31:02 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,22 @@ static void	get_dimension(t_map *map, char *fname)
 
 	fd = open(fname, O_RDONLY);
 	if (fd < 0)
-		return (free_map(map), error("Error opening file"));
+		return (free_map(map), error("Error opening file\n"));
 	line = get_next_line(fd);
 	if (!line)
-		return (free_map(map), error("Empty map"));
+		return (free_map(map), error("Empty map\n"));
 	map->width = get_width(line);
 	while (line)
 	{
 		len = get_width(line);
 		free(line);
 		if (len != map->width)
-			return (free_map(map), error("Wrong map format"));
+			return (free_map(map), error("Wrong map format\n"));
 		map->height++;
 		line = get_next_line(fd);
 	}
+	if (map->width == 0)
+		return (free_map(map), error("Empty map\n"));
 	close(fd);
 }
 
@@ -88,7 +90,7 @@ static void	fill_map(t_map *map, char *fname)
 
 	fd = open(fname, O_RDONLY);
 	if (fd < 0)
-		return (free_map(map), error("Error opening file"));
+		return (free_map(map), error("Error opening file\n"));
 	map->num_arr = malloc(sizeof(int *) * map->height);
 	map->color_arr = malloc(sizeof(int *) * map->height);
 	line = get_next_line(fd);
