@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:44:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/15 17:31:20 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/16 15:17:28 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,7 @@ void	draw(t_map *map, t_fdf *fdf)
 		}
 		y++;
 	}
-	mlx_image_to_window(fdf->mlx, fdf->img, 0, 0);
+	if (mlx_image_to_window(fdf->mlx, fdf->img, 0, 0) < 0)
+		return (mlx_delete_image(fdf->mlx, fdf->img), mlx_terminate(fdf->mlx),
+			free_fdf(fdf), error("Fail to dispay image"));
 }

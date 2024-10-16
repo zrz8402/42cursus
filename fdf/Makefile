@@ -1,18 +1,18 @@
 NAME  = fdf
 
 CC    = cc
-CFLAGS  = -Wunreachable-code -Ofast -g3 
+CFLAGS  = -Wall -Wextra -Werror
 RM    = rm -rf
 
 LIBMLX  = ./lib/MLX42
 LIBFT  = ./lib/libft
 
-HEADERS  = -I . -I $(LIBMLX)/include -I $(LIBFT)
+HEADERS  = -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 
 SRCDIR = ./src
 SRCS  = main.c map.c utils.c init.c \
 		draw.c project.c line.c line_utils.c \
-		hooks.c actions.c instruction.c		
+		hooks.c actions.c
 
 OBJS = $(addprefix $(SRCDIR)/, $(SRCS:.c=.o))
 

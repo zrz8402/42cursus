@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:10:27 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/15 16:04:32 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/16 12:44:46 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,11 @@ void	iso(int *x, int *y, int z)
 
 t_point	project(t_fdf *fdf, t_point point)
 {
-	int	x;
-	int	y;
-
 	point.x *= fdf->camera->zoom;
 	point.y *= fdf->camera->zoom;
 	point.z *= fdf->camera->zoom / fdf->camera->z_divisor;
+	point.x -= (fdf->camera->zoom * fdf->map->width) / 2;
+	point.y -= (fdf->camera->zoom * fdf->map->height) / 2;
 	rotate_x(&point.y, &point.z, fdf->camera->alpha);
 	rotate_y(&point.x, &point.z, fdf->camera->beta);
 	rotate_z(&point.x, &point.y, fdf->camera->gamma);

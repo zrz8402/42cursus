@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:48:32 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/14 16:56:07 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/16 11:08:07 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,24 @@ void	free_arr(char **s)
 	while (s[i])
 		free(s[i++]);
 	free(s);
+}
+
+void	instruction(t_fdf *fdf)
+{
+	int	x;
+	int	y;
+
+	x = 30;
+	y = 0;
+	mlx_put_string(fdf->mlx, "Instructions", x, y += 30);
+	mlx_put_string(fdf->mlx, "Zoom: (+/-), Scroll", x, y += 30);
+	mlx_put_string(fdf->mlx, "Move: Arrows", x, y += 30);
+	mlx_put_string(fdf->mlx, "Flatten: (</>)", x, y += 30);
+	mlx_put_string(fdf->mlx, "Rotate", x, y += 30);
+	mlx_put_string(fdf->mlx, "x-axis(1/2)", x + 30, y += 30);
+	mlx_put_string(fdf->mlx, "y-axis(3/4)", x + 30, y += 30);
+	mlx_put_string(fdf->mlx, "z-axis(5/6)", x + 30, y += 30);
+	mlx_put_string(fdf->mlx, "Projection:", x, y += 30);
+	mlx_put_string(fdf->mlx, "ISO: I", x + 30, y += 30);
+	mlx_put_string(fdf->mlx, "Parallel: P", x + 30, y += 30);
 }

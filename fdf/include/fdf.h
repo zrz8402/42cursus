@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:11:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/15 13:56:15 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/16 15:09:53 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,10 @@
 #  define M_PI 3.14159265358979323846
 # endif
 
-# define WIDTH 1050
-# define HEIGHT 1050
+# define WIDTH 2056
+# define HEIGHT 2056
 
-# define FT_INT_MAX ((int)(~0U >> 1))
-# define FT_INT_MIN ((int)(~FT_INT_MAX))
-
-typedef	enum
+typedef enum e_prjection
 {
 	ISO,
 	PARALLEL,
@@ -48,13 +45,13 @@ typedef struct s_point
 
 typedef struct s_map
 {
-	int	width;
-	int	height;
-	int	**num_arr;
-	int	**color_arr;
-	int	z_min;
-	int	z_max;
-	int	z_range;
+	int				width;
+	int				height;
+	int				**num_arr;
+	int				**color_arr;
+	int				z_min;
+	int				z_max;
+	unsigned int	z_range;
 }	t_map;
 
 typedef struct s_camera
@@ -69,13 +66,6 @@ typedef struct s_camera
 	float			z_divisor;
 }	t_camera;
 
-typedef struct s_mouse
-{
-	int	x;
-	int	y;
-	int	is_pressed;
-}	t_mouse;
-
 typedef struct fdf
 {
 	mlx_t		*mlx;
@@ -83,7 +73,6 @@ typedef struct fdf
 	t_map		*map;
 	int			steep;
 	t_camera	*camera;
-	t_mouse		*mouse;
 }	t_fdf;
 
 //main.c 
@@ -102,7 +91,6 @@ void		free_arr(char **s);
 // init.c
 t_map		*init_map(void);
 t_camera	*init_camera(t_fdf *fdf);
-t_mouse		*init_mouse(t_fdf *fdf);
 void		init_fdf(t_map *map, t_fdf *fdf);
 void		free_fdf(t_fdf *fdf);
 
@@ -137,13 +125,13 @@ void		scroll(double xdelta, double ydelta, void *param);
 void		hook_control(t_fdf *fdf);
 
 // actions.c
-void	zoom(int key, t_fdf *fdf);
-void	move(int key, t_fdf *fdf);
-void	rotate(int key, t_fdf *fdf);
-void	flatten(int key, t_fdf *fdf);
-void	change_projection(int key, t_fdf *fdf);
+void		zoom(int key, t_fdf *fdf);
+void		move(int key, t_fdf *fdf);
+void		rotate(int key, t_fdf *fdf);
+void		flatten(int key, t_fdf *fdf);
+void		change_projection(int key, t_fdf *fdf);
 
 // instruction.c
-void	instruction(t_fdf *fdf);
+void		instruction(t_fdf *fdf);
 
 #endif

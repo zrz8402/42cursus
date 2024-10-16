@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:01:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/15 18:41:25 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/16 14:37:35 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,28 @@ void	move(int key, t_fdf *fdf)
 void	rotate(int key, t_fdf *fdf)
 {
 	if (key == 49)
-		fdf->camera->alpha += 0.5;
+		fdf->camera->alpha += 0.1;
 	else if (key == 50)
-		fdf->camera->alpha -= 0.5;
+		fdf->camera->alpha -= 0.1;
 	else if (key == 51)
-		fdf->camera->beta += 0.5;
+		fdf->camera->beta += 0.1;
 	else if (key == 52)
-		fdf->camera->beta -= 0.5;
+		fdf->camera->beta -= 0.1;
 	else if (key == 53)
-		fdf->camera->gamma += 0.5;
+		fdf->camera->gamma += 0.1;
 	else
-		fdf->camera->gamma -= 0.5;
+		fdf->camera->gamma -= 0.1;
 	draw(fdf->map, fdf);
 }
 
 void	flatten(int key, t_fdf *fdf)
 {
 	if (key == 44)
-		fdf->camera->z_divisor += 0.1;
+		fdf->camera->z_divisor *= 1.1;
 	else
-		fdf->camera->z_divisor -= 0.1;
-	if (fdf->camera->z_divisor < 0.1)
-		fdf->camera->z_divisor = 0.1;
-	else if (fdf->camera->z_divisor > 10)
-		fdf->camera->z_divisor = 10;
+		fdf->camera->z_divisor *= 0.9;
+	if (fdf->camera->z_divisor < 0.01)
+		fdf->camera->z_divisor = 0.01;
 	draw(fdf->map, fdf);
 }
 
