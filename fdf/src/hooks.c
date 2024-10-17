@@ -36,28 +36,6 @@ void	key_press(mlx_key_data_t keycode, void *param)
 	}
 }
 
-// void	mouse_press(mouse_key_t button, action_t action, modifier_key_t mods, void* param)
-// {
-// 	t_fdf *fdf;
-
-// 	int prev_x;
-// 	int	prev_y;
-// 	int	x;
-// 	int	y;
-
-// 	prev_x = 0;
-// 	prev_y = 0;
-// 	fdf = (t_fdf *) param;
-// 	mlx_get_mouse_pos(fdf->mlx, &prev_x, &prev_y);
-// 	if (button == MLX_KEY_LEFT && action == MLX_REPEAT)
-// 	{
-// 		mlx_get_mouse_pos(fdf->mlx, &x, &y);
-// 		fdf->camera->x_offset += (x - prev_x);
-// 		fdf->camera->y_offset += (y - prev_y);
-// 		move(262, fdf);
-// 	}
-// }
-
 void	scroll(double xdelta, double ydelta, void *param)
 {
 	t_fdf	*fdf;

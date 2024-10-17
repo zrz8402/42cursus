@@ -34,7 +34,3 @@
 # define KP_4 324
 # define KP_5 325
 # define KP_6 326
-
-
-# define MOUSE_SCROLL_UP 256
-# define MOUSE_SCROLL_DOWN 256

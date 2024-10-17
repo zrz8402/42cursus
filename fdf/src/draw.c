@@ -64,5 +64,5 @@ void	draw(t_map *map, t_fdf *fdf)
 	}
 	if (mlx_image_to_window(fdf->mlx, fdf->img, 0, 0) < 0)
 		return (mlx_delete_image(fdf->mlx, fdf->img), mlx_terminate(fdf->mlx),
-			free_fdf(fdf), error("Fail to dispay image"));
+			free_fdf(fdf), error("Fail to dispay image\n"));
 }

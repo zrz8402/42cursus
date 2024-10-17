@@ -18,15 +18,14 @@ int32_t	main(int ac, char **av)
 	t_map	*map;
 
 	if (ac < 2)
-		error("No arguement");
+		error("No arguement\n");
 	if (ac > 2)
-		error("Too many arguements");
+		error("Too many arguements\n");
 	map = get_map(av[1]);
 	init_fdf(map, &fdf);
 	instruction(&fdf);
 	draw(map, &fdf);
 	mlx_key_hook(fdf.mlx, &key_press, &fdf);
-	// mlx_mouse_hook(fdf.mlx, &mouse_press, &fdf);
 	mlx_scroll_hook(fdf.mlx, &scroll, &fdf);
 	mlx_loop(fdf.mlx);
 	mlx_delete_image(fdf.mlx, fdf.img);
