@@ -33,4 +33,4 @@ int32_t	main(void)
 	return (EXIT_SUCCESS);
 }
 
-//cc scroll.c ./lib/MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm -o test
+//cc scroll.c ../lib/MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm -o test

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:47:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/16 18:31:02 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/18 10:04:52 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ static void	fill_map(t_map *map, char *fname)
 		line = get_next_line(fd);
 		i++;
 	}
-	map->z_range = map->z_max - map->z_min;
+	if (labs(map->z_max) >= labs(map->z_min))
+		map->z_range = labs(map->z_max);
+	else
+		map->z_range = labs(map->z_min);
 	close(fd);
 }
 

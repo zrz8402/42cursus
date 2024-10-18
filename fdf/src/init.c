@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 16:28:21 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/16 18:30:49 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/18 11:27:58 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ t_camera	*init_camera(t_fdf *fdf)
 	camera->y_offset = 0;
 	if (fdf->map->z_range)
 		camera->z_divisor = fdf->map->z_range;
-	else if (fdf->map->z_max)
-		camera->z_divisor = fdf->map->z_max;
 	else
 		camera->z_divisor = 1;
 	return (camera);
@@ -66,6 +64,7 @@ void	init_fdf(t_map *map, t_fdf *fdf)
 			error("Error creating image\n"));
 	fdf->map = map;
 	fdf->camera = init_camera(fdf);
+	fdf->count = 0;
 }
 
 void	free_fdf(t_fdf *fdf)

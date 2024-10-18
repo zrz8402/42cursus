@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:44:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/16 15:17:28 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/18 10:09:36 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	default_color(t_map *map, int altitude)
 	if (map->z_range == 0)
 		percent = 0.f;
 	else
-		percent = (float)altitude / (map->z_range);
+		percent = (float)labs(altitude) / (map->z_range);
 	rgb = (255 * percent);
 	return (rgb << 16 | rgb << 8 | rgb);
 }
