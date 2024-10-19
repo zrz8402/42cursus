@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:02:01 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/19 20:22:29 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/19 21:36:37 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,9 @@ void	ft_error(char *message)
 {
 	ft_putstr_fd(message, 2);
 	exit(0);
+}
+
+int	isspace(char c)
+{
+	return (c == 32 || (c >= 9 && c <= 13));
 }
