@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   validate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 19:53:32 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/20 18:46:09 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/10/20 18:32:23 by ruzhang           #+#    #+#             */
+/*   Updated: 2024/10/20 18:33:07 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int ac, char **av)
+void	check_duplicates()
 {
-	if (ac < 2)
-		return (1);
-	t_cb stack_a;
-	stack_a = get_stack(++av);
-	free(stack_a.stack);
+	
 }
