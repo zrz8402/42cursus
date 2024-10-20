@@ -6,13 +6,13 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:46:26 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/19 19:53:55 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/20 15:57:50 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa()
+void	sa(void)
 {
-	
+	return ;	
 }

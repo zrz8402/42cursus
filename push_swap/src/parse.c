@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:20:55 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/19 22:09:29 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/20 16:06:33 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,66 @@
 
 int	stoi(char *s, t_error error)
 {
-	int	result;
-	int	sign;
-	int	tmp;
+	int			sign;
+	long int	result;
 
 	result = 0;
 	sign = 1;
-	while(isspace(*s))
-		s++;
 	if (*s == '+' || *s == '-')
 	{
 		if (*s == '-')
-			sign = -1;
+			sign *= -1;
 		s++;
 	}
-	while(*s)
+	while (ft_isdigit(*s))
 	{
-		if(!ft_isdigit(*s))
+		result = result * 10 + sign * (*s - '0');
+		if (result > INT_MAX || result < INT_MIN)
 		{
-			error = NOT_INT;
-			break ;
+			error = OUT_OF_BOUNDS;
+			return (0);
 		}
-		tmp = *s - '0';
-		if ((sign > 0 && result > (INT_MAX - tmp))
-			|| sign < 0 && -result < (INT_MIN + tmp))
-		{
-			error = OUT_OF_BOUND;
-			break ;
-		}
-		result = result * 10 + tmp;
+		s++;
 	}
-	return (result * sign);	
+	if (*s)
+		error = NOT_INT;
+	return ((int)result);
 }
 
-void	fill_stack(t_cb *cb, int ac, char **av)
+char	*join_str(char *s1, char *s2)
 {
-	while(++av)
+	char	*str;
+	char	*tmp;
+	int		len;
+
+	if (!s1 && !s2)
+		return (NULL);
+	len = ft_strlen(s1) + 1 + ft_strlen(s2) + 1;
+	str = malloc(len);
+	if (!str)
+		return (NULL);
+	tmp = str;
+	if (s1)
 	{
-		cb->stack[cb->count++] = ft_stoi(*av);
+		ft_memcpy(tmp, s1, ft_strlen(s1));
+		printf("(%s) (%s)\n", s1, tmp);
+		free(s1);
+		*tmp++ = ' ';
 	}
+	ft_strlcat(str, s2, len);
+	return (str);
+}
+
+void	fill_stack(char **av)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	while (*av)
+	{
+		tmp = join_str(tmp, *av);
+		printf("%s\n", tmp);
+		av++;
+	}
+	//printf("%s\n", tmp);
 }

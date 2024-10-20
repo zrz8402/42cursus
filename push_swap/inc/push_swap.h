@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/19 21:58:53 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/20 16:00:10 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
 
-#include "libft.h"
+# include "libft.h"
+// delte it later
+# include "stdio.h"
 
 typedef struct s_cb
 {
@@ -25,17 +27,22 @@ typedef struct s_cb
 	int	head;
 	int	tail;
 	int	count;
-} t_cb;
+}	t_cb;
 
-typedef enum	e_error
+typedef enum e_error
 {
 	SUCCESS,
 	NOT_INT,
-	OUT_OF_BOUND,
+	OUT_OF_BOUNDS,
 }	t_error;
 
+// parse.c
+int		stoi(char *s, t_error error);
+char	*join_str(char *s1, char *s2);
+void	fill_stack(char **av);
+
 void	init_stack(t_cb *cb, int size);
-void	ft_error(char *message);
-int	isspace(char c);
+void	ft_error(void);
+int		ft_isspace(char c);
 
 #endif

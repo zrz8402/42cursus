@@ -2,29 +2,40 @@ NAME = push_swap
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-RM = rm -f
+RM = rm -rf
 
-HEADER = -I ./inc
+SRC_PATH = ./src/
+INCLUDE_PATH = ./inc/
+LIBFT_PATH = ./lib/libft/
 
-SRC_DIR = ./src
-SRC = 
+HEADERS = -I $(INCLUDE_PATH) -I $(LIBFT_PATH)
 
-OBJS = $(addprefix $(SRC)/, $(SRC:.c=.o))
+CFILES = main.c parse.c
+SRCS = $(addprefix $(SRC_PATH), $(CFILES))
+
+OBJS = $(SRCS:.c=.o)
+
+LIBFT = $(LIBFT_PATH)libft.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(HEADER) $(OBJS) -o $(NAME)
+$(LIBFT):
+	@make -C $(LIBFT_PATH)
 
-%.o : %.c Makefile ./inc/push_swap.h
-	$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+$(NAME): $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) $(HEADERS) $(OBJS) $(LIBFT) -o $(NAME)
+
+%.o : $(SRC_PATH)%.c Makefile $(INCLUDE_PATH)push_swap.h
+	@echo "Compiling $< with headers: $(HEADERS)"
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
+	@make clean -C $(LIBFT_PATH)
 
-fclean:
-	clean
-	$(RM) $(NAME)
+fclean: clean
+	@$(RM) $(NAME)
+	@make fclean -C $(LIBFT_PATH)
 
 re: fclean all
 

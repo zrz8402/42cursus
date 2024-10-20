@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:02:01 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/19 21:36:37 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/20 15:57:13 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@ void	init_stack(t_cb *cb, int size)
 {
 	cb->stack = malloc(size * sizeof(int));
 	if (!cb->stack)
-		ft_error("Error\n");
+		ft_error();
 	cb->size = size;
 	cb->head = 0;
 	cb->tail = 0;
 	cb->count = 0;
 }
 
-void	ft_error(char *message)
+void	ft_error(void)
 {
-	ft_putstr_fd(message, 2);
+	ft_putstr_fd("Error\n", 2);
 	exit(0);
 }
 
-int	isspace(char c)
+int	ft_isspace(char c)
 {
 	return (c == 32 || (c >= 9 && c <= 13));
 }
