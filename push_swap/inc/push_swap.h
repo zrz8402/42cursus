@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/20 16:00:10 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/20 16:43:57 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # include "libft.h"
 // delte it later
-# include "stdio.h"
+# include <stdio.h>
 
 typedef struct s_cb
 {

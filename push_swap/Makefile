@@ -1,21 +1,21 @@
 NAME = push_swap
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
 RM = rm -rf
 
-SRC_PATH = ./src/
-INCLUDE_PATH = ./inc/
-LIBFT_PATH = ./lib/libft/
+SRC_PATH = ./src
+INCLUDE_PATH = ./inc
+LIBFT_PATH = ./lib/libft
 
 HEADERS = -I $(INCLUDE_PATH) -I $(LIBFT_PATH)
 
 CFILES = main.c parse.c
-SRCS = $(addprefix $(SRC_PATH), $(CFILES))
+SRCS = $(addprefix $(SRC_PATH)/, $(CFILES))
 
 OBJS = $(SRCS:.c=.o)
 
-LIBFT = $(LIBFT_PATH)libft.a
+LIBFT = $(LIBFT_PATH)/libft.a
 
 all: $(NAME)
 
@@ -25,8 +25,7 @@ $(LIBFT):
 $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(HEADERS) $(OBJS) $(LIBFT) -o $(NAME)
 
-%.o : $(SRC_PATH)%.c Makefile $(INCLUDE_PATH)push_swap.h
-	@echo "Compiling $< with headers: $(HEADERS)"
+%.o : %.c Makefile $(INCLUDE_PATH)/push_swap.h
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
