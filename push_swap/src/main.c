@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:53:32 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/20 18:46:09 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/21 17:30:29 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,7 @@ int	main(int ac, char **av)
 		return (1);
 	t_cb stack_a;
 	stack_a = get_stack(++av);
+	for (int i = 0; i < stack_a.size; i++)
+		printf("%d ", stack_a.stack[i]);
 	free(stack_a.stack);
 }

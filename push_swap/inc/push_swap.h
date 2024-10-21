@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/20 18:45:53 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:15:15 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ typedef struct s_cb
 	int	count;
 }	t_cb;
 
+typedef struct s_data
+{
+	t_cb	stack_a;
+	t_cb	stack_b;
+	t_list	ops;
+}	t_data;
+
 typedef enum e_error
 {
 	SUCCESS,
@@ -41,7 +48,9 @@ int		stoi(char *s, int *error);
 char	*join_str(char *s1, char *s2);
 char	**get_strs(char **av);
 t_cb	get_stack(char	**av);
-void	init_stack(t_cb *cb, int size);
+
+void	init_stack_a(t_cb *cb, int size);
+int	*transform(int *arr, int n);
 
 void	ft_error(void);
 int		ft_isspace(char c);

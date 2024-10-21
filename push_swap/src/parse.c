@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:20:55 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/20 18:46:54 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/21 17:39:22 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,7 @@ char	**get_strs(char **av)
 	return (strs);
 }
 
-void	init_stack(t_cb *cb, int size)
-{
-	cb->stack = malloc(size * sizeof(int));
-	if (!cb->stack)
-		cb->stack = NULL;
-	cb->size = size;
-	cb->head = 0;
-	cb->tail = 0;
-	cb->count = 0;
-}
-
-int	stoi(char *s, int *error)
+int	validate    (char *s, int *error)
 {
 	int			sign;
 	long int	result;
@@ -97,32 +86,4 @@ int	stoi(char *s, int *error)
 	if (*s)
 		*error = NOT_INT;
 	return ((int)result);
-}
-
-t_cb	get_stack(char	**av)
-{
-	char	**strs;
-	int		size;
-	t_cb	stack_a;
-	int		error;
-	int		i;
-
-	strs = get_strs(av);
-	size = array_size(strs);
-	init_stack(&stack_a, size);
-	if (!stack_a.stack)
-		return (free_arr(strs), ft_error(), stack_a);
-	i = 0;
-	while (strs[i])
-	{
-		error = SUCCESS;
-		stack_a.stack[i] = stoi(strs[i], &error);
-		if (error != SUCCESS)
-			return (free_arr(strs), free(stack_a.stack), ft_error(), stack_a);
-		stack_a.tail++;
-		stack_a.count++;
-		i++;
-	}
-	free_arr(strs);
-	return (stack_a);
 }

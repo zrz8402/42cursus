@@ -10,7 +10,7 @@ LIBFT_PATH = ./lib/libft
 
 HEADERS = -I $(INCLUDE_PATH) -I $(LIBFT_PATH)
 
-CFILES = main.c parse.c utils.c
+CFILES = main.c parse.c utils.c stack.c
 SRCS = $(addprefix $(SRC_PATH)/, $(CFILES))
 
 OBJS = $(SRCS:.c=.o)

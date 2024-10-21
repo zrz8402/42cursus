@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate.c                                         :+:      :+:    :+:   */
+/*   ops.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/20 18:32:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/20 18:33:07 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/10/19 19:46:26 by ruzhang           #+#    #+#             */
+/*   Updated: 2024/10/21 18:21:14 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	check_duplicates()
+void	swap(t_cb *cb)
 {
-	
+	int	tmp;
+
+	tmp = cb->stack[0];
+	cb->stack[0] = cb->stack[1];
+	cb->stack[1] = tmp;
+	return ;
 }
