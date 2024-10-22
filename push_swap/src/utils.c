@@ -18,16 +18,11 @@ void	ft_error(void)
 	exit(0);
 }
 
-int	ft_isspace(char c)
-{
-	return (c == 32 || (c >= 9 && c <= 13));
-}
-
 int	ft_isempty(char *s)
 {
 	while (*s)
 	{
-		if (!ft_isspace(*s))
+		if (!(*s == 32 || (*s >= 9 && *s <= 13)))
 			return (0);
 		s++;
 	}
@@ -52,4 +47,14 @@ void	free_arr(char **arr)
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
+}
+
+void	free_data(t_data *data)
+{
+	if (data->a.stack)
+		free(data->a.stack);
+	if (data->b.stack)
+		free(data->b.stack);
+	// if (data->ops)
+	// 	ft_lstclear(&data->ops, NULL);
 }

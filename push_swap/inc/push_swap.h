@@ -31,30 +31,41 @@ typedef struct s_cb
 
 typedef struct s_data
 {
-	t_cb	stack_a;
-	t_cb	stack_b;
-	t_list	ops;
+	t_cb	a;
+	t_cb	b;
+	t_list	*ops;
 }	t_data;
 
-typedef enum e_error
+typedef enum e_ops
 {
-	SUCCESS,
-	NOT_INT,
-	OUT_OF_BOUNDS,
-}	t_error;
+	sa,
+	sb,
+	ss,
+	pa,
+	pb,
+	ra,
+	rb,
+	rr,
+	rra,
+	rrb,
+	rrr
+}	t_ops;
 
 // parse.c
-int		stoi(char *s, int *error);
 char	*join_str(char *s1, char *s2);
 char	**get_strs(char **av);
-t_cb	get_stack(char	**av);
+int		is_valid(char *s);
+int		check_duplicates(int *arr, int size);
+int		*transform(int *arr, int n);
 
-void	init_stack_a(t_cb *cb, int size);
-int	*transform(int *arr, int n);
-
+// utils.c
 void	ft_error(void);
-int		ft_isspace(char c);
-int	ft_isempty(char *s);
-int	array_size(char **s);
+int		ft_isempty(char *s);
+int		array_size(char **s);
 void	free_arr(char **arr);
+void	free_data(t_data *data);
+
+// stack.c
+t_cb	get_stack_a(char **av);
+void	init_data(t_cb a, t_data *data);
 #endif

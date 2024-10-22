@@ -14,11 +14,13 @@
 
 int	main(int ac, char **av)
 {
+	t_cb	a;
+	t_data	data;
+
 	if (ac < 2)
 		return (1);
-	t_cb stack_a;
-	stack_a = get_stack(++av);
-	for (int i = 0; i < stack_a.size; i++)
-		printf("%d ", stack_a.stack[i]);
-	free(stack_a.stack);
+	a = get_stack_a(++av);
+	init_data(a, &data);
+	// sort(data);
+	// get_ops(data.ops);
 }

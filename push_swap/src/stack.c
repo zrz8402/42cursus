@@ -12,64 +12,48 @@
 
 #include "push_swap.h"
 
-void	init_stack(t_cb *cb, int size)
-{
-	cb->stack = malloc(size * sizeof(int));
-	if (!cb->stack)
-		cb->stack = NULL;
-	cb->size = size;
-	cb->head = 0;
-	cb->tail = 0;
-	cb->count = 0;
-}
-
-t_cb	get_stack(char	**av)
+t_cb	get_stack_a(char **av)
 {
 	char	**strs;
 	int		size;
-	t_cb	stack_a;
-	int		error;
+	t_cb	a;
 	int		i;
 
 	strs = get_strs(av);
-	size = array_size(strs);
-	init_stack(&stack_a, size);
-	if (!stack_a.stack)
-		return (free_arr(strs), ft_error(), stack_a);
+	a.size = array_size(strs);
+	a.stack = malloc(a.size * sizeof(int));
+	if (!a.stack)
+		return (free_arr(strs), ft_error(), a);
 	i = 0;
 	while (strs[i])
 	{
-		error = SUCCESS;
-		stack_a.stack[i] = stoi(strs[i], &error);
-		if (error != SUCCESS)
-			return (free_arr(strs), free(stack_a.stack), ft_error(), stack_a);
-		stack_a.tail++;
-		stack_a.count++;
+		if (!is_valid(strs[i]))
+			return (free_arr(strs), free(a.stack), ft_error(), a);
+		a.stack[i] = ft_atoi(strs[i]);
 		i++;
 	}
 	free_arr(strs);
-	stack_a.stack = transform(stack_a.stack, stack_a.size);
-	return (stack_a);
+	if (check_duplicates(a.stack, a.size))
+		return (free(a.stack), ft_error(), a);
+	a.stack = transform(a.stack, a.size);
+	a.head = 0;
+	a.tail = a.size - 1;
+	a.count = a.size;
+	return (a);
 }
 
-int	check_duplicates(int *arr, int size)
+void	init_data(t_cb a, t_data *data)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < size)
-	{
-		j = i + 1;
-		while (j < size)
-		{
-			if (arr[i] == arr[j])
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
+	data->a = a;
+	data->b.stack = malloc(a.size * sizeof(int));
+	if (!data->b.stack)
+		return (free(data->a.stack), ft_error());
+	ft_memset(data->b.stack, 0, a.size - 1);
+	data->b.size = a.size;
+	data->b.head = 0;
+	data->b.tail = 0;
+	data->b.count = 0;
+	data->ops = NULL;
 }
 
 int	check_sorted(int *arr, int n)
@@ -86,29 +70,4 @@ int	check_sorted(int *arr, int n)
 		i++;
 	}
 	return (1);
-}
-
-int	*transform(int *arr, int n)
-{
-	int	i;
-	int	j;
-	int	rank;
-	int	*nums;
-
-	i = 0;
-	nums = malloc(n * sizeof(int));
-	while (i < n)
-	{
-		j = 0;
-		rank = 0;
-		while (j < n)
-		{
-			if (arr[i] >= arr[j])
-				rank++;
-			j++;
-		}
-		nums[i] = rank;
-		i++;
-	}
-	return (nums);
 }

@@ -19,5 +19,16 @@ void	swap(t_cb *cb)
 	tmp = cb->stack[0];
 	cb->stack[0] = cb->stack[1];
 	cb->stack[1] = tmp;
-	return ;
+}
+
+void	sa(t_data *data)
+{
+	swap(&data->a);
+	add_op(data->ops, sa);
+}
+
+void	sb(t_data *data)
+{
+	swap(&data->b);
+	add_op(data->ops, sb);
 }

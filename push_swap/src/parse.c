@@ -45,7 +45,6 @@ char	**get_strs(char **av)
 {
 	char	*tmp;
 	char	**strs;
-	int		size;
 
 	tmp = NULL;
 	while (*av)
@@ -60,7 +59,7 @@ char	**get_strs(char **av)
 	return (strs);
 }
 
-int	validate    (char *s, int *error)
+int	is_valid(char *s)
 {
 	int			sign;
 	long int	result;
@@ -73,17 +72,62 @@ int	validate    (char *s, int *error)
 			sign *= -1;
 		s++;
 	}
-	while (ft_isdigit(*s))
+	while (*s)
 	{
+		if (!ft_isdigit(*s))
+			return (0);
 		result = result * 10 + sign * (*s - '0');
 		if (result > INT_MAX || result < INT_MIN)
-		{
-			*error = OUT_OF_BOUNDS;
 			return (0);
-		}
 		s++;
 	}
-	if (*s)
-		*error = NOT_INT;
-	return ((int)result);
+	return (1);
+}
+
+int	check_duplicates(int *arr, int size)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < size)
+	{
+		j = i + 1;
+		while (j < size)
+		{
+			if (arr[i] == arr[j])
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	*transform(int *arr, int n)
+{
+	int	i;
+	int	j;
+	int	rank;
+	int	*nums;
+
+	i = 0;
+	nums = malloc(n * sizeof(int));
+	if (!nums)
+		return (free(arr), ft_error(), nums);
+	while (i < n)
+	{
+		j = 0;
+		rank = 0;
+		while (j < n)
+		{
+			if (arr[i] >= arr[j])
+				rank++;
+			j++;
+		}
+		nums[i] = rank;
+		i++;
+	}
+	free(arr);
+	return (nums);
 }
