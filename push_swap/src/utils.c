@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:02:01 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/20 18:51:53 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/23 10:50:56 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ void	free_data(t_data *data)
 		free(data->a.stack);
 	if (data->b.stack)
 		free(data->b.stack);
-	// if (data->ops)
-	// 	ft_lstclear(&data->ops, NULL);
+	if (data->ops)
+		ft_lstclear(&data->ops, NULL);
 }

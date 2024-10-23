@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 18:32:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/21 17:35:14 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/23 19:16:38 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_cb	get_stack_a(char **av)
 	a.stack = transform(a.stack, a.size);
 	a.head = 0;
 	a.tail = a.size - 1;
-	a.count = a.size;
 	return (a);
 }
 
@@ -48,11 +47,10 @@ void	init_data(t_cb a, t_data *data)
 	data->b.stack = malloc(a.size * sizeof(int));
 	if (!data->b.stack)
 		return (free(data->a.stack), ft_error());
-	ft_memset(data->b.stack, 0, a.size - 1);
+	ft_memset(data->b.stack, 0, (a.size * sizeof(int)));
 	data->b.size = a.size;
 	data->b.head = 0;
 	data->b.tail = 0;
-	data->b.count = 0;
 	data->ops = NULL;
 }
 

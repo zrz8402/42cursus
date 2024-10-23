@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/21 18:15:15 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/23 17:36:55 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_cb
 	int	size;
 	int	head;
 	int	tail;
-	int	count;
 }	t_cb;
 
 typedef struct s_data
@@ -38,17 +37,17 @@ typedef struct s_data
 
 typedef enum e_ops
 {
-	sa,
-	sb,
-	ss,
-	pa,
-	pb,
-	ra,
-	rb,
-	rr,
-	rra,
-	rrb,
-	rrr
+	SA,
+	SB,
+	SS,
+	RA,
+	RB,
+	RR,
+	RRA,
+	RRB,
+	RRR,
+	PA,
+	PB
 }	t_ops;
 
 // parse.c
@@ -68,4 +67,22 @@ void	free_data(t_data *data);
 // stack.c
 t_cb	get_stack_a(char **av);
 void	init_data(t_cb a, t_data *data);
+
+// op_utils.c
+void	swap(int *x, int *y);
+int		is_full(t_cb *cb);
+void	add_op(t_list *list, int op);
+int	is_empty(t_cb *cb);
+
+void	sa(t_data *data);
+void	sb(t_data *data);
+void	ra(t_data *data);
+void	rb(t_data *data);
+void	rra(t_data *data);
+void	rrb(t_data *data);
+void	pa(t_data *data);
+void	pb(t_data *data);
+
+void	sort_three(t_data *data);
+void	sort_five(t_data *data);
 #endif

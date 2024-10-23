@@ -1,39 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   op_swap.c                                          :+:      :+:    :+:   */
+/*   op_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 19:46:26 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/23 16:03:08 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/10/23 14:52:14 by ruzhang           #+#    #+#             */
+/*   Updated: 2024/10/23 17:34:46 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	op_swap(t_cb *cb)
+void	swap(int *x, int *y)
 {
 	int	tmp;
-	int	*first;
-	int *second;
 
-	first = &cb->stack[cb->head];
-	second = &cb->stack[(cb->head + 1) % cb->size];
-
-	tmp = *first;
-	*first = *second;
-	*second = tmp;
+	tmp = *x;
+	*x = *y;
+	*y = tmp;
 }
 
-void	sa(t_data *data)
+int	is_full(t_cb *cb)
 {
-	op_swap(&data->a);
-	add_op(data->ops, SA);
+	if ((cb->tail + 1) % cb->size == cb->head)
+		return (1);
+	return (0);
 }
 
-void	sb(t_data *data)
+void	add_op(t_list *list, int op)
 {
-	op_swap(&data->b);
-	add_op(data->ops, SB);
+	return ;
+}
+
+int	is_empty(t_cb *cb)
+{
+	if (cb->head == cb->tail && cb->stack[cb->head] == 0)
+		return (0);
+	return (1);
 }

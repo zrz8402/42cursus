@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   op_swap.c                                          :+:      :+:    :+:   */
+/*   op_rotate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 19:46:26 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/23 16:03:08 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/10/23 13:03:27 by ruzhang           #+#    #+#             */
+/*   Updated: 2024/10/23 15:47:42 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	op_swap(t_cb *cb)
-{
-	int	tmp;
-	int	*first;
-	int *second;
-
-	first = &cb->stack[cb->head];
-	second = &cb->stack[(cb->head + 1) % cb->size];
-
-	tmp = *first;
-	*first = *second;
-	*second = tmp;
+void	rotate(t_cb *cb)
+{                                                                                                                            
+	cb->tail = (cb->tail + 1) % cb->size;
+	if (!is_full(cb))
+		swap(&cb->stack[cb->head], &cb->stack[cb->tail]);
+	cb->head = (cb->head + 1) % cb->size;
 }
 
-void	sa(t_data *data)
+void	ra(t_data *data)
 {
-	op_swap(&data->a);
-	add_op(data->ops, SA);
+	rotate(&data->a);
+	add_op(data->ops, RA);
 }
 
-void	sb(t_data *data)
+void	rb(t_data *data)
 {
-	op_swap(&data->b);
-	add_op(data->ops, SB);
+	rotate(&data->b);
+	add_op(data->ops, RB);
 }

@@ -27,7 +27,7 @@ BONUS_OBJS = $(BONUS_SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) bonus
 	@$(AR) $(NAME) $(OBJS)
 
 bonus: $(OBJS) $(BONUS_OBJS)
