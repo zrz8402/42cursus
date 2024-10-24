@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/23 17:36:55 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/24 12:23:24 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	free_data(t_data *data);
 // stack.c
 t_cb	get_stack_a(char **av);
 void	init_data(t_cb a, t_data *data);
+int	is_sorted(int *arr, int n);
 
 // op_utils.c
 void	swap(int *x, int *y);

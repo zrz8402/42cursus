@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 18:32:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/23 19:16:38 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/24 12:23:11 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	init_data(t_cb a, t_data *data)
 	data->ops = NULL;
 }
 
-int	check_sorted(int *arr, int n)
+int	is_sorted(int *arr, int n)
 {
 	int	i;
 
