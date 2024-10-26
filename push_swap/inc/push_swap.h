@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/24 12:23:24 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/26 20:00:52 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ typedef struct s_cb
 {
 	int	*stack;
 	int	size;
-	int	head;
-	int	tail;
+	int	start;
+	int	count;
 }	t_cb;
 
 typedef struct s_data

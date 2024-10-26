@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:03:54 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/24 12:47:47 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/26 20:18:13 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	r_rotate(t_cb *cb)
 {
-	if (!is_full(cb))
-		swap(&cb->stack[(cb->head - 1 + cb->size) % cb->size],
-			&cb->stack[cb->tail]);
-	cb->head = (cb->head - 1 + cb->size) % cb->size;
-	cb->tail = (cb->tail - 1 + cb->size) % cb->size;
+	if (cb->size != cb->count)
+		swap(&cb->stack[(cb->start - 1 + cb->size) % cb->size],
+			&cb->stack[(cb->start + cb->count - 1)  % cb->size]);
+	cb->start = (cb->start - 1 + cb->size) % cb->size;
 }
 
 void	rra(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:26:55 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/24 14:13:39 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/26 20:50:05 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	sort_three(t_data *data)
 	int	second;
 	int	third;
 
-	first = data->a.stack[(data->a.head) % data->a.size];
-	second = data->a.stack[(data->a.head + 1) % data->a.size];
-	third = data->a.stack[(data->a.head + 2) % data->a.size];
+	first = data->a.stack[(data->a.start) % data->a.size];
+	second = data->a.stack[(data->a.start + 1) % data->a.size];
+	third = data->a.stack[(data->a.start + 2) % data->a.size];
 	if (first < second && second < third) // 123
 		return ;
 	else if (first > second && second < third && first < third) //213
@@ -48,8 +48,8 @@ void	sort_five(t_data *data)
 	count = 0;
 	while (count < 2)
 	{
-		if (data->a.stack[data->a.head] == 1
-			|| data->a.stack[data->a.head] == 2)
+		if (data->a.stack[data->a.start] == 1
+			|| data->a.stack[data->a.start] == 2)
 		{
 			pb(data);
 			count++;
@@ -58,8 +58,8 @@ void	sort_five(t_data *data)
 			ra(data);
 	}
 	sort_three(data);
-	if (data->b.stack[data->b.head]
-		< data->b.stack[(data->b.head + 1) % data->b.size])
+	if (data->b.stack[data->b.start]
+		< data->b.stack[(data->b.start + 1) % data->b.size])
 		sb(data);
 	pa(data);
 	if (data->b.stack[0] < data->b.stack[1])
@@ -69,5 +69,30 @@ void	sort_five(t_data *data)
 
 void	sort(t_data *data)
 {
+	pb(data);
+	pb(data);
 	
+	int	pos_a;
+	int	pos_b;
+	int	*move;
+	move = malloc(data->a.count * sizeof(int));
+	// for (int i = 0; i < data->a.count; i++)
+	// {
+	// 	if (i <= data->a.count / 2)
+	// 		pos_a = i;
+	// 	else
+	// 		pos_a = count - i;
+		
+	// }
+}
+
+int	rank(int n, int *arr, int size)
+{
+	int rank;
+
+	rank = 0;
+	// for (int i = 0; i < size; i++)
+	// {
+	// 	if (n > arr[i])
+	// }
 }
