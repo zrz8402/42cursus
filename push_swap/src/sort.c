@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:26:55 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/26 20:50:05 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/26 21:01:34 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	sort_five(t_data *data)
 	pa(data);
 }
 
-void	sort(t_data *data)
+void	turk_sort(t_data *data)
 {
 	pb(data);
 	pb(data);
@@ -76,23 +76,23 @@ void	sort(t_data *data)
 	int	pos_b;
 	int	*move;
 	move = malloc(data->a.count * sizeof(int));
-	// for (int i = 0; i < data->a.count; i++)
-	// {
-	// 	if (i <= data->a.count / 2)
-	// 		pos_a = i;
-	// 	else
-	// 		pos_a = count - i;
-		
-	// }
+	for (int i = 0; i < data->a.count; i++)
+	{
+		if (i <= data->a.count / 2)
+			pos_a = i;
+		else
+			pos_a = data->a.count - i;
+		printf("(%d)", pos_a);
+	}
 }
 
-int	rank(int n, int *arr, int size)
-{
-	int rank;
+// int	rank(int n, int *arr, int size)
+// {
+// 	int rank;
 
-	rank = 0;
-	// for (int i = 0; i < size; i++)
-	// {
-	// 	if (n > arr[i])
-	// }
-}
+// 	rank = 0;
+// 	// for (int i = 0; i < size; i++)
+// 	// {
+// 	// 	if (n > arr[i])
+// 	// }
+// }

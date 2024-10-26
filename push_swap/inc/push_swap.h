@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/26 20:00:52 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/26 21:01:06 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ int	is_sorted(int *arr, int n);
 
 // op_utils.c
 void	swap(int *x, int *y);
-int		is_full(t_cb *cb);
 void	add_op(t_list *list, int op);
-int	is_empty(t_cb *cb);
 
 void	sa(t_data *data);
 void	sb(t_data *data);
@@ -86,4 +84,5 @@ void	pb(t_data *data);
 
 void	sort_three(t_data *data);
 void	sort_five(t_data *data);
+void	turk_sort(t_data *data);
 #endif
