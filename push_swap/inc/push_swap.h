@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/26 21:01:06 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/27 16:16:42 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ typedef struct s_data
 	t_list	*ops;
 }	t_data;
 
+typedef enum e_move
+{
+	RARB,
+	RARRB,
+	RRARB,
+	RRARRB
+}	t_move;
+
+
 typedef enum e_ops
 {
 	SA,
@@ -59,10 +68,10 @@ int		*transform(int *arr, int n);
 
 // utils.c
 void	ft_error(void);
-int		ft_isempty(char *s);
 int		array_size(char **s);
 void	free_arr(char **arr);
 void	free_data(t_data *data);
+int	ft_isempty(char *s);
 
 // stack.c
 t_cb	get_stack_a(char **av);
@@ -85,4 +94,9 @@ void	pb(t_data *data);
 void	sort_three(t_data *data);
 void	sort_five(t_data *data);
 void	turk_sort(t_data *data);
+
+
+int	*get_lis(int	*arr, int n);
+void	sortn(t_data *data);
+void	count_move(t_data *data);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 18:32:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/26 20:01:22 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/27 13:38:13 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_cb	get_stack_a(char **av)
 	free_arr(strs);
 	if (check_duplicates(a.stack, a.size))
 		return (free(a.stack), ft_error(), a);
+	a.stack = transform(a.stack, a.size);
 	a.start = 0;
 	a.count = a.size;
 	return (a);

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:26:55 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/26 21:01:34 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/27 11:40:49 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,45 @@ void	turk_sort(t_data *data)
 			pos_a = i;
 		else
 			pos_a = data->a.count - i;
+		move[i] = pos_a + pos_b;
 		printf("(%d)", pos_a);
 	}
 }
 
-// int	rank(int n, int *arr, int size)
+// int	get_pos_b(int n, t_cb cb)
 // {
-// 	int rank;
+// 	int step;
 
-// 	rank = 0;
-// 	// for (int i = 0; i < size; i++)
-// 	// {
-// 	// 	if (n > arr[i])
-// 	// }
+// 	step = 0;
+// 	if (n > cb.stack[cb.start]
+// 		&& n < cb.stack[(cb.start + cb.count) % cb.size])
+// 		step = 0;
+// 	else if (n > ft_max(cb) || n < ft_min(cb))
+	
 // }
+
+int	ft_max(t_cb cb)
+{
+	int	max;
+
+	max = cb.stack[cb.start];
+	while (cb.count--)
+	{
+		if (max < cb.stack[(cb.start + 1) % cb.size])
+			max = cb.stack[(cb.start + 1) % cb.size];
+	}
+	return (max);
+}
+
+int	ft_min(t_cb cb)
+{
+	int	min;
+
+	min = cb.stack[cb.start];
+	while (cb.count--)
+	{
+		if (min > cb.stack[(cb.start + 1) % cb.size])
+			min = cb.stack[(cb.start + 1) % cb.size];
+	}
+	return (min);
+}

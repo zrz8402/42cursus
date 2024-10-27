@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:29:16 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/26 20:21:29 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/27 14:11:37 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	pa(t_data *data)
 {
 	push(&data->b, &data->a);
 	add_op(data->ops, PA);
-	printf("%s\n", "PA");
+	//printf("%s\n", "PA");
 }
 
 void	pb(t_data *data)
 {
 	push(&data->a, &data->b);
 	add_op(data->ops, PB);
-	printf("%s\n", "PB");
+	//printf("%s\n", "PB");
 }
