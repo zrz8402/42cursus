@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   op_push.c                                          :+:      :+:    :+:   */
+/*   op_rrotate.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 14:29:16 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/29 17:45:00 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/10/23 13:03:54 by ruzhang           #+#    #+#             */
+/*   Updated: 2024/10/24 12:47:47 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push(t_cb *from, t_cb *to)
+void	r_rotate(t_cb *cb)
 {
-	to->start = (to->start - 1 + to->size) % to->size;
-	to->stack[to->start] = from->stack[from->start];
-	from->stack[from->start] = 0;
-	from->start = (from->start + 1) % from->size;
-	from->count--;
-	to->count++;
+	if (!is_full(cb))
+		swap(&cb->stack[(cb->head - 1 + cb->size) % cb->size],
+			&cb->stack[cb->tail]);
+	cb->head = (cb->head - 1 + cb->size) % cb->size;
+	cb->tail = (cb->tail - 1 + cb->size) % cb->size;
 }
 
-void	pa(t_data *data)
+void	rra(t_data *data)
 {
-	push(&data->b, &data->a);
-	add_op(data->ops, PA);
-	printf("%s\n", "pa");
+	r_rotate(&data->a);
+	add_op(data->ops, RRA);
+	printf("%s\n", "RRA");
 }
 
-void	pb(t_data *data)
+void	rrb(t_data *data)
 {
-	push(&data->a, &data->b);
-	add_op(data->ops, PB);
-	printf("%s\n", "pb");
+	r_rotate(&data->b);
+	add_op(data->ops, RRB);
+	printf("%s\n", "RRB");
 }

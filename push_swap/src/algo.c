@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 11:41:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/27 14:21:56 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/29 17:33:35 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ int	*get_indices(int *arr, int *lis, int *prev, int n)
         max_index = prev[max_index];
         i--;
     }
-	printf("\n(max len%d)\n", max_len);
-	print_array(indices, max_len);
 	return (indices);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 13:30:37 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/29 13:40:12 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/29 19:16:02 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,10 @@ void	sortn(t_data *data)
 		else
 			pb(data);
 	}
+
+	//count_move(data);
 	while (data->b.count > 0)
 {		count_move(data);
-	printf("\n---------a------------\n");
-	for (int i = 0; i < data->a.size; i++)
-	{
-		int n = (data->a.start + i) % data->a.size;
-		printf("%d ", data->a.stack[n]);
-	}
-	printf("\n----------b-----------\n");
-	for (int i = 0; i < data->b.size; i++)
-	{
-		int n = (data->b.start + i) % data->b.size;
-		printf("%d ", data->b.stack[n]);
-	}
-	printf("\n---------------------\n");
 	}
 }
 
@@ -60,8 +49,8 @@ int	ft_max(t_cb cb)
 	max = cb.stack[cb.start];
 	while (cb.count--)
 	{
-		if (max < cb.stack[(cb.start + 1) % cb.size])
-			max = cb.stack[(cb.start + 1) % cb.size];
+		if (max < cb.stack[(cb.start + cb.count) % cb.size])
+			max = cb.stack[(cb.start + cb.count) % cb.size];
 	}
 	return (max);
 }
@@ -73,8 +62,8 @@ int	ft_min(t_cb cb)
 	min = cb.stack[cb.start];
 	while (cb.count--)
 	{
-		if (min > cb.stack[(cb.start + 1) % cb.size])
-			min = cb.stack[(cb.start + 1) % cb.size];
+		if (min > cb.stack[(cb.start + cb.count) % cb.size])
+			min = cb.stack[(cb.start + cb.count) % cb.size];
 	}
 	return (min);
 }
@@ -83,21 +72,22 @@ int	get_pos_a(int n, t_cb cb)
 {
 	int	i;
 
-	i = 0;
-	if (n < cb.stack[cb.start] && n > cb.stack[(cb.start + cb.count - 1) % cb.size])
+	i = 1;
+	int first = cb.stack[cb.start];
+	int last = cb.stack[(cb.start + cb.count - 1) % cb.size];
+	if ((first > last && (n < first && n > last)) || (first < last && n < first))
 		i = 0;
+	else if (n < ft_min(cb) || n > ft_max(cb))
+	{
+		while (cb.stack[(cb.start + i - 1) % cb.size] < cb.stack[(cb.start + i) % cb.size])
+			i++;
+	}
 	else
 	{
-		while (n > cb.stack[(cb.start + i) % cb.size])
-		{
+		while (!(n > cb.stack[(cb.start + i - 1) % cb.size] && n < cb.stack[(cb.start + i) % cb.size]))
 			i++;
-			if (i > cb.count)
-				break ;
-		}
 	}
-	if (i > cb.count)
-		i = -1;
-	else if (i > cb.count / 2)
+	if (i > cb.count / 2)
 		i -= cb.count;
 	return (i);
 }
@@ -138,7 +128,6 @@ void	count_move(t_data *data)
 			moves[i].pos_b = i - data->b.count;
 		moves[i].pos_a = get_pos_a(data->b.stack[(data->b.start + i)
 				% data->b.size], data->a);
-		//printf("(%d %d)\n", moves[i].pos_a, moves[i].pos_b);
 		if (moves[i].pos_a >= 0 && moves[i].pos_b >= 0)
 		{
 			if (moves[i].pos_a > moves[i].pos_b)

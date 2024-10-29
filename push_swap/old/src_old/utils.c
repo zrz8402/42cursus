@@ -1,37 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   op_push.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 14:29:16 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/29 17:45:00 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/10/19 20:02:01 by ruzhang           #+#    #+#             */
+/*   Updated: 2024/10/26 18:51:05 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push(t_cb *from, t_cb *to)
+void	ft_error(void)
 {
-	to->start = (to->start - 1 + to->size) % to->size;
-	to->stack[to->start] = from->stack[from->start];
-	from->stack[from->start] = 0;
-	from->start = (from->start + 1) % from->size;
-	from->count--;
-	to->count++;
+	ft_putstr_fd("Error\n", 2);
+	exit(0);
 }
 
-void	pa(t_data *data)
+int	ft_isempty(char *s)
 {
-	push(&data->b, &data->a);
-	add_op(data->ops, PA);
-	printf("%s\n", "pa");
+	while (*s)
+	{
+		if (!(*s == 32 || (*s >= 9 && *s <= 13)))
+			return (0);
+		s++;
+	}
+	return (1);
 }
 
-void	pb(t_data *data)
+int	array_size(char **arr)
 {
-	push(&data->a, &data->b);
-	add_op(data->ops, PB);
-	printf("%s\n", "pb");
+	int	size;
+
+	size = 0;
+	while (*(arr++))
+		size++;
+	return (size);
+}
+
+void	free_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
 }
