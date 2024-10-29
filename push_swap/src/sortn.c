@@ -21,12 +21,6 @@ void	sortn(t_data *data)
 	indices = get_lis(data->a.stack, data->a.size);
 	for (int i = 0; i < data->a.size; i++)
 	{
-		// last_a = data->a.stack[(data->a.start + data->a.count - 1) % data->a.size];
-		// if (data->b.stack[data->b.start] > last_a && data->b.stack[data->b.start] < data->a.stack[indices[j]])
-		// {
-		// 	pa(data);
-		// 	ra(data);
-		// }
 		if (i == indices[j])
 		{
 			ra(data);
@@ -35,10 +29,24 @@ void	sortn(t_data *data)
 		else
 			pb(data);
 	}
-
 	//count_move(data);
 	while (data->b.count > 0)
-{		count_move(data);
+	{
+		// printf("\n---------a------------\n");
+		// for (int i = 0; i < data->a.size; i++)
+		// {
+		// 	//printf("%d ", data->a.stack[i]);
+		// 	int n = (data->a.start + i) % data->a.size;
+		// 	printf("%d ", data->a.stack[n]);
+		// }
+		// printf("\n---------b------------\n");
+		// for (int i = 0; i < data->a.size; i++)
+		// {
+		// 	//printf("%d ", data->a.stack[i]);
+		// 	int n = (data->b.start + i) % data->b.size;
+		// 	printf("%d ", data->b.stack[n]);
+		// }
+		count_move(data);
 	}
 }
 
@@ -106,7 +114,7 @@ int	min_move_index(t_move *moves, int size)
 		if (n > moves[i].min)
 		{
 			n = moves[i].min;
-			index++;
+			index = i;
 		}
 		i++;
 	}
@@ -115,8 +123,6 @@ int	min_move_index(t_move *moves, int size)
 
 void	count_move(t_data *data)
 {
-	int	pos_a;
-	int	pos_b;
 	t_move	*moves;
 
 	moves = malloc(data->b.count * sizeof(t_move));
@@ -128,6 +134,7 @@ void	count_move(t_data *data)
 			moves[i].pos_b = i - data->b.count;
 		moves[i].pos_a = get_pos_a(data->b.stack[(data->b.start + i)
 				% data->b.size], data->a);
+		//printf("(%d %d ", moves[i].pos_a, moves[i].pos_b);
 		if (moves[i].pos_a >= 0 && moves[i].pos_b >= 0)
 		{
 			if (moves[i].pos_a > moves[i].pos_b)
@@ -146,12 +153,13 @@ void	count_move(t_data *data)
 			moves[i].pos_b = -moves[i].pos_b;
 			moves[i].type = RRARRB;
 		}
-		else if (pos_a > 0 && moves[i].pos_b < 0)
+		else if (moves[i].pos_a >= 0 && moves[i].pos_b < 0)
 		{
 			if (moves[i].pos_a - moves[i].pos_b < moves[i].pos_b + data->b.count)
 			{
 				moves[i].min = moves[i].pos_a - moves[i].pos_b;
 				moves[i].pos_b = -moves[i].pos_b;
+				//printf("min %d ", moves[i].min);
 				moves[i].type = RARRB;
 			}
 			else
@@ -176,11 +184,11 @@ void	count_move(t_data *data)
 				moves[i].type = RARB;	
 			}
 		}
-		// printf("%d ", moves[i].min);
-		// printf("\n");
+		//printf("%d)\n", moves[i].min);
 	}
+	// printf("\n");
 	int i = min_move_index(moves, data->b.count);
-	//printf("%d", i);
+	//printf("%d\n", i);
 	move(i, moves, data);
 }
 
