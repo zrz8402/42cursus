@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 13:30:37 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/29 13:19:39 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/29 13:40:12 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,22 @@ void	sortn(t_data *data)
 		else
 			pb(data);
 	}
-	count_move(data);
+	while (data->b.count > 0)
+{		count_move(data);
+	printf("\n---------a------------\n");
+	for (int i = 0; i < data->a.size; i++)
+	{
+		int n = (data->a.start + i) % data->a.size;
+		printf("%d ", data->a.stack[n]);
+	}
+	printf("\n----------b-----------\n");
+	for (int i = 0; i < data->b.size; i++)
+	{
+		int n = (data->b.start + i) % data->b.size;
+		printf("%d ", data->b.stack[n]);
+	}
+	printf("\n---------------------\n");
+	}
 }
 
 int	ft_max(t_cb cb)
@@ -69,7 +84,7 @@ int	get_pos_a(int n, t_cb cb)
 	int	i;
 
 	i = 0;
-	if (n < cb.stack[cb.start])
+	if (n < cb.stack[cb.start] && n > cb.stack[(cb.start + cb.count - 1) % cb.size])
 		i = 0;
 	else
 	{
@@ -122,7 +137,8 @@ void	count_move(t_data *data)
 		else
 			moves[i].pos_b = i - data->b.count;
 		moves[i].pos_a = get_pos_a(data->b.stack[(data->b.start + i)
-				% data->b.size], data->a);	
+				% data->b.size], data->a);
+		//printf("(%d %d)\n", moves[i].pos_a, moves[i].pos_b);
 		if (moves[i].pos_a >= 0 && moves[i].pos_b >= 0)
 		{
 			if (moves[i].pos_a > moves[i].pos_b)
@@ -171,8 +187,11 @@ void	count_move(t_data *data)
 				moves[i].type = RARB;	
 			}
 		}
+		// printf("%d ", moves[i].min);
+		// printf("\n");
 	}
 	int i = min_move_index(moves, data->b.count);
+	//printf("%d", i);
 	move(i, moves, data);
 }
 
@@ -182,18 +201,19 @@ void	move(int i, t_move *moves, t_data *data)
 	int	m;
 
 	m = 0;
+	//printf("(%d %d)\n", moves[i].pos_a, moves[i].pos_b);
 	if (moves[i].type == RARB)
 	{
-		while (m < moves[i].pos_a && moves[i].pos_b)
+		while (m < moves[i].pos_a && m < moves[i].pos_b)
 		{
 			rr(data);
 			m++;
 		}
-		while (m < moves[i].pos_a || moves[i].pos_b)
+		while (m < moves[i].pos_a || m < moves[i].pos_b)
 		{
 			if (m < moves[i].pos_a)
 				ra(data);
-			if (m < moves[i].pos_a)
+			if (m < moves[i].pos_b)
 				rb(data);
 			m++;
 		}
@@ -201,16 +221,16 @@ void	move(int i, t_move *moves, t_data *data)
 	}
 	else if (moves[i].type == RRARRB)
 	{
-		while (m < moves[i].pos_a && moves[i].pos_b)
+		while (m < moves[i].pos_a && m < moves[i].pos_b)
 		{
 			rrr(data);
 			m++;
 		}
-		while (m < moves[i].pos_a || moves[i].pos_b)
+		while (m < moves[i].pos_a || m < moves[i].pos_b)
 		{
 			if (m < moves[i].pos_a)
 				rra(data);
-			if (m < moves[i].pos_a)
+			if (m < moves[i].pos_b)
 				rrb(data);
 			m++;
 		}
@@ -218,17 +238,17 @@ void	move(int i, t_move *moves, t_data *data)
 	}
 	else if (moves[i].type == RRARB)
 	{
-		while (m < moves[i].pos_a && moves[i].pos_b)
+		while (m < moves[i].pos_a && m < moves[i].pos_b)
 		{
 			rra(data);
 			rb(data);
 			m++;
 		}
-		while (m < moves[i].pos_a || moves[i].pos_b)
+		while (m < moves[i].pos_a || m < moves[i].pos_b)
 		{
 			if (m < moves[i].pos_a)
 				rra(data);
-			if (m < moves[i].pos_a)
+			if (m < moves[i].pos_b)
 				rb(data);
 			m++;
 		}
@@ -236,17 +256,17 @@ void	move(int i, t_move *moves, t_data *data)
 	}
 	else //if (moves[i].type == RARRB)
 	{
-		while (m < moves[i].pos_a && moves[i].pos_b)
+		while (m < moves[i].pos_a && m < moves[i].pos_b)
 		{
 			ra(data);
 			rrb(data);
 			m++;
 		}
-		while (m < moves[i].pos_a || moves[i].pos_b)
+		while (m < moves[i].pos_a || m < moves[i].pos_b)
 		{
 			if (m < moves[i].pos_a)
 				ra(data);
-			if (m < moves[i].pos_a)
+			if (m < moves[i].pos_b)
 				rrb(data);
 			m++;
 		}
