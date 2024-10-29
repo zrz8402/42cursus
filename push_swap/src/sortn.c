@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 13:30:37 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/27 16:21:29 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/29 13:19:39 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,26 +80,176 @@ int	get_pos_a(int n, t_cb cb)
 				break ;
 		}
 	}
-	if (i > cb.count / 2)
+	if (i > cb.count)
+		i = -1;
+	else if (i > cb.count / 2)
 		i -= cb.count;
 	return (i);
+}
+
+int	min_move_index(t_move *moves, int size)
+{
+	int	i;
+	int	n;
+	int	index;
+
+	i = 0;
+	n = moves[i].min;
+	index = 0;
+	while (i < size)
+	{
+		if (n > moves[i].min)
+		{
+			n = moves[i].min;
+			index++;
+		}
+		i++;
+	}
+	return (index);
 }
 
 void	count_move(t_data *data)
 {
 	int	pos_a;
 	int	pos_b;
-	int	*move;
+	t_move	*moves;
 
-	move = malloc(data->b.count * sizeof(int));
+	moves = malloc(data->b.count * sizeof(t_move));
 	for (int i = 0; i < data->b.count; i++)
 	{
 		if (i <= data->b.count / 2)
-			pos_b = i;
+			moves[i].pos_b = i;
 		else
-			pos_b = i - data->b.count;
-		pos_a = get_pos_a(data->b.stack[(data->b.start + i) % data->b.size], data->a);
-		move[i] = pos_a + pos_b;
-		printf("(%d %d)\n", pos_b, pos_a);
+			moves[i].pos_b = i - data->b.count;
+		moves[i].pos_a = get_pos_a(data->b.stack[(data->b.start + i)
+				% data->b.size], data->a);	
+		if (moves[i].pos_a >= 0 && moves[i].pos_b >= 0)
+		{
+			if (moves[i].pos_a > moves[i].pos_b)
+				moves[i].min = moves[i].pos_a;
+			else
+				moves[i].min = moves[i].pos_b;
+			moves[i].type = RARB;
+		}
+		else if (moves[i].pos_a < 0 && moves[i].pos_b < 0)
+		{
+			if (moves[i].pos_a > moves[i].pos_b)
+				moves[i].min = -moves[i].pos_b;
+			else
+				moves[i].min = -moves[i].pos_a;
+			moves[i].pos_a = -moves[i].pos_a;
+			moves[i].pos_b = -moves[i].pos_b;
+			moves[i].type = RRARRB;
+		}
+		else if (pos_a > 0 && moves[i].pos_b < 0)
+		{
+			if (moves[i].pos_a - moves[i].pos_b < moves[i].pos_b + data->b.count)
+			{
+				moves[i].min = moves[i].pos_a - moves[i].pos_b;
+				moves[i].pos_b = -moves[i].pos_b;
+				moves[i].type = RARRB;
+			}
+			else
+			{
+				moves[i].pos_b = moves[i].pos_b + data->b.count;
+				moves[i].min = moves[i].pos_b;
+				moves[i].type = RARB;	
+			}
+		}
+		else
+		{
+			if (moves[i].pos_b - moves[i].pos_a < moves[i].pos_a + data->a.count)
+			{
+				moves[i].min = moves[i].pos_b - moves[i].pos_a;
+				moves[i].pos_a = -moves[i].pos_a;
+				moves[i].type = RRARB;
+			}
+			else
+			{
+				moves[i].pos_a = moves[i].pos_a + data->a.count;
+				moves[i].min = moves[i].pos_a;
+				moves[i].type = RARB;	
+			}
+		}
+	}
+	int i = min_move_index(moves, data->b.count);
+	move(i, moves, data);
+}
+
+
+void	move(int i, t_move *moves, t_data *data)
+{
+	int	m;
+
+	m = 0;
+	if (moves[i].type == RARB)
+	{
+		while (m < moves[i].pos_a && moves[i].pos_b)
+		{
+			rr(data);
+			m++;
+		}
+		while (m < moves[i].pos_a || moves[i].pos_b)
+		{
+			if (m < moves[i].pos_a)
+				ra(data);
+			if (m < moves[i].pos_a)
+				rb(data);
+			m++;
+		}
+		pa(data);
+	}
+	else if (moves[i].type == RRARRB)
+	{
+		while (m < moves[i].pos_a && moves[i].pos_b)
+		{
+			rrr(data);
+			m++;
+		}
+		while (m < moves[i].pos_a || moves[i].pos_b)
+		{
+			if (m < moves[i].pos_a)
+				rra(data);
+			if (m < moves[i].pos_a)
+				rrb(data);
+			m++;
+		}
+		pa(data);
+	}
+	else if (moves[i].type == RRARB)
+	{
+		while (m < moves[i].pos_a && moves[i].pos_b)
+		{
+			rra(data);
+			rb(data);
+			m++;
+		}
+		while (m < moves[i].pos_a || moves[i].pos_b)
+		{
+			if (m < moves[i].pos_a)
+				rra(data);
+			if (m < moves[i].pos_a)
+				rb(data);
+			m++;
+		}
+		pa(data);
+	}
+	else //if (moves[i].type == RARRB)
+	{
+		while (m < moves[i].pos_a && moves[i].pos_b)
+		{
+			ra(data);
+			rrb(data);
+			m++;
+		}
+		while (m < moves[i].pos_a || moves[i].pos_b)
+		{
+			if (m < moves[i].pos_a)
+				ra(data);
+			if (m < moves[i].pos_a)
+				rrb(data);
+			m++;
+		}
+		pa(data);
 	}
 }

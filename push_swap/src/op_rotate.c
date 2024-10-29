@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:03:27 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/27 14:11:46 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/29 12:45:02 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,12 @@ void	rb(t_data *data)
 	rotate(&data->b);
 	add_op(data->ops, RB);
 	//printf("%s\n", "RB");
+}
+
+void	rr(t_data *data)
+{
+	rotate(&data->a);
+	rotate(&data->b);
+	add_op(data->ops, RR);
+	//printf("%s\n", "RRR");
 }
