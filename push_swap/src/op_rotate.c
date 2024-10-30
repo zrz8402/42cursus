@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:03:27 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/29 17:45:12 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/30 12:21:35 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,28 @@
 
 void	rotate(t_cb *cb)
 {
-	if (cb->size != cb->count)
-		swap(&cb->stack[cb->start], &cb->stack[(cb->start + cb->count) % cb->size]);
-	cb->start = (cb->start + 1) % cb->size;
+	int	tmp;
+	int	i;
+
+	tmp = cb->stack[0];
+	i = 1;
+	while (i < cb->count)
+	{
+		cb->stack[i - 1] = cb->stack[i];
+		i++;
+	}
+	cb->stack[cb->count - 1] = tmp;
 }
 
 void	ra(t_data *data)
 {
 	rotate(&data->a);
-	add_op(data->ops, RA);
 	printf("%s\n", "ra");
 }
 
 void	rb(t_data *data)
 {
 	rotate(&data->b);
-	add_op(data->ops, RB);
 	printf("%s\n", "rb");
 }
 
@@ -37,6 +43,5 @@ void	rr(t_data *data)
 {
 	rotate(&data->a);
 	rotate(&data->b);
-	add_op(data->ops, RR);
-	printf("%s\n", "rrr");
+	printf("%s\n", "rr");
 }

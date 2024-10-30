@@ -6,43 +6,36 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:46:26 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/29 17:45:43 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/30 12:19:48 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	op_swap(t_cb *cb)
+void	swap(int *x, int *y)
 {
 	int	tmp;
-	int	*first;
-	int	*second;
 
-	first = &cb->stack[cb->start];
-	second = &cb->stack[(cb->start + 1) % cb->size];
-	tmp = *first;
-	*first = *second;
-	*second = tmp;
+	tmp = *x;
+	*x = *y;
+	*y = tmp;
 }
 
 void	sa(t_data *data)
 {
-	op_swap(&data->a);
-	add_op(data->ops, SA);
+	swap(&data->a.stack[0], &data->a.stack[1]);
 	printf("%s\n", "sa");
 }
 
 void	sb(t_data *data)
 {
-	op_swap(&data->b);
-	add_op(data->ops, SB);
+	swap(&data->b.stack[0], &data->b.stack[1]);
 	printf("%s\n", "sb");
 }
 
 void	ss(t_data *data)
 {
-	op_swap(&data->a);
-	op_swap(&data->b);
-	add_op(data->ops, SS);
+	swap(&data->a.stack[0], &data->a.stack[1]);
+	swap(&data->b.stack[0], &data->b.stack[1]);
 	printf("%s\n", "ss");
 }

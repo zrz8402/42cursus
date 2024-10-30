@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:03:54 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/29 17:45:28 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/30 12:21:42 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,28 @@
 
 void	r_rotate(t_cb *cb)
 {
-	if (cb->size != cb->count)
-		swap(&cb->stack[(cb->start - 1 + cb->size) % cb->size],
-			&cb->stack[(cb->start + cb->count - 1)  % cb->size]);
-	cb->start = (cb->start - 1 + cb->size) % cb->size;
+	int	tmp;
+	int	i;
+
+	tmp = cb->stack[cb->count - 1];
+	i = cb->count - 1;
+	while (i > 0)
+	{
+		cb->stack[i] = cb->stack[i - 1];
+		i--;
+	}
+	cb->stack[0] = tmp;
 }
 
 void	rra(t_data *data)
 {
 	r_rotate(&data->a);
-	add_op(data->ops, RRA);
 	printf("%s\n", "rra");
 }
 
 void	rrb(t_data *data)
 {
 	r_rotate(&data->b);
-	add_op(data->ops, RRB);
 	printf("%s\n", "rrb");
 }
 
@@ -38,6 +43,5 @@ void	rrr(t_data *data)
 {
 	r_rotate(&data->a);
 	r_rotate(&data->b);
-	add_op(data->ops, RRR);
-	printf("%s\n", "rrb");
+	printf("%s\n", "rrr");
 }

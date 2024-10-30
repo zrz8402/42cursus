@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 18:32:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/27 13:38:13 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/30 12:25:47 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_cb	get_stack_a(char **av)
 	if (check_duplicates(a.stack, a.size))
 		return (free(a.stack), ft_error(), a);
 	a.stack = transform(a.stack, a.size);
-	a.start = 0;
 	a.count = a.size;
 	return (a);
 }
@@ -49,7 +48,6 @@ void	init_data(t_cb a, t_data *data)
 		return (free(data->a.stack), ft_error());
 	ft_memset(data->b.stack, 0, (a.size * sizeof(int)));
 	data->b.size = a.size;
-	data->b.start = 0;
 	data->b.count = 0;
 	data->ops = NULL;
 }

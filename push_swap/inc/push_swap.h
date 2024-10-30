@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/29 13:15:47 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/30 11:59:33 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_cb
 {
 	int	*stack;
 	int	size;
-	int	start;
 	int	count;
 }	t_cb;
 
@@ -51,22 +50,6 @@ typedef enum e_type
 	RRARRB
 }	t_type;
 
-
-typedef enum e_ops
-{
-	SA,
-	SB,
-	SS,
-	RA,
-	RB,
-	RR,
-	RRA,
-	RRB,
-	RRR,
-	PA,
-	PB
-}	t_ops;
-
 // parse.c
 char	*join_str(char *s1, char *s2);
 char	**get_strs(char **av);
@@ -88,8 +71,6 @@ int	is_sorted(int *arr, int n);
 
 // op_utils.c
 void	swap(int *x, int *y);
-void	add_op(t_list *list, int op);
-
 void	sa(t_data *data);
 void	sb(t_data *data);
 void	ss(t_data *data);
@@ -111,7 +92,7 @@ void	turk_sort(t_data *data);
 
 
 int	*get_lis(int	*arr, int n);
-void	sortn(t_data *data);
 void	count_move(t_data *data);
 void	move(int i, t_move *moves, t_data *data);
+void	sortn(t_data *data);
 #endif
