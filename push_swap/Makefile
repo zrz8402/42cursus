@@ -10,7 +10,8 @@ LIBFT_PATH = ./lib/libft
 
 HEADERS = -I $(INCLUDE_PATH) -I $(LIBFT_PATH)
 
-CFILES = main.c parse.c utils.c stack.c sortn.c algo.c \
+CFILES = main.c parse.c stack.c utils.c sort.c \
+		sortn.c lis.c sortn_utils.c move.c\
 		op_swap.c op_rotate.c op_rrotate.c op_push.c
 
 SRCS = $(addprefix $(SRC_PATH)/, $(CFILES))

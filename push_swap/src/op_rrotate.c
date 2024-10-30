@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:03:54 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/30 12:21:42 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/30 15:29:18 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ void	r_rotate(t_cb *cb)
 void	rra(t_data *data)
 {
 	r_rotate(&data->a);
-	printf("%s\n", "rra");
+	ft_putstr_fd("rra\n", 1);
 }
 
 void	rrb(t_data *data)
 {
 	r_rotate(&data->b);
-	printf("%s\n", "rrb");
+	ft_putstr_fd("rrb\n", 1);
 }
 
 void	rrr(t_data *data)
 {
 	r_rotate(&data->a);
 	r_rotate(&data->b);
-	printf("%s\n", "rrr");
+	ft_putstr_fd("rrr\n", 1);
 }

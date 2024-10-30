@@ -6,11 +6,22 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:20:55 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/23 12:27:20 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/30 15:39:40 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	ft_isempty(char *s)
+{
+	while (*s)
+	{
+		if (!(*s == 32 || (*s >= 9 && *s <= 13)))
+			return (0);
+		s++;
+	}
+	return (1);
+}
 
 char	*join_str(char *s1, char *s2)
 {
@@ -102,32 +113,4 @@ int	check_duplicates(int *arr, int size)
 		i++;
 	}
 	return (0);
-}
-
-int	*transform(int *arr, int n)
-{
-	int	i;
-	int	j;
-	int	rank;
-	int	*nums;
-
-	i = 0;
-	nums = malloc(n * sizeof(int));
-	if (!nums)
-		return (free(arr), ft_error(), nums);
-	while (i < n)
-	{
-		j = 0;
-		rank = 0;
-		while (j < n)
-		{
-			if (arr[i] >= arr[j])
-				rank++;
-			j++;
-		}
-		nums[i] = rank;
-		i++;
-	}
-	free(arr);
-	return (nums);
 }

@@ -6,16 +6,53 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 18:32:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/30 12:25:47 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/30 17:35:18 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+int	array_size(char **arr)
+{
+	int	size;
+
+	size = 0;
+	while (*(arr++))
+		size++;
+	return (size);
+}
+
+int	*transform(int *arr, int n)
+{
+	int	i;
+	int	j;
+	int	rank;
+	int	*nums;
+
+	i = 0;
+	nums = malloc(n * sizeof(int));
+	if (!nums)
+		return (free(arr), ft_error(), nums);
+	while (i < n)
+	{
+		j = 0;
+		rank = 0;
+		while (j < n)
+		{
+			if (arr[i] >= arr[j])
+				rank++;
+			j++;
+		}
+		nums[i] = rank;
+		i++;
+	}
+	free(arr);
+	return (nums);
+}
+
 t_cb	get_stack_a(char **av)
 {
 	char	**strs;
-	int		size;
 	t_cb	a;
 	int		i;
 
@@ -49,21 +86,12 @@ void	init_data(t_cb a, t_data *data)
 	ft_memset(data->b.stack, 0, (a.size * sizeof(int)));
 	data->b.size = a.size;
 	data->b.count = 0;
-	data->ops = NULL;
 }
 
-int	is_sorted(int *arr, int n)
-{
-	int	i;
-
-	if (n == 0 || n == 1)
-		return (1);
-	i = 1;
-	while (i < n)
-	{
-		if (arr[i - 1] > arr[i])
-			return (0);
-		i++;
-	}
-	return (1);
-}
+// void	free_data(t_data *data)
+// {
+// 	if (data->a.stack)
+// 		free(data->a.stack);
+// 	if (data->b.stack)
+// 		free(data->b.stack);
+// }
