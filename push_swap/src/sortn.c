@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 13:30:37 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/30 14:50:30 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/30 14:55:20 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,34 +172,17 @@ void	count_move(t_data *data)
 		}
 		else if (moves[i].pos_a >= 0 && moves[i].pos_b <= 0)
 		{
-			if (moves[i].pos_a - moves[i].pos_b < moves[i].pos_b + data->b.count)
-			{
 				moves[i].min = moves[i].pos_a - moves[i].pos_b;
 				moves[i].pos_b = -moves[i].pos_b;
 				//printf("min %d ", moves[i].min);
 				moves[i].type = RARRB;
-			}
-			else
-			{
-				moves[i].pos_b = moves[i].pos_b + data->b.count;
-				moves[i].min = moves[i].pos_b;
-				moves[i].type = RARB;	
-			}
 		}
 		else
 		{
-			if (moves[i].pos_b - moves[i].pos_a < moves[i].pos_a + data->a.count)
-			{
 				moves[i].min = moves[i].pos_b - moves[i].pos_a;
 				moves[i].pos_a = -moves[i].pos_a;
 				moves[i].type = RRARB;
-			}
-			else
-			{
-				moves[i].pos_a = moves[i].pos_a + data->a.count;
-				moves[i].min = moves[i].pos_a;
-				moves[i].type = RARB;	
-			}
+			
 		}
 		//printf("%d)\n", moves[i].min);
 	}
