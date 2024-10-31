@@ -27,7 +27,7 @@ BONUS_OBJS = $(BONUS_SRC:.c=.o)
 
 LIBFT = $(LIBFT_PATH)/libft.a
 
-all: $(NAME) $(BONUS)
+all: $(NAME)
 
 bonus: $(BONUS)
 
