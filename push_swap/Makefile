@@ -2,7 +2,7 @@ NAME = push_swap
 BONUS = checker
 
 CC = cc
-CFLAGS = 
+CFLAGS =
 RM = rm -rf
 
 SRC_PATH = ./src

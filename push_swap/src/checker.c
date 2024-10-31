@@ -6,11 +6,21 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 09:37:46 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/31 11:49:08 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/31 20:39:16 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
+
+void	ferror(t_data *data, char *arr)
+{
+	if (arr)
+		free(arr);
+	if (data)
+		free_data(data);
+	ft_putstr_fd("Error\n", 2);
+	exit(0);
+}
 
 void	process_op(char *op, t_data *data)
 {
@@ -37,19 +47,17 @@ void	process_op(char *op, t_data *data)
 	else if (!ft_strncmp(op, "pb\n", 3))
 		pb(data);
 	else
-		(free_data(data), free(op), ft_error());
+		ferror(data, op);
 }
 
 int	main(int ac, char **av)
 {
 	t_data	data;
-	t_cb	a;
 	char	*op;
 
 	if (ac < 2)
 		return (1);
-	a = get_stack_a(++av);
-	init_data(a, &data);
+	init_data(av, &data);
 	data.write = 0;
 	op = get_next_line(0);
 	while (op)

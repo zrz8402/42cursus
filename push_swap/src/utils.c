@@ -6,16 +6,23 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:02:01 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/30 17:09:53 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/31 20:41:45 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_error(void)
+void	ft_error(t_data *data)
 {
+	free_data(data);
 	ft_putstr_fd("Error\n", 2);
 	exit(0);
+}
+
+void	f_error(t_data *data, char **arr)
+{
+	free_arr(arr);
+	ft_error(data);
 }
 
 void	free_arr(char **arr)

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/31 10:54:36 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/31 20:42:26 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,24 @@ typedef struct s_move
 
 // parse.c
 char	*join_str(char *s1, char *s2);
-char	**get_strs(char **av);
+char	**get_strs(char **av, t_data *data);
 int		is_valid(char *s);
 int		check_duplicates(int *arr, int size);
 
 // stack.c
-int		*transform(int *arr, int n);
-t_cb	get_stack_a(char **av);
-void	init_data(t_cb a, t_data *data);
+int		*transform(t_data *data, int *arr);
+t_cb	get_stack_a(char **av, t_data *data);
+void	init_data(char **av, t_data *data);
 
 // utils.c
-void	ft_error(void);
+void	ft_error(t_data *data);
+void	f_error(t_data *data, char **arr);
 void	free_arr(char **arr);
 void	free_data(t_data *data);
 
 // sort.c
 int		is_sorted(int *arr, int n);
+void	sort_two(t_data *data);
 void	sort_three(t_data *data);
 void	sort_five(t_data *data);
 
@@ -66,7 +68,7 @@ void	ft_move_to_a(t_data *data);
 void	sortn(t_data *data);
 
 // lis.c
-int		*get_lis(t_data *data, int n);
+int		*get_lis(t_data *data, int *len);
 
 // sortn_utils.c
 int		get_pos_a(int n, t_cb cb);

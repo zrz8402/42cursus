@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 11:41:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/30 17:20:55 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/31 19:36:29 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,52 +50,58 @@ void	get_max(int *lis, int n, int *max_len, int *max_index)
 	}
 }
 
-int	*get_indices(t_data *data, int *lis, int *prev, int n)
+int	*get_indices(t_data *data, int *lis, int *prev, int *len)
 {
 	int	i;
-	int	max_len;
 	int	max_index;
 	int	*indices;
 
-	max_len = 1;
+	*len = 1;
 	max_index = 0;
-	get_max(lis, n, &max_len, &max_index);
-	indices = (int *)malloc(max_len * sizeof(int));
+	get_max(lis, data->a.size, len, &max_index);
+	indices = (int *)malloc(*len * sizeof(int));
 	if (!indices)
-		return (free_data(data), free(lis), free(prev), ft_error(), indices);
-	i = max_len - 1;
+	{
+		free(lis);
+		free(prev);
+		ft_error(data);
+	}
+	i = *len - 1;
 	while (max_index != -1)
 	{
 		indices[i] = max_index;
 		max_index = prev[max_index];
 		i--;
 	}
+	free(lis);
+	free(prev);
 	return (indices);
 }
 
-int	*get_lis(t_data *data, int n)
+int	*get_lis(t_data *data, int *len)
 {
 	int	*lis;
 	int	*prev;
 	int	*indices;
 	int	i;
 
-	lis = (int *)malloc(n * sizeof(int));
+	lis = (int *)malloc(data->a.size * sizeof(int));
 	if (!lis)
-		return (free_data(data), ft_error(), NULL);
-	prev = (int *)malloc(n * sizeof(int));
+		ft_error(data);
+	prev = (int *)malloc(data->a.size * sizeof(int));
 	if (!prev)
-		return (free_data(data), free(lis), ft_error(), NULL);
+	{
+		free(lis);
+		ft_error(data);
+	}
 	i = 0;
-	while (i < n)
+	while (i < data->a.size)
 	{
 		lis[i] = 1;
 		prev[i] = -1;
 		i++;
 	}
-	build_lis(data->a.stack, lis, prev, n);
-	indices = get_indices(data, lis, prev, n);
-	free(lis);
-	free(prev);
+	build_lis(data->a.stack, lis, prev, data->a.size);
+	indices = get_indices(data, lis, prev, len);
 	return (indices);
 }

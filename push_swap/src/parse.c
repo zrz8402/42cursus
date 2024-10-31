@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:20:55 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/30 15:39:40 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/31 20:18:57 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*join_str(char *s1, char *s2)
 	return (str);
 }
 
-char	**get_strs(char **av)
+char	**get_strs(char **av, t_data *data)
 {
 	char	*tmp;
 	char	**strs;
@@ -61,7 +61,10 @@ char	**get_strs(char **av)
 	while (*av)
 	{
 		if (ft_isempty(*av))
-			return (free(tmp), ft_error(), NULL);
+		{
+			free(tmp);
+			ft_error(data);
+		}
 		tmp = join_str(tmp, *av);
 		av++;
 	}
@@ -83,6 +86,8 @@ int	is_valid(char *s)
 			sign *= -1;
 		s++;
 	}
+	if (!*s || !ft_isdigit(*s))
+		return (0);
 	while (*s)
 	{
 		if (!ft_isdigit(*s))

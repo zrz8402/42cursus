@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 13:30:37 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/30 18:31:41 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/31 19:35:25 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 
 void	ft_move_to_b(t_data *data)
 {
-	int	*indices;
 	int	i;
 	int	j;
+	int	*indices;
+	int	len;
 
-	indices = get_lis(data, data->a.size);
+	indices = get_lis(data, &len);
 	i = 0;
 	j = 0;
 	while (i < data->a.size)
 	{
-		if (i == indices[j])
+		if (j < len && i == indices[j])
 		{
 			ra(data);
 			j++;
@@ -42,7 +43,7 @@ void	ft_move_to_a(t_data *data)
 
 	moves = malloc(data->b.count * sizeof(t_move));
 	if (!moves)
-		return (free_data(data), ft_error());
+		ft_error(data);
 	i = 0;
 	while (i < data->b.count)
 	{
