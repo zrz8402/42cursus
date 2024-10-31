@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:29:16 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/30 15:28:27 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/31 11:43:00 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,18 @@ void	push(t_cb *from, t_cb *to)
 
 void	pa(t_data *data)
 {
+	if (!data->b.count)
+		return ;
 	push(&data->b, &data->a);
-	ft_putstr_fd("pa\n", 1);
+	if (data->write)
+		ft_putstr_fd("pa\n", 1);
 }
 
 void	pb(t_data *data)
 {
+	if (!data->a.count)
+		return ;
 	push(&data->a, &data->b);
-	ft_putstr_fd("pb\n", 1);
+	if (data->write)
+		ft_putstr_fd("pb\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/30 18:41:21 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/10/31 10:54:36 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_data
 {
 	t_cb	a;
 	t_cb	b;
+	int		write;
 }	t_data;
 
 typedef struct s_move
