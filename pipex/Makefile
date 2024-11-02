@@ -30,7 +30,7 @@ clean:
 	@make clean -C $(LIBFT)
 
 fclean: clean
-	$(RM) $(OBJS)
+	$(RM) $(NAME)
 	@make fclean -C $(LIBFT)
 
 re: fclean all
