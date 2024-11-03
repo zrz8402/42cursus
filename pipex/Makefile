@@ -10,7 +10,7 @@ LIBFT_A = $(LIBFT)/libft.a
 
 HEADERS = -I . -I $(LIBFT)
 
-SRCS = pipex.c
+SRCS = src/pipex.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -30,7 +30,7 @@ clean:
 	@make clean -C $(LIBFT)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 	@make fclean -C $(LIBFT)
 
 re: fclean all

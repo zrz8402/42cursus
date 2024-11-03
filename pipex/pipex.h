@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:33:04 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/02 17:06:57 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/03 13:45:31 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include "libft.h"
 
 #endif

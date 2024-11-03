@@ -1,1 +1,8 @@
-0
+examples
+in
+lib
+Makefile
+out
+pipex
+pipex.h
+src
