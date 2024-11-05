@@ -11,30 +11,10 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-extern char **environ;
 
 char	*parse_cmd(char *cmd)
 {
 	return (cmd);
-}
-
-void	ft_error(char *message)
-{
-	perror(message);
-	exit(1);
-}
-
-void	free_arr(char **s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		free(s[i]);
-		i++;
-	}
-	free(s);
 }
 
 void	first_child_process(char **av, int pipefd[2])
@@ -43,21 +23,22 @@ void	first_child_process(char **av, int pipefd[2])
 	char	**args;
 	char	*path;
 
-	input_fd = open(*av, O_RDONLY);
+	input_fd = open(av[1], O_RDONLY);
 	if (input_fd < 0)
-		ft_error("Error opening file");
+	{
+		perror("Error opening file");
+		exit(1);
+	}
 	close(pipefd[0]);
-	if (dup2(input_fd, STDIN_FILENO) == -1)
-		ft_error("Duplicating fd failed");
+	dup2(input_fd, STDIN_FILENO);
 	close(input_fd);
-	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-		ft_error("Duplicating fd failed");
+	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[1]);
-	args = ft_split(*(++av), ' ');
+	args = ft_split(av[2], ' ');
 	path = parse_cmd(args[0]);
-	execve(path, args, environ);
-	free_arr(args);
-	ft_error("execve failed");
+	execve(path, args, __environ);
+	perror("execve failed");
+	exit(1);
 }
 
 void	last_child_process(char **av, int pipefd[2], int ac)
@@ -67,40 +48,26 @@ void	last_child_process(char **av, int pipefd[2], int ac)
 	char	*path;
 
 	close(pipefd[1]);
-	output_fd = open(*av, O_RDWR | O_CREAT | O_TRUNC, 0777);
+	output_fd = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (output_fd < 0)
-		ft_error("Error opening file");
-	if (dup2(output_fd, STDOUT_FILENO) == -1)
-		ft_error("Duplicating fd failed");
+	{
+		perror("Error opening file");
+		exit(1);
+	}
+	dup2(output_fd, STDOUT_FILENO);
 	close(output_fd);
-	if (dup2(pipefd[0], STDIN_FILENO) == -1)
-		ft_error("Duplicating fd failed");
+	dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
-	args = ft_split(*(--av), ' ');
+	args = ft_split(av[ac - 2], ' ');
 	path = parse_cmd(args[0]);
-	execve(path, args, environ);
-	free_arr(args);
-	ft_error("execve failed");
+	execve(path, args, __environ);
+	perror("execve failed");
+	exit(1);
 }
 
-void	general_child_process(char **av, int prev_pipe[2], int cur_pipe[2], int ac)
+void	generate_child_process(char **av, int prev_pipe[2], int cur_pipe[2], int ac)
 {
-	char	**args;
-	char	*path;
-
-	close(prev_pipe[1]);
-	if (dup2(prev_pipe[0], STDIN_FILENO) == -1)
-		ft_error("Duplicating fd failed");
-	close(prev_pipe[0]);
-	close(cur_pipe[0]);
-	if (dup2(cur_pipe[1], STDOUT_FILENO) == -1)
-		ft_error("Duplicating fd failed");
-	close(cur_pipe[1]);
-	args = ft_split(*(++av), ' ');
-	path = parse_cmd(args[0]);
-	execve(path, args, environ);
-	free_arr(args);
-	ft_error("execve failed");
+	return ;
 }
 
 int	main(int ac, char **av)
@@ -110,7 +77,7 @@ int	main(int ac, char **av)
 	int		cur_pipe[2];
 
 	if (ac < 5)
-		return (1);
+		return (0);
 	for (int i = 0; i < ac - 3; i++)
 	{
 		if (i != 0)
@@ -119,28 +86,22 @@ int	main(int ac, char **av)
 			prev_pipe[1] = cur_pipe[1];
 		}
 		if (i != ac - 4)
-		{
-			if (pipe(cur_pipe) == -1)
-				ft_error("Failing creating pipe");
-		}
+			pipe(cur_pipe);
 		pid = fork();
-		if (pid < 0)
-			ft_error("Fork failed");
         if (pid == 0)
         {
             if (i == 0)
-                first_child_process(++av, cur_pipe);
+                first_child_process(av, cur_pipe);
             else if (i == ac - 4)
-                last_child_process(&av[ac - 1], cur_pipe, ac);
+                first_child_process(av, cur_pipe);
             else
-				general_child_process(++av + i, prev_pipe, cur_pipe, ac);
+                generate_child_process(av, prev_pipe, cur_pipe, ac);
         }
-		if (i != 0)
-		{
-			close(prev_pipe[0]);
-			close(prev_pipe[1]);
-		}
     }
+    close(prev_pipe[0]);
+    close(prev_pipe[1]);
+    close(cur_pipe[0]);
+    close(cur_pipe[1]);
     for (int i = 0; i < ac - 3; i++) {
         wait(NULL);
     }
