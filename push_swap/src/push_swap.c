@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:53:32 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/31 20:31:38 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/06 13:22:40 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 		return (1);
 	init_data(av, &data);
 	if (data.a.size == 2)
-		sort_three(&data);
+		sort_two(&data);
 	else if (data.a.size == 3)
 		sort_three(&data);
 	else if (data.a.size == 5)
