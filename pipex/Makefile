@@ -1,7 +1,7 @@
 NAME = pipex
 
 CC = cc
-CFLAGS =
+CFLAGS = -fsanitize=address -g0
 RM = rm -rf
 
 LIBFT = ./lib/libft
