@@ -44,7 +44,7 @@ for (int i = 0; i < n; i++)
 - Using **Linked List** for stacks 
 
 ### Useful Links
-- [Understanding the program](https://medium.com/@jamierobertdawson/push-swap-the-least-amount-of-moves-with-two-stacks-d1e76a71789a){:target="_blank"}
-- [Project explaining applying LIS algorithm](https://github.com/sisittu99/push_swap/blob/master/README_EN.md){:target="_blank"}
-- [Visualizer in Python](https://github.com/10257/push_swap_viz_kivy){:target="_blank"}
-- [Another Visualizer](https://github.com/o-reo/push_swap_visualizer){:target="_blank"}
+- <a href="https://medium.com/@jamierobertdawson/push-swap-the-least-amount-of-moves-with-two-stacks-d1e76a71789a" target="_blank">Another Understanding the program</a>
+- <a href="https://github.com/sisittu99/push_swap/blob/master/README_EN.md" target="_blank">Another Project explaining applying LIS algorithm</a>
+- <a href="https://github.com/10257/push_swap_viz_kivy" target="_blank">Visualizer in Python</a>
+- <a href="https://github.com/o-reo/push_swap_visualizer" target="_blank">Another Visualizer</a>
