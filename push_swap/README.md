@@ -16,14 +16,14 @@ Apply the **LIS** algorithm. The numbers that belong to the sequence stay in **s
 ```
 for (int i = 0; i < n; i++)
 {
-  for (int j = 0; j < i; j++)
-  {
+	for (int j = 0; j < i; j++)
+	{
 		if (arr[i] > arr[j] && lis[i] < lis[j] + 1)
 		{
 			lis[i] = lis[j] + 1;
 			prev[i] = j;
 		}
-  }
+	}
 }
 ```
 - **Move to B**: Transfer numbers not part of the LIS to **stack B**.
