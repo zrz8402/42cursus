@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:21:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/31 20:42:26 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/06 14:56:45 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		check_duplicates(int *arr, int size);
 
 // stack.c
 int		*transform(t_data *data, int *arr);
-t_cb	get_stack_a(char **av, t_data *data);
+void	get_stack_a(char **av, t_data *data);
 void	init_data(char **av, t_data *data);
 
 // utils.c

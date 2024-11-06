@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 18:32:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/31 20:42:15 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/06 14:57:02 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,37 +50,35 @@ int	*transform(t_data *data, int *arr)
 	return (nums);
 }
 
-t_cb	get_stack_a(char **av, t_data *data)
+void	get_stack_a(char **av, t_data *data)
 {
 	char	**strs;
-	t_cb	a;
 	int		i;
 
 	strs = get_strs(av, data);
-	a.size = array_size(strs);
-	a.stack = malloc(a.size * sizeof(int));
-	if (!a.stack)
+	data->a.size = array_size(strs);
+	data->a.stack = malloc(data->a.size * sizeof(int));
+	if (!data->a.stack)
 		f_error(data, strs);
 	i = 0;
 	while (strs[i])
 	{
 		if (!is_valid(strs[i]))
 			f_error(data, strs);
-		a.stack[i] = ft_atoi(strs[i]);
+		data->a.stack[i] = ft_atoi(strs[i]);
 		i++;
 	}
 	free_arr(strs);
-	if (check_duplicates(a.stack, a.size))
+	if (check_duplicates(data->a.stack, data->a.size))
 		ft_error(data);
-	a.count = a.size;
-	return (a);
+	data->a.count = data->a.size;
 }
 
 void	init_data(char **av, t_data *data)
 {
 	data->a.stack = NULL;
 	data->b.stack = NULL;
-	data->a = get_stack_a(++av, data);
+	get_stack_a(++av, data);
 	data->a.stack = transform(data, data->a.stack);
 	data->b.stack = malloc(data->a.size * sizeof(int));
 	if (!data->b.stack)

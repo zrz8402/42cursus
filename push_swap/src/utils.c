@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 20:02:01 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/31 20:41:45 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/06 14:49:18 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_error(t_data *data)
 {
 	free_data(data);
 	ft_putstr_fd("Error\n", 2);
-	exit(0);
+	exit(1);
 }
 
 void	f_error(t_data *data, char **arr)
@@ -31,7 +31,10 @@ void	free_arr(char **arr)
 
 	i = 0;
 	while (arr[i])
-		free(arr[i++]);
+	{
+		free(arr[i]);
+		i++;
+	}
 	free(arr);
 }
 

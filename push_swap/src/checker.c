@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 09:37:46 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/31 20:39:16 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/06 14:44:41 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ferror(t_data *data, char *arr)
 	if (data)
 		free_data(data);
 	ft_putstr_fd("Error\n", 2);
-	exit(0);
+	exit(1);
 }
 
 void	process_op(char *op, t_data *data)
