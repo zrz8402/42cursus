@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:26:55 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/10/31 20:31:07 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/08 08:32:23 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	is_sorted(int *arr, int n)
 	}
 	return (1);
 }
+
 void	sort_two(t_data *data)
 {
 	if (data->a.stack[0] > data->a.stack[1])
