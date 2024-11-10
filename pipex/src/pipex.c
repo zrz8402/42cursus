@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <stdio.h>
 
 extern char	**environ;
 
@@ -100,14 +99,11 @@ void	last_child_process(char **av, int pipefd[2], int output_fd)
 	char	**args;
 	char	*path;
 
-	// char buff[10000];
-	// read(pipefd[0], buff, 1000);
 	if (output_fd < 0)
 		ft_error("Error opening file", 1);
 	close(pipefd[1]);
 	if (dup2(output_fd, STDOUT_FILENO) == -1)
 		ft_error("Duplicating fd failed", 1);
-	//printf("%s",buff);
 	close(output_fd);
 	if (dup2(pipefd[0], STDIN_FILENO) == -1)
 		ft_error("Duplicating pipefd failed", 1);
@@ -164,7 +160,6 @@ int	main(int ac, char **av)
 		output_fd = open(av[ac - 1], O_WRONLY | O_TRUNC);
 	for (int i = 0; i < ac - 3; i++)
 	{
-		write(2, "d\n", 2);
 		if (i != 0 || i != ac - 4)
 			ft_memcpy(prev_pipe, cur_pipe, sizeof(int) * 2);
 		if (i != ac - 4)
@@ -173,10 +168,6 @@ int	main(int ac, char **av)
 				ft_error("Failing creating pipe", 1);
 		}
 		pid = fork();
-		if (pid == 0)
-			write(2, "c\n", 2);
-		else
-			write(2, "p\n", 2);
 		if (pid < 0)
 			ft_error("Fork failed", 1);
         if (pid == 0)
@@ -201,11 +192,4 @@ int	main(int ac, char **av)
         ;
 	//printf("%d\n", WEXITSTATUS(status));
 	return (WEXITSTATUS(status));
-}
-
-
-void ft(void){
-	int i = 0;
-	while (i < 4)
-		;
 }
