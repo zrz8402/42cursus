@@ -12,8 +12,6 @@
 
 #include "pipex.h"
 
-extern char	**environ;
-
 void	free_arr(char **s)
 {
 	int	i;
@@ -33,43 +31,42 @@ void	ft_error(char *message, int status)
 	exit(status);
 }
 
-char	*parse_cmd(char **args)
+void	execute(char *cmd, char **envp)
 {
-	char	*cmd;
-	char	*full;
 	char	**paths;
+	char	*full;
+	char	**args;
 	int		i = 0;
 
+	args = ft_split(cmd, ' ');
 	if (!args || !*args)
-		ft_error("command not found", 127);
-	cmd = args[0];
-	if (access(cmd, X_OK) == 0)
-		return (cmd);
-	while (*environ)
+		ft_error("Empty command", 127);
+	if (access(args[0], X_OK) == 0)
 	{
-		if (ft_strncmp(*environ, "PATH=", 5) == 0)
+		execve(args[0], args, envp);
+	}
+	if (access(args[0], F_OK) == 0)
+		ft_error("Command permission", 126);
+	while (*envp)
+	{
+		if (ft_strncmp(*envp, "PATH=", 5) == 0)
 		{
-			paths = ft_split(*environ + 5, ':');
+			paths = ft_split(*envp + 5, ':');
 			break ;
 		}
-		environ++;
+		envp++;
 	}
-	if (!*environ)
-		ft_error("command not found", 127);
 	while (paths[i])
 	{
-		full = ft_strjoin(paths[i], ft_strjoin("/", cmd));
+		full = ft_strjoin(paths[i], ft_strjoin("/", args[0]));
 		if (access(full, X_OK) == 0)
-			return (full);
+			execve(full, args, envp);
 		free(full);
 		i++;
 	}
-	free_arr(args);
-	ft_error("command not found", 127);
-	return (NULL);
 }
 
-void	first_child_process(char **av, int pipefd[2])
+void	first_child_process(char **av, int pipefd[2], char **envp)
 {
 	int		input_fd;
 	char	**args;
@@ -86,47 +83,28 @@ void	first_child_process(char **av, int pipefd[2])
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 		ft_error("Duplicating pipefd failed", 1);
 	close(pipefd[1]);
-	args = ft_split(av[1], ' ');
-	path = parse_cmd(args);
-	execve(path, args, environ);
-	free(path);
-	free_arr(args);
-	ft_error("execve failed", 127);
+	execute(av[1], envp);
 }
 
-void	last_child_process(char **av, int pipefd[2], int output_fd)
+void	last_child_process(char **av, int pipefd[2], int ac, char **envp)
 {
-	char	**args;
-	char	*path;
+	int output_fd;
 
+	output_fd = open(*av, O_WRONLY | O_TRUNC);
 	if (output_fd < 0)
 		ft_error("Error opening file", 1);
 	close(pipefd[1]);
 	if (dup2(output_fd, STDOUT_FILENO) == -1)
-		ft_error("Duplicating fd failed", 1);
+		ft_error("Duplicating output fd failed", 1);
 	close(output_fd);
 	if (dup2(pipefd[0], STDIN_FILENO) == -1)
 		ft_error("Duplicating pipefd failed", 1);
 	close(pipefd[0]);
-	args = ft_split(*(--av), ' ');
-	path = parse_cmd(args);
-	execve(path, args, environ);
-	printf("something went wrong");
-	free_arr(args);
-	ft_error("execve failed", 127);
+	execute(*(--av), envp);
 }
 
-void	printArr(char **arr)
+void	general_child_process(char **av, int prev_pipe[2], int cur_pipe[2], char **envp)
 {
-	for (int i = 0; arr[i]; i++)
-		printf("%s\n", arr[i]);
-}
-
-void	general_child_process(char **av, int prev_pipe[2], int cur_pipe[2])
-{
-	char	**args;
-	char	*path;
-
 	close(prev_pipe[1]);
 	if (dup2(prev_pipe[0], STDIN_FILENO) == -1)
 		ft_error("Duplicating fd failed", 1);
@@ -135,60 +113,66 @@ void	general_child_process(char **av, int prev_pipe[2], int cur_pipe[2])
 	if (dup2(cur_pipe[1], STDOUT_FILENO) == -1)
 		ft_error("Duplicating fd failed", 1);
 	close(cur_pipe[1]);
-	args = ft_split(*(++av), ' ');
-	path = parse_cmd(args);
-	execve(path, args, environ);
-	free_arr(args);
-	ft_error("execve failed", 127);
+	execute(*(++av), envp);
 }
 
-int	main(int ac, char **av)
+void	create_pipe(int pipefd[2])
+{
+	if (pipe(pipefd) == -1)
+		ft_error("Failing creating pipe", 1);	
+}
+
+void	parent_process(int prev_pipe[2], int cur_pipe[2], int i, int n)
+{
+	if (i != 0)
+	{
+		close(prev_pipe[0]);
+		close(prev_pipe[1]);
+	}
+	if (i != n)
+	{
+		prev_pipe[0] = cur_pipe[0];
+		prev_pipe[1] = cur_pipe[1];
+	}
+}
+
+void process(char **av, char **envp, int ac)
 {
 	pid_t	pid;
 	int		prev_pipe[2];
 	int		cur_pipe[2];
-	int		status;
+	int		i;
 
-
-	if (ac < 5)
-		return (1);
-	int output_fd;
-	if (access(av[ac - 1], F_OK) == -1)
-		output_fd = open(av[ac - 1], O_WRONLY | O_CREAT , 0644);
-	else
-		output_fd = open(av[ac - 1], O_WRONLY | O_TRUNC);
-	for (int i = 0; i < ac - 3; i++)
+	i = 0;
+	while (i < ac - 3)
 	{
-		if (i != 0)
-			ft_memcpy(prev_pipe, cur_pipe, sizeof(int) * 2);
 		if (i != ac - 4)
-		{
-			if (pipe(cur_pipe) == -1)
-				ft_error("Failing creating pipe", 1);
-		}
+			create_pipe(cur_pipe);
 		pid = fork();
 		if (pid < 0)
 			ft_error("Fork failed", 1);
         if (pid == 0)
         {
             if (i == 0)
-                first_child_process(++av, cur_pipe);
+                first_child_process(++av, cur_pipe, envp);
             else if (i == ac - 4)
-                last_child_process(&av[ac - 1], prev_pipe, output_fd);
+                last_child_process(&av[ac - 1], prev_pipe, ac, envp);
             else
-				general_child_process(++av + i, prev_pipe, cur_pipe);
+				general_child_process(++av + i, prev_pipe, cur_pipe, envp);
         }
-            if (i != 0)
-            {
-                close(prev_pipe[0]);
-                close(prev_pipe[1]);
-            }
+		parent_process(prev_pipe, cur_pipe, i, ac - 4);
+		i++;
     }
-	while (wait(&status) > 0)
-        ;
-	close(output_fd);
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	close(STDERR_FILENO);
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	int		status;
+
+	if (ac < 5)
+		return (0);
+	no_outfile(av, ac);
+	process(av, envp, ac);
+	wait_close(&status, ac - 3);
 	return (WEXITSTATUS(status));
 }

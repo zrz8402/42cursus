@@ -10,7 +10,7 @@ LIBFT_A = $(LIBFT)/libft.a
 
 HEADERS = -I . -I $(LIBFT)
 
-SRCS = src/pipex.c
+SRCS = src/pipex.c src/utils.c
 
 OBJS = $(SRCS:.c=.o)
 

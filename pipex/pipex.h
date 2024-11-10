@@ -21,4 +21,6 @@
 # include <sys/wait.h>
 # include "libft.h"
 
+void	no_outfile(char **av, int ac);
+void	wait_close(int *status, int n);
 #endif
