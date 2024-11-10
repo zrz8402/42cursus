@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:32:52 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/09 20:11:03 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/10 16:47:03 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ void	general_child_process(char **av, int prev_pipe[2], int cur_pipe[2])
 	close(cur_pipe[1]);
 	args = ft_split(*(++av), ' ');
 	path = parse_cmd(args);
-	printf("%s\n", path);
 	execve(path, args, environ);
 	free_arr(args);
 	ft_error("execve failed", 127);
@@ -160,7 +159,7 @@ int	main(int ac, char **av)
 		output_fd = open(av[ac - 1], O_WRONLY | O_TRUNC);
 	for (int i = 0; i < ac - 3; i++)
 	{
-		if (i != 0 || i != ac - 4)
+		if (i != 0)
 			ft_memcpy(prev_pipe, cur_pipe, sizeof(int) * 2);
 		if (i != ac - 4)
 		{
@@ -175,21 +174,21 @@ int	main(int ac, char **av)
             if (i == 0)
                 first_child_process(++av, cur_pipe);
             else if (i == ac - 4)
-                last_child_process(&av[ac - 1], cur_pipe, output_fd);
+                last_child_process(&av[ac - 1], prev_pipe, output_fd);
             else
 				general_child_process(++av + i, prev_pipe, cur_pipe);
         }
-		else
-		{
-			if (i != 0)
-			{
-				close(prev_pipe[0]);
-				close(prev_pipe[1]);
-			}
-		}
+            if (i != 0)
+            {
+                close(prev_pipe[0]);
+                close(prev_pipe[1]);
+            }
     }
 	while (wait(&status) > 0)
         ;
-	//printf("%d\n", WEXITSTATUS(status));
+	close(output_fd);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 	return (WEXITSTATUS(status));
 }
