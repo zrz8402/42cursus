@@ -40,7 +40,8 @@ void	execute(char *cmd, char **envp)
 
 	args = ft_split(cmd, ' ');
 	if (!args || !*args)
-		ft_error("Empty command", 127);
+		//*args = "";
+		ft_error("Empty command", 127);}
 	if (access(args[0], X_OK) == 0)
 	{
 		execve(args[0], args, envp);
