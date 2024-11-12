@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:33:04 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/03 13:45:31 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/12 12:36:20 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/wait.h>
 # include "libft.h"
 
-void	no_outfile(char **av, int ac);
-void	wait_close(int *status, int n);
+void	ft_error(char *message, int code);
+void	no_outfile(char *file);
+void	execute(char *cmd, char **envp);
+char	**parse_path(char **envp);
 #endif
