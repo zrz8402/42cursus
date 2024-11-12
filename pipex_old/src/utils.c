@@ -22,8 +22,11 @@ void	wait_close(int *status, int n)
 
 	i = 0;
 	while (i++ < n)
-        wait(status);
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	close(STDERR_FILENO);
+    {
+		wait(status);
+		printf("%d %d\n", i, WEXITSTATUS(*status));
+	}
+	// close(STDIN_FILENO);
+	// close(STDOUT_FILENO);
+	// close(STDERR_FILENO);
 }
