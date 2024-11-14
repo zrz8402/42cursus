@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 17:59:08 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/14 13:28:06 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:41:43 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ void	process_heredoc(pid_t pid, int *pipefd, char **av, char **envp)
 	{
 		close(pipefd[0]);
 		if (pipe(heredoc_fd) < 0)
+		{
+			close(pipefd[1]);
 			ft_error("Failing creating pipe", 1);
+		}
 		get_heredoc(heredoc_fd, av);
 		if (dup2(heredoc_fd[0], STDIN_FILENO) == -1)
 		{
@@ -120,7 +123,7 @@ int	main(int ac, char **av, char **envp)
 	int		status;
 
 	if (ac < 5 || (!ft_strncmp(av[1], "here_doc", 9) && ac < 6))
-		ft_error("Bad argument", 0);
+		ft_error("Bad arguments", 0);
 	no_outfile(av[ac - 1]);
 	if (pipe(pipefd) < 0)
 		ft_error("Failing creating pipe", 1);
