@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 09:49:28 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/12 17:41:46 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/14 10:33:06 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	main(int ac, char **av, char **envp)
 	int		status;
 
 	if (ac != 5)
-		return (0);
+		ft_error("Usage: number of args", 0);
 	no_outfile(av[ac - 1]);
 	if (pipe(pipefd) < 0)
 		ft_error("Failing creating pipe", 1);
