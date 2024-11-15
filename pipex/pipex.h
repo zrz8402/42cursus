@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:33:04 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/14 14:26:12 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 11:08:31 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@
 
 typedef struct  s_pipex
 {
-	int	inf_fd;
-	int	outf_fd;
+	int	inf;
+	int	outf;
 	int	is_heredoc;
+	int	prev_pipe[2];
+	int	cur_pipe[2];
 }	t_pipex;
 
 

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 13:44:02 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/14 18:21:06 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 11:05:04 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	first_child_process(char **av, int pipefd[2], char **envp)
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 		ft_error("Duplicating pipefd failed", 1);
 	close(pipefd[1]);
-	execute(av[2], envp);
+	execute(av[1], envp);
 }
 
 void	last_child_process(char **av, int pipefd[2], int ac, char **envp)
@@ -101,8 +101,8 @@ int	main(int ac, char **av, char **envp)
 	int		*pid;
 	int		status;
 
-	// if (ac < 5 || (!ft_strncmp(av[1], "here_doc", 9) && ac < 6))
-	// 	ft_error("Bad arguments", 0);
+	if (ac < 5 || (!ft_strncmp(av[1], "here_doc", 9) && ac < 6))
+		ft_error("Bad arguments", 1);
 	no_outfile(av[ac - 1]);
 	pid = malloc((ac - 3) * sizeof(int));
 	int i = 0;
@@ -134,6 +134,8 @@ int	main(int ac, char **av, char **envp)
 		waitpid(pid[i], &status, 0);
 	}
 
-
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 	return (WEXITSTATUS(status));
 }
