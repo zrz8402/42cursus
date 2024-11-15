@@ -6,32 +6,67 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:25:31 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/14 10:27:30 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 17:12:35 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-void	check_execute(char *path, char **args, char **envp, char **paths)
+void	free_arr(char **s)
 {
-	if (access(path, F_OK) == 0)
+	int	i;
+
+	i = 0;
+	if (s)
 	{
-		if (access(path, X_OK) == -1)
+		while (s[i])
 		{
-			free_arr(paths);
-			free_arr(args);
-			ft_error("Command no permission", 126);
+			free(s[i]);
+			i++;
 		}
-		if (execve(path, args, envp) == -1)
+		free(s);
+	}
+}
+
+void	check_pure_execute(char **args, char **envp, t_pipex *p)
+{
+	if (access(args[0], F_OK) == 0)
+	{
+		if (access(args[0], X_OK) == -1)
 		{
-			free_arr(paths);
 			free_arr(args);
-			ft_error("execve failed", 1);
+			ft_error("Command no permission", 126, p);
+		}
+		if (execve(args[0], args, envp) == -1)
+		{
+			free_arr(args);
+			ft_error("execve failed", 1, p);
 		}
 	}
 }
 
-char	**parse_path(char **envp)
+void	check_execute(char **args, char **envp, char **paths, t_pipex *p)
+{
+	if (access(p->cmd, F_OK) == 0)
+	{
+		if (access(p->cmd, X_OK) == -1)
+		{
+			free(p->cmd);
+			free_arr(paths);
+			free_arr(args);
+			ft_error("Command no permission", 126, p);
+		}
+		if (execve(p->cmd, args, envp) == -1)
+		{
+			free(p->cmd);
+			free_arr(paths);
+			free_arr(args);
+			ft_error("execve failed", 1, p);
+		}
+	}
+}
+
+char	**parse_path(char **envp, t_pipex *p)
 {
 	char	**paths;
 
@@ -46,7 +81,7 @@ char	**parse_path(char **envp)
 		envp++;
 	}
 	if (!paths || !*paths)
-		ft_error("Command not found", 127);
+		ft_error("Command not found", 127, p);
 	return (paths);
 }
 
@@ -76,7 +111,7 @@ char	*join_str(char const *s1, char const *s2)
 	return (str);
 }
 
-void	execute(char *cmd, char **envp)
+void	execute(char *cmd, char **envp, t_pipex *p)
 {
 	char	**args;
 	char	**paths;
@@ -87,19 +122,19 @@ void	execute(char *cmd, char **envp)
 	if ((!args || !*args) && (access("", F_OK) == -1))
 	{
 		free_arr(args);
-		ft_error("Command not found", 127);
+		ft_error("Command not found", 127, p);
 	}
-	check_execute(args[0], args, envp, NULL);
-	paths = parse_path(envp);
+	check_pure_execute(args, envp, p);
+	paths = parse_path(envp, p);
 	i = 0;
 	while (paths[i])
 	{
-		full = join_str(paths[i], args[0]);
-		check_execute(full, args, envp, paths);
-		free(full);
+		p->cmd = join_str(paths[i], args[0]);
+		check_execute(args, envp, paths, p);
+		free(p->cmd);
 		i++;
 	}
 	free_arr(args);
 	free_arr(paths);
-	ft_error("Command not found", 127);
+	ft_error("Command not found", 127, p);
 }

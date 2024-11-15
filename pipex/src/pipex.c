@@ -6,11 +6,33 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 09:49:28 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/14 15:10:28 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 15:54:48 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	ft_error(char *message, int code)
+{
+	perror(message);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
+	exit(code);
+}
+
+void	no_outfile(char *file)
+{
+	int	output_fd;
+
+	if (access(file, F_OK) == -1)
+	{
+		output_fd = open(file, O_WRONLY | O_CREAT, 0644);
+		if (output_fd < 0)
+			ft_error("Failing creating output file", 1);
+		close(output_fd);
+	}
+}
 
 void	process_in(pid_t pid, int *pipefd, char **av, char **envp)
 {
@@ -21,6 +43,8 @@ void	process_in(pid_t pid, int *pipefd, char **av, char **envp)
 	if (pid == 0)
 	{
 		close(pipefd[0]);
+		if (access(av[1], F_OK) == -1)
+			ft_error("No infile", 1);
 		inf_fd = open(av[1], O_RDONLY);
 		if (inf_fd < 0)
 		{
@@ -28,10 +52,7 @@ void	process_in(pid_t pid, int *pipefd, char **av, char **envp)
 			ft_error("Error opening input file", 1);
 		}
 		if (dup2(inf_fd, STDIN_FILENO) == -1)
-		{
-			close(pipefd[1]);
 			ft_error("Duplicating infile fd failed", 1);
-		}
 		close(inf_fd);
 		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 			ft_error("Duplicating pipefd failed", 1);
@@ -56,10 +77,7 @@ void	process_out(pid_t pid, int *pipefd, char **av, char **envp)
 			ft_error("Error opening output file", 1);
 		}
 		if (dup2(outf_fd, STDOUT_FILENO) == -1)
-		{
-			close(pipefd[0]);
 			ft_error("Duplicating outfile fd failed", 1);
-		}
 		close(outf_fd);
 		if (dup2(pipefd[0], STDIN_FILENO) == -1)
 			ft_error("Duplicating pipefd failed", 1);

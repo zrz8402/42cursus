@@ -2,7 +2,7 @@
 
 # bonus info config (CHANGE HERE if your bonus exec/rule is not 'pipex')
 pipex_bonus=pipex
-rule_bonus=pipex
+rule_bonus=bonus
 
 # const
 vlgppx='/usr/bin/valgrind --trace-children=yes --leak-check=full --track-fds=yes'
