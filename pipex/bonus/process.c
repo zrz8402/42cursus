@@ -6,18 +6,17 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:55:29 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/15 17:10:00 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 17:18:20 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-
 void	get_heredoc(int	*heredoc_fd, char *delimiter)
 {
 	char	*line;
 
-	line  = get_next_line(STDIN_FILENO);
+	line = get_next_line(STDIN_FILENO);
 	while (line)
 	{
 		if (!ft_strncmp(line, delimiter, ft_strlen(delimiter))
@@ -25,7 +24,7 @@ void	get_heredoc(int	*heredoc_fd, char *delimiter)
 			break ;
 		write(heredoc_fd[1], line, ft_strlen(line));
 		free(line);
-		line  = get_next_line(STDIN_FILENO);
+		line = get_next_line(STDIN_FILENO);
 	}
 	free(line);
 	close(heredoc_fd[1]);
@@ -88,11 +87,12 @@ void	process_out(char *av, char **envp, t_pipex *p)
 	if (outf_fd < 0)
 		ft_error("Error opening output file", 1, p);
 	if (dup2(outf_fd, STDOUT_FILENO) == -1)
-		ft_error("Duplicating outfile fd failed", 1, p);	close(outf_fd);
+		ft_error("Duplicating outfile fd failed", 1, p);
+	close(outf_fd);
 	if (dup2(p->cur_pipe[0], STDIN_FILENO) == -1)
 		ft_error("Duplicating pipefd failed", 1, p);
 	close(p->cur_pipe[0]);
-	execute(av, envp, p);	
+	execute(av, envp, p);
 }
 
 void	general_process(char *av, char **envp, t_pipex *p)

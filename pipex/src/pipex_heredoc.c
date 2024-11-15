@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   pipex_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 17:59:08 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/14 13:41:43 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 17:17:37 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	get_heredoc(int	*heredoc_fd, char **av)
 {
 	char	*line;
 
-	line  = get_next_line(STDIN_FILENO);
+	line = get_next_line(STDIN_FILENO);
 	while (line)
 	{
 		if (!ft_strncmp(line, av[2], ft_strlen(av[2]))
@@ -52,7 +52,7 @@ void	get_heredoc(int	*heredoc_fd, char **av)
 			break ;
 		write(heredoc_fd[1], line, ft_strlen(line));
 		free(line);
-		line  = get_next_line(STDIN_FILENO);
+		line = get_next_line(STDIN_FILENO);
 	}
 	free(line);
 	close(heredoc_fd[1]);

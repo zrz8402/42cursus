@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 13:44:02 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/15 16:17:53 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 17:19:10 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,15 @@ void	process(t_pipex *p, char **av, char **envp)
 		p->pids[i] = fork();
 		if (p->pids[i] < 0)
 			ft_error("Fork failed", 1, p);
-        if (p->pids[i] == 0)
-        {
-            if (i == 0)
+		if (p->pids[i] == 0)
+		{
+			if (i == 0)
 				process_in(*av, envp, p);
-            else if (i == p->num_cmds - 1)
-            	process_out(*av, envp, p);
-            else
+			else if (i == p->num_cmds - 1)
+				process_out(*av, envp, p);
+			else
 				general_process(*av, envp, p);
-        }
+		}
 		parent_process(p->prev_pipe, p->cur_pipe, i, p->num_cmds - 1);
 		av++;
 	}

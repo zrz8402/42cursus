@@ -6,12 +6,12 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:33:04 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/15 16:16:56 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 17:14:26 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include <unistd.h>
 # include <fcntl.h>
@@ -21,7 +21,7 @@
 # include <sys/wait.h>
 # include "libft.h"
 
-typedef struct  s_pipex
+typedef struct s_pipex
 {
 	int		is_heredoc;
 	char	*inf;
@@ -35,7 +35,6 @@ typedef struct  s_pipex
 	char	*cmd;
 }	t_pipex;
 
-
 void	no_outfile(char *file);
 void	ft_error(char *message, int code, t_pipex *pipex);
 void	free_arr(char **s);
@@ -45,4 +44,5 @@ void	execute(char *cmd, char **envp, t_pipex *p);
 void	process_in(char *av, char **envp, t_pipex *p);
 void	process_out(char *av, char **envp, t_pipex *p);
 void	general_process(char *av, char **envp, t_pipex *p);
+
 #endif
