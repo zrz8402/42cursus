@@ -6,31 +6,16 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:50:10 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/15 17:14:45 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 19:20:42 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	close_pipe(int *prev_pipe, int *cur_pipe)
-{
-	if (prev_pipe[0] >= 0)
-		close(prev_pipe[0]);
-	if (prev_pipe[1] >= 0)
-		close(prev_pipe[1]);
-	if (cur_pipe[0] >= 0)
-		close(cur_pipe[0]);
-	if (cur_pipe[1] >= 0)
-		close(cur_pipe[1]);
-}
-
 void	ft_error(char *message, int code, t_pipex *p)
 {
-	int	i;
-
 	if (p)
 	{
-		close_pipe(p->prev_pipe, p->cur_pipe);
 		if (p->pids)
 			free(p->pids);
 	}
@@ -39,6 +24,13 @@ void	ft_error(char *message, int code, t_pipex *p)
 	close(STDOUT_FILENO);
 	close(STDERR_FILENO);
 	exit(code);
+}
+
+void	f_error(char *message, int code, t_pipex *p, int fd)
+{
+	if (fd >= 0)
+		close(fd);
+	ft_error(message, code, p);
 }
 
 void	no_outfile(char *file)
@@ -51,5 +43,21 @@ void	no_outfile(char *file)
 		if (output_fd < 0)
 			ft_error("Failing creating output file", 1, NULL);
 		close(output_fd);
+	}
+}
+
+void	free_arr(char **s)
+{
+	int	i;
+
+	i = 0;
+	if (s)
+	{
+		while (s[i])
+		{
+			free(s[i]);
+			i++;
+		}
+		free(s);
 	}
 }

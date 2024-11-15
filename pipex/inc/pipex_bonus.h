@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 15:33:04 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/15 17:14:26 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 19:20:17 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_pipex
 
 void	no_outfile(char *file);
 void	ft_error(char *message, int code, t_pipex *pipex);
+void	f_error(char *message, int code, t_pipex *p, int fd);
 void	free_arr(char **s);
 
 void	execute(char *cmd, char **envp, t_pipex *p);

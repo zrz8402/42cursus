@@ -6,27 +6,11 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:25:31 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/15 17:12:35 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:30:09 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-void	free_arr(char **s)
-{
-	int	i;
-
-	i = 0;
-	if (s)
-	{
-		while (s[i])
-		{
-			free(s[i]);
-			i++;
-		}
-		free(s);
-	}
-}
 
 void	check_pure_execute(char **args, char **envp, t_pipex *p)
 {
@@ -115,7 +99,6 @@ void	execute(char *cmd, char **envp, t_pipex *p)
 {
 	char	**args;
 	char	**paths;
-	char	*full;
 	int		i;
 
 	args = ft_split(cmd, ' ');

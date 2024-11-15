@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 13:44:02 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/15 17:19:10 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 19:03:21 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_pipex	p;
 	int		status;
+	int		i;
 
 	if (ac < 5 || (!ft_strncmp(av[1], "here_doc", 9) && ac < 6))
 		ft_error("Bad arguments", 1, NULL);
@@ -91,7 +92,8 @@ int	main(int ac, char **av, char **envp)
 	init_p(&p, av, ac);
 	av += p.start;
 	process(&p, av, envp);
-	for (int i = 0; i < p.num_cmds; i++)
+	i = -1;
+	while (++i < p.num_cmds)
 		waitpid(p.pids[i], &status, 0);
 	free(p.pids);
 	return (WEXITSTATUS(status));

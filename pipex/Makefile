@@ -1,7 +1,7 @@
 NAME = pipex
 
 CC = cc
-CFLAGS = 
+CFLAGS = -Wall -Werror -Wextra
 RM = rm -rf
 
 LIBFT = ./lib/libft

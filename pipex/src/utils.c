@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:18:44 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/15 17:15:11 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:43:55 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	check_execute(char *path, char **args, char **envp, char **paths)
 		{
 			free_arr(paths);
 			free_arr(args);
-			ft_error("Command no permission", 126);
+			ft_error("Command no permission", 126, -1);
 		}
 		if (execve(path, args, envp) == -1)
 		{
 			free_arr(paths);
 			free_arr(args);
-			ft_error("execve failed", 1);
+			ft_error("execve failed", 1, -1);
 		}
 	}
 }
@@ -62,7 +62,7 @@ char	**parse_path(char **envp)
 		envp++;
 	}
 	if (!paths || !*paths)
-		ft_error("Command not found", 127);
+		ft_error("Command not found", 127, -1);
 	return (paths);
 }
 
@@ -103,7 +103,7 @@ void	execute(char *cmd, char **envp)
 	if ((!args || !*args) && (access("", F_OK) == -1))
 	{
 		free_arr(args);
-		ft_error("Command not found", 127);
+		ft_error("Command not found", 127, -1);
 	}
 	check_execute(args[0], args, envp, NULL);
 	paths = parse_path(envp);
@@ -117,5 +117,5 @@ void	execute(char *cmd, char **envp)
 	}
 	free_arr(args);
 	free_arr(paths);
-	ft_error("Command not found", 127);
+	ft_error("Command not found", 127, -1);
 }
