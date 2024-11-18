@@ -1,0 +1,37 @@
+
+// prepare out files
+while (num_of_pipes >= 0) // or > 0
+{
+	while (args_between_pipe)
+	{
+		if (is_<)
+		{
+			if (access(in, R_OK) == -1)
+				break ;
+		}
+		if (is_>)
+		{
+			if (access(out, F_OK) == -1)
+				// create out file
+			if (access(out, W_OK) == -1)
+				// break;
+		}
+		args_between_pipe --;
+	}
+	num_of_pipe--;
+}
+
+// process
+while (num_of_pipes >= 0) // or > 0
+{
+	if (i < num_of_pipes)
+	{
+		// create pipe
+	}
+	pids[i] = fork()
+	if (pid[i] < 0)
+		// fork failed
+	if (pid[i] == 0)
+		// child process
+	parent_process()
+}
