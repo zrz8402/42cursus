@@ -1,4 +1,11 @@
 
+// here_doc (priority)
+while (<<)
+{
+	here_doc_fd[i][2]
+	// signal plays a role
+}
+
 // prepare out files
 while (num_of_pipes >= 0) // or > 0
 {
@@ -9,7 +16,7 @@ while (num_of_pipes >= 0) // or > 0
 			if (access(in, R_OK) == -1)
 				break ;
 		}
-		if (is_>)
+		if (is_> || is_>>)
 		{
 			if (access(out, F_OK) == -1)
 				// create out file
@@ -35,3 +42,12 @@ while (num_of_pipes >= 0) // or > 0
 		// child process
 	parent_process()
 }
+while(num_of_pipes >= 0) 
+	waitpid(pid, &status, 0);
+clean_up(); // free things
+
+// child_process
+redirect input && output
+execute
+
+//execute
