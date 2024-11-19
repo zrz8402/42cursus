@@ -1,0 +1,22 @@
+1. prepare out files
+	loop through (|) 
+		<< heredoc has highest priority, if we use (normal) ctrl+c forcing to exit, the whole process stops(why signal plays a role). So if there are <<s, we will process them first and save the result in heredoc[i][2] pipes(with marking where they should go later).
+
+		Then we will check < and > in order. If any fails, it stops here.
+			if (< in): infile does't exit or we have no permission to read it, stop;
+			if (> out | >> out): if no out, creat out
+						if no write permission, stop
+
+2. process
+	redirection part
+		redirect in/here_doc and out in order with dup2()
+		dup2(in, STDIN_FILENO)
+		dup2(out, STDOUT_FILENO)
+	execute part
+		built-in commands(may work differently)
+		[cmd, options, arguments, NULL];
+		cmd - parse cmd
+		// to-do: understand how to work with $(VARIABLE)
+		// to-do: understand how to make built-in cmds work
+
+
