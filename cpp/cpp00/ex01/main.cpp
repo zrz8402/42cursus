@@ -48,6 +48,10 @@ void    searchContact(PhoneBook& phoneBook)
     std::string index;
     int         maxEntry = phoneBook.getSize() - 1;
 
+    if (maxEntry < 0) {
+        std::cout << "Empty phonebook. Add some contacts first." << std::endl;
+        return ;
+    }
     do {
         std::cout << "Enter the entry index(0 - " << maxEntry << "): ";
         std::getline(std::cin, index);
