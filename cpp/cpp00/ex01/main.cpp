@@ -76,8 +76,7 @@ int main(void)
             break;
         }
         std::cout << "Enter a command(ADD, SEARCH, EXIT): ";
-        std::getline(std::cin, cmd);
-        
+        std::getline(std::cin, cmd);  
     }
     return (0);
 }

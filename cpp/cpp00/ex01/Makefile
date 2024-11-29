@@ -4,7 +4,8 @@ CXX = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++11
 RM = rm -f
 
-HEADERS = Contact.hpp PhoneBook.hpp
+HEADERS = -I .
+HEADER_FILES = Contact.hpp PhoneBook.hpp
 SRCS = main.cpp Contact.cpp PhoneBook.cpp
 OBJS = $(SRCS:.cpp=.o)
 
@@ -13,7 +14,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@$(CXX) $(CXXFLAGS) $(HEADERS) $(OBJS) -o $(NAME)
 
-%.o: %.cpp Makefile $(HEADERS)
+%.o: %.cpp Makefile $(HEADER_FILES)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
