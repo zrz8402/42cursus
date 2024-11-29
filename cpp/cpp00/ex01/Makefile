@@ -1,11 +1,11 @@
 NAME = test
 
 CXX = c++
-CXXFLAGS = -std=c++98
+CXXFLAGS = -std=c++11
 RM = rm -f
 
 HEADERS = 
-SRCS = main.cpp
+SRCS = main.cpp Contact.cpp PhoneBook.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
