@@ -6,7 +6,7 @@ if [ $? -eq 0 ]; then
     echo "Compilation successful. Running the program..."
 
     expect <<EOF
-spawn ./test
+spawn ./phonebook
 
 # Enter the ADD command
 expect "Enter a command(ADD, SEARCH, EXIT):" { send "ADD\r" }

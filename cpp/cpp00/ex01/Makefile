@@ -1,10 +1,10 @@
-NAME = test
+NAME = phonebook
 
 CXX = c++
-CXXFLAGS = -std=c++11
+CXXFLAGS = -Wall -Werror -Wextra -std=c++11
 RM = rm -f
 
-HEADERS = 
+HEADERS = Contact.hpp PhoneBook.hpp
 SRCS = main.cpp Contact.cpp PhoneBook.cpp
 OBJS = $(SRCS:.cpp=.o)
 
@@ -13,7 +13,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@$(CXX) $(CXXFLAGS) $(HEADERS) $(OBJS) -o $(NAME)
 
-%.o: %.c Makefile
+%.o: %.cpp Makefile $(HEADERS)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
@@ -24,4 +24,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean all
+.PHONY: all clean fclean re
