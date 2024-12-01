@@ -1,4 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Contact.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/29 17:24:42 by ruzhang           #+#    #+#             */
+/*   Updated: 2024/12/01 13:07:27 by ruzhang          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Contact.hpp"
+
+Contact::Contact(){
+	
+}
+
+Contact::~Contact(){
+	
+}
 
 void   Contact::setFirstName(const std::string& newFirstName) {
     firstName = newFirstName;

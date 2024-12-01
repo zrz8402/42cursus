@@ -1,11 +1,11 @@
-NAME =
+NAME = account
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 RM = rm -f
 
-HEADERS = 
-SRCS = 
+HEADERS = -I .
+SRCS = Account.cpp tests.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
@@ -13,13 +13,13 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(HEADERS) $(OBJS) -o $(NAME)
 
-%.o: %.c Makefile
+%.o: %.cpp Makefile
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJS)
 
-fclean: clean
+fclean: clean   
 	$(RM) $(NAME)
 
 re: fclean all
