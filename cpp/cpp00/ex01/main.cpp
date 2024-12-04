@@ -6,83 +6,25 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:25:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/30 17:43:19 by ruzhang          ###   ########.fr       */
+/*   Updated: 2024/12/04 12:17:21 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PhoneBook.hpp"
 #include <iostream>
-
-void    addContact(PhoneBook& phoneBook)
-{
-    Contact newContact;
-    std::string firstName, lastName, nickname, phoneNumber, darkestSecret;
-
-    do {
-        std::cout << "Enter first name: ";
-        std::getline(std::cin, firstName);
-    } while (firstName.empty());
-    newContact.setFirstName(firstName);
-    do {
-        std::cout << "Enter last name: ";
-        std::getline(std::cin, lastName);
-    } while (lastName.empty());
-    newContact.setLastName(lastName);
-    do {
-        std::cout << "Enter nickname: ";
-        std::getline(std::cin, nickname);
-    } while (nickname.empty());
-    newContact.setNickname(nickname);
-    do {
-        std::cout << "Enter phone number: ";
-        std::getline(std::cin, phoneNumber);
-    } while (phoneNumber.empty());
-    newContact.setPhoneNumber(phoneNumber);
-    do {
-        std::cout << "Enter darkest secret: ";
-        std::getline(std::cin, darkestSecret);
-    } while (darkestSecret.empty());
-    newContact.setDarkestSecret(darkestSecret);
-    phoneBook.saveContact(newContact);
-}
-
-bool    validEntry(std::string entry, int limit)
-{
-    if (entry.length() == 1){
-        if (entry[0] >= '0' && entry[0] <= (limit + '0'))
-            return true;
-    }
-    return false;
-}
-
-void    searchContact(PhoneBook& phoneBook)
-{
-    std::string index;
-    int         maxEntry = phoneBook.getSize() - 1;
-
-    if (maxEntry < 0) {
-        std::cout << "Empty phonebook. Add some contacts first." << std::endl;
-        return ;
-    }
-    do {
-        std::cout << "Enter the entry index(0 - " << maxEntry << "): ";
-        std::getline(std::cin, index);
-    } while (!validEntry(index, maxEntry));
-    phoneBook.displayContact(index[0] - '0');
-}
+#include "PhoneBook.hpp"
 
 int main(void)
 {
-    std::string cmd;
-    PhoneBook phoneBook;
+    PhoneBook	phoneBook;
+	std::string cmd;
 
     std::cout << "Enter a command(ADD, SEARCH, EXIT): ";
     std::getline(std::cin, cmd);
     while (cmd != "EXIT") {
         if (cmd == "ADD") {
-            addContact(phoneBook);
+            phoneBook.add();
         } else if (cmd == "SEARCH") {
-            searchContact(phoneBook);
+            phoneBook.search();
         } else {
             std::cout << "Not a valid command\n";
             break;
