@@ -1,4 +1,4 @@
-NAME =
+NAME = sed
 
 CXX = c++
 CXXFLAG = -Wall -Wextra -Werror -std=c++98
@@ -6,7 +6,7 @@ RM = rm -f
 
 HEADER = -I .
 
-SRCS =
+SRCS = main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

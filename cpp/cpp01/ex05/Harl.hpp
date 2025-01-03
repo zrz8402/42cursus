@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Weapon.cpp                                         :+:      :+:    :+:   */
+/*   Harl.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 14:45:05 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/03 12:25:21 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/01/03 16:13:55 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/01/03 16:17:01 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Weapon.hpp"
+#ifndef __HARL_HPP__
+#define __HARL_HPP__
 
-Weapon::Weapon() {}
+#include <iostream>
 
-Weapon::Weapon(std::string type) : type(type) {}
+class Harl {
 
-Weapon::~Weapon() {}
+private:
+	void	debug( void );
+	void	info( void );
+	void	warning( void );
+	void	error( void );
 
-void	Weapon::setType(const std::string &type) {
-	this->type = type;
-}
+public:
+	void	complain( std::string level );
 
-// const std::string & => Return Type
-// Weapon::getType() const
-//		=> is a const member function
-//		=> does not modify any non-mutable data members of the class
-const std::string	&Weapon::getType() const{
-	return type;
-}
+};
+
+#endif

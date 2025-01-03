@@ -6,10 +6,12 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:42:43 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/12/04 14:47:50 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/03 12:16:44 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef __WEAPON_HPP__
+#define __WEAPON_HPP__
 #include <iostream>
 
 class Weapon {
@@ -19,9 +21,12 @@ private:
 
 public:
 	Weapon();
+	Weapon(std::string	type);
 	~Weapon();
 
-	void	setType(std::string newType);
+	void	setType(const std::string &type);
 
-	std::string	getType();
+	const std::string	&getType() const;
 };
+
+#endif

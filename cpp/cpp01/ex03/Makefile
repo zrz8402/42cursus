@@ -1,4 +1,4 @@
-NAME =
+NAME = attack
 
 CXX = c++
 CXXFLAG = -Wall -Wextra -Werror -std=c++98
