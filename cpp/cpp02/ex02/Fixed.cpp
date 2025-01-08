@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 14:04:07 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/08 14:22:25 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/08 14:36:00 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,12 +145,10 @@ Fixed Fixed::operator--(int) {
 }
 
 Fixed& Fixed::min(Fixed &a, Fixed &b) {
-	std::cout << "non-const\n";
 	return a < b ? a : b;
 }
 
 const Fixed& Fixed::min(const Fixed &a, const Fixed &b) {
-	std::cout << "const\n";
 	return a < b ? a : b;
 }
 
