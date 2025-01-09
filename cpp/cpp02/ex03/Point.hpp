@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 14:37:25 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/08 14:59:39 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/09 15:43:43 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ public:
 	Point();
 	Point(const float x, const float y);
 	Point(const Point &other);
-	Point& operator=(const Point &other);
+	// Point& operator=(const Point &other) = delete;
 	~Point();
 
 	Fixed	get_x() const;

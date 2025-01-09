@@ -6,7 +6,7 @@ RM = rm -f
 
 HEADER = -I .
 
-SRCS = main.cpp Fixed.cpp
+SRCS = main.cpp Fixed.cpp Point.cpp BSP.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

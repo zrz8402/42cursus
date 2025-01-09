@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 14:37:01 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/09 11:53:16 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/09 15:43:30 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@ Point::Point(const float x, const float y) : x(x), y(y) {}
 
 Point::Point(const Point &other) : x(other.x), y(other.y) {}
 
-Point& Point::operator=(const Point &other) {
-	if (this != &other) {
-		
-	}
-	return *this;
-}
+// Point& Point::operator=(const Point &other) = delete;
 
 Point::~Point() {}
 
