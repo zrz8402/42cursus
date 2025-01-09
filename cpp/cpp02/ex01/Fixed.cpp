@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 14:04:07 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/08 12:29:06 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/09 11:22:54 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,15 @@ Fixed::~Fixed(){
 
 // convert number V into its fixed-point representation N; n: fractional bits
 // N = round(V * 2 ^ n)
-Fixed::Fixed( const int value ) {
+Fixed::Fixed( const int value ) : value(value << FRACTIONAL_BITS) {
 	std::cout << "Int constructor called" << std::endl;
-	this->value = value << FRACTIONAL_BITS;
 }
 
-Fixed::Fixed( const float value ) {
+Fixed::Fixed( const float value ) : value(roundf(value * (1 << FRACTIONAL_BITS))) {
 	std::cout << "Float constructor called" << std::endl;
-	this->value = roundf(value * (1 << FRACTIONAL_BITS));
-	
 }
 
 int	Fixed::getRawBits( void ) const {
-	// std::cout << "getRawBits member function called" << std::endl;
 	return value;
 }
 
