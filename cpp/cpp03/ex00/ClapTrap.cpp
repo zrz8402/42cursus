@@ -6,18 +6,19 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 10:38:40 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 17:22:24 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/10 17:38:01 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
+#include <iostream>
 
 ClapTrap::ClapTrap( void )  : name("Unnamed"), hitPoints(10), energyPoints(10), attackDamage(0) {
-	std::cout << "Default constructor was created." << std::endl;
+	std::cout << "ClapTrap Default constructor was created." << std::endl;
 }
 
 ClapTrap::ClapTrap( std::string name ) : name(name), hitPoints(10), energyPoints(10), attackDamage(0) {
-	std::cout << "Parametric constructor was created." << std::endl;
+	std::cout << "ClapTrap Parametric constructor was created." << std::endl;
 }
 
 ClapTrap::ClapTrap( const ClapTrap &other ) : name(other.name), hitPoints(other.hitPoints), energyPoints(other.energyPoints), attackDamage(other.attackDamage) {}
@@ -32,7 +33,9 @@ ClapTrap& ClapTrap::operator=( const ClapTrap &other ) {
 	return *this;
 }
 
-ClapTrap::~ClapTrap( void ) {}
+ClapTrap::~ClapTrap( void ) {
+	std::cout << "ClapTrap destructor was created." << std::endl;
+}
 
 void	ClapTrap::setName( const std::string name ) {
 	this->name = name;
