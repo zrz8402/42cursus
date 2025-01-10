@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 11:53:29 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 15:30:01 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/10 15:52:19 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main() {
 	// print_status(rocket);
 
 	// std::cout << "\n----Being attacked----" << std::endl;
-	// rocket.takeDamage(5);
+	// rocket.takeDamage(100);
 	// print_status(rocket);
 
 	// std::cout << "\n----Being repaired----" << std::endl;
@@ -44,15 +44,10 @@ int main() {
 	// print_status(rocket);
 	// rocket.attack("Adam");
 	// rocket.beRepaired(10);
-	// rocket.attack("Adam");
-	// rocket.attack("Adam");
-	// rocket.attack("Adam");
-	// rocket.attack("Adam");
-	// rocket.attack("Adam");
+	// rocket.setEp(1);
 	// rocket.attack("Adam");
 	// rocket.attack("Adam");
 	// print_status(rocket);
-	// rocket.beRepaired(10);
 	
 	return 0;
 }
