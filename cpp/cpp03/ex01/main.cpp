@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 11:53:29 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 17:53:22 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/10 18:01:43 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int main() {
 	std::cout << "\n----Being repaired----" << std::endl;
 	rocket.beRepaired(10);
 	print_status(rocket);
+
+	std::cout << "\n----Guard mode----" << std::endl;
+	rocket.guardGate();
 
 	std::cout << "\n----No energy/hit points----" << std::endl;
 	rocket.setHitPoints(0);
