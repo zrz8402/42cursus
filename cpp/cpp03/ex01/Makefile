@@ -1,13 +1,13 @@
-NAME = claptrap
+NAME = scavtrap
 
 CXX = c++
 CXXFLAG = -Wall -Werror -Wextra -std=c++98
 RM = rm -f
 
 HEADER = -I .
-HEADERS = ClapTrap.hpp
+HEADERS = ClapTrap.hpp ScavTrap.hpp
 
-SRCS = main.cpp ClapTrap.cpp
+SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

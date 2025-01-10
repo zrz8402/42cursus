@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 10:36:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 11:57:46 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/10 14:55:27 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ public:
 	ClapTrap& operator=( const ClapTrap &other );
 	~ClapTrap();
 
+	void	setName( const std::string name );
 	void	setHp( const unsigned int hp );
 	void	setEp( const unsigned int ep );
 	void	setDamage( const unsigned int damage );

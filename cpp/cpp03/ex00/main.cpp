@@ -6,14 +6,14 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 11:53:29 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 12:27:19 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/10 15:30:11 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 #include <iomanip>
 
-void	print_status(ClapTrap name) {
+void	print_status(ClapTrap &name) {
 	std::cout << "Current status:" << std::endl;
 	std::cout << name.getName() 
 				<< std::setw(6) << " hp: " << name.getHp()

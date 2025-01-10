@@ -6,15 +6,13 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 10:38:40 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 14:19:34 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/10 15:24:15 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
 ClapTrap::ClapTrap( std::string name ) : name(name), hp(10), ep(10), damage(0) {}
-
-ClapTrap::~ClapTrap() {}
 
 ClapTrap::ClapTrap( const ClapTrap &other ) : name(other.name), hp(other.hp), ep(other.ep), damage(other.damage) {}
 
@@ -26,6 +24,12 @@ ClapTrap& ClapTrap::operator=( const ClapTrap &other ) {
 		damage = other.damage;
 	}
 	return *this;
+}
+
+ClapTrap::~ClapTrap() {}
+
+void	ClapTrap::setName( const std::string name ) {
+	this->name = name;
 }
 
 void	ClapTrap::setHp( const unsigned int hp ) {
@@ -74,7 +78,7 @@ void	ClapTrap::takeDamage( unsigned int amount ) {
 		hp -= amount;
 	else
 		hp = 0;
-	std::cout << "ClapTrap " << name << " takes " << amount << " points of damage(loses " 
+	std::cout << name << " takes " << amount << " points of damage(loses " 
 				<< amount << " hit points)." << std::endl;
 }
 
