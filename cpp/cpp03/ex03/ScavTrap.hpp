@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:29:08 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 18:10:20 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/10 18:12:02 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "ClapTrap.hpp"
 
-class ScavTrap : public ClapTrap {
+class ScavTrap : virtual public ClapTrap {
 
 public:
 	ScavTrap( void );

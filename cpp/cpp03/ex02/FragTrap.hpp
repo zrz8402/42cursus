@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:29:08 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 17:55:57 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/10 18:10:02 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ public:
 	FragTrap( std::string name );
 	FragTrap( const FragTrap &other );
 	FragTrap& operator=( const FragTrap &other );
-	~FragTrap();
+	virtual ~FragTrap();
 
 	void	highFivesGuys( void );
 };
