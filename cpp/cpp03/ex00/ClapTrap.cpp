@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 10:38:40 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 17:42:19 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/10 17:45:53 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	ClapTrap::takeDamage( unsigned int amount ) {
 // beRepaired: ep -= 1; hp += amount
 void	ClapTrap::beRepaired( unsigned int amount ) {
 	if (energyPoints <= 0 || hitPoints <= 0)
-		std::cout << "ClapTrap " << name << " doesn't have enough energy points to repair." << std::endl;
+		std::cout << "ClapTrap " << name << " doesn't have enough energy/hit points to repair." << std::endl;
 	else {
 		hitPoints += amount;
 		energyPoints--;
