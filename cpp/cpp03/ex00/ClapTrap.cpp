@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 10:38:40 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 17:38:01 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/10 17:42:19 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include <iostream>
 
 ClapTrap::ClapTrap( void )  : name("Unnamed"), hitPoints(10), energyPoints(10), attackDamage(0) {
-	std::cout << "ClapTrap Default constructor was created." << std::endl;
+	std::cout << "ClapTrap default constructor was created." << std::endl;
 }
 
 ClapTrap::ClapTrap( std::string name ) : name(name), hitPoints(10), energyPoints(10), attackDamage(0) {
-	std::cout << "ClapTrap Parametric constructor was created." << std::endl;
+	std::cout << "ClapTrap parametric constructor was created." << std::endl;
 }
 
 ClapTrap::ClapTrap( const ClapTrap &other ) : name(other.name), hitPoints(other.hitPoints), energyPoints(other.energyPoints), attackDamage(other.attackDamage) {}
@@ -93,8 +93,7 @@ void	ClapTrap::takeDamage( unsigned int amount ) {
 	else
 		hitPoints = 0;
 
-	std::cout << "ClapTrap " << name << " takes " << amount << " points of damage(loses " 
-				<< amount << " hit points)." << std::endl;
+	std::cout << "ClapTrap " << name << " takes " << amount << " points of damage." << std::endl;
 }
 
 // beRepaired: ep -= 1; hp += amount
