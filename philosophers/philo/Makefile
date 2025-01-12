@@ -2,14 +2,14 @@ NAME = philo
 BONUS_NAME = philo_bonus
 
 CC = cc
-CFLAGS =
+CFLAGS = -Wall
 RM = rm -f
 
 HEADER = -I .
 
 SRCS = main.c input.c
 
-OBJS = $(SRCS: .c=.o)
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
