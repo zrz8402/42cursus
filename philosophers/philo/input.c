@@ -6,13 +6,13 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:53:14 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/12 16:05:48 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/12 16:15:37 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	ft_isspace(char c)
+int	ft_isspace(char c)
 {
 	return (c == 32 || (c >= 9 && c <= 13));
 }
