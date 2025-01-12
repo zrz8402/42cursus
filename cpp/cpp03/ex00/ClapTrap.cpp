@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 10:38:40 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 18:04:45 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/12 10:29:28 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,6 @@ void	ClapTrap::beRepaired( unsigned int amount ) {
 	else {
 		hitPoints += amount;
 		energyPoints--;
-		std::cout << name << " is repaired and gains " << amount << " hits points." << std::endl;
+		std::cout << "ClapTrap " << name << " is repaired and gains " << amount << " hits points." << std::endl;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 11:53:29 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 18:13:52 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/12 11:19:39 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 #include "FragTrap.hpp"
 #include "DiamondTrap.hpp"
 #include <iomanip>
+#include <iostream>
 
 void	print_status(DiamondTrap &name) {
 	std::cout << "Current status:" << std::endl;
-	std::cout << name.getName() 
+	std::cout << name.getName()
 				<< std::setw(7) << "hp: " << name.getHitPoints()
 				<< std::setw(7) << "ep: " << name.getEnergyPoints()
 				<< std::setw(10) << "damage: " << name.getAttackDamage()
@@ -30,30 +31,8 @@ int main() {
 
 	print_status(rocket);
 
-	// std::cout << "\n----Making attack----" << std::endl;
-	// rocket.attack("Adam");
-	// print_status(rocket);
+	std::cout << "----Who Am I----" << std::endl;
+	rocket.whoAmI();
 
-	// std::cout << "\n----Being attacked----" << std::endl;
-	// rocket.takeDamage(100);
-	// print_status(rocket);
-
-	// std::cout << "\n----Being repaired----" << std::endl;
-	// rocket.beRepaired(10);
-	// print_status(rocket);
-
-	// std::cout << "\n----High-five request----" << std::endl;
-	// rocket.highFivesGuys();
-
-	// std::cout << "\n----No energy/hit points----" << std::endl;
-	// rocket.setHp(0);
-	// print_status(rocket);
-	// rocket.attack("Adam");
-	// rocket.beRepaired(10);
-	// rocket.setEp(1);
-	// rocket.attack("Adam");
-	// rocket.attack("Adam");
-	// print_status(rocket);
-	
 	return 0;
 }
