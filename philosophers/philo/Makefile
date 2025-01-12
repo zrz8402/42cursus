@@ -7,7 +7,7 @@ RM = rm -f
 
 HEADER = -I .
 
-SRCS = main.c
+SRCS = main.c input.c
 
 OBJS = $(SRCS: .c=.o)
 
