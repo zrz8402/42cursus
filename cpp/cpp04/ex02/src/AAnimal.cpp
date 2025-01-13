@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 11:33:03 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/13 17:13:43 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/13 18:36:59 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,4 @@ AAnimal::~AAnimal( void ) {
 
 std::string	AAnimal::getType( void ) const {
 	return type;
-}
-
-void	AAnimal::makeSound( void ) const {
-	std::cout << "Animal makes no sound." << std::endl;
 }
