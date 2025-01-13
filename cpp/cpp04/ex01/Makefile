@@ -11,7 +11,7 @@ O = obj
 INC = -I $(I)
 
 SRCS = $(S)/main.cpp $(S)/Animal.cpp $(S)/Dog.cpp $(S)/Cat.cpp \
-		$(S)/WrongAnimal.cpp $(S)/WrongCat.cpp
+		$(S)/WrongAnimal.cpp $(S)/WrongCat.cpp $(S)/Brain.cpp
 
 OBJS = $(SRCS:$(S)/%.cpp=$(O)/%.o)
 
