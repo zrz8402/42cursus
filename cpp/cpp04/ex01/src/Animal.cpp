@@ -6,10 +6,11 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 11:33:03 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/13 15:26:43 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/13 17:09:52 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <iostream>
 #include "Animal.hpp"
 
 Animal::Animal( void ) : type("Animal") {

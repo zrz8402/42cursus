@@ -6,10 +6,11 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:23:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/13 15:45:13 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/13 17:09:22 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <iostream>
 #include "Cat.hpp"
 
 Cat::Cat( void ) : Animal("Cat") {

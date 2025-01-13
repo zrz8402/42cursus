@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   AAnimal.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 11:27:12 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/13 17:08:58 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/01/13 11:28:09 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/01/13 17:12:22 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Brain.hpp"
-#include "Animal.hpp"
-#include "Dog.hpp"
-#include "Cat.hpp"
+#ifndef __AANIMAL_HPP__
+#define __AANIMAL_HPP__
+
 #include <iostream>
 
-int main() {
-	const Animal* dog = new Dog();
-	const Animal* cat = new Cat();
+class AAnimal {
 
-	std::cout << dog->getType() << " " << std::endl;
-	dog->makeSound();
+protected:
+	std::string	type;
 
-	std::cout << cat->getType() << " " << std::endl;
-	cat->makeSound();
+public:
+	AAnimal( void );
+	AAnimal( std::string type );
+	AAnimal( const AAnimal &other );
+	AAnimal& operator=( const AAnimal &other );
+	virtual ~AAnimal( void );
 
-	delete dog;
-	delete cat;
+	std::string		getType( void ) const;
+	virtual void	makeSound( void ) const = 0;
+};
 
-	return 0;
-}
+#endif

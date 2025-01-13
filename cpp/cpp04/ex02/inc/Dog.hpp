@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Dog.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 11:27:12 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/13 17:08:58 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/01/13 11:29:13 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/01/13 17:01:05 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef __DOG_HPP__
+#define __DOG_HPP__
+
+#include "AAnimal.hpp"
 #include "Brain.hpp"
-#include "Animal.hpp"
-#include "Dog.hpp"
-#include "Cat.hpp"
-#include <iostream>
 
-int main() {
-	const Animal* dog = new Dog();
-	const Animal* cat = new Cat();
+class Dog : public AAnimal {
 
-	std::cout << dog->getType() << " " << std::endl;
-	dog->makeSound();
+private:
+	Brain	*brain;
 
-	std::cout << cat->getType() << " " << std::endl;
-	cat->makeSound();
+public:
+	Dog( void );
+	Dog( const Dog &other );
+	Dog& operator=( const Dog &other );
+	virtual ~Dog( void );
 
-	delete dog;
-	delete cat;
+	void	makeSound( void ) const;
+};
 
-	return 0;
-}
+#endif
