@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 12:58:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/15 16:00:48 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/15 16:16:24 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,9 @@ typedef struct s_program
 }	t_program;
 
 int	check_input(char **av);
+
+
+size_t	get_current_time(void);
+void	ft_usleep(size_t milliseconds);
+
 #endif
