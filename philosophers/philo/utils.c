@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 15:52:21 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/15 15:08:44 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/01/15 15:44:41 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/01/15 16:05:04 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+size_t	get_current_time(void)
 {
-	// structure
+	struct timeval	time;
 
-	if ((ac != 5 && ac != 6) || check_input(av) == -1)
-	{
-		printf("Invalid args");
-		// printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]");
-		return (0);
-	}
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
 
-	// init things
+void	ft_usleep(size_t milliseconds)
+{
+	size_t	start;
 
-	// create threads
-
-	// destroy threads
+	start = get_current_time();
+	while ((get_current_time() - start) < milliseconds)
+		usleep(500); // sleep 500 microseconds
 }
