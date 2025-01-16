@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:52:21 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/15 16:13:48 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/16 11:38:28 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	main(int ac, char **av)
 {
-	// structure
+	t_table			table;
+	t_philo			philos[MAX_PHILO];
+	pthread_mutex_t	forks[MAX_PHILO];
 
 	if ((ac != 5 && ac != 6) || check_input(av) == -1)
 	{
@@ -24,8 +26,13 @@ int	main(int ac, char **av)
 	}
 
 	// init things
+	init_table(&table, philos);
+	init_forks(forks, ft_atoi(av[1]));
+	init_philos(philos, &table, forks, av);
 
 	// create threads
-
+	threads(philos, &table, forks, av);
+	
 	// destroy threads
+	cleanup(NULL, &table, forks);
 }
