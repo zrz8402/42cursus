@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 15:08:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/16 14:05:04 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/21 12:59:56 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,39 @@ void	*routine(void *arg)
 	return (arg);
 }
 
-int	thread(t_table *table, pthread_mutex_t *forks)
+void	cleanup(char *message, t_table *table, pthread_mutex_t *forks) 
 {
-	pthread_t	monitor;
+	int	i;
+
+	i = -1;
+	if (message)
+		printf("%s\n", message);
+	pthread_mutex_destroy(&table->write_lock);
+	pthread_mutex_destroy(&table->eat_lock);
+	pthread_mutex_destroy(&table->finish_lock);
+	while (++i < table->philos[i].num_philos)
+		pthread_mutex_destroy(&forks[i]);
+}
+
+void	thread(t_table *table, pthread_mutex_t *forks)
+{
+	pthread_t	control;
 	int			i;
 
-	if (pthread_create(&monitor, NULL, &observe, table->philos) != 0)
-		return (1); // cleanup
+	if (pthread_create(&control, NULL, &monitor, table->philos) != 0)
+		return (cleanup("Thread creation error", table, forks));
 	i = -1;
-	while (++i < table->num_philos)
+	while (++i < table->philos[0].num_philos)
 	{
 		if (pthread_create(&table->philos[i].thread, NULL, &routine, &table->philos[i] != 0))
-			return (1); // cleanup
+			return (cleanup("Thread creation error", table, forks));
 	}
-	if (pthread_join(monitor, NULL) != 0)
-		return (1); //cleanup
+	if (pthread_join(control, NULL) != 0)
+		return (cleanup("Thread join error", table, forks));
 	i = -1;
-	while (++i < table->num_philos)
+	while (++i < table->philos[0].num_philos)
 	{
 		if (pthread_join(table->philos[i].thread, NULL) != 0)
-			return (1); //cleanup
+			return (cleanup("Thread join error", table, forks));
 	}
 }

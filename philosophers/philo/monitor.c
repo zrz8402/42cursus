@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 12:21:55 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/16 14:08:09 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/21 11:54:58 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ void	write_message(char *message, t_philo *philo, int id)
 {
 	size_t	time;
 
-	// lock write
-	pthread_mutex_lock(philo);
+	pthread_mutex_lock(philo->write_lock);
 	time = get_current_time() - philo->start_time;
 	if (!is_dead(philo))
 		printf("%zu %d %s\n", time, id, message);
-	pthread_mutex_unlock(philo);
+	pthread_mutex_unlock(philo->write_lock);
 }
 
 
@@ -36,10 +35,14 @@ int	has_dead(t_philo *philo)
 
 int	all_ate(t_philo *philo)
 {
+	int	i;
 
+	i = -1;
+	// while (++i < philo->num_philos)
+	// 	return ;
 }
 
-void	*observe(void *arg)
+void	*monitor(void *arg)
 {
 	t_philo *philos;
 
