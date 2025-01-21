@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 10:40:53 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/21 12:31:13 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/21 17:21:04 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_philos(t_philo *philos, t_table *table, pthread_mutex_t *forks, char *
 		philos[i].meals_eaten = 0;
 		philos[i].l_fork = &forks[i];
 		philos[i].r_fork = &forks[(i + philos[i].num_philos - 1) % philos[i].num_philos];
-		philos[i].dead = table->is_dead;
+		philos[i].dead = &table->is_dead;
 		philos[i].write_lock = &table->write_lock;
 		philos[i].eat_lock = &table->eat_lock;
 		philos[i].finish_lock = &table->finish_lock;

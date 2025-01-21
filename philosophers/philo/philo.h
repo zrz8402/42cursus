@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 12:58:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/21 12:17:20 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/21 17:26:37 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ typedef struct s_table
 
 // input.c
 int	check_input(char **av);
+int	ft_atoi(const char *nptr);
+
+void	init_philos(t_philo *philos, t_table *table, pthread_mutex_t *forks, char **av);
+void	init_forks(pthread_mutex_t *forks, int num_forks);
+void	init_table(t_table *table, t_philo *philos);
+
 
 // utils.c
 size_t	get_current_time(void);
@@ -61,12 +67,13 @@ void	ft_usleep(size_t milliseconds);
 
 // threads.c
 void	*routine(void *arg);
-int	thread(t_table *table, pthread_mutex_t *forks);
+void	thread(t_table *table, pthread_mutex_t *forks);
+void	cleanup(char *message, t_table *table, pthread_mutex_t *forks);
 
 // monitor.c
 void	write_message(char *message, t_philo *philo, int id);
 void	*monitor(void *arg);
-
+int	philo_is_dead(t_philo *philo);
 
 // routine.c
 void	ft_think(t_philo *philo);

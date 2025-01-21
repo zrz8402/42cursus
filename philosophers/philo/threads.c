@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 15:08:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/21 12:59:56 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/21 17:25:11 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(1); // to be decided
-	while (!is_dead(philo))
+	while (!philo_is_dead(philo))
 	{
 		ft_eat(philo);
 		ft_sleep(philo);
@@ -28,18 +28,21 @@ void	*routine(void *arg)
 	return (arg);
 }
 
-void	cleanup(char *message, t_table *table, pthread_mutex_t *forks) 
+void	cleanup(char *message, t_table *table, pthread_mutex_t *forks)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	if (message)
 		printf("%s\n", message);
 	pthread_mutex_destroy(&table->write_lock);
 	pthread_mutex_destroy(&table->eat_lock);
 	pthread_mutex_destroy(&table->finish_lock);
-	while (++i < table->philos[i].num_philos)
+	while (i < table->philos[i].num_philos)
+	{
 		pthread_mutex_destroy(&forks[i]);
+		i++;
+	}
 }
 
 void	thread(t_table *table, pthread_mutex_t *forks)
@@ -52,7 +55,7 @@ void	thread(t_table *table, pthread_mutex_t *forks)
 	i = -1;
 	while (++i < table->philos[0].num_philos)
 	{
-		if (pthread_create(&table->philos[i].thread, NULL, &routine, &table->philos[i] != 0))
+		if (pthread_create(&table->philos[i].thread, NULL, &routine, NULL))
 			return (cleanup("Thread creation error", table, forks));
 	}
 	if (pthread_join(control, NULL) != 0)

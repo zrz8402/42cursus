@@ -7,7 +7,7 @@ RM = rm -f
 
 HEADER = -I .
 
-SRCS = main.c input.c
+SRCS = main.c input.c init.c threads.c monitor.c routines.c utils.c
 
 OBJS = $(SRCS:.c=.o)
 

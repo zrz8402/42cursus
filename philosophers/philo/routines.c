@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 15:07:57 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/16 14:01:25 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/21 16:51:10 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->r_fork);
 	write_message("has taken a fork", philo, philo->id);
-	if (1)// only one philo
+	if (philo->num_philos == 1)
 	{
 		ft_usleep(philo->time_to_die);
 		pthread_mutex_unlock(philo->r_fork);

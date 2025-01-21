@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:52:21 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/16 11:38:28 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/21 17:27:14 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int ac, char **av)
 	init_philos(philos, &table, forks, av);
 
 	// create threads
-	threads(philos, &table, forks, av);
+	thread(&table, forks);
 	
 	// destroy threads
 	cleanup(NULL, &table, forks);
