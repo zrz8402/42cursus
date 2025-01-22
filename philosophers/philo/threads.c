@@ -6,11 +6,23 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 15:08:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/21 17:25:11 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/22 10:25:31 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int		finish(t_philo *philo)
+{
+	pthread_mutex_lock(philo->finish_lock);
+	if (*philo->dead == 1)
+	{
+		pthread_mutex_unlock(philo->finish_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(philo->finish_lock);
+	return (0);
+}
 
 void	*routine(void *arg)
 {
@@ -18,8 +30,8 @@ void	*routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		ft_usleep(1); // to be decided
-	while (!philo_is_dead(philo))
+		ft_usleep(1);
+	while (!finish(philo))
 	{
 		ft_eat(philo);
 		ft_sleep(philo);
@@ -55,7 +67,7 @@ void	thread(t_table *table, pthread_mutex_t *forks)
 	i = -1;
 	while (++i < table->philos[0].num_philos)
 	{
-		if (pthread_create(&table->philos[i].thread, NULL, &routine, NULL))
+		if (pthread_create(&table->philos[i].thread, NULL, &routine, &table->philos[i]))
 			return (cleanup("Thread creation error", table, forks));
 	}
 	if (pthread_join(control, NULL) != 0)

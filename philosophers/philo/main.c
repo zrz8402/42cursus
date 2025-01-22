@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:52:21 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/21 17:27:14 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/22 09:36:51 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,9 @@ int	main(int ac, char **av)
 		printf("Invalid args");
 		return (0);
 	}
-
-	// init things
 	init_table(&table, philos);
 	init_forks(forks, ft_atoi(av[1]));
 	init_philos(philos, &table, forks, av);
-
-	// create threads
 	thread(&table, forks);
-	
-	// destroy threads
 	cleanup(NULL, &table, forks);
 }

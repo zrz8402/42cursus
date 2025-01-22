@@ -2,7 +2,7 @@ NAME = philo
 BONUS_NAME = philo_bonus
 
 CC = cc
-CFLAGS = -Wall
+CFLAGS =
 RM = rm -f
 
 HEADER = -I .

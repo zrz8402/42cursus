@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 12:58:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/21 17:26:37 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/22 09:49:50 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	thread(t_table *table, pthread_mutex_t *forks);
 void	cleanup(char *message, t_table *table, pthread_mutex_t *forks);
 
 // monitor.c
-void	write_message(char *message, t_philo *philo, int id);
+void	write_message(char *message, t_philo *philo);
 void	*monitor(void *arg);
 int	philo_is_dead(t_philo *philo);
 
