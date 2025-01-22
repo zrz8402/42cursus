@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 12:58:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/22 09:49:50 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/22 12:40:53 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_philo
 	size_t			time_to_sleep; // av[4];
 	int				num_times_must_eat; // av[5] ? av[5] : -1
 	size_t			start_time;
-	size_t			last_meal; // time when starting to eat
+	size_t			last_meal;
 	int				meals_eaten;
 	int				*dead;
 
@@ -42,7 +42,6 @@ typedef struct s_philo
 	pthread_mutex_t	*finish_lock;
 }	t_philo;
 
-// finish_lock - if (has_dead(philo) || all_ate(philos))
 typedef struct s_table
 {
 	int				is_dead;
@@ -52,32 +51,31 @@ typedef struct s_table
 	t_philo			*philos;
 }	t_table;
 
-// input.c
-int	check_input(char **av);
-int	ft_atoi(const char *nptr);
-
-void	init_philos(t_philo *philos, t_table *table, pthread_mutex_t *forks, char **av);
-void	init_forks(pthread_mutex_t *forks, int num_forks);
-void	init_table(t_table *table, t_philo *philos);
-
-
 // utils.c
+int		check_input(char **av);
+int		ft_atoi(const char *nptr);
 size_t	get_current_time(void);
 void	ft_usleep(size_t milliseconds);
 
+// init.c
+void	init_philos(t_philo *philos, t_table *table,
+			pthread_mutex_t *forks, char **av);
+void	init_forks(pthread_mutex_t *forks, int num_forks);
+void	init_table(t_table *table, t_philo *philos);
+
 // threads.c
-void	*routine(void *arg);
-void	thread(t_table *table, pthread_mutex_t *forks);
 void	cleanup(char *message, t_table *table, pthread_mutex_t *forks);
+void	thread(t_table *table, pthread_mutex_t *forks);
 
 // monitor.c
 void	write_message(char *message, t_philo *philo);
 void	*monitor(void *arg);
-int	philo_is_dead(t_philo *philo);
 
 // routine.c
 void	ft_think(t_philo *philo);
 void	ft_sleep(t_philo *philo);
 void	ft_eat(t_philo *philo);
+int		finish(t_philo *philo);
+void	*routine(void *arg);
 
 #endif

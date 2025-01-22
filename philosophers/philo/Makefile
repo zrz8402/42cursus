@@ -2,12 +2,12 @@ NAME = philo
 BONUS_NAME = philo_bonus
 
 CC = cc
-CFLAGS =
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 HEADER = -I .
 
-SRCS = main.c input.c init.c threads.c monitor.c routines.c utils.c
+SRCS = main.c init.c threads.c monitor.c routines.c utils.c
 
 OBJS = $(SRCS:.c=.o)
 
