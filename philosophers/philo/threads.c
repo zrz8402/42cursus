@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 15:08:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/22 12:40:47 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/26 15:46:30 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	cleanup(char *message, t_table *table, pthread_mutex_t *forks)
 	if (message)
 		printf("%s\n", message);
 	pthread_mutex_destroy(&table->write_lock);
-	pthread_mutex_destroy(&table->eat_lock);
 	pthread_mutex_destroy(&table->finish_lock);
 	while (i < table->philos[0].num_philos)
 	{

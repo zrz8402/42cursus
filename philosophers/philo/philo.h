@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 12:58:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/22 12:40:53 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/26 15:46:13 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*write_lock;
-	pthread_mutex_t	*eat_lock;
 	pthread_mutex_t	*finish_lock;
 }	t_philo;
 
@@ -46,7 +45,6 @@ typedef struct s_table
 {
 	int				is_dead;
 	pthread_mutex_t	write_lock;
-	pthread_mutex_t	eat_lock;
 	pthread_mutex_t	finish_lock;
 	t_philo			*philos;
 }	t_table;

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 10:40:53 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/22 12:38:56 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/26 15:46:18 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	init_philos(t_philo *philos, t_table *table,
 		philos[i].r_fork = &forks[(i + ft_atoi(av[1]) - 1) % ft_atoi(av[1])];
 		philos[i].dead = &table->is_dead;
 		philos[i].write_lock = &table->write_lock;
-		philos[i].eat_lock = &table->eat_lock;
 		philos[i].finish_lock = &table->finish_lock;
 	}
 }
