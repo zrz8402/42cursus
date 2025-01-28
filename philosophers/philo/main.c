@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:52:21 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/22 12:35:49 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/28 12:53:46 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ int	main(int ac, char **av)
 	init_table(&table, philos);
 	init_forks(forks, ft_atoi(av[1]));
 	init_philos(philos, &table, forks, av);
-	thread(&table, forks);
+	if (thread(&table))
+	{
+		cleanup(NULL, &table, forks);
+		return (1);
+	}	
 	cleanup(NULL, &table, forks);
+	return (0);
 }
