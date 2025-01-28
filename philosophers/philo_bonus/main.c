@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:19:50 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/28 12:54:21 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/28 14:08:27 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int	init_table(t_table *table, char **av)
 	table->fork_sem = sem_open("/fork", O_CREAT, 0644, table->num_philos);
 	table->write_sem = sem_open("/write", O_CREAT, 0644, 1);
 	if (table->fork_sem == SEM_FAILED || table->write_sem == SEM_FAILED)
-	{	printf("sem\n");
-		return (1);}
+		return (1);
 	table->pids = malloc(sizeof(pid_t) * table->num_philos);
 	if (!table->pids)
 	{
@@ -60,6 +59,9 @@ void	process(t_table *table)
 		table->pids[i] = fork();
 		if (table->pids[i] == -1)
 		{
+			// kill processes created previously
+			while (--i >= 0)
+				kill(table->pids[i], SIGKILL);
 			cleanup(table);
 			exit(1);
 		}
@@ -68,6 +70,30 @@ void	process(t_table *table)
 			init_philo();
 			routine(&table->philos[i]);
 			exit(0);
+		}
+	}
+	// monitor();
+}
+
+void	wait_exit(t_table *table)
+{
+	int	i;
+	int	j;
+	int	status;
+
+	i = -1;
+	while (++i < table->num_philos)
+	{
+		waitpid(table->pids[i], &status, 0);
+		if (WEXITSTATUS(status) == 1)
+		{
+			j = -1;
+			while (++j < table->num_philos)
+			{
+				if (j != i)
+					kill(table->pids[j], SIGKILL);
+			}
+			break ;
 		}
 	}
 }
@@ -84,7 +110,7 @@ int	main(int ac, char **av)
 	if (init_table(&table, av))
 		return (1);
 	process(&table);
-	wait();
+	wait_exit(&table);
 	cleanup(&table);
 	return (0);
 }

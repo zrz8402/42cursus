@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:19:47 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/28 12:54:36 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/28 14:03:09 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <fcntl.h>
 # include <sys/time.h>
 # include <semaphore.h>
+# include <pthread.h>
+# include <signal.h>
 
 # define MAX_PHILO 200
 

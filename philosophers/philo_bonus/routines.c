@@ -6,11 +6,22 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:22:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/28 12:00:52 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/28 13:58:20 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void	write_message(char *message, t_philo *philo)
+{
+	size_t	time;
+
+	sem_wait(philo->write_sem);
+	time = get_current_time() - philo->start_time;
+	if (!finish(philo))
+		printf("%zu %d %s\n", time, philo->id, message);
+	sem_post(philo->write_sem);
+}
 
 void	ft_think(t_philo *philo)
 {
@@ -43,30 +54,28 @@ void	ft_eat(t_philo *philo)
 	sem_post(philo->fork_sem);
 }
 
-int	finish(t_philo *philo)
+int	philo_is_dead(t_philo *philo)
 {
-	// pthread_mutex_lock(philo->finish_lock);
-	if (*philo->dead == 1)
+	if (get_current_time() - philo->last_meal >= philo->time_to_die)
 	{
-		// pthread_mutex_unlock(philo->finish_lock);
+		write_message("died", philo);
 		return (1);
 	}
-	// pthread_mutex_unlock(philo->finish_lock);
 	return (0);
 }
 
-void	*routine(void *arg)
+void	routine(t_philo *philo)
 {
-	t_philo	*philo;
+	pthread_t	death_thread;
 
-	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(1);
-	while (!finish(philo))
-	{ 
+	while (1)
+	{
+		if (philo_is_dead(philo))
+			exit(1);
 		ft_eat(philo);
 		ft_sleep(philo);
 		ft_think(philo);
 	}
-	return (arg);
 }
