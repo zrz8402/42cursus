@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:19:50 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/28 14:08:27 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/28 16:25:01 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,41 @@ int	init_table(t_table *table, char **av)
 	return (0);
 }
 
+void	*check_meals(void *arg)
+{
+	t_table	*table;
+	int		finished;
+
+	finished = 0;
+	table = (t_table *)arg;
+	while (1)
+	{
+		sem_wait(table->meal_sem);
+		++finished;
+		if (finished >= table->num_philos)
+			cleanup(table);
+	}
+	return (arg);
+}
+
 void	process(t_table *table)
 {
-	int		i;
+	int			i;
+	pthread_t	meal_check;
 
 	i = -1;
+	if (table->num_times_must_eat > 0)
+	{
+		if (pthread_create(&meal_check, NULL, &check_meals, table) != 0)
+			cleanup(table); // to be fixed
+		pthread_detach(&meal_check);
+	}
+	
 	while (++i < table->num_philos)
 	{
 		table->pids[i] = fork();
 		if (table->pids[i] == -1)
 		{
-			// kill processes created previously
 			while (--i >= 0)
 				kill(table->pids[i], SIGKILL);
 			cleanup(table);
@@ -72,7 +96,6 @@ void	process(t_table *table)
 			exit(0);
 		}
 	}
-	// monitor();
 }
 
 void	wait_exit(t_table *table)

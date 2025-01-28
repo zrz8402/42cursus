@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:19:47 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/28 14:03:09 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/28 16:30:25 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_philo
 
 	sem_t	*fork_sem;
 	sem_t	*write_sem;
+	sem_t	*meal_sem;
+	sem_t	*death_sem;
 }	t_philo;
 
 typedef struct s_table
@@ -52,6 +54,8 @@ typedef struct s_table
 	int			all_ate;
 	sem_t		*fork_sem;
 	sem_t		*write_sem;
+	sem_t		*meal_sem;
+	sem_t		*death_sem;
 	t_philo		*philos;
 	pid_t		*pids;
 }	t_table;
