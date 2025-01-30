@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:19:47 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/28 16:30:25 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 11:06:10 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ typedef struct s_table
 	pid_t		*pids;
 }	t_table;
 
+// init.c
+void	destroy_all(t_table *table, int kill_child, char *message, int signal);
+void	init_table(t_table *table, char **av);
 
 // utils.c
 int		ft_atoi(const char *nptr);

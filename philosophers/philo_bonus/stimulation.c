@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   stimulation.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 18:19:50 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/30 11:16:06 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/01/30 10:49:18 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/01/30 11:10:51 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,41 +29,34 @@ void	*check_meals(void *arg)
 	return (arg);
 }
 
-
-void	wait_exit(t_table *table)
+void	process(t_table *table)
 {
-	int	i;
-	int	j;
-	int	status;
+	int			i;
 
 	i = -1;
 	while (++i < table->num_philos)
 	{
-		waitpid(table->pids[i], &status, 0);
-		if (WEXITSTATUS(status) == 1)
+		table->pids[i] = fork();
+		if (table->pids[i] == -1)
+			destroy_all(table, 1, "Fork error", EXIT_FAILURE);
+		else if (table->pids[i] == 0)
 		{
-			j = -1;
-			while (++j < table->num_philos)
-			{
-				if (j != i)
-					kill(table->pids[j], SIGKILL);
-			}
-			break ;
+			init_philo();
+			routine(&table->philos[i]);
+			exit(0);
 		}
 	}
 }
 
-int	main(int ac, char **av)
+void	stimulation(t_table *table)
 {
-	t_table			table;
+	pthread_t	meal_check;
 
-	if ((ac != 5 && ac != 6) || check_input(av) == -1)
+	if (table->num_times_must_eat > 0)
 	{
-		printf("Invalid args");
-		return (0);
+		if (pthread_create(&meal_check, NULL, &check_meals, table) != 0)
+			destroy_all(table, 0, "Thread creation error", EXIT_FAILURE);
+		pthread_detach(&meal_check);
 	}
-	init_table(&table, av);
-	stimulation(&table);
-	destroy_all(&table, 0, NULL, EXIT_SUCCESS);
-	return (0);
+	process(table);
 }

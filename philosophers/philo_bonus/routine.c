@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routines.c                                         :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:22:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/28 16:34:31 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 11:15:20 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,10 @@ void	*check_death(void *arg)
 		if (get_current_time() - philo->last_meal >= philo->time_to_die)
 		{
 			write_message("died", philo);
-			sem_post();
-			
+			sem_post(philo->death_sem);
 			exit(EXIT_SUCCESS);
 		}
-		sem_post(philo->dead);
+		sem_post(philo->death_sem);
 	}
 	return (arg);
 }
@@ -83,7 +82,6 @@ void	routine(t_philo *philo)
 	if (pthread_create(&death_check, NULL, &check_death, philo) != 0)
 		cleanup();
 	pthread_detach(&death_check);
-
 	while (1)
 	{
 		ft_eat(philo);
