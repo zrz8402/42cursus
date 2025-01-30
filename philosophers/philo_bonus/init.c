@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:41:45 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/30 13:42:40 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 15:01:19 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ void	destroy_all(t_table *table, int kill_child, char *message, int signal)
 	if (table->pids)
 		free(table->pids);
 	i = -1;
-	while (++i < table->num_philos)
-	{
-		if (table->philos[i])
-			free(table->philos[i]);
-	}
 	if (table->philos)
+	{
+		while (++i < table->num_philos)
+		{
+			if (table->philos[i])
+				free(table->philos[i]);
+		}
 		free(table->philos);
+	}
 	if (message)
 		printf("%s\n", message);
 	exit(signal);

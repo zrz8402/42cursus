@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:22:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/30 14:00:39 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 14:54:35 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	*check_death(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
+		ft_usleep(10);
 		sem_wait(philo->death_sem);
 		if (get_current_time() - philo->last_meal >= philo->time_to_die)
 		{
