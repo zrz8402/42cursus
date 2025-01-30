@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 10:40:53 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/26 15:46:18 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 09:33:17 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,17 @@ void	init_philos(t_philo *philos, t_table *table,
 		philos[i].time_to_die = ft_atoi(av[2]);
 		philos[i].time_to_eat = ft_atoi(av[3]);
 		philos[i].time_to_sleep = ft_atoi(av[4]);
+		philos[i].num_times_must_eat = -1;
 		if (av[5])
 			philos[i].num_times_must_eat = ft_atoi(av[5]);
-		else
-			philos[i].num_times_must_eat = -1;
 		philos[i].start_time = get_current_time();
 		philos[i].last_meal = philos[i].start_time;
 		philos[i].meals_eaten = 0;
 		philos[i].l_fork = &forks[i];
-		philos[i].r_fork = &forks[(i + ft_atoi(av[1]) - 1) % ft_atoi(av[1])];
+		if (i == 0)
+			philos[i].r_fork = &forks[philos[i].num_philos - 1];
+		else
+			philos[i].r_fork = &forks[i - 1];
 		philos[i].dead = &table->is_dead;
 		philos[i].write_lock = &table->write_lock;
 		philos[i].finish_lock = &table->finish_lock;

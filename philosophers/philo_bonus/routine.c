@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:22:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/30 12:52:29 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 14:00:39 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	*check_death(void *arg)
 void	routine(t_philo *philo, t_table *table)
 {
 	pthread_t	death_check;
-
+	
 	if (pthread_create(&death_check, NULL, &check_death, philo) != 0)
 		destroy_all(table, 1, "Thread creation error", EXIT_FAILURE);
 	pthread_detach(death_check);

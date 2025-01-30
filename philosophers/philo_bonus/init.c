@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:41:45 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/30 12:50:12 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 13:42:40 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	init_table(t_table *table, char **av)
 {
 	int	i;
 
-	i = -1;
 	table->num_philos = ft_atoi(av[1]);
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
@@ -82,16 +81,16 @@ void	init_table(t_table *table, char **av)
 	table->pids = malloc(sizeof(pid_t) * table->num_philos);
 	if (!table->pids)
 		destroy_all(table, 0, "Malloc error", EXIT_FAILURE);
-	table->philos = malloc(sizeof(t_philo *) * table->num_philos);
+	table->philos = (t_philo **)malloc(sizeof(t_philo *) * table->num_philos);
 	if (!table->philos)
 		destroy_all(table, 0, "Malloc error", EXIT_FAILURE);
-	while (++i)
+	i = -1;
+	while (++i < table->num_philos)
 	{
 		table->pids[i] = -1;
-		table->philos[i] = malloc(sizeof(t_philo));
-		if (!table->philos[i])
-			destroy_all(table, 0, "Malloc error", EXIT_FAILURE);
+		table->philos[i] = NULL;
 	}
+	init_sems(table);
 }
 
 void	init_philo(t_table *table)
@@ -100,9 +99,12 @@ void	init_philo(t_table *table)
 	int		i;
 
 	i = -1;
+	philos = table->philos;
 	while (++i < table->num_philos)
 	{
-		philos = table->philos;
+		philos[i] = (t_philo *)malloc(sizeof(t_philo));
+		if (!philos[i])
+			destroy_all(table, 0, "Malloc error", EXIT_FAILURE);
 		philos[i]->id = i + 1;
 		philos[i]->num_philos = table->num_philos;
 		philos[i]->time_to_die = table->time_to_die;

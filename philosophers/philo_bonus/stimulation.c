@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:49:18 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/30 12:50:54 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 13:12:57 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,25 @@ void	*check_meals(void *arg)
 	return (arg);
 }
 
-void	process(t_table *table)
+void	wait_exit(t_table *table)
 {
-	int			i;
+	int	i;
+	int	j;
+	int	status;
 
 	i = -1;
 	while (++i < table->num_philos)
 	{
-		table->pids[i] = fork();
-		if (table->pids[i] == -1)
-			destroy_all(table, 1, "Fork error", EXIT_FAILURE);
-		else if (table->pids[i] == 0)
+		waitpid(table->pids[i], &status, 0);
+		if (WEXITSTATUS(status) == 1)
 		{
-			routine(table->philos[i], table);
+			j = -1;
+			while (++j < table->num_philos)
+			{
+				if (j != i)
+					kill(table->pids[j], SIGKILL);
+			}
+			break ;
 		}
 	}
 }
@@ -49,6 +55,7 @@ void	process(t_table *table)
 void	stimulation(t_table *table)
 {
 	pthread_t	meal_check;
+	int			i;
 
 	if (table->num_times_must_eat > 0)
 	{
@@ -56,6 +63,14 @@ void	stimulation(t_table *table)
 			destroy_all(table, 0, "Thread creation error", EXIT_FAILURE);
 		pthread_detach(meal_check);
 	}
-	process(table);
-	// waitpid(-1, NULL, 0);
+	i = -1;
+	while (++i < table->num_philos)
+	{
+		table->pids[i] = fork();
+		if (table->pids[i] == -1)
+			destroy_all(table, 1, "Fork error", EXIT_FAILURE);
+		else if (table->pids[i] == 0)
+			routine(table->philos[i], table);
+	}
+	wait_exit(table);
 }
