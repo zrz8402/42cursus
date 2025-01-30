@@ -6,29 +6,11 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:19:50 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/30 11:16:06 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 12:50:38 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-void	*check_meals(void *arg)
-{
-	t_table	*table;
-	int		finished;
-
-	finished = 0;
-	table = (t_table *)arg;
-	while (1)
-	{
-		sem_wait(table->meal_sem);
-		++finished;
-		if (finished >= table->num_philos)
-			cleanup(table);
-	}
-	return (arg);
-}
-
 
 void	wait_exit(t_table *table)
 {
@@ -63,7 +45,8 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	init_table(&table, av);
+	init_philo(&table);
 	stimulation(&table);
-	destroy_all(&table, 0, NULL, EXIT_SUCCESS);
+	// destroy_all(&table, 0, NULL, EXIT_SUCCESS);
 	return (0);
 }

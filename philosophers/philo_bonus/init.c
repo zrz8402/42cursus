@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:41:45 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/30 11:08:57 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 12:50:12 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ void	destroy_all(t_table *table, int kill_child, char *message, int signal)
 	sem_unlink("/death");
 	if (table->pids)
 		free(table->pids);
+	i = -1;
+	while (++i < table->num_philos)
+	{
+		if (table->philos[i])
+			free(table->philos[i]);
+	}
+	if (table->philos)
+		free(table->philos);
 	if (message)
 		printf("%s\n", message);
 	exit(signal);
@@ -72,8 +80,41 @@ void	init_table(t_table *table, char **av)
 	if (av[5])
 		table->num_times_must_eat = ft_atoi(av[5]);
 	table->pids = malloc(sizeof(pid_t) * table->num_philos);
-	while (++i)
-		table->pids[i] = -1;
 	if (!table->pids)
 		destroy_all(table, 0, "Malloc error", EXIT_FAILURE);
+	table->philos = malloc(sizeof(t_philo *) * table->num_philos);
+	if (!table->philos)
+		destroy_all(table, 0, "Malloc error", EXIT_FAILURE);
+	while (++i)
+	{
+		table->pids[i] = -1;
+		table->philos[i] = malloc(sizeof(t_philo));
+		if (!table->philos[i])
+			destroy_all(table, 0, "Malloc error", EXIT_FAILURE);
+	}
+}
+
+void	init_philo(t_table *table)
+{
+	t_philo **philos;
+	int		i;
+
+	i = -1;
+	while (++i < table->num_philos)
+	{
+		philos = table->philos;
+		philos[i]->id = i + 1;
+		philos[i]->num_philos = table->num_philos;
+		philos[i]->time_to_die = table->time_to_die;
+		philos[i]->time_to_eat = table->time_to_eat;
+		philos[i]->time_to_sleep = table->time_to_sleep;
+		philos[i]->num_times_must_eat = table->num_times_must_eat;
+		philos[i]->start_time = get_current_time();
+		philos[i]->last_meal = get_current_time();
+		philos[i]->meals_eaten = 0;
+		philos[i]->fork_sem = table->fork_sem;
+		philos[i]->write_sem = table->write_sem;
+		philos[i]->meal_sem = table->meal_sem;
+		philos[i]->death_sem = table->death_sem;
+	}
 }

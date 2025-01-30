@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:22:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/30 11:15:20 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 12:52:29 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	write_message(char *message, t_philo *philo)
 
 	sem_wait(philo->write_sem);
 	time = get_current_time() - philo->start_time;
-	if (!finish(philo))
-		printf("%zu %d %s\n", time, philo->id, message);
+	printf("%zu %d %s\n", time, philo->id, message);
 	sem_post(philo->write_sem);
 }
 
@@ -75,13 +74,13 @@ void	*check_death(void *arg)
 	return (arg);
 }
 
-void	routine(t_philo *philo)
+void	routine(t_philo *philo, t_table *table)
 {
 	pthread_t	death_check;
 
 	if (pthread_create(&death_check, NULL, &check_death, philo) != 0)
-		cleanup();
-	pthread_detach(&death_check);
+		destroy_all(table, 1, "Thread creation error", EXIT_FAILURE);
+	pthread_detach(death_check);
 	while (1)
 	{
 		ft_eat(philo);

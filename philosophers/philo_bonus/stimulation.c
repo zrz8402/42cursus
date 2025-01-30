@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:49:18 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/30 11:10:51 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/30 12:50:54 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*check_meals(void *arg)
 		sem_wait(table->meal_sem);
 		++finished;
 		if (finished >= table->num_philos)
-			cleanup(table);
+			destroy_all(table, 1, NULL, EXIT_SUCCESS);
 	}
 	return (arg);
 }
@@ -41,9 +41,7 @@ void	process(t_table *table)
 			destroy_all(table, 1, "Fork error", EXIT_FAILURE);
 		else if (table->pids[i] == 0)
 		{
-			init_philo();
-			routine(&table->philos[i]);
-			exit(0);
+			routine(table->philos[i], table);
 		}
 	}
 }
@@ -56,7 +54,8 @@ void	stimulation(t_table *table)
 	{
 		if (pthread_create(&meal_check, NULL, &check_meals, table) != 0)
 			destroy_all(table, 0, "Thread creation error", EXIT_FAILURE);
-		pthread_detach(&meal_check);
+		pthread_detach(meal_check);
 	}
 	process(table);
+	// waitpid(-1, NULL, 0);
 }
