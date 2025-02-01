@@ -21,49 +21,38 @@ void	ft_think(t_philo *philo, t_table *table)
 
 void	ft_sleep(t_philo *philo, t_table *table)
 {
-	pthread_mutex_lock(&table->stop_lock);
-	if (table->stop)
-	{
-		pthread_mutex_unlock(&table->stop_lock);
-		return ;
-	}
-	pthread_mutex_unlock(&table->stop_lock);
+	// pthread_mutex_lock(&table->stop_lock);
+	// if (table->stop)
+	// {
+	// 	pthread_mutex_unlock(&table->stop_lock);
+	// 	return ;
+	// }
+	// pthread_mutex_unlock(&table->stop_lock);
 	write_message("is sleeping", philo, table);
 	ft_usleep(table->time_to_sleep);
 }
 
-void ft_eat(t_philo *philo, t_table *table) {
-    // Early exit if the simulation has stopped
-    pthread_mutex_lock(&table->stop_lock);
-    if (table->stop) {
-        pthread_mutex_unlock(&table->stop_lock);
-        return;
-    }
-    pthread_mutex_unlock(&table->stop_lock);
-
-    // Lock forks in a consistent order to avoid deadlocks
+void ft_eat(t_philo *philo, t_table *table)
+{
     pthread_mutex_lock(philo->r_fork);
     write_message("has taken a fork", philo, table);
 
     if (table->num_philos == 1) {
         ft_usleep(table->time_to_die);
         pthread_mutex_unlock(philo->r_fork);
-        return;
+        return ;
     }
 
     pthread_mutex_lock(philo->l_fork);
     write_message("has taken a fork", philo, table);
 
-    // Update eating status
     write_message("is eating", philo, table);
     pthread_mutex_lock(&philo->time_lock);
     philo->last_meal = get_current_time();
     pthread_mutex_unlock(&philo->time_lock);
 
-    // Simulate eating
     ft_usleep(table->time_to_eat);
 
-    // Update meals eaten
     pthread_mutex_lock(&philo->meal_lock);
     philo->meals_eaten++;
     pthread_mutex_unlock(&philo->meal_lock);
