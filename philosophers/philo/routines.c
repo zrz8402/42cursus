@@ -34,17 +34,29 @@ void	ft_sleep(t_philo *philo, t_table *table)
 
 void ft_eat(t_philo *philo, t_table *table)
 {
-    pthread_mutex_lock(philo->r_fork);
-    write_message("has taken a fork", philo, table);
-
-    if (table->num_philos == 1) {
-        ft_usleep(table->time_to_die);
-        pthread_mutex_unlock(philo->r_fork);
-        return ;
+    if (philo->id % 2 == 0) {
+        pthread_mutex_lock(philo->l_fork);
+        write_message("has taken a fork", philo, table);
+        pthread_mutex_lock(philo->r_fork);
+        write_message("has taken a fork", philo, table);
+    } else {
+        pthread_mutex_lock(philo->r_fork);
+        write_message("has taken a fork", philo, table);
+        pthread_mutex_lock(philo->l_fork);
+        write_message("has taken a fork", philo, table);
     }
 
-    pthread_mutex_lock(philo->l_fork);
-    write_message("has taken a fork", philo, table);
+    // pthread_mutex_lock(philo->r_fork);
+    // write_message("has taken a fork", philo, table);
+
+    // if (table->num_philos == 1) {
+    //     ft_usleep(table->time_to_die);
+    //     pthread_mutex_unlock(philo->r_fork);
+    //     return ;
+    // }
+
+    // pthread_mutex_lock(philo->l_fork);
+    // write_message("has taken a fork", philo, table);
 
     write_message("is eating", philo, table);
     pthread_mutex_lock(&philo->time_lock);
