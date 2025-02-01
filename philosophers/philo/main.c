@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:52:21 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/28 12:53:46 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/01 12:25:13 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	main(int ac, char **av)
 		printf("Invalid args");
 		return (0);
 	}
-	init_table(&table, philos);
+	init_table(&table, philos, av);
 	init_forks(forks, ft_atoi(av[1]));
-	init_philos(philos, &table, forks, av);
-	if (thread(&table))
+	init_philos(philos, &table, forks);
+	if (stimulation(&table))
 	{
 		cleanup(NULL, &table, forks);
 		return (1);
