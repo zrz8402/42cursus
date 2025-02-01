@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 12:21:55 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/01 13:37:13 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/01 14:27:53 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	*monitor(void *arg)
 	while (1)
 	{
 		pthread_mutex_lock(&table->stop_lock);
-		if (table->finished >= table->num_philos || table->stop)
+		if (table->num_finished >= table->num_philos || table->stop)
 		{
 			pthread_mutex_unlock(&table->stop_lock);
 			break ;

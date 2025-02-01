@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 10:40:53 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/01 13:34:51 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/01 14:25:28 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	init_table(t_table *table, t_philo *philos, char **av)
 	if (av[5])
 		table->num_times_must_eat = ft_atoi(av[5]);
 	table->stop = 0;
-	table->finished = 0;
+	table->num_finished = 0;
 	table->philos = philos;
 	pthread_mutex_init(&table->write_lock, NULL);
 	pthread_mutex_init(&table->stop_lock, NULL);

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 12:58:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/01 13:34:48 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/01 14:25:24 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_table
 	size_t			time_to_sleep; // av[4];
 	int				num_times_must_eat; // av[5] ? av[5] : -1
 	int				stop;
-	int				finished;
+	int				num_finished;
 	pthread_mutex_t	write_lock;  // for writing messages
 	pthread_mutex_t	stop_lock; // for stop, if someone died
 	pthread_mutex_t	finish_lock; // for finish, if people eat X meals

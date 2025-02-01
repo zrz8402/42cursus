@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 15:08:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/01 13:33:29 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/01 14:36:30 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ int	stimulation(t_table *table)
 	int			i;
 
 	i = -1;
+	if (pthread_create(&control, NULL, &monitor, table) != 0)
+		return (1);
 	while (++i < table->num_philos)
 	{
 		if (pthread_create(&table->philos[i].thread, NULL,
 				&routine, &table->philos[i]))
 			return (1);
 	}
-	if (pthread_create(&control, NULL, &monitor, table) != 0)
-		return (1);
 	i = -1;
 	while (++i < table->num_philos)
 	{
