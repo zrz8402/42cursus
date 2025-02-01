@@ -32,53 +32,57 @@ void	ft_sleep(t_philo *philo, t_table *table)
 	ft_usleep(table->time_to_sleep);
 }
 
-void	eat(t_philo *philo, t_table *table)
-{
-}
+void ft_eat(t_philo *philo, t_table *table) {
+    // Early exit if the simulation has stopped
+    pthread_mutex_lock(&table->stop_lock);
+    if (table->stop) {
+        pthread_mutex_unlock(&table->stop_lock);
+        return;
+    }
+    pthread_mutex_unlock(&table->stop_lock);
 
-void	ft_eat(t_philo *philo, t_table *table)
-{
-	pthread_mutex_lock(&table->stop_lock);
-	if (table->stop)
-	{
-		pthread_mutex_unlock(&table->stop_lock);
-		return ;
-	}
-	pthread_mutex_unlock(&table->stop_lock);
+    // Lock forks in a consistent order to avoid deadlocks
+    pthread_mutex_lock(philo->r_fork);
+    write_message("has taken a fork", philo, table);
 
-	pthread_mutex_lock(philo->r_fork);
-	write_message("has taken a fork", philo, table);
-	if (table->num_philos == 1)
-	{
-		ft_usleep(table->time_to_die);
-		pthread_mutex_unlock(philo->r_fork);
-		return ;
-	}
-	pthread_mutex_lock(philo->l_fork);
-	write_message("has taken a fork", philo, table);
-	write_message("is eating", philo, table);
-	pthread_mutex_lock(&philo->time_lock);
-	philo->last_meal = get_current_time();
-	pthread_mutex_unlock(&philo->time_lock);
+    if (table->num_philos == 1) {
+        ft_usleep(table->time_to_die);
+        pthread_mutex_unlock(philo->r_fork);
+        return;
+    }
 
-	ft_usleep(table->time_to_eat);
-	pthread_mutex_lock(&philo->meal_lock);
-	philo->meals_eaten++;
-	pthread_mutex_unlock(&philo->meal_lock);
+    pthread_mutex_lock(philo->l_fork);
+    write_message("has taken a fork", philo, table);
 
-	pthread_mutex_unlock(philo->l_fork);
-	pthread_mutex_unlock(philo->r_fork);
+    // Update eating status
+    write_message("is eating", philo, table);
+    pthread_mutex_lock(&philo->time_lock);
+    philo->last_meal = get_current_time();
+    pthread_mutex_unlock(&philo->time_lock);
 
-	if (table->num_times_must_eat != -1 || philo->meals_eaten == table->num_times_must_eat)
-	{
-		pthread_mutex_lock(&table->finish_lock);
-		pthread_mutex_lock(&table->stop_lock);
-		table->num_finished++;
-		if (table->num_finished == table->num_philos)
-			table->stop = 1;
-		pthread_mutex_unlock(&table->stop_lock);
-		pthread_mutex_unlock(&table->finish_lock);
-	}
+    // Simulate eating
+    ft_usleep(table->time_to_eat);
+
+    // Update meals eaten
+    pthread_mutex_lock(&philo->meal_lock);
+    philo->meals_eaten++;
+    pthread_mutex_unlock(&philo->meal_lock);
+
+    // Unlock forks
+    pthread_mutex_unlock(philo->l_fork);
+    pthread_mutex_unlock(philo->r_fork);
+
+    // Check if all philosophers have finished eating
+    if (table->num_times_must_eat != -1 && philo->meals_eaten >= table->num_times_must_eat) {
+        pthread_mutex_lock(&table->finish_lock);
+        table->num_finished++;
+        if (table->num_finished == table->num_philos) {
+            pthread_mutex_lock(&table->stop_lock);
+            table->stop = 1;
+            pthread_mutex_unlock(&table->stop_lock);
+        }
+        pthread_mutex_unlock(&table->finish_lock);
+    }
 }
 
 void	*routine(void *arg)
