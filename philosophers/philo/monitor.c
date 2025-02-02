@@ -5,82 +5,89 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 12:21:55 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/22 12:36:34 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/02/02 15:34:43 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/02/02 18:07:23 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	write_message(char *message, t_philo *philo)
+void	to_log(t_philo *philo, char *message)
 {
-	size_t	time;
+	long int	stamp;
 
-	pthread_mutex_lock(philo->write_lock);
-	time = get_current_time() - philo->start_time;
-	if (!finish(philo))
-		printf("%zu %d %s\n", time, philo->id, message);
-	pthread_mutex_unlock(philo->write_lock);
+	stamp = get_current_time() - philo->table->start_time;
+	pthread_mutex_lock(&philo->table->log_mutex);
+	if (!finished(philo, 1) || ft_strcmp(message, "died") == 0)
+		printf("%ld %d %s\n", stamp, philo->id, message);
+	pthread_mutex_unlock(&philo->table->log_mutex);
 }
 
-int	philo_is_dead(t_philo *philo)
+int	get_status(t_philo *philo)
 {
-	pthread_mutex_lock(philo->finish_lock);
-	if (get_current_time() - philo->last_meal >= philo->time_to_die)
+	if (philo->times_eaten == philo->table->num_must_eat)
 	{
-		pthread_mutex_unlock(philo->finish_lock);
-		return (1);
-	}
-	pthread_mutex_unlock(philo->finish_lock);
-	return (0);
-}
-
-int	has_dead(t_philo *philos)
-{
-	int	i;
-
-	i = -1;
-	while (++i < philos[0].num_philos)
-	{
-		if (philo_is_dead(&philos[i]))
+		pthread_mutex_lock(&philo->table->monitor_mutex);
+		philo->table->num_finished++;
+		if (philo->table->num_finished == philo->table->num_philos)
 		{
-			write_message("died", &philos[i]);
-			pthread_mutex_lock(philos[0].finish_lock);
-			*philos->dead = 1;
-			pthread_mutex_unlock(philos[0].finish_lock);
+			pthread_mutex_unlock(&philo->table->monitor_mutex);
+			finished(philo, 0);
 			return (1);
 		}
+		pthread_mutex_unlock(&philo->table->monitor_mutex);
+		return (0);
 	}
 	return (0);
 }
 
-int	all_ate(t_philo *philos)
+int	finished(t_philo *philo, int status)
 {
-	int	i;
-
-	i = -1;
-	if (philos[0].num_times_must_eat == -1)
-		return (0);
-	while (++i < philos[0].num_philos)
+	pthread_mutex_lock(&philo->table->death_mutex);
+	if (status == 0)
+		philo->table->stop = 1;
+	if (philo->table->stop == 1)
 	{
-		if (philos[i].meals_eaten < philos[i].num_times_must_eat)
-			return (0);
+		pthread_mutex_unlock(&philo->table->death_mutex);
+		return (1);
 	}
-	pthread_mutex_lock(philos[0].finish_lock);
-	*philos->dead = 1;
-	pthread_mutex_unlock(philos[0].finish_lock);
-	return (1);
+	pthread_mutex_unlock(&philo->table->death_mutex);
+	return (0);
+}
+
+int	philo_is_dead(t_table *table, int i)
+{
+	pthread_mutex_lock(&table->eating_mutex);
+	if (get_current_time() - table->philos[i]->last_meal_time
+		>= table->time_to_die)
+	{
+		pthread_mutex_unlock(&table->eating_mutex);
+		finished(table->philos[i], 0);
+		to_log(table->philos[i], "died");
+		return (1);
+	}
+	pthread_mutex_unlock(&table->eating_mutex);
+	return (0);
 }
 
 void	*monitor(void *arg)
 {
-	t_philo	*philos;
+	t_table	*table;
+	int		i;
 
-	philos = (t_philo *)arg;
-	while (1)
+	table = (t_table *)arg;
+	ft_usleep(50000);
+	while (!finished(table->philos[0], 1))
 	{
-		if (has_dead(philos) == 1 || all_ate(philos) == 1)
-			break ;
+		i = -1;
+		ft_usleep(1000);
+		while (++i < table->num_philos)
+		{
+			if (finished(table->philos[i], 1))
+				return (NULL);
+			if (philo_is_dead(table, i))
+				return (NULL);
+		}
 	}
-	return (arg);
+	return (NULL);
 }

@@ -5,75 +5,81 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 12:58:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/26 15:46:13 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/02/02 15:05:52 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/02/02 18:06:00 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <pthread.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <sys/time.h>
-
 # define MAX_PHILO 200
 
-typedef struct s_philo
-{
-	pthread_t		thread;
-	int				id;
-	int				num_philos; // av[1]
-	size_t			time_to_die; // av[2];
-	size_t			time_to_eat; // av[3];
-	size_t			time_to_sleep; // av[4];
-	int				num_times_must_eat; // av[5] ? av[5] : -1
-	size_t			start_time;
-	size_t			last_meal;
-	int				meals_eaten;
-	int				*dead;
-
-	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*write_lock;
-	pthread_mutex_t	*finish_lock;
-}	t_philo;
+# include <stdio.h>
+# include <pthread.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/time.h>
 
 typedef struct s_table
 {
-	int				is_dead;
-	pthread_mutex_t	write_lock;
-	pthread_mutex_t	finish_lock;
-	t_philo			*philos;
+	long			start_time;
+	int				num_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_must_eat;
+	int				num_finished;
+	int				stop; // -> death mutex
+	pthread_t		monitor;
+	pthread_mutex_t	**forks;
+	struct s_philo	**philos;
+	pthread_mutex_t	log_mutex;
+	pthread_mutex_t	eating_mutex;
+	pthread_mutex_t	monitor_mutex;
+	pthread_mutex_t	death_mutex;
 }	t_table;
 
-// utils.c
-int		check_input(char **av);
-int		ft_atoi(const char *nptr);
-size_t	get_current_time(void);
-void	ft_usleep(size_t milliseconds);
+typedef struct s_philo
+{
+	int				id;
+	int				times_eaten;
+	long			last_meal_time;
+	pthread_t		thread;
+	pthread_mutex_t	*first_fork;
+	pthread_mutex_t	*second_fork;
+	t_table			*table;
+}	t_philo;
 
 // init.c
-void	init_philos(t_philo *philos, t_table *table,
-			pthread_mutex_t *forks, char **av);
-void	init_forks(pthread_mutex_t *forks, int num_forks);
-void	init_table(t_table *table, t_philo *philos);
+int		init_forks(t_table *table);
+int		init_philo(t_table *table);
+int		init_table(t_table *table, char **av);
+int		init(t_table *table, char **av);
 
-// threads.c
-void	cleanup(char *message, t_table *table, pthread_mutex_t *forks);
-void	thread(t_table *table, pthread_mutex_t *forks);
+// simulation.c
+long	get_current_time(void);
+void	cleanup(t_table *table);
+int		simulation(t_table *table);
 
 // monitor.c
-void	write_message(char *message, t_philo *philo);
+void	to_log(t_philo *philo, char *message);
+int		get_status(t_philo *philo);
+int		finished(t_philo *philo, int status);
+int		philo_is_dead(t_table *table, int i);
 void	*monitor(void *arg);
 
 // routine.c
-void	ft_think(t_philo *philo);
-void	ft_sleep(t_philo *philo);
 void	ft_eat(t_philo *philo);
-int		finish(t_philo *philo);
+void	ft_sleep(t_philo *philo);
+void	ft_think(t_philo *philo);
 void	*routine(void *arg);
+
+//utils
+int		ft_atoi(const char *nptr);
+int		check_input(char **av);
+int		ft_strcmp(const char *s1, const char *s2);
+void	ft_usleep(long int time_in_microseconds);
 
 #endif

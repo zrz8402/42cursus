@@ -5,27 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 15:52:21 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/22 12:35:49 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/02/02 15:00:09 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/02/02 18:06:16 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+int	main(int argc, char **av)
 {
-	t_table			table;
-	t_philo			philos[MAX_PHILO];
-	pthread_mutex_t	forks[MAX_PHILO];
+	t_table	table;	
 
-	if ((ac != 5 && ac != 6) || check_input(av) == -1)
+	if ((argc != 5 && argc != 6) || check_input(av) == -1)
 	{
 		printf("Invalid args");
-		return (0);
+		return (-1);
 	}
-	init_table(&table, philos);
-	init_forks(forks, ft_atoi(av[1]));
-	init_philos(philos, &table, forks, av);
-	thread(&table, forks);
-	cleanup(NULL, &table, forks);
+	if (!init(&table, av))
+	{
+		free(table.philos);
+		return (1);
+	}
+	if (!simulation(&table))
+		return (1);
+	cleanup(&table);
+	return (0);
 }

@@ -5,54 +5,90 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 10:40:53 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/26 15:46:18 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/02/02 15:04:33 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/02/02 18:06:35 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_philos(t_philo *philos, t_table *table,
-		pthread_mutex_t *forks, char **av)
+int	init_forks(t_table *table)
 {
 	int	i;
 
 	i = -1;
-	while (++i < ft_atoi(av[1]))
+	table->forks = malloc(sizeof(pthread_mutex_t) * table->num_philos);
+	if (!table->forks)
+		return (0);
+	while (++i < table->num_philos)
 	{
-		philos[i].id = i + 1;
-		philos[i].num_philos = ft_atoi(av[1]);
-		philos[i].time_to_die = ft_atoi(av[2]);
-		philos[i].time_to_eat = ft_atoi(av[3]);
-		philos[i].time_to_sleep = ft_atoi(av[4]);
-		if (av[5])
-			philos[i].num_times_must_eat = ft_atoi(av[5]);
-		else
-			philos[i].num_times_must_eat = -1;
-		philos[i].start_time = get_current_time();
-		philos[i].last_meal = philos[i].start_time;
-		philos[i].meals_eaten = 0;
-		philos[i].l_fork = &forks[i];
-		philos[i].r_fork = &forks[(i + ft_atoi(av[1]) - 1) % ft_atoi(av[1])];
-		philos[i].dead = &table->is_dead;
-		philos[i].write_lock = &table->write_lock;
-		philos[i].finish_lock = &table->finish_lock;
+		table->forks[i] = malloc(sizeof(pthread_mutex_t));
+		if (!table->forks[i])
+			return (0);
+		if (pthread_mutex_init(table->forks[i], NULL) != 0)
+			return (0);
 	}
+	return (1);
 }
 
-void	init_forks(pthread_mutex_t *forks, int num_forks)
+int	init_philo(t_table *table)
 {
-	int	i;
+	t_philo	*philo;
+	int		i;
 
-	i = -1;
-	while (++i < num_forks)
-		pthread_mutex_init(&forks[i], NULL);
+	i = 0;
+	while (i < table->num_philos)
+	{
+		table->philos[i] = malloc(sizeof(t_philo));
+		if (!table->philos[i])
+			return (0);
+		philo = table->philos[i];
+		philo->id = i + 1;
+		philo->times_eaten = 0;
+		philo->table = table;
+		if (i > 0)
+			table->philos[i]->first_fork = table->forks[i - 1];
+		else
+			table->philos[i]->first_fork = table->forks[table->num_philos - 1];
+		table->philos[i]->second_fork = table->forks[i];
+		i++;
+	}
+	return (1);
 }
 
-void	init_table(t_table *table, t_philo *philos)
+int	init_table(t_table *table, char **av)
 {
-	table->is_dead = 0;
-	table->philos = philos;
-	pthread_mutex_init(&table->write_lock, NULL);
-	pthread_mutex_init(&table->finish_lock, NULL);
+	table->num_philos = ft_atoi(av[1]);
+	table->time_to_die = ft_atoi(av[2]);
+	table->time_to_eat = ft_atoi(av[3]) * 1000;
+	table->time_to_sleep = ft_atoi(av[4]) * 1000;
+	table->stop = 0;
+	if (av[5])
+		table->num_must_eat = ft_atoi(av[5]);
+	else
+		table->num_must_eat = -1;
+	table->num_finished = 0;
+	table->philos = malloc(sizeof(t_philo) * table->num_philos);
+	if (!table->philos)
+		return (0);
+	if (pthread_mutex_init(&table->log_mutex, NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(&table->eating_mutex, NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(&table->monitor_mutex, NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(&table->death_mutex, NULL) != 0)
+		return (0);
+	return (1);
+}
+
+int	init(t_table *table, char **argv)
+{
+	if (!init_table(table, argv))
+		return (0);
+	if (!init_forks(table))
+		return (0);
+	if (!init_philo(table))
+		return (0);
+	return (1);
 }

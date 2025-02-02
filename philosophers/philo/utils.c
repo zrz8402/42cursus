@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 15:44:41 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/02 11:31:49 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/02/02 15:03:59 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/02/02 18:06:21 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,26 @@ int	check_input(char **av)
 	return (0);
 }
 
-size_t	get_current_time(void)
-{
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
-}
-
 // sleep() only allows for sleeping for whole seconds
 // Fine-Grained Control:
 // 	usleep in small increments gives the program more control over the timing
 // 	without consuming too much CPU
 // 	as it does not need to constantly poll the time without any sleep.
-void	ft_usleep(size_t milliseconds)
+void	ft_usleep(long int time_in_microseconds)
 {
-	size_t	start;
+	long int	start;
 
-	start = get_current_time();
-	while ((get_current_time() - start) < milliseconds)
-		usleep(500);
+	start = get_current_time() * 1000;
+	while ((get_current_time() * 1000 - start) < time_in_microseconds)
+		usleep(100);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while ((s1[i] && s2[i]) && (s1[i] == s2[i]))
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
