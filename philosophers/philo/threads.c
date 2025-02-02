@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 15:08:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/28 12:53:13 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/26 15:46:30 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,26 @@ void	cleanup(char *message, t_table *table, pthread_mutex_t *forks)
 	}
 }
 
-int	thread(t_table *table)
+void	thread(t_table *table, pthread_mutex_t *forks)
 {
 	pthread_t	control;
 	int			i;
 
 	if (pthread_create(&control, NULL, &monitor, table->philos) != 0)
-		return (1);
+		return (cleanup("Thread creation error", table, forks));
 	i = -1;
 	while (++i < table->philos[0].num_philos)
 	{
 		if (pthread_create(&table->philos[i].thread, NULL,
 				&routine, &table->philos[i]))
-			return (1);
+			return (cleanup("Thread creation error", table, forks));
 	}
 	if (pthread_join(control, NULL) != 0)
-		return (1);
+		return (cleanup("Thread join error", table, forks));
 	i = -1;
 	while (++i < table->philos[0].num_philos)
 	{
 		if (pthread_join(table->philos[i].thread, NULL) != 0)
-			return (1);
+			return (cleanup("Thread join error", table, forks));
 	}
-	return (0);
 }

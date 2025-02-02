@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:19:47 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/28 12:54:36 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/26 19:55:56 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,20 @@ typedef struct s_philo
 
 	sem_t	*fork_sem;
 	sem_t	*write_sem;
+	sem_t	*meal_sem;
 }	t_philo;
 
 typedef struct s_table
 {
-	int			num_philos;
-	size_t		time_to_die;
-	size_t		time_to_eat;
-	size_t		time_to_sleep;
-	int			num_times_must_eat;
-	int			all_ate;
-	sem_t		*fork_sem;
-	sem_t		*write_sem;
-	t_philo		*philos;
-	pid_t		*pids;
+	int				num_philos;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	int				all_ate;
+	sem_t			write_sem;
+	sem_t			meal_sem;
+	t_philo			*philos;
+	pid_t			*pids;
 }	t_table;
 
 

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:22:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/28 12:00:52 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/01/26 18:52:37 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	*routine(void *arg)
 	if (philo->id % 2 == 0)
 		ft_usleep(1);
 	while (!finish(philo))
-	{ 
+	{
 		ft_eat(philo);
 		ft_sleep(philo);
 		ft_think(philo);
