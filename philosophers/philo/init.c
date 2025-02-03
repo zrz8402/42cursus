@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 15:04:33 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/03 11:43:08 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/03 12:06:20 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	init_forks(t_table *table)
 
 int	init_philo(t_table *table)
 {
-	t_philo	*philo;
 	int		i;
 
 	i = 0;
@@ -42,10 +41,9 @@ int	init_philo(t_table *table)
 		table->philos[i] = malloc(sizeof(t_philo));
 		if (!table->philos[i])
 			return (0);
-		philo = table->philos[i];
-		philo->id = i + 1;
-		philo->times_eaten = 0;
-		philo->table = table;
+		table->philos[i]->id = i + 1;
+		table->philos[i]->times_eaten = 0;
+		table->philos[i]->table = table;
 		if (i > 0)
 			table->philos[i]->first_fork = table->forks[i - 1];
 		else

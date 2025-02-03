@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 15:19:54 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/03 11:43:59 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/03 12:15:19 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int	simulation(t_table *table)
 	int	i;
 
 	table->start_time = get_current_time();
-	if (pthread_create(&table->monitor, NULL, monitor, table) != 0)
-		return (0);
 	i = -1;
 	while (++i < table->num_philos)
 	{
@@ -58,6 +56,8 @@ int	simulation(t_table *table)
 				routine, table->philos[i]) != 0)
 			return (0);
 	}
+	if (pthread_create(&table->monitor, NULL, monitor, table) != 0)
+		return (0);
 	i = -1;
 	while (++i < table->num_philos)
 		pthread_join(table->philos[i]->thread, NULL);

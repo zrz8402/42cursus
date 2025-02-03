@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 15:05:52 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/03 11:48:13 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/03 11:55:43 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_table
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_must_eat;
-	int				num_finished;
+	int				num_finished; // -> monitor mutex
 	int				stop; // -> death mutex
 	pthread_t		monitor;
 	pthread_mutex_t	**forks;
@@ -44,8 +44,8 @@ typedef struct s_table
 typedef struct s_philo
 {
 	int				id;
-	int				times_eaten;
-	long			last_meal_time;
+	int				times_eaten; // -> meal mutex 
+	long			last_meal_time; // -> meal mutex 
 	pthread_t		thread;
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
