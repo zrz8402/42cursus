@@ -6,24 +6,24 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 15:34:43 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/02 18:07:23 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/03 11:48:33 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	to_log(t_philo *philo, char *message)
+void	print_status(t_philo *philo, char *message)
 {
 	long int	stamp;
 
 	stamp = get_current_time() - philo->table->start_time;
-	pthread_mutex_lock(&philo->table->log_mutex);
+	pthread_mutex_lock(&philo->table->write_mutex);
 	if (!finished(philo, 1) || ft_strcmp(message, "died") == 0)
 		printf("%ld %d %s\n", stamp, philo->id, message);
-	pthread_mutex_unlock(&philo->table->log_mutex);
+	pthread_mutex_unlock(&philo->table->write_mutex);
 }
 
-int	get_status(t_philo *philo)
+int	finish_eating(t_philo *philo)
 {
 	if (philo->times_eaten == philo->table->num_must_eat)
 	{
@@ -33,12 +33,12 @@ int	get_status(t_philo *philo)
 		{
 			pthread_mutex_unlock(&philo->table->monitor_mutex);
 			finished(philo, 0);
-			return (1);
+			return (0);
 		}
 		pthread_mutex_unlock(&philo->table->monitor_mutex);
-		return (0);
+		return (1);
 	}
-	return (0);
+	return (1);
 }
 
 int	finished(t_philo *philo, int status)
@@ -57,16 +57,16 @@ int	finished(t_philo *philo, int status)
 
 int	philo_is_dead(t_table *table, int i)
 {
-	pthread_mutex_lock(&table->eating_mutex);
+	pthread_mutex_lock(&table->meal_mutex);
 	if (get_current_time() - table->philos[i]->last_meal_time
 		>= table->time_to_die)
 	{
-		pthread_mutex_unlock(&table->eating_mutex);
+		pthread_mutex_unlock(&table->meal_mutex);
 		finished(table->philos[i], 0);
-		to_log(table->philos[i], "died");
+		print_status(table->philos[i], "died");
 		return (1);
 	}
-	pthread_mutex_unlock(&table->eating_mutex);
+	pthread_mutex_unlock(&table->meal_mutex);
 	return (0);
 }
 

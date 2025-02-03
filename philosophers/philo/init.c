@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 15:04:33 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/02 18:06:35 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/03 11:43:08 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int	init_table(t_table *table, char **av)
 	table->philos = malloc(sizeof(t_philo) * table->num_philos);
 	if (!table->philos)
 		return (0);
-	if (pthread_mutex_init(&table->log_mutex, NULL) != 0)
+	if (pthread_mutex_init(&table->write_mutex, NULL) != 0)
 		return (0);
-	if (pthread_mutex_init(&table->eating_mutex, NULL) != 0)
+	if (pthread_mutex_init(&table->meal_mutex, NULL) != 0)
 		return (0);
 	if (pthread_mutex_init(&table->monitor_mutex, NULL) != 0)
 		return (0);

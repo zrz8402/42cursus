@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 15:05:52 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/02 18:06:00 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/03 11:48:13 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct s_table
 	pthread_t		monitor;
 	pthread_mutex_t	**forks;
 	struct s_philo	**philos;
-	pthread_mutex_t	log_mutex;
-	pthread_mutex_t	eating_mutex;
+	pthread_mutex_t	write_mutex;
+	pthread_mutex_t	meal_mutex;
 	pthread_mutex_t	monitor_mutex;
 	pthread_mutex_t	death_mutex;
 }	t_table;
@@ -64,8 +64,8 @@ void	cleanup(t_table *table);
 int		simulation(t_table *table);
 
 // monitor.c
-void	to_log(t_philo *philo, char *message);
-int		get_status(t_philo *philo);
+void	print_status(t_philo *philo, char *message);
+int		finish_eating(t_philo *philo);
 int		finished(t_philo *philo, int status);
 int		philo_is_dead(t_table *table, int i);
 void	*monitor(void *arg);

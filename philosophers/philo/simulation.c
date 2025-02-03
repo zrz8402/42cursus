@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 15:19:54 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/02 18:07:31 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/03 11:43:59 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ void	cleanup(t_table *table)
 		free(table->philos[i]);
 		free(table->forks[i]);
 	}
-	pthread_mutex_destroy(&table->eating_mutex);
-	pthread_mutex_destroy(&table->log_mutex);
+	pthread_mutex_destroy(&table->meal_mutex);
+	pthread_mutex_destroy(&table->write_mutex);
 	pthread_mutex_destroy(&table->monitor_mutex);
 	pthread_mutex_destroy(&table->death_mutex);
-	free(table->forks);
-	free(table->philos);
+	if (table->forks)
+		free(table->forks);
+	if (table->philos)
+		free(table->philos);
 }
 
 int	simulation(t_table *table)
