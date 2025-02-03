@@ -1,4 +1,4 @@
-NAME = lexer
+NAME = minishell
 
 CC = cc
 CFLAGS =
@@ -10,7 +10,7 @@ LIBFT_A = $(LIBFT)/libft.a
 
 HEADERS = -I ./inc -I $(LIBFT)
 
-SRCS = lexer/lexer.c
+SRCS = 
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

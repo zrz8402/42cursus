@@ -20,4 +20,31 @@
 		// to-do: understand how to make built-in cmds work
 
 
-q
+echo -n 
+	print text without newline
+	write()
+
+cd (with a relative or absolute path)
+	chdir() --#include <stdio.h>
+
+pwd (no options)
+	get the current working directory
+	getcwd() --#include <unistd.h>
+
+export (no options)
+	set environment variables
+	setenv() --#include <stdlib.h>
+
+unset (no options)
+	unset environment variables
+	unsetenv() --#include <unistd.h>
+
+env (no options/args)
+	getenv()
+
+exit (no options)
+	exit() --#include <stdlib.h>
+
+
+
+

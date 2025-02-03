@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:58:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/11/19 18:01:35 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/03 17:14:04 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@
 // have: function(dir), cases(file), notes(file)....
 int	main(void)
 {
+
 	// test ls
-	// char	*cmds[5] = {"/bin/ls", "-a", "-l", NULL};
-	// execve(cmds[0], cmds, __environ);
-	// char	*cmds[5] = {"/bin/ls", "-a", "..", NULL};
-	// execve(cmds[0], cmds, __environ);
-	// char	*cmds[5] = {"/bin/ls", "-al", "function", NULL};
-	// execve(cmds[0], cmds, __environ);
+	// char	*cmd1[5] = {"/bin/ls", "-a", "-l", NULL};
+	// execve(cmd1[0], cmd1, __environ);
+	// char	*cmd2[5] = {"/bin/ls", "-a", "..", NULL};
+	// execve(cmd2[0], cmd2, __environ);
+	// char	*cmd3[5] = {"/bin/ls", "-al", "function", NULL};
+	// execve(cmd3[0], cmd3, __environ);
 
 	// test cat
 	// char	*cmds[5] = {"/bin/cat", "notes", "cases", NULL};
