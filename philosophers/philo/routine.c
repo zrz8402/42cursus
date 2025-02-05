@@ -58,7 +58,7 @@ void	ft_sleep(t_philo *philo)
 void	ft_think(t_philo *philo)
 {
 	print_status(philo, "is sleeping");
-	ft_usleep(philo->table->time_to_sleep);
+	ft_usleep(1);
 }
 
 void	*routine(void *arg)
