@@ -15,7 +15,37 @@ int	main(void)
 	else
 		perror("getcwd failed");
 
-	if (chdir("/home/ruzhang") == 0)
+	// if (chdir("/home/ruzhang") == 0)
+	// {
+	// 	printf("Directory changed successfully.\n");
+	// 	cwd = getcwd(NULL, 0);
+	// 	if (cwd)
+	// 	{
+	// 		printf("New working directory: %s\n", cwd);
+	// 		free(cwd);
+	// 	}
+	// 	else
+	// 		perror("getcwd failed");
+	// }
+	// else
+	// 	perror("chdir failed");
+
+	// if (chdir("../..") == 0)
+	// {
+	// 	printf("Directory changed successfully.\n");
+	// 	cwd = getcwd(NULL, 0);
+	// 	if (cwd)
+	// 	{
+	// 		printf("New working directory: %s\n", cwd);
+	// 		free(cwd);
+	// 	}
+	// 	else
+	// 		perror("getcwd failed");
+	// }
+	// else
+	// 	perror("chdir failed");
+
+	if (chdir("~") == 0)
 	{
 		printf("Directory changed successfully.\n");
 		cwd = getcwd(NULL, 0);
@@ -29,5 +59,6 @@ int	main(void)
 	}
 	else
 		perror("chdir failed");
+
 	return (0);
 }

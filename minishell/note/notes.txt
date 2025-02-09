@@ -20,12 +20,50 @@
 		// to-do: understand how to make built-in cmds work
 
 
-echo -n 
-	print text without newline
-	write()
+echo with/without -n 
+	print text with/without newline
+  =>
+	echo
+		printf("\n");
+	echo hello world
+		printf("hello world"\n)
+	echo hello            world
+		printf("hello world"\n)
+	echo "hello            world"
+		printf("hello            world\n")
+	echo -n
+		return ;
+	echo -nnnnn hello
+		printf("hello")
+	echo -n -n "hello"
+		printf("hello")
+  =>
+	while (args[i] == "option")
+		i++;
+		option = 1
+	while (args[i])
+		printf(agrs[i])
+		if (next)
+			printf(" ") // add a space between
+		i++
+	if (option == 0)
+		printf("\n")
+	return (0);
 
 cd (with a relative or absolute path)
 	chdir() --#include <stdio.h>
+  =>
+	cd arg1 arg2
+		bash: cd: too many arguments
+	cd
+		change to HOME
+		if (!HOME)
+			bash: cd: HOME not set
+	cd "dir"
+		chdir(dir)
+		if fail
+			bash: cd: dir: No such file or directory
+	update PWD
 
 pwd (no options)
 	get the current working directory
