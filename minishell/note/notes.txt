@@ -33,14 +33,35 @@ pwd (no options)
 
 export (no options)
 	set environment variables
-	setenv() --#include <stdlib.h>
+  =>
+	case 1: export // with nothing
+		print all env variables with format like in order:
+			declare -x CHROME_DESKTOP="code.desktop"
+		if VALUE == NULL
+			declare -x A
+		if VALUE is empty
+			declare -x A=""
+	case 2: export A
+		add variable A to env_list, its value = NULL
+	case 3: export A=
+		add variable A to env_list, its value = "" (empty)
+	case 4: export A=hello || export A="hello" || export A=hello'
+		add variable A to env_list, its value = hello
+		-> export A="hello" || export A='hello'
+		-> export A="hello""world" => its value = helloworld
+	case 5: export A="hello" "world"
+		add variable A to env_list, its value = hello
+		add variable world to env_list
 
 unset (no options)
 	unset environment variables
 	unsetenv() --#include <unistd.h>
 
 env (no options/args)
-	getenv()
+	getenv(VARIABLE)
+	if VALUE != NULL
+		printf("VARIABLE=VALUE")
+	
 
 exit (no options)
 	exit() --#include <stdlib.h>
