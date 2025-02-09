@@ -65,7 +65,3 @@ env (no options/args)
 
 exit (no options)
 	exit() --#include <stdlib.h>
-
-
-
-
