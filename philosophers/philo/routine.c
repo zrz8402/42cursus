@@ -57,7 +57,7 @@ void	ft_sleep(t_philo *philo)
 
 void	ft_think(t_philo *philo)
 {
-	print_status(philo, "is sleeping");
+	print_status(philo, "is thinking");
 	ft_usleep(1);
 }
 
