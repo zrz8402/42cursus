@@ -13,12 +13,15 @@
 		dup2(in, STDIN_FILENO)
 		dup2(out, STDOUT_FILENO)
 	execute part
-		built-in commands(may work differently)
+		built-in commands(work differently)
 		[cmd, options, arguments, NULL];
 		cmd - parse cmd
 		// to-do: understand how to work with $(VARIABLE)
-		// to-do: understand how to make built-in cmds work
 
+
+
+
+Built-in Commands:
 
 echo with/without -n 
 	print text with/without newline
@@ -72,13 +75,14 @@ pwd (no options)
 export (no options)
 	set environment variables
   =>
-	case 1: export // with nothing
-		print all env variables with format like in order:
+	case 1: export
+		print all env variables with following format in order:
 			declare -x CHROME_DESKTOP="code.desktop"
 		if VALUE == NULL
 			declare -x A
 		if VALUE is empty
 			declare -x A=""
+		do not print "_=/usr/bin/env" starting with underscore
 	case 2: export A
 		add variable A to env_list, its value = NULL
 	case 3: export A=
@@ -90,16 +94,73 @@ export (no options)
 	case 5: export A="hello" "world"
 		add variable A to env_list, its value = hello
 		add variable world to env_list
+  =>
+	if (no_arg)
+		sort env_list
+		printf(env_list)
+	to be added
+
+
+env (no options/args)
+	if VALUE != NULL
+		printf("VARIABLE=VALUE")
 
 unset (no options)
 	unset environment variables
-	unsetenv() --#include <unistd.h>
+  =>
+	if (no_arg)
+		return
+	while (arg)
+		if arg in env
+			remove from env_list
+		arg++
 
-env (no options/args)
-	getenv(VARIABLE)
-	if VALUE != NULL
-		printf("VARIABLE=VALUE")
-	
 
 exit (no options)
 	exit() --#include <stdlib.h>
+  ->check exit status with echo $?
+  =>
+	exit a || exit ++0
+		exit
+		bash: exit: a: numeric argument required
+		(exit the program)
+	exit 9 99
+		exit
+		bash: exit: too many arguments
+		(do not exit the program)
+	exit
+		exit
+	exit 10
+		exit (echo $? = 10)
+	exit -10
+		exit (echo $? = 246)
+  =>
+	if (no_arg)
+		exit(0)
+	if (ac > 2)
+		printf("too many arguments")
+		return 1
+	if (invalid_arg)
+		printf("numeric argument required")
+	exit(atoi(arg))
+
+
+
+exit status codes:
+	0: Success 
+	Non-zero values (1–255): Failure or error
+
+	1: General error 
+		— This is often used for "generic" failure when no other specific exit code applies.
+	2: Misuse of shell builtins 
+		— For example, in Bash, exit 2 might be used when the command syntax is wrong.
+	126: Command invoked cannot execute 
+		— This could happen if a command doesn't have execute permission.
+	127: Command not found 
+		— This is a typical exit code if a command doesn't exist in the system's path.
+	128: Invalid argument to exit 
+		— This exit code is used when the exit function is used incorrectly.
+	130: Script terminated by Ctrl+C 
+		— This occurs when a program or script is interrupted by the user (Ctrl+C).
+	255: Exit status out of range 
+		— An exit status code over 255 is usually an error or an invalid status.

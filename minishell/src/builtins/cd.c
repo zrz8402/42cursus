@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 15:50:05 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/09 16:34:55 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/10 13:32:13 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	cd_home(void)
 	return (0);
 }
 
-// suppose args = cd path
-int	builtin_cd(char *args, int ac)
+// suppose argv = cd path
+int	builtin_cd(char *argv, int ac)
 {
 	if (ac > 2)
 	{
@@ -41,10 +41,10 @@ int	builtin_cd(char *args, int ac)
 	}
 	if (ac == 1)
 		return (cd_home());
-	if (chdir(args[1]) != 0)
+	if (chdir(argv[1]) != 0)
 	{
 		ft_putchar_fd("minishell: cd: ", 2);
-		ft_putchar_fd(args[1], 2);
+		ft_putchar_fd(argv[1], 2);
 		ft_putchar_fd(": No such file or directory\n", 2);
 		return (1);		
 	}
