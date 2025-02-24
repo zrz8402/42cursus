@@ -16,7 +16,6 @@
 		built-in commands(work differently)
 		[cmd, options, arguments, NULL];
 		cmd - parse cmd
-		// to-do: understand how to work with $(VARIABLE)
 
 
 
@@ -29,9 +28,9 @@ echo with/without -n
 	echo
 		printf("\n");
 	echo hello world
-		printf("hello world"\n)
+		printf("hello world\n")
 	echo hello            world
-		printf("hello world"\n)
+		printf("hello world\n")
 	echo "hello            world"
 		printf("hello            world\n")
 	echo -n
@@ -164,3 +163,37 @@ exit status codes:
 		— This occurs when a program or script is interrupted by the user (Ctrl+C).
 	255: Exit status out of range 
 		— An exit status code over 255 is usually an error or an invalid status.
+
+
+
+init():
+	init_program()
+	init_env()
+	update_shlvl()  // SHLVL: shell level, call ./minishell -> value(SHLVL) + 1
+
+
+// may not using all and may not cover all, list here for hint
+t_program
+{
+		t_lex		*lex_list;	// 'input' -> 'tokens' -> lex_list in parsing
+								// lex_list -> 'redir' + 'cmd'
+		char		**envp;		// to env_list
+		t_env		*env_list; 	// to print out env and for export
+		int			env_len; 	// maybe
+		int			status;		 // $?
+		int			exit;
+}
+
+t_lex
+{
+	enum e_ltype		type;
+	char				*value;
+	int					fd_int; // to be decided how to use this later
+	struct s_lex		*next_lex;	
+}
+		
+t_cmd
+{
+	char	**args;		//['cmd', 'arg1', 'arg2'...]
+						//may be empty; e.g. << EOF | wc -l
+}

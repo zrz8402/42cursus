@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:27:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/10 16:51:23 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/18 14:00:34 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ int	builtin_exit(int ac, char **av)
 		exit(1);
 	}
 	exit_code = ft_atoi(av[1]);
-	if (exit_code == 0)
-		ft_putchar_fd("exit\n", 1);
-	else
-		ft_putchar_fd("exit\n", 2);
+	ft_putchar_fd("exit\n", 1);
 	cleanup();
 	exit(exit_code);
 }
