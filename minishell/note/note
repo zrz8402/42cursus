@@ -73,6 +73,7 @@ pwd (no options)
 
 export (no options)
 	set environment variables
+	export VAR=value
   =>
 	case 1: export
 		print all env variables with following format in order:
@@ -81,7 +82,7 @@ export (no options)
 			declare -x A
 		if VALUE is empty
 			declare -x A=""
-		do not print "_=/usr/bin/env" starting with underscore
+		do not print "_=/usr/bin/env" with VAR=_ single underscore
 	case 2: export A
 		add variable A to env_list, its value = NULL
 	case 3: export A=
@@ -98,6 +99,13 @@ export (no options)
 		sort env_list
 		printf(env_list)
 	to be added
+
+
+  => env var name requirements:
+	must beigin with letter/_underscore
+	can contain letters, numbers, underscores
+	case-sensitive
+	no special characters(like @, !, -, /, or spaces)
 
 
 env (no options/args)

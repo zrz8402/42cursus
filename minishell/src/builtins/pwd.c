@@ -6,13 +6,13 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:35:43 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/09 14:56:25 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/24 13:01:53 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_pwd(void)
+int	builtin_pwd(t_command *cmd, t_program *minishell)
 {
 	char	*cwd;
 	char	buf[1024];

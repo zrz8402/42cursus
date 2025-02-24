@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/24 09:53:24 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/24 12:59:35 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,16 @@ typedef struct s_program
 
 
 
-
-// exec
-
+// exec_builtin.c
+int		is_builtin(char *arg);
+void	exec_builtin(t_command *cmd, t_program *minishell);
 
 // builtins
-
-
+int		builtin_echo(t_command *cmd, t_program *minishell);
+int		builtin_cd(t_command *cmd, t_program *minishell);
+int		builtin_pwd(t_command *cmd, t_program *minishell);
+int		builtin_export(t_command *cmd, t_program *minishell);
+int		builtin_unset(t_command *cmd, t_program *minishell);
+int		builtin_env(t_command *cmd, t_program *minishell);
+int		builtin_exit(t_command *cmd, t_program *minishell);
 #endif

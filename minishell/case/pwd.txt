@@ -1,0 +1,12 @@
+basic
+- [ ]  pwd a
+- [ ]  pwd a b c d
+// no difference with pwd
+
+
+Other (ignore)
+- [ ]  cd ../../../../../.. ; pwd
+- [ ]  cd .. | pwd
+	// do not change directory; check with cd command
+- [ ]  export pwd
+- [ ]  unset pwd

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 14:35:25 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/10 13:32:01 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/24 12:53:15 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,22 @@ int	with_option(char *s)
 	return (1);
 }
 
-// suppose agrv = echo option...s text....s
-int	builtin_echo(char *argv)
+int	builtin_echo(t_command *cmd, t_program *minishell)
 {
 	int	i;
 	int	option;
 
 	i = 1;
 	option = 0;
-	while (argv[i] && with_option(argv[i]))
+	while (cmd->args[i] && with_option(cmd->args[i]))
 	{
 		option = 1;
 		i++;
 	}
-	while (argv[i])
+	while (cmd->args[i])
 	{
-		ft_putchar_fd(argv[i], 1);
-		if (argv[i + 1])
+		ft_putchar_fd(cmd->args[i], 1);
+		if (cmd->args[i + 1])
 			ft_putchar_fd(" ", 1);
 		i++;
 	}

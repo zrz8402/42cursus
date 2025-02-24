@@ -6,13 +6,13 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:16:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/10 17:25:40 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/02/24 13:01:49 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_export()
+int	builtin_export(t_command *cmd, t_program *minishell)
 {
 	
 }

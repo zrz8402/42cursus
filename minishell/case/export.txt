@@ -1,0 +1,84 @@
+basic
+- [ ]  export "test=ici"=coucou
+- [ ]  export LOL=lala ROR=rara
+- [ ]  export "HI= hi"
+- [ ]  export TEST=123
+- [ ]  export ___TEST=123
+- [ ]  export _TEST=100
+- [ ]  export _TEST=123
+- [ ]  export TES_T=123
+- [ ]  export TEST_=123
+- [ ]  export ________=123
+ 
+- [ ]  export TES=T=""
+- [ ]  export TES=T=123
+
+
+not setting value for variable
+	// value($VAR) = NULL
+- [ ]  export TEST
+- [ ]  export export
+- [ ]  export echo
+- [ ]  export pwd
+- [ ]  export cd
+- [ ]  export export
+- [ ]  export unset
+- [ ]  export sudo
+- [ ]  export TEST
+
+
+Kind of set value but value = empty string
+	// value($VAR) = ""
+- [ ]  export TEST=
+
+
+Invalid:
+invalid option
+- [ ]  export --TEST=123
+- [ ]  export -TEST=100
+
+not a valid identifier:
+- [ ]  export "" et unset ""
+- [ ]  export var ="cat Makefile | grep >"
+- [ ]  export ""=""
+- [ ]  export ''=''
+- [ ]  export "="="="
+- [ ]  export '='='='
+- [ ]  export TE\\ST=100
+- [ ]  export TE-ST=100
+- [ ]  export TEST-=100
+- [ ]  export ==========
+- [ ]  export 1TEST=
+- [ ]  export TE+S=T=""
+- [ ]  export TES.T=123
+- [ ]  export TES\$T=123
+- [ ]  export TES\\T
+- [ ]  export TES+T=123
+- [ ]  export TES}T=123
+- [ ]  export TES{T=123
+- [ ]  export -TEST=123
+- [ ]  export TE*ST=123
+- [ ]  export TES#T=123
+- [ ]  export TES@T=123
+- [ ]  export TES!T=123
+- [ ]  export TES$?T=123
+- [ ]  export =============123
+- [ ]  export +++++++=123
+- [ ]  export TES^T=123
+- [ ]  export TES!T=123
+- [ ]  export TES~T=123
+- [ ]  export TEST+=100
+- [ ]  export "HI =hi"
+- [ ]  export $?
+
+
+Other:
+- [ ]  unset export
+- [ ]  export TEST=1 test=2 sup=
+- [ ]  export TEST=123 | cat -e | cat -e
+	// $TEST does not exist
+- [ ]  export TEST=1 test=2 sup= | env
+	// $TEST does not exist
+- [ ]  export | grep "SHLVL"
+- [ ]  export | grep "OLDPWD"
+- [ ]  export | grep "PWD"
