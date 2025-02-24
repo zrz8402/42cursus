@@ -41,6 +41,8 @@ with -n
 
 // not see as option -n
 - [ ]  echo -n"-n" bonjour
+	// -n-n bonjour
+	// unwrap double quotes
 - [ ]  echo "-n -n -n"-n bonjour
 - [ ]  echo "-n '-n'" bonjour
 
@@ -50,9 +52,6 @@ basic
 - [ ]  echo 2 >> out1 > out2
 - [ ]  echo 2 > out1 >> out2
 - [ ]  /bin/echo bonjour
-- [ ]  echo "$HOME"
-- [ ]  echo '$HOME'
-	// difference in interpreting double vs single quotes
 - [ ]  > log echo coucou
 - [ ]  echo
 - [ ]  echo simple

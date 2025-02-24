@@ -1,0 +1,29 @@
+Deadline:
+2.28 Friday - finish built-in commands (basic)
+
+
+built_in commands
+- echo ~
+- cd
+- pwd ~
+- export
+- unset
+- env
+- exit
+
+2.25
+get env_list for built-in commands
+
+
+
+change lex_list to
+  redir array
+  cmd array
+
+pipes
+  pipe()
+  need to close it
+pids
+  fork()
+  waitpid()
+cleanup
