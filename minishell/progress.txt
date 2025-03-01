@@ -1,5 +1,5 @@
 Deadline:
-2.28 Friday - finish built-in commands (basic)
+3.2 Friday - finish built-in commands (basic)
 
 
 built_in commands
@@ -7,12 +7,9 @@ built_in commands
 - cd
 - pwd ~
 - export
-- unset
-- env
+- unset ~
+- env ~
 - exit
-
-2.25
-get env_list for built-in commands
 
 
 

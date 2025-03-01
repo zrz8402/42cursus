@@ -6,10 +6,12 @@
 // int			status;
 // int			exit;
 
-void    init()
+void    init(t_program *minishell, char **envp)
 {
-    init_env();
-    update_shlvl();
+	ft_memset(minishell, 0, sizeof(t_program));
+    // update_shlvl();
+	minishell->envp = envp;
+    init_env(minishell);
 }
 
 int main(int ac, char **av, char **envp)
@@ -19,7 +21,9 @@ int main(int ac, char **av, char **envp)
     (void) ac;
     (void) av;
 
-    init();
-    run();
-    cleanup();
+    init(&minishell, envp);
+	print_lst(minishell.envlst);
+	free_lst(minishell.envlst);
+    // run();
+    // cleanup();
 }

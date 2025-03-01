@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/24 18:03:45 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/01 12:06:50 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
-	int				sign;
 	struct s_env	*next;
 }	t_env;
 
 typedef struct s_program
 {
-	t_lex		*lex_list;
-	t_command	*cmd;
-	t_env		*env_list;
+	// t_lex		*lex_list;
+	// t_command	*cmd;
+	char		**envp;
+	t_env		*envlst;
 	int			status;
 	int			exit;
 }	t_program;
