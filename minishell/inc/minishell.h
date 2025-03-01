@@ -18,17 +18,48 @@
 # include <stdio.h>
 # include "libft.h"
 
+enum	e_ltype
+{
+	COMMAND,
+	ARGUMENT,
+	PIPE,
+	RED_IN,
+	RED_OUT,
+	APPEND,
+	HEREDOC,
+	NO_TYPE,
+};
+
+typedef struct s_lex
+{
+	enum e_ltype		type;
+	char				*value;
+	int					fd_int;
+	struct s_lex		*next_lex;
+}						t_lex;
+
 typedef struct s_command
 {
 	char	**args;
 	
 }	t_command;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	int				sign;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_program
 {
-	/* data */
+	t_lex		*lex_list;
+	t_command	*cmd;
+	t_env		*env_list;
+	int			status;
+	int			exit;
 }	t_program;
-
 
 
 // exec_builtin.c

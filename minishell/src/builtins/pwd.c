@@ -18,7 +18,7 @@ int	builtin_pwd(t_command *cmd, t_program *minishell)
 	char	buf[1024];
 
 	cwd = getcwd(buf, sizeof(buf));
-	if (!cwd)
+	if (!cwd) 
 	{
 		perror("getcwd failed");
 		return (1);
