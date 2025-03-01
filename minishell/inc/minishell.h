@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/01 12:06:50 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/01 13:09:23 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,8 @@ int		builtin_export(t_command *cmd, t_program *minishell);
 int		builtin_unset(t_command *cmd, t_program *minishell);
 int		builtin_env(t_command *cmd, t_program *minishell);
 int		builtin_exit(t_command *cmd, t_program *minishell);
+
+void	init_env(t_program *minishell);
+void	update_envlst(t_program *minishell, char *key, char *value, int append);
+void	free_lst(t_env *envlst);
 #endif

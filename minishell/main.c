@@ -22,8 +22,25 @@ int main(int ac, char **av, char **envp)
     (void) av;
 
     init(&minishell, envp);
-	print_lst(minishell.envlst);
+	// print_lst(minishell.envlst);
+	// free_lst(minishell.envlst);
+
+	t_command cmd;
+
+	char *arg3[] = {"env", "PATH", NULL};
+	cmd.args = arg3;
+	builtin_env(&cmd, &minishell);
+
+	char *arg1[] = {"unset", "PATH", NULL};
+	cmd.args = arg1;
+	builtin_unset(&cmd, &minishell);
+
+	char *arg2[] = {"env", "PATH", NULL};
+	cmd.args = arg2;
+	builtin_env(&cmd, &minishell);
 	free_lst(minishell.envlst);
+
+
     // run();
     // cleanup();
 }

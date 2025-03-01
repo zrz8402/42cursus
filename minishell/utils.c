@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/09 13:07:13 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/01 13:19:10 by ruzhang          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 void	init_env(t_program *minishell)
@@ -100,14 +88,39 @@ int	builtin_env(t_command *cmd, t_program *minishell)
 	return (0);
 }
 
-// void	print_lst(t_env *envlst)
-// {
-// 	while (envlst)
-// 	{
-// 		if (envlst->value)
-// 			printf("%s=%s\n", envlst->key, envlst->value);
-// 		else
-// 			printf("%s", envlst->key);
-// 		envlst = envlst->next;
-// 	}
-// }
+void	unset_var(t_env **envlst, char *key)
+{
+	t_env	*prev;
+	t_env	*cur;
+
+	prev = NULL;
+	cur = *envlst;
+	while (cur)
+	{
+		if (ft_strncmp(key, cur->key, ft_strlen(key)) == 0)
+		{
+			if (prev)
+				prev->next = cur->next;
+			else
+				*envlst = cur->next;
+			free(cur->key);
+			free(cur->value);
+			free(cur);
+			return ;
+		}
+		prev = cur;
+		cur = cur->next;
+	}
+}
+
+int	builtin_unset(t_command *cmd, t_program *minishell)
+{
+	int	i;
+
+	if (!cmd->args[1])
+		return (0);
+	i = 0;
+	while (cmd->args[++i])
+		unset_var(&minishell->envlst, cmd->args[i]);
+	return (0);
+}
