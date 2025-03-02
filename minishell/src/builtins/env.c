@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:07:13 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/01 13:19:10 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/02 14:14:02 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,54 +36,30 @@ void	init_env(t_program *minishell)
 	}
 }
 
-t_env	*create_node(char *key, char *value)
-{
-	t_env *new;
-
-	new = (t_env *)ft_calloc(1, sizeof(t_env));
-	if (!new)
-		return (NULL);
-	new->key = ft_strdup(key);
-	if (value)
-		new->value = ft_strdup(value);
-	new->next = NULL;
-	return (new);
-}
-
-void	append_node(t_env **envlst, t_env *new)
+void	update_envlst(t_program *minishell, char *key, char *value, int append)
 {
 	t_env	*tmp;
 
-	if (!*envlst)
+	if (append)
 	{
-		*envlst = new;
+		append_node(&minishell->envlst, create_node(key, value));
 		return ;
 	}
-	tmp = *envlst;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-}
-
-void	update_envlst(t_program *minishell, char *key, char *value, int append)
-{
-	if (append)
-		append_node(&minishell->envlst, create_node(key, value));
-}
-
-void	free_lst(t_env *envlst)
-{
-	t_env *tmp;
-
-	while (envlst)
+	tmp = minishell->envlst;
+	while (tmp)
 	{
-		tmp = envlst;
-		envlst = envlst->next;
-		free(tmp->key);
-		if (tmp->value)
-			free(tmp->value);
-		free(tmp);
+		if (ft_strncmp(key, tmp->key, ft_strlen(key)) == 0)
+		{
+			if (value)
+			{
+				free(tmp->value);
+				tmp->value = ft_strdup(value);
+			}
+			return ;
+		}
+		tmp = tmp->next;
 	}
+	append_node(&minishell->envlst, create_node(key, value));
 }
 
 int	builtin_env(t_command *cmd, t_program *minishell)
@@ -94,7 +70,12 @@ int	builtin_env(t_command *cmd, t_program *minishell)
 	while (tmp)
 	{
 		if (tmp->value)
-			printf("%s=%s\n", tmp->key, tmp->value);
+		{
+			ft_putstr_fd(tmp->key, 1);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(tmp->value, 1);
+			ft_putstr_fd("\n", 1);
+		}
 		tmp = tmp->next;
 	}
 	return (0);

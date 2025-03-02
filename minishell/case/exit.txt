@@ -39,7 +39,7 @@ not numeric
 - [ ]  exit a
 - [ ]  exit z
 - [ ]  exit "+++1230"
-- [ ]  exit 9223372036854775808 
+- [ ]  exit 9223372036854775808
 	// out of long long range, not numeric
 - [ ]  exit --000
 - [ ]  exit +++++++000

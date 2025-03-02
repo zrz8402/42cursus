@@ -131,6 +131,12 @@ exit (no options)
 		exit
 		bash: exit: a: numeric argument required
 		(exit the program)
+	exit 9 a
+		exit
+		bash: exit: too many arguments
+	exit a 88
+		exit
+		bash: exit: a: numeric argument required
 	exit 9 99
 		exit
 		bash: exit: too many arguments
@@ -144,11 +150,11 @@ exit (no options)
   =>
 	if (no_arg)
 		exit(0)
+	if (invalid_arg)
+		printf("numeric argument required")
 	if (ac > 2)
 		printf("too many arguments")
 		return 1
-	if (invalid_arg)
-		printf("numeric argument required")
 	exit(atoi(arg))
 
 

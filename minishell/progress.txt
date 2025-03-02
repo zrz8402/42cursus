@@ -24,3 +24,9 @@ pids
   fork()
   waitpid()
 cleanup
+
+
+ONLY change pwd and oldpwd in both envp and envlst
+->cd
+
+export -> change envlst

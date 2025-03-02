@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/01 13:09:23 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/02 13:28:07 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <unistd.h>
 # include <stdio.h>
 # include "libft.h"
+
+# define LONG_MAX 9223372036854775807
+# define LONG_MIN -9223372036854775807
 
 enum	e_ltype
 {
@@ -53,8 +56,8 @@ typedef struct s_env
 
 typedef struct s_program
 {
-	// t_lex		*lex_list;
-	// t_command	*cmd;
+	t_lex		*lex_list;
+	t_command	*cmd;
 	char		**envp;
 	t_env		*envlst;
 	int			status;
@@ -78,4 +81,5 @@ int		builtin_exit(t_command *cmd, t_program *minishell);
 void	init_env(t_program *minishell);
 void	update_envlst(t_program *minishell, char *key, char *value, int append);
 void	free_lst(t_env *envlst);
+char	*get_var_value(char *key, t_env *envlst);
 #endif
