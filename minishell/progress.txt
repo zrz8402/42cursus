@@ -1,32 +1,43 @@
 Deadline:
-3.2 Friday - finish built-in commands (basic)
+redir + process
+first ddl: 3.7 Friday
+second ddl: 3.9 Sunday
 
 
+~ 3.2 finish built-in commands (basic)
 built_in commands
 - echo ~
-- cd
+- cd ~
 - pwd ~
 - export
 - unset ~
 - env ~
-- exit
+- exit ~
 
-
+Things left:
+	decide whether update envp or not
+	export without, undefined or print all
 
 change lex_list to
   redir array
   cmd array
 
-pipes
-  pipe()
-  need to close it
-pids
-  fork()
-  waitpid()
-cleanup
+redir + process
+	pipes
+		- pipe()
+		need to close it
+	pids
+		-fork()
+		-waitpid()
+
+cleanup()
 
 
+TO BE DECIDED:
 ONLY change pwd and oldpwd in both envp and envlst
-->cd
-
+(or make it even easier, do not change any in envp)
+	-> relates to cd
+	-> if change both
+		could be done when finding shlvl?
+		save index of pwd and oldpwd somewhere if we don't plan to change other env var
 export -> change envlst
