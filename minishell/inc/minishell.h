@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/02 13:28:07 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/06 16:30:46 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,42 @@ typedef struct s_lex
 	struct s_lex		*next_lex;
 }						t_lex;
 
+// I might use an array right now just to write process part
+// anyway, it will be a linear structure easy to loop
+typedef struct s_redir
+{
+	char				**redirection;
+	// enum e_ltype		type;
+	// char				*value;
+	// int				heredoc_fd;
+}	t_redir;
+
+// one cmd chunk contains args([cmd, arg1, arg2]) + redirections
+// args could be null(no command)
+// or easier to check having a cmd as valid input is easier
+// then args will always have something (flexible to change at my part)
 typedef struct s_command
 {
-	char	**args;
-	
+	char				**args;
+	t_redir				*redirections;
+	struct s_command	*next;
 }	t_command;
+
+// lex_list to cmd chunks
+typedef struct s_pipeline
+{
+	t_command	*cmd;
+	int			num_cmds;
+}	t_pipeline;
+
+
+typedef struct s_pipex
+{
+	int		i;
+	int		prev_fd;
+	int		cur_pipefd[2];
+	pid_t	*pids;
+}	t_pipex;
 
 typedef struct s_env
 {
@@ -57,7 +88,6 @@ typedef struct s_env
 typedef struct s_program
 {
 	t_lex		*lex_list;
-	t_command	*cmd;
 	char		**envp;
 	t_env		*envlst;
 	int			status;
@@ -82,4 +112,12 @@ void	init_env(t_program *minishell);
 void	update_envlst(t_program *minishell, char *key, char *value, int append);
 void	free_lst(t_env *envlst);
 char	*get_var_value(char *key, t_env *envlst);
+
+void	free_arr(char **s);
+void	check_execute(char *path, char **args, char **envp, char **paths);
+char	**parse_path(t_env *envlst);
+char	*join_str(char const *s1, char const *s2);
+void	execute(char **args, t_env *envlst, char **envp);
+void	ft_error(char *message, int code, int fd);
+
 #endif

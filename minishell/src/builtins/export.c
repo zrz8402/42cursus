@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:16:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/02 16:07:21 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:38:40 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	builtin_export(t_command *cmd, t_program *minishell)
 		{
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(cmd->args[1], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			ft_putendl_fd("': not a valid identifier", 2);
 		}
 		else
 		{

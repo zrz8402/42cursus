@@ -10,7 +10,7 @@ LIBFT_A = $(LIBFT)/libft.a
 
 HEADERS = -I ./inc -I $(LIBFT)
 
-SRCS = main.c utils.c
+SRCS = main.c utils.c process.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

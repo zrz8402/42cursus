@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:35:43 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/24 18:04:34 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:41:20 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	builtin_pwd(void)
 		perror("getcwd failed");
 		return (1);
 	}
-	ft_putstr_fd(cwd, 1);
-	ft_putstr_fd("\n", 1);
+	ft_putendl_fd(cwd, 1);
 	return (0);
 }
 

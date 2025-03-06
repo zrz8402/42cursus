@@ -211,3 +211,7 @@ t_cmd
 	char	**args;		//['cmd', 'arg1', 'arg2'...]
 						//may be empty; e.g. << EOF | wc -l
 }
+
+
+valgrind -q --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --error-limit=no --suppressions=valgrind.supp
+

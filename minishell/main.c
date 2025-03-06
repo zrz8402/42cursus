@@ -48,7 +48,7 @@ int	builtin_exit(t_command *cmd, t_program *minishell)
 	{
 		if (!valid_arg(cmd->args[1]))
 		{
-			ft_putstr_fd("exit\n", 2);
+			ft_putendl_fd("exit", 2);
 			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(cmd->args[1], 2);	
 			ft_putstr_fd(": numeric argument required\n", 2);
@@ -68,6 +68,32 @@ int	builtin_exit(t_command *cmd, t_program *minishell)
 	exit(minishell->status);
 }
 
+void	process_in(pid_t pid, int *pipefd, char **av, char **envp, t_env *envlst)
+{
+	int	inf_fd;
+
+	if (pid < 0)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
+	}
+	if (pid == 0)
+	{
+		close(pipefd[0]);
+		// if (access(av[1], F_OK) == -1)
+		// 	ft_error("No infile", 1, pipefd[1]);
+		// inf_fd = open(av[1], O_RDONLY);
+		// if (inf_fd < 0)
+		// 	ft_error("Error opening input file", 1, pipefd[1]);
+		// if (dup2(inf_fd, STDIN_FILENO) == -1)
+		// 	ft_error("Duplicating infile fd failed", 1, pipefd[1]);
+		// close(inf_fd);
+		dup2(pipefd[1], STDOUT_FILENO);
+		close(pipefd[1]);
+		execute(av, envlst, envp);
+	}
+}
+
 int main(int ac, char **av, char **envp)
 {
     t_program   minishell;
@@ -76,8 +102,19 @@ int main(int ac, char **av, char **envp)
     (void) av;
     init(&minishell, envp);
 
-
 	t_command cmd;
+
+	int		pipefd[2];
+	pid_t	pid1;
+
+	char *arg3[] = {"ls", NULL};
+	cmd.args = arg3;
+
+	// if (pipe(pipefd) < 0)
+	// 	ft_error("Failing creating pipe", 1, -1);
+	// pid1 = fork();
+	// process_in(pid1, pipefd, arg3, envp, minishell.envlst);
+
 
 	// Testing env and unset
 
@@ -111,8 +148,8 @@ int main(int ac, char **av, char **envp)
 
 	// Testing cd
 
-	printf("PWD: %s\n", get_var_value("PWD", minishell.envlst));
-	printf("OLD: %s\n\n", get_var_value("OLDPWD", minishell.envlst));
+	// printf("PWD: %s\n", get_var_value("PWD", minishell.envlst));
+	// printf("OLD: %s\n\n", get_var_value("OLDPWD", minishell.envlst));
 
 	// char *arg1[] = {"cd", NULL};
 	// cmd.args = arg1;
@@ -134,12 +171,12 @@ int main(int ac, char **av, char **envp)
 	// cmd.args = arg4;
 	// builtin_cd(&cmd, &minishell);
 
-	char *arg5[] = {"cd", "/ashf", NULL};
-	cmd.args = arg5;
-	builtin_cd(&cmd, &minishell);
+	// char *arg5[] = {"cd", "/ashf", NULL};
+	// cmd.args = arg5;
+	// builtin_cd(&cmd, &minishell);
 
-	printf("PWD: %s\n", get_var_value("PWD", minishell.envlst));
-	printf("OLD: %s\n", get_var_value("OLDPWD", minishell.envlst));
+	// printf("PWD: %s\n", get_var_value("PWD", minishell.envlst));
+	// printf("OLD: %s\n", get_var_value("OLDPWD", minishell.envlst));
 
 
 	// free_lst(minishell.envlst);
