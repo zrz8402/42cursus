@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/07 13:47:29 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/07 15:08:53 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	process_heredoc(int	heredoc_fd)
 	close(heredoc_fd);
 }
 
-void	process_redirections()
+void	process_redirections(t_pipeline *pipeline, t_program *minishell)
 {
 	// for (int i = 0; i < n; i++)
 	// {

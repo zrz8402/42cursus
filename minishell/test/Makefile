@@ -4,9 +4,11 @@ CC = cc
 RM = rm -rf
 
 
-HEADERS = -I . -I ../../../lib/libft
+HEADERS = -I . -I ../lib/libft
 
-SRCS = test_pwd.c
+SRCS = main.c env.c env_utils.c unset.c \
+		cd.c  echo.c  exit.c  export.c pwd.c \
+		builtin.c process.c  redir.c  execute.c  
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

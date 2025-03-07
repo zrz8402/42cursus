@@ -68,32 +68,6 @@ int	builtin_exit(t_command *cmd, t_program *minishell)
 	exit(minishell->status);
 }
 
-void	process_in(pid_t pid, int *pipefd, char **av, char **envp, t_env *envlst)
-{
-	int	inf_fd;
-
-	if (pid < 0)
-	{
-		close(pipefd[0]);
-		close(pipefd[1]);
-	}
-	if (pid == 0)
-	{
-		close(pipefd[0]);
-		// if (access(av[1], F_OK) == -1)
-		// 	ft_error("No infile", 1, pipefd[1]);
-		// inf_fd = open(av[1], O_RDONLY);
-		// if (inf_fd < 0)
-		// 	ft_error("Error opening input file", 1, pipefd[1]);
-		// if (dup2(inf_fd, STDIN_FILENO) == -1)
-		// 	ft_error("Duplicating infile fd failed", 1, pipefd[1]);
-		// close(inf_fd);
-		dup2(pipefd[1], STDOUT_FILENO);
-		close(pipefd[1]);
-		execute(av, envlst, envp);
-	}
-}
-
 int main(int ac, char **av, char **envp)
 {
     t_program   minishell;
@@ -183,4 +157,38 @@ int main(int ac, char **av, char **envp)
     // run();
     // cleanup();
 	free_lst(minishell.envlst);
+}
+
+
+int main() {
+    // Example pipeline: "echo hello | cat"
+    t_pipeline pipeline;
+    
+    // Command 1: "echo hello"
+    t_command cmd1;
+    char *args1[] = {"echo", "hello", NULL};
+    t_redir redir1;
+    redir1.redirection = NULL;  // No redirection for this command
+    cmd1.args = args1;
+    cmd1.redirections = &redir1;
+    cmd1.next = NULL;
+
+    // Command 2: "cat"
+    t_command cmd2;
+    char *args2[] = {"cat", NULL};
+    t_redir redir2;
+    redir2.redirection = NULL;  // No redirection for this command
+    cmd2.args = args2;
+    cmd2.redirections = &redir2;
+    cmd2.next = NULL;
+
+    // Connect the commands in the pipeline
+    cmd1.next = &cmd2;
+    pipeline.cmd = &cmd1;
+    pipeline.num_cmds = 2;
+
+    // Process the pipeline
+    process_pipeline(&pipeline);
+
+    return 0;
 }

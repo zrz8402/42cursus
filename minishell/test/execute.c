@@ -74,9 +74,9 @@ char	*join_str(char const *s1, char const *s2)
 
 void	execute(t_program *minishell, t_pipeline *pipeline, char **args, t_pipex *p)
 {
-	char	**args;
 	char	**paths;
 	int		i;
+	char 	*tmp;
 
 	if ((!args || !*args) && (access("", F_OK) == -1))
 	{
@@ -87,10 +87,12 @@ void	execute(t_program *minishell, t_pipeline *pipeline, char **args, t_pipex *p
 	check_execute(args, minishell->envp, NULL, p);
 	paths = parse_path(minishell->envlst, p);
 	i = -1;
+	tmp = ft_strdup(args[0]);
 	while (paths[++i])
 	{
-		free(args[0]);
-		args[0] = join_str(paths[i], args[0]);
+		if (i > 0)
+			free(args[0]);
+		args[0] = join_str(paths[i], tmp);
 		check_execute(args, minishell->envp, paths, p);
 	}
 	ft_putendl_fd("Command not found", 2);

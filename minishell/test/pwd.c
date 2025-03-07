@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/24 18:03:37 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/02/09 12:35:43 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/03/06 15:38:53 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_H
-# define TEST_H
+#include "minishell.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include "../../../lib/libft/libft.h"
+int	builtin_pwd(t_command *cmd, t_program *minishell)
+{
+	char	*cwd;
+	char	buf[1024];
 
-#endif
+	cwd = getcwd(buf, sizeof(buf));
+	if (!cwd)
+	{
+		perror("getcwd failed");
+		return (1);
+	}
+	ft_putendl_fd(cwd, 1);
+	return (0);
+}

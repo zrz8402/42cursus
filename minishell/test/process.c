@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/07 14:25:40 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/07 15:49:27 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,11 @@ void	exec_one_cmd(t_pipeline *pipeline, t_program *minishell)
 		exec_builtin(pipeline->cmd, minishell);
 	else
 		execute(minishell, pipeline, pipeline->cmd->args, NULL);
-	cleanup();
 }
 
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p)
 {
-	process_redirections();
+	process_redirections(pipeline, minishell);
 	if (p->i > 0)
 		dup2(p->prev_fd, STDIN_FILENO);
 	if (p->i < pipeline->num_cmds -1)
@@ -93,7 +92,7 @@ void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 		p->pids[i] = fork();
 		if (p->pids[i] < 0)
 		{
-			error("Fork failed", 1, pipeline);
+			ft_putendl_fd("Fork failed", 1);
 			cleanup();
 			exit(1);
 		}
@@ -103,7 +102,7 @@ void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 	}
 }
 
-void	run(t_pipeline *pipeline, t_program *minishell)
+void	process_pipeline(t_pipeline *pipeline, t_program *minishell)
 {
 	t_pipex	p;
 
@@ -112,4 +111,9 @@ void	run(t_pipeline *pipeline, t_program *minishell)
 	process(pipeline, minishell, &p);
 	wait_and_status();
 	cleanup();
+}
+
+void	cleanup()
+{
+	
 }
