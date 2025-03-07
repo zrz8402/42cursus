@@ -213,5 +213,23 @@ t_cmd
 }
 
 
-valgrind -q --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --error-limit=no --suppressions=valgrind.supp
+	// 3 cmds
 
+	// i = 0
+	// dup(cur_fd[1], stdout);
+	// close(cur_fd[1]);
+	// close(cur_fd[0]);
+
+	// i = 1
+	// dup(prev_fd, stdin);
+	// dup(cur_fd[1], stdout);
+	// close(prev_fd);
+	// close(cur_fd[1]);
+	// close(cur_fd[0]);
+
+	// i = 2;
+	// dup(prev_fd, stdin);
+	// close(prev_fd);
+
+
+valgrind -q --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --error-limit=no --suppressions=valgrind.supp

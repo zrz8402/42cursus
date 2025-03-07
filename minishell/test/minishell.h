@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/07 15:09:03 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/07 17:28:59 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
+# include <sys/wait.h>
 # include "../lib/libft/libft.h"
 
 # define LONG_MAX 9223372036854775807
@@ -107,7 +108,7 @@ void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
 void	exec_one_cmd(t_pipeline *pipeline, t_program *minishell);
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p);
 void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd);
-void	wait_and_status();
+int		wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
 
 // builtin.c
 int		is_builtin(char *arg);
@@ -136,4 +137,5 @@ char	*join_str(char const *s1, char const *s2);
 void	execute(t_program *minishell, t_pipeline *pipeline, char **args, t_pipex *p);
 
 void	cleanup();
+void	free_pipeline(t_pipeline *pipeline);
 #endif
