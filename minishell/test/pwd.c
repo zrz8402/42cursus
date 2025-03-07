@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	builtin_pwd(t_command *cmd, t_program *minishell)
+void	run_pwd(t_program *minishell)
 {
 	char	*cwd;
 	char	buf[1024];
@@ -20,9 +20,8 @@ int	builtin_pwd(t_command *cmd, t_program *minishell)
 	cwd = getcwd(buf, sizeof(buf));
 	if (!cwd)
 	{
-		perror("getcwd failed");
-		return (1);
+		minishell->exit = 1;
+		return ;
 	}
 	ft_putendl_fd(cwd, 1);
-	return (0);
 }

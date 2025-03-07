@@ -56,41 +56,38 @@ void free_pipeline(t_pipeline *pipeline)
 	free(pipeline);
 }
 
-
 t_pipeline *parse_pipeline(void)
 {
     t_pipeline	*pipeline = malloc(sizeof(t_pipeline));
 
 	t_redir		*redir_in = create_redirection(RED_IN, "Makefile");
-	t_redir		*redir_out = create_redirection(RED_OUT, "output.txt");
-	t_redir		*redir_append = create_redirection(APPEND, "append.txt");
+	// t_redir		*redir_out = create_redirection(RED_OUT, "output.txt");
+	// t_redir		*redir_append = create_redirection(APPEND, "append.txt");
 
-	redir_in->next = redir_out;
-	redir_out->next = redir_append;
+	// redir_in->next = redir_out;
+	// redir_out->next = redir_append;
 
-    char		*args1[] = {"sort", "-b", NULL};
+    char		*args1[] = {"exit", "9", NULL};
 	t_redir		*redir1 = redir_in;
-    t_command	*cmd1 = create_command(args1, 2, redir1);
+    t_command	*cmd1 = create_command(args1, 1, redir1);
 
 
-    // char *args2[] = {"cat", "-e", NULL};
-    // t_command *cmd2 = create_command(args2, 1, NULL);
+    char *args2[] = {"ls", "-l", NULL};
+    t_command *cmd2 = create_command(args2, 1, NULL);
 	pipeline->cmd = cmd1;
 
-	// cmd1->next = cmd2;
-	pipeline->num_cmds = 1;
+	cmd1->next = cmd2;
+	pipeline->num_cmds = 2;
 
 	return pipeline;
 }
 
-
 int main(int argc, char **argv, char **envp)
 {
-	t_program minishell = {NULL, envp, NULL, 0, 0};
+	t_program minishell = {NULL, envp, NULL, 0};
 	init_env(&minishell); // set envlst
 
 	t_pipeline *pipeline;
-	t_pipex pipex = {0};
 
 	// char *input = "echo hello";
 	// printf("------input------\n");
@@ -109,5 +106,5 @@ int main(int argc, char **argv, char **envp)
 	// free_pipeline(pipeline);
 	// free_lex_list(minishell.lex_list);
 
-	return 0;
+	return (minishell.exit);
 }

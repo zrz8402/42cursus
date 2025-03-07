@@ -73,7 +73,7 @@ void	exec_one_cmd(t_pipeline *pipeline, t_program *minishell)
 		exit(1);
 	}
 	if (is_builtin(pipeline->cmd->args[0]))
-		exec_builtin(pipeline->cmd, minishell);
+		exec_builtin(pipeline->cmd->args, minishell);
 	else
 		execute(minishell, pipeline->cmd->args);
 	cleanup(pipeline, minishell, NULL);
@@ -81,7 +81,7 @@ void	exec_one_cmd(t_pipeline *pipeline, t_program *minishell)
 
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p)
 {
-	if (process_redirections(pipeline->cmd->redirections, minishell))
+	if (process_redirections(cmd->redirections, minishell))
 	{
 		cleanup(pipeline, minishell, NULL);
 		exit(1);
@@ -98,10 +98,11 @@ void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t
 		close(p->cur_pipefd[1]);
 	}
 	if (is_builtin(cmd->args[0]))
-		exec_builtin(cmd, minishell);
+		exec_builtin(cmd->args, minishell);
 	else
 		execute(minishell, cmd->args);
 	cleanup(pipeline, minishell, p);
+	exit(minishell->exit);
 }
 
 void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd)
@@ -149,6 +150,9 @@ void	process_pipeline(t_pipeline *pipeline, t_program *minishell)
 {
 	t_pipex	p;
 
+	p.prev_fd = -1;
+	p.cur_pipefd[0] = -1;
+	p.cur_pipefd[1] = -1;
 	if (pipeline->num_cmds == 1)
 		return (exec_one_cmd(pipeline, minishell));
 	process(pipeline, minishell, &p);
@@ -173,7 +177,7 @@ int	cleanup(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 	return (0);
 }
 
-int	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
+void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 {
 	int	i;
 	int	status;
@@ -187,8 +191,7 @@ int	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 	free_lst(minishell->envlst);
 	free_pipeline(pipeline);
 	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
+		minishell->exit = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
-		return (WTERMSIG(status) + 128);
-	return (0);
+		minishell->exit = WTERMSIG(status) + 128;
 }

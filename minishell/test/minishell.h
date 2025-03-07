@@ -84,7 +84,6 @@ typedef struct s_program
 	t_lex		*lex_list;
 	char		**envp;
 	t_env		*envlst;
-	int			status; // exit_status
 	int			exit;
 }	t_program;
 
@@ -104,19 +103,19 @@ void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
 void	exec_one_cmd(t_pipeline *pipeline, t_program *minishell);
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p);
 void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd);
-int		wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
+void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
 
 // builtin.c
 int		is_builtin(char *arg);
-void	exec_builtin(t_command *cmd, t_program *minishell);
+void	exec_builtin(char **args, t_program *minishell);
 
-int		builtin_echo(t_command *cmd, t_program *minishell);
-int		builtin_cd(t_command *cmd, t_program *minishell);
-int		builtin_pwd(t_command *cmd, t_program *minishell);
-int		builtin_export(t_command *cmd, t_program *minishell);
-int		builtin_unset(t_command *cmd, t_program *minishell);
-int		builtin_env(t_command *cmd, t_program *minishell);
-int		builtin_exit(t_command *cmd, t_program *minishell);
+void	run_echo(char **args, t_program *minishell);
+void	run_cd(char **args, t_program *minishell);
+void	run_pwd(t_program *minishell);
+void	run_export(char **args, t_program *minishell);
+void	run_unset(char **args, t_env *envlst);
+void	run_env(t_env *envlst);
+void	run_exit(char **args, t_program *minishell);
 
 
 // redir.c

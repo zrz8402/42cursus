@@ -65,7 +65,7 @@ char	*extract_key(char *s)
 	
 // }
 
-int	builtin_export(t_command *cmd, t_program *minishell)
+void	run_export(char **args, t_program *minishell)
 {
 	int		i;
 	char	*key;
@@ -89,5 +89,5 @@ int	builtin_export(t_command *cmd, t_program *minishell)
 	// 		free(value);
 	// 	}
 	// }
-	return (0);
+	return ;
 }

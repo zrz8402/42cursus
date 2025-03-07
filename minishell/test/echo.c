@@ -28,26 +28,25 @@ int	with_option(char *s)
 	return (1);
 }
 
-int	builtin_echo(t_command *cmd, t_program *minishell)
+void	run_echo(char **args, t_program *minishell)
 {
 	int	i;
 	int	option;
 
 	i = 1;
 	option = 0;
-	while (cmd->args[i] && with_option(cmd->args[i]))
+	while (args[i] && with_option(args[i]))
 	{
 		option = 1;
 		i++;
 	}
-	while (cmd->args[i])
+	while (args[i])
 	{
-		ft_putstr_fd(cmd->args[i], 1);
-		if (cmd->args[i + 1])
+		ft_putstr_fd(args[i], 1);
+		if (args[i + 1])
 			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (option == 0)
 		ft_putstr_fd("\n", 1);
-	return (0);
 }

@@ -37,14 +37,13 @@ void	unset_var(t_env **envlst, char *key)
 	}
 }
 
-int	builtin_unset(t_command *cmd, t_program *minishell)
+void	run_unset(char **args, t_env *envlst)
 {
 	int	i;
 
-	if (!cmd->args[1])
-		return (0);
+	if (!args[1])
+		return ;
 	i = 0;
-	while (cmd->args[++i])
-		unset_var(&minishell->envlst, cmd->args[i]);
-	return (0);
+	while (args[++i])
+		unset_var(&envlst, args[i]);
 }

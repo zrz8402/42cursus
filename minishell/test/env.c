@@ -62,11 +62,11 @@ void	update_envlst(t_program *minishell, char *key, char *value, int append)
 	append_node(&minishell->envlst, create_node(key, value));
 }
 
-int	builtin_env(t_command *cmd, t_program *minishell)
+void	run_env(t_env *envlst)
 {
 	t_env	*tmp;
 
-	tmp = minishell->envlst;
+	tmp = envlst;
 	while (tmp)
 	{
 		if (tmp->value)
@@ -77,7 +77,6 @@ int	builtin_env(t_command *cmd, t_program *minishell)
 		}
 		tmp = tmp->next;
 	}
-	return (0);
 }
 
 // void	print_lst(t_env *envlst)

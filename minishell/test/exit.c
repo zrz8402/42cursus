@@ -46,29 +46,28 @@ If 1 arg, but not numeric, return 2 and exit shell
 If > 1 arg, first is numeric, return 1 and do not exit shell
 If VALUE(arg) out of range (0-255): undefined
 */
-int	builtin_exit(t_command *cmd, t_program *minishell)
+void	run_exit(char **args, t_program *minishell)
 {
-	if (cmd->args[1])
+	minishell->exit = 0;
+	if (args[1])
 	{
-		if (!valid_arg(cmd->args[1]))
+		if (!valid_arg(args[1]))
 		{
 			ft_putendl_fd("exit", 2);
 			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(cmd->args[1], 2);
+			ft_putstr_fd(args[1], 2);
 			ft_putendl_fd(": numeric argument required", 2);
-			// cleanup(); // need to be added
-			exit(2);
+			minishell->exit = 2;
+			return ;
 		}
-		if (cmd->args[2])
+		if (args[2])
 		{
 			ft_putendl_fd("exit", 2);
 			ft_putendl_fd("minishell: exit: too many arguments", 2);
-			return (1);
+			minishell->exit = 2;
+			return ;
 		}
-		minishell->status = ft_atoi(cmd->args[1]);
+		minishell->exit = ft_atoi(args[1]);
 	}
 	ft_putendl_fd("exit", 1);
-	free_lst(minishell->envlst);
-	// cleanup();
-	exit(minishell->status);
 }
