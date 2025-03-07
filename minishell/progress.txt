@@ -1,8 +1,5 @@
 Deadline:
-redir + process
-first ddl: 3.7 Friday
-second ddl: 3.9 Sunday
-
+3.9 export + some tests
 
 ~ 3.2 finish built-in commands (basic)
 built_in commands
@@ -18,19 +15,14 @@ Things left:
 	decide whether update envp or not
 	export without, undefined or print all
 
-change lex_list to
-  redir array
-  cmd array
-
-redir + process
+~ 3.7 redir + process
 	pipes
 		- pipe()
 		need to close it
 	pids
 		-fork()
 		-waitpid()
-
-cleanup()
+	cleanup()
 
 
 TO BE DECIDED:
