@@ -1,15 +1,18 @@
 #include "minishell.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
+t_redir	*create_redirection(enum e_ltype type, const char *file)
+{
+	t_redir	*redir = malloc(sizeof(t_redir));
 
-#include <stdlib.h>
-#include <string.h>
+	redir->type = type;
+	redir->file = strdup(file);
+	redir->heredoc_fd = -1;
+	redir->next = NULL;
 
-t_command *create_command(char *args[], int num_args)
+	return (redir);
+}
+
+t_command *create_command(char *args[], int num_args, t_redir *redirs)
 {
     t_command *cmd = malloc(sizeof(t_command));
 
@@ -20,88 +23,91 @@ t_command *create_command(char *args[], int num_args)
     }
 
     cmd->next = NULL;
-    cmd->redirections = NULL;
-    return cmd;
+    cmd->redirections = redirs;
+    return (cmd);
 }
 
 void free_pipeline(t_pipeline *pipeline)
 {
-    t_command *cmd = pipeline->cmd, *tmp_cmd;
+	t_command	*cmd = pipeline->cmd, *tmp_cmd;
+	t_redir		*redir, *tmp_redir;
 
-    while (cmd) {
-        tmp_cmd = cmd;
-        cmd = cmd->next;
+	while (cmd) {
+		tmp_cmd = cmd;
+		cmd = cmd->next;
 
-        if (tmp_cmd->args) {
-            for (int i = 0; tmp_cmd->args[i] != NULL; i++) {
-                free(tmp_cmd->args[i]);
-            }
-            free(tmp_cmd->args);
-        }
-        if (tmp_cmd->redirections) {
-            if (tmp_cmd->redirections->redirection) {
-                for (int i = 0; tmp_cmd->redirections->redirection[i] != NULL; i++) {
-                    free(tmp_cmd->redirections->redirection[i]);
-                }
-                free(tmp_cmd->redirections->redirection);
-            }
-            free(tmp_cmd->redirections);
-        }
+		if (tmp_cmd->args) {
+			for (int i = 0; tmp_cmd->args[i] != NULL; i++) {
+				free(tmp_cmd->args[i]);
+			}
+			free(tmp_cmd->args);
+		}
 
-        free(tmp_cmd);
-    }
-    free(pipeline);
-}
+		redir = tmp_cmd->redirections;
+		while (redir) {
+			tmp_redir = redir;
+			redir = redir->next;
+			free(tmp_redir->file);
+			free(tmp_redir);
+		}
 
-t_pipeline *parse_pipeline(void) {
-    t_pipeline *pipeline = malloc(sizeof(t_pipeline));
-    if (!pipeline) {
-        return NULL;
-    }
-
-    // Create first command "ls -l"
-    char *args1[] = {"ls", "-l", NULL};
-    t_command *cmd1 = create_command(args1, 2);
-
-    // Create second command "cat"
-    char *args2[] = {"cat", "Makefile", NULL};
-    t_command *cmd2 = create_command(args2, 2);
-
-	// char *args2[] = {"./ls", "-a", NULL};
-    // t_command *cmd2 = create_command(args2, 2);
-
-    // Connect cmd1 and cmd2 to form a pipeline
-    pipeline->cmd = cmd1;
-    cmd1->next = cmd2;
-    pipeline->num_cmds = 2;
-
-    return pipeline;
+		free(tmp_cmd);
+	}
+	free(pipeline);
 }
 
 
-int main(int argc, char **argv, char **envp) {
-    t_program minishell = {NULL, envp, NULL, 0, 0};
+t_pipeline *parse_pipeline(void)
+{
+    t_pipeline	*pipeline = malloc(sizeof(t_pipeline));
+
+	t_redir		*redir_in = create_redirection(RED_IN, "Makefile");
+	t_redir		*redir_out = create_redirection(RED_OUT, "output.txt");
+	t_redir		*redir_append = create_redirection(APPEND, "append.txt");
+
+	redir_in->next = redir_out;
+	redir_out->next = redir_append;
+
+    char		*args1[] = {"sort", "-b", NULL};
+	t_redir		*redir1 = redir_in;
+    t_command	*cmd1 = create_command(args1, 2, redir1);
+
+
+    // char *args2[] = {"cat", "-e", NULL};
+    // t_command *cmd2 = create_command(args2, 1, NULL);
+	pipeline->cmd = cmd1;
+
+	// cmd1->next = cmd2;
+	pipeline->num_cmds = 1;
+
+	return pipeline;
+}
+
+
+int main(int argc, char **argv, char **envp)
+{
+	t_program minishell = {NULL, envp, NULL, 0, 0};
 	init_env(&minishell); // set envlst
 
-    t_pipeline *pipeline;
-    t_pipex pipex = {0};
+	t_pipeline *pipeline;
+	t_pipex pipex = {0};
 
-    // char *input = "echo hello";
+	// char *input = "echo hello";
 	// printf("------input------\n");
 	// printf("%s\n", input);
 	// printf("----------------\n\n");
 
-    pipeline = parse_pipeline();
+	pipeline = parse_pipeline();
 	process_pipeline(pipeline, &minishell);
 
 	// free_lst(minishell.envlst);
 	// free_pipeline(pipeline);
-    // // Process the pipeline (execute commands)
-    // process_pipeline(pipeline, &minishell, &pipex);
+	// // Process the pipeline (execute commands)
+	// process_pipeline(pipeline, &minishell, &pipex);
 
-    // // Clean up allocated memory
-    // free_pipeline(pipeline);
-    // free_lex_list(minishell.lex_list);
+	// // Clean up allocated memory
+	// free_pipeline(pipeline);
+	// free_lex_list(minishell.lex_list);
 
-    return 0;
+	return 0;
 }

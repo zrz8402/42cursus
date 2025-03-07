@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:27:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/06 15:39:56 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/07 20:37:17 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	builtin_exit(t_command *cmd, t_program *minishell)
 			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(cmd->args[1], 2);
 			ft_putendl_fd(": numeric argument required", 2);
-			cleanup(); // need to be added
+			// cleanup(); // need to be added
 			exit(2);
 		}
 		if (cmd->args[2])
@@ -69,6 +69,6 @@ int	builtin_exit(t_command *cmd, t_program *minishell)
 	}
 	ft_putendl_fd("exit", 1);
 	free_lst(minishell->envlst);
-	cleanup(); // need to be added
+	// cleanup();
 	exit(minishell->status);
 }

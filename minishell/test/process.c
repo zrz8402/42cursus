@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/07 17:28:39 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/07 20:47:45 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,25 @@
 
 void	exec_one_cmd(t_pipeline *pipeline, t_program *minishell)
 {
-	process_redirections(pipeline, minishell);
+	if (process_redirections(pipeline->cmd->redirections, minishell))
+	{
+		cleanup(pipeline, minishell, NULL);
+		exit(1);
+	}
 	if (is_builtin(pipeline->cmd->args[0]))
 		exec_builtin(pipeline->cmd, minishell);
 	else
-		execute(minishell, pipeline, pipeline->cmd->args, NULL);
+		execute(minishell, pipeline->cmd->args);
+	cleanup(pipeline, minishell, NULL);
 }
 
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p)
 {
-	process_redirections(pipeline, minishell);
+	if (process_redirections(pipeline->cmd->redirections, minishell))
+	{
+		cleanup(pipeline, minishell, NULL);
+		exit(1);
+	}
 	if (p->i != 0)
 	{
 		dup2(p->prev_fd, STDIN_FILENO);
@@ -91,7 +100,8 @@ void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t
 	if (is_builtin(cmd->args[0]))
 		exec_builtin(cmd, minishell);
 	else
-		execute(minishell, pipeline, cmd->args, p);
+		execute(minishell, cmd->args);
+	cleanup(pipeline, minishell, p);
 }
 
 void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd)
@@ -126,7 +136,7 @@ void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 		if (p->pids[i] < 0)
 		{
 			ft_putendl_fd("Fork failed", 1);
-			cleanup();
+			// cleanup();
 			exit(1);
 		}
 		if (p->pids[i] == 0)
@@ -145,9 +155,22 @@ void	process_pipeline(t_pipeline *pipeline, t_program *minishell)
 	wait_and_clean(pipeline, minishell, &p);
 }
 
-void	cleanup()
+int	cleanup(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 {
-	
+	if (p)
+	{
+		if (p->prev_fd > -1)
+			close(p->prev_fd);
+		if (p->cur_pipefd[0] > -1)
+			close(p->cur_pipefd[0]);
+		if (p->cur_pipefd[1] > -1)
+			close(p->cur_pipefd[1]);
+		if (p->pids)
+			free(p->pids);
+	}
+	free_lst(minishell->envlst);
+	free_pipeline(pipeline);
+	return (0);
 }
 
 int	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
@@ -156,6 +179,7 @@ int	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 	int	status;
 
 	i = -1;
+	status = 0;
 	while (++i < pipeline->num_cmds)
 		waitpid(p->pids[i], &status, 0);
 

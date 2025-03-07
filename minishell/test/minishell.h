@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/07 17:28:59 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/07 20:39:31 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,13 @@ typedef struct s_lex
 	struct s_lex		*next_lex;
 }						t_lex;
 
-
 typedef struct s_redir
 {
-	char				**redirection;
-	// enum e_ltype		type;
-	// char				*value;
-	// int				heredoc_fd;
+	enum e_ltype	type;
+	char			*file;
+	int				heredoc_fd;
+	struct s_redir	*next;
 }	t_redir;
-
 
 typedef struct s_command
 {
@@ -86,7 +84,7 @@ typedef struct s_program
 	t_lex		*lex_list;
 	char		**envp;
 	t_env		*envlst;
-	int			status;
+	int			status; // exit_status
 	int			exit;
 }	t_program;
 
@@ -94,8 +92,6 @@ typedef struct s_program
 // env.c
 void	init_env(t_program *minishell);
 void	update_envlst(t_program *minishell, char *key, char *value, int append);
-int		builtin_env(t_command *cmd, t_program *minishell);
-
 char	*get_var_value(char *key, t_env *envlst);
 t_env	*create_node(char *key, char *value);
 void	append_node(t_env **envlst, t_env *new);
@@ -124,18 +120,18 @@ int		builtin_exit(t_command *cmd, t_program *minishell);
 
 
 // redir.c
-void	process_in(char *file);
-void	process_out(char *file);
-void	process_append(char *file);
-void	process_heredoc(int	heredoc_fd);
-void	process_redirections(t_pipeline *pipeline, t_program *minishell);
+int		process_in(char *file);
+int		process_out(char *file);
+int		process_append(char *file);
+int		process_heredoc(int	heredoc_fd);
+int		process_redirections(t_redir *redir, t_program *minishell);
 
 // execute.c
-void	check_execute(char **args, char **envp, char **paths, t_pipex *p);
-char	**parse_path(t_env *envlst, t_pipex *p);
 char	*join_str(char const *s1, char const *s2);
-void	execute(t_program *minishell, t_pipeline *pipeline, char **args, t_pipex *p);
+int		check_execute(char **args, char **paths, t_program *minishell);
+int		check_exec_with_path(char **args, t_program *minishell);
+void	execute(t_program *minishell, char **args);
 
-void	cleanup();
+int	cleanup(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
 void	free_pipeline(t_pipeline *pipeline);
 #endif
