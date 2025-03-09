@@ -40,17 +40,17 @@ char	*join_str(char const *s1, char const *s2)
 
 void	free_paths(char **arr)
 {
-    char	**tmp;
+	char	**tmp;
 
 	tmp = arr;
 	if (arr)
 	{
-        while (*arr)
-        {
-            free(*arr);
-            arr++;
-        }
-        free(tmp); 
+		while (*arr)
+		{
+			free(*arr);
+			arr++;
+		}
+		free(tmp);
 	}
 }
 

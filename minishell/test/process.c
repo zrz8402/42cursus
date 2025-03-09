@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 15:06:57 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 15:19:22 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t
 		execute(minishell, cmd->args);
 	exit(minishell->status);
 }
-
 
 void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd)
 {

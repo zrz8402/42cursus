@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:16:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 11:38:19 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 15:22:39 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,12 @@ int	is_valid_key(char *s)
 	{
 		if (*s == '=')
 			break ;
-		if (!ft_isalnum(*s) || *s != '_' || *s != '$')
+		if (!ft_isalnum(*s) || *s != '_')
 			return (0);
 		s++;
 	}
 	return (1);
 }
-
-// int	is_valid_key(char *s)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!ft_isdigit(s[i]) || s[i] != '_')
-// 		return (0);
-// 	i++;
-// 	while (s[i])
-// 	{
-// 		if (s[i] == '=')
-// 			break ;
-// 		if (!ft_isalnum(s[i]) || s[i] != '_' || s[i] != '$')
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (i);
-// }
 
 char	*extract_key(char *s)
 {
@@ -60,9 +41,9 @@ char	*extract_key(char *s)
 	return (key);
 }
 
-// char	*extract_value(char *s)
-// {
-// }
+char	*extract_value(char *s)
+{
+}
 
 void	run_export(char **args, t_program *minishell)
 {
@@ -71,23 +52,23 @@ void	run_export(char **args, t_program *minishell)
 	char	*value;
 
 	i = 0;
+	while (args[++i])
+	{
+		if (!is_valid_key(args))
+		{
+			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+			ft_putstr_fd(args[1], STDERR_FILENO);
+			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+			minishell->status = 1;
+		}
+		else
+		{
+			key = extract_key(args);
+			value = extract_value(args);
+			update_envlst(minishell, key, value, 0);
+			free(key);
+			free(value);
+		}
+	}
 	return ;
 }
-
-	// while (cmd->args[++i])
-	// {
-	// 	if (!is_valid_key(cmd->args))
-	// 	{
-	// 		ft_putstr_fd("minishell: export: `", 2);
-	// 		ft_putstr_fd(cmd->args[1], 2);
-	// 		ft_putendl_fd("': not a valid identifier", 2);
-	// 	}
-	// 	else
-	// 	{
-	// 		key = extract_key(cmd->args);
-	// 		value  = extract_value(cmd->args);
-	// 		update_envlst(minishell, key, value, 0);
-	// 		free(key);
-	// 		free(value);
-	// 	}
-	// }

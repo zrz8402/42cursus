@@ -1,5 +1,5 @@
 Deadline:
-3.9 export + some tests
+3.10 export
 
 ~ 3.2 finish built-in commands (basic)
 built_in commands
