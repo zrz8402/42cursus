@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:16:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 15:22:39 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 15:34:55 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_valid_key(char *s)
 {
-	if (!ft_isdigit(*s) || *s != '_')
+	if (!ft_isalpha(*s) && *s != '_')
 		return (0);
 	s++;
 	while (*s)
@@ -43,6 +43,7 @@ char	*extract_key(char *s)
 
 char	*extract_value(char *s)
 {
+	return (NULL);
 }
 
 void	run_export(char **args, t_program *minishell)
@@ -54,7 +55,7 @@ void	run_export(char **args, t_program *minishell)
 	i = 0;
 	while (args[++i])
 	{
-		if (!is_valid_key(args))
+		if (!is_valid_key(args[i]))
 		{
 			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 			ft_putstr_fd(args[1], STDERR_FILENO);
@@ -63,8 +64,8 @@ void	run_export(char **args, t_program *minishell)
 		}
 		else
 		{
-			key = extract_key(args);
-			value = extract_value(args);
+			key = extract_key(args[i]);
+			value = extract_value(args[i]);
 			update_envlst(minishell, key, value, 0);
 			free(key);
 			free(value);

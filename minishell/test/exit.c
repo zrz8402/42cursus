@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:27:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 13:58:09 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 16:04:24 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ void	run_exit(char **args, t_program *minishell, int num_cmds)
 		minishell->status = ft_atoi(args[1]);
 	}
 	ft_putendl_fd("exit", STDOUT_FILENO);
+	free_lst(minishell->envlst);
 	exit(minishell->status);
 }

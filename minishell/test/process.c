@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 15:19:22 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 16:04:30 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t
 		exec_builtin(cmd->args, minishell, pipeline->num_cmds);
 	else
 		execute(minishell, cmd->args);
+	free_lst(minishell->envlst);
 	exit(minishell->status);
 }
 
