@@ -33,3 +33,6 @@ ONLY change pwd and oldpwd in both envp and envlst
 		could be done when finding shlvl?
 		save index of pwd and oldpwd somewhere if we don't plan to change other env var
 export -> change envlst
+
+
+valgrind -q --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --error-limit=no --suppressions=valgrind.supp ./test

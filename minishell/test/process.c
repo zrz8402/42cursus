@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 14:09:23 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 15:06:57 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,11 @@ void	process_pipeline(t_pipeline *pipeline, t_program *minishell)
 	p.cur_pipefd[0] = -1;
 	p.cur_pipefd[1] = -1;
 	if (pipeline->num_cmds == 1 && is_builtin(pipeline->cmd->args[0]))
-		return (exec_one_builtin(pipeline, minishell, pipeline->cmd));
+	{
+		exec_one_builtin(pipeline, minishell, pipeline->cmd);
+		free_pipeline(pipeline);
+		return ;
+	}
 	process(pipeline, minishell, &p);
 	wait_and_clean(pipeline, minishell, &p);
 }
