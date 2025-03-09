@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/07 19:55:04 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 11:46:41 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	process_append(char *file)
 	return (0);
 }
 
-int	process_heredoc(int	heredoc_fd)
+int	process_heredoc(int heredoc_fd)
 {
 	dup2(heredoc_fd, STDIN_FILENO);
 	close(heredoc_fd);
@@ -74,14 +74,14 @@ int	process_redirections(t_redir *redir, t_program *minishell)
 	while (redir != NULL)
 	{
 		if (redir->type == RED_IN)
-			minishell->exit = process_in(redir->file);
+			minishell->status = process_in(redir->file);
 		else if (redir->type == RED_OUT)
-			minishell->exit = process_out(redir->file);
+			minishell->status = process_out(redir->file);
 		else if (redir->type == APPEND)
-			minishell->exit = process_append(redir->file);
+			minishell->status = process_append(redir->file);
 		else if (redir->type == HEREDOC)
-			minishell->exit = process_heredoc(redir->heredoc_fd);
-		if (minishell->exit)
+			minishell->status = process_heredoc(redir->heredoc_fd);
+		if (minishell->status)
 			return (1);
 		redir = redir->next;
 	}

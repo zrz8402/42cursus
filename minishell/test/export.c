@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:16:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/07 15:04:18 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 11:38:19 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	*extract_key(char *s)
 
 // char	*extract_value(char *s)
 // {
-	
 // }
 
 void	run_export(char **args, t_program *minishell)
@@ -72,6 +71,9 @@ void	run_export(char **args, t_program *minishell)
 	char	*value;
 
 	i = 0;
+	return ;
+}
+
 	// while (cmd->args[++i])
 	// {
 	// 	if (!is_valid_key(cmd->args))
@@ -89,5 +91,3 @@ void	run_export(char **args, t_program *minishell)
 	// 		free(value);
 	// 	}
 	// }
-	return ;
-}

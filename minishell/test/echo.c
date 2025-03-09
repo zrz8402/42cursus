@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 14:35:25 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/02/24 16:42:00 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 12:43:19 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	run_echo(char **args, t_program *minishell)
 	}
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], 1);
+		ft_putstr_fd(args[i], STDOUT_FILENO);
 		if (args[i + 1])
-			ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
 	}
 	if (option == 0)
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 }

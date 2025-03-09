@@ -12,19 +12,36 @@ t_redir	*create_redirection(enum e_ltype type, const char *file)
 	return (redir);
 }
 
+// t_pipeline *parse_pipeline(char *input)
+// {
+// 	t_pipeline	*pipeline = malloc(sizeof(t_pipeline));
+
+// 	char		*args1[] = {"exit", "9", NULL};
+// 	t_command	*cmd1 = create_command(args1, 1, NULL);
+
+
+// 	char *args2[] = {"ls", "-l", NULL};
+// 	t_command *cmd2 = create_command(args2, 1, NULL);
+// 	pipeline->cmd = cmd1;
+
+// 	cmd1->next = cmd2;
+// 	pipeline->num_cmds = 2;
+
+// 	return pipeline;
+// }
+
 t_command *create_command(char *args[], int num_args, t_redir *redirs)
 {
-    t_command *cmd = malloc(sizeof(t_command));
+	t_command	*cmd = malloc(sizeof(t_command));
 
-    cmd->args = calloc(num_args + 1, sizeof(char *));
+	cmd->args = calloc(num_args + 1, sizeof(char *));
 
-    for (int i = 0; i < num_args; i++) {
-        cmd->args[i] = strdup(args[i]);
-    }
+	for (int i = 0; i < num_args; i++)
+		cmd->args[i] = strdup(args[i]);
 
-    cmd->next = NULL;
-    cmd->redirections = redirs;
-    return (cmd);
+	cmd->next = NULL;
+	cmd->redirections = redirs;
+	return cmd;
 }
 
 void free_pipeline(t_pipeline *pipeline)
@@ -56,55 +73,74 @@ void free_pipeline(t_pipeline *pipeline)
 	free(pipeline);
 }
 
-t_pipeline *parse_pipeline(void)
+t_pipeline *parse_pipeline(char *input)
 {
-    t_pipeline	*pipeline = malloc(sizeof(t_pipeline));
+	t_pipeline	*pipeline = malloc(sizeof(t_pipeline));
+	char		*cmd_str, *cmd_args_str;
+	char		*cmds[10];
+	int			num_cmds = 0;
+		
+	// Split the input by '|'
+	cmd_str = strtok(input, "|");
+	while (cmd_str != NULL) {
+		cmds[num_cmds++] = cmd_str;
+		cmd_str = strtok(NULL, "|");
+	}
+		
+	t_command *prev_cmd = NULL;
 
-	t_redir		*redir_in = create_redirection(RED_IN, "Makefile");
+	// t_redir		*redir_in = create_redirection(RED_IN, "Makefile");
 	// t_redir		*redir_out = create_redirection(RED_OUT, "output.txt");
 	// t_redir		*redir_append = create_redirection(APPEND, "append.txt");
 
 	// redir_in->next = redir_out;
 	// redir_out->next = redir_append;
 
-    char		*args1[] = {"exit", "9", NULL};
-	t_redir		*redir1 = redir_in;
-    t_command	*cmd1 = create_command(args1, 1, redir1);
 
+	// t_redir		*redir1 = redir_in;
 
-    char *args2[] = {"ls", "-l", NULL};
-    t_command *cmd2 = create_command(args2, 1, NULL);
-	pipeline->cmd = cmd1;
+	for (int i = 0; i < num_cmds; i++) {
+		char *args[100];
+		int num_args = 0;
 
-	cmd1->next = cmd2;
-	pipeline->num_cmds = 2;
+		cmd_args_str = strtok(cmds[i], " ");
+		while (cmd_args_str != NULL) {
+			args[num_args++] = cmd_args_str;
+			cmd_args_str = strtok(NULL, " ");
+		}
+		
+		t_command *cmd = create_command(args, num_args, NULL);
+		
+		if (prev_cmd == NULL) {
+			pipeline->cmd = cmd;
+		} else {
+			prev_cmd->next = cmd;
+		}
+		
+		prev_cmd = cmd;
+	}
 
+	pipeline->num_cmds = num_cmds;
 	return pipeline;
 }
-
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	t_program minishell = {NULL, envp, NULL, 0};
-	init_env(&minishell); // set envlst
+	t_program	minishell = {NULL, envp, NULL, 0, 0};
+	t_pipeline	*pipeline;
+	char		*input;
 
-	t_pipeline *pipeline;
-
-	// char *input = "echo hello";
-	// printf("------input------\n");
-	// printf("%s\n", input);
-	// printf("----------------\n\n");
-
-	pipeline = parse_pipeline();
-	process_pipeline(pipeline, &minishell);
-
-	// free_lst(minishell.envlst);
-	// free_pipeline(pipeline);
-	// // Process the pipeline (execute commands)
-	// process_pipeline(pipeline, &minishell, &pipex);
-
-	// // Clean up allocated memory
-	// free_pipeline(pipeline);
-	// free_lex_list(minishell.lex_list);
-
-	return (minishell.exit);
+	init_env(&minishell);
+	while (1) {
+		input = readline("minishell$ ");
+		if (input == NULL) {
+			printf("\nExiting minishell...\n");
+			break;
+		}
+		if (*input)
+			add_history(input);
+		pipeline = parse_pipeline(input);
+		process_pipeline(pipeline, &minishell);
+		free(input);
+	}
+	return (0);
 }

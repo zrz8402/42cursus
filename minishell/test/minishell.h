@@ -6,12 +6,12 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/07 20:39:31 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 13:51:12 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_H
-# define TEST_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -19,6 +19,8 @@
 # include <string.h>
 # include <sys/wait.h>
 # include "../lib/libft/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define LONG_MAX 9223372036854775807
 # define LONG_MIN -9223372036854775807
@@ -84,9 +86,9 @@ typedef struct s_program
 	t_lex		*lex_list;
 	char		**envp;
 	t_env		*envlst;
+	int			status;
 	int			exit;
 }	t_program;
-
 
 // env.c
 void	init_env(t_program *minishell);
@@ -96,18 +98,17 @@ t_env	*create_node(char *key, char *value);
 void	append_node(t_env **envlst, t_env *new);
 void	free_lst(t_env *envlst);
 
-
 // process.c
 void	process_pipeline(t_pipeline *pipeline, t_program *minishell);
 void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
-void	exec_one_cmd(t_pipeline *pipeline, t_program *minishell);
+// void	exec_one_cmd(t_pipeline *pipeline, t_program *minishell);
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p);
 void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd);
 void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
 
 // builtin.c
 int		is_builtin(char *arg);
-void	exec_builtin(char **args, t_program *minishell);
+void	exec_builtin(char **args, t_program *minishell, int num_cmds);
 
 void	run_echo(char **args, t_program *minishell);
 void	run_cd(char **args, t_program *minishell);
@@ -115,14 +116,13 @@ void	run_pwd(t_program *minishell);
 void	run_export(char **args, t_program *minishell);
 void	run_unset(char **args, t_env *envlst);
 void	run_env(t_env *envlst);
-void	run_exit(char **args, t_program *minishell);
-
+void	run_exit(char **args, t_program *minishell, int num_cmds);
 
 // redir.c
 int		process_in(char *file);
 int		process_out(char *file);
 int		process_append(char *file);
-int		process_heredoc(int	heredoc_fd);
+int		process_heredoc(int heredoc_fd);
 int		process_redirections(t_redir *redir, t_program *minishell);
 
 // execute.c
@@ -131,6 +131,7 @@ int		check_execute(char **args, char **paths, t_program *minishell);
 int		check_exec_with_path(char **args, t_program *minishell);
 void	execute(t_program *minishell, char **args);
 
-int	cleanup(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
+// void	cleanup(t_pipex *p);
 void	free_pipeline(t_pipeline *pipeline);
+
 #endif

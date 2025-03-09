@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:27:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/07 20:37:17 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 13:58:09 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,29 @@ If 1 arg, but not numeric, return 2 and exit shell
 If > 1 arg, first is numeric, return 1 and do not exit shell
 If VALUE(arg) out of range (0-255): undefined
 */
-void	run_exit(char **args, t_program *minishell)
+void	run_exit(char **args, t_program *minishell, int num_cmds)
 {
-	minishell->exit = 0;
+	minishell->status = 0;
 	if (args[1])
 	{
 		if (!valid_arg(args[1]))
 		{
-			ft_putendl_fd("exit", 2);
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(args[1], 2);
-			ft_putendl_fd(": numeric argument required", 2);
-			minishell->exit = 2;
-			return ;
+			ft_putendl_fd("exit", STDERR_FILENO);
+			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+			ft_putstr_fd(args[1], STDERR_FILENO);
+			ft_putendl_fd(": numeric argument required", STDERR_FILENO);
+			minishell->status = 2;
+			exit(minishell->status);
 		}
 		if (args[2])
 		{
-			ft_putendl_fd("exit", 2);
-			ft_putendl_fd("minishell: exit: too many arguments", 2);
-			minishell->exit = 2;
+			ft_putendl_fd("exit", STDERR_FILENO);
+			ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
+			minishell->status = 2;
 			return ;
 		}
-		minishell->exit = ft_atoi(args[1]);
+		minishell->status = ft_atoi(args[1]);
 	}
-	ft_putendl_fd("exit", 1);
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	exit(minishell->status);
 }

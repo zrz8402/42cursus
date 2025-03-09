@@ -40,10 +40,18 @@ char	*join_str(char const *s1, char const *s2)
 
 void	free_paths(char **arr)
 {
-	// if (arr)
-	// {
-	// 	free(arr);
-	// }
+    char	**tmp;
+
+	tmp = arr;
+	if (arr)
+	{
+        while (*arr)
+        {
+            free(*arr);
+            arr++;
+        }
+        free(tmp); 
+	}
 }
 
 int	check_execute(char **args, char **paths, t_program *minishell)
@@ -54,14 +62,14 @@ int	check_execute(char **args, char **paths, t_program *minishell)
 		{
 			ft_putendl_fd("Command no permission", 2);
 			free_paths(paths);
-			minishell->exit = 126;
+			minishell->status = 126;
 			return (1);
 		}
 		if (execve(args[0], args, minishell->envp) == -1)
 		{
 			ft_putendl_fd("Command no permission", 2);
 			free_paths(paths);
-			minishell->exit = 1;
+			minishell->status = 1;
 			return (1);
 		}
 	}
@@ -72,7 +80,7 @@ int	check_exec_with_path(char **args, t_program *minishell)
 {
 	char	**paths;
 	int		i;
-	char 	*tmp;
+	char	*tmp;
 
 	paths = NULL;
 	paths = ft_split(get_var_value("PATH", minishell->envlst), ':');
@@ -82,16 +90,14 @@ int	check_exec_with_path(char **args, t_program *minishell)
 	{
 		free(args[0]);
 		args[0] = join_str(paths[i], tmp);
-		if (check_execute(args, paths, minishell))
-		{
-			args[0] = tmp;
-			return (1);
-		}
+		check_execute(args, paths, minishell);
 	}
+	ft_putendl_fd("Command not found", 2);
+	minishell->status = 127;
 	args[0] = tmp;
+	free_paths(paths);
 	return (0);
 }
-
 
 void	execute(t_program *minishell, char **args)
 {
@@ -100,7 +106,7 @@ void	execute(t_program *minishell, char **args)
 	if ((!args || !*args) && (access("", F_OK) == -1))
 	{
 		ft_putendl_fd("Command not found", 2);
-		minishell->exit = 127;
+		minishell->status = 127;
 		return ;
 	}
 	if (check_execute(args, NULL, minishell))
@@ -109,9 +115,8 @@ void	execute(t_program *minishell, char **args)
 	if (!path || !*path)
 	{
 		ft_putendl_fd("Command not found", 2);
-		minishell->exit = 127;
+		minishell->status = 127;
 		return ;
 	}
-	if (check_exec_with_path(args, minishell))
-		return ;
+	check_exec_with_path(args, minishell);
 }
