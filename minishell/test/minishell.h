@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 13:51:12 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/09 16:17:09 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
 # include <sys/wait.h>
@@ -87,7 +88,6 @@ typedef struct s_program
 	char		**envp;
 	t_env		*envlst;
 	int			status;
-	int			exit;
 }	t_program;
 
 // env.c
@@ -101,7 +101,7 @@ void	free_lst(t_env *envlst);
 // process.c
 void	process_pipeline(t_pipeline *pipeline, t_program *minishell);
 void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
-// void	exec_one_cmd(t_pipeline *pipeline, t_program *minishell);
+
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p);
 void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd);
 void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
@@ -131,7 +131,6 @@ int		check_execute(char **args, char **paths, t_program *minishell);
 int		check_exec_with_path(char **args, t_program *minishell);
 void	execute(t_program *minishell, char **args);
 
-// void	cleanup(t_pipex *p);
 void	free_pipeline(t_pipeline *pipeline);
 
 #endif

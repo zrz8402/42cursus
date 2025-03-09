@@ -125,7 +125,7 @@ t_pipeline *parse_pipeline(char *input)
 }
 int	main(int argc, char **argv, char **envp)
 {
-	t_program	minishell = {NULL, envp, NULL, 0, 0};
+	t_program	minishell = {NULL, envp, NULL, 0};
 	t_pipeline	*pipeline;
 	char		*input;
 
