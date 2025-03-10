@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 16:17:09 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/10 16:18:52 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
+# include <signal.h>
 # include <sys/wait.h>
 # include "../lib/libft/libft.h"
 # include <readline/readline.h>
@@ -132,5 +133,10 @@ int		check_exec_with_path(char **args, t_program *minishell);
 void	execute(t_program *minishell, char **args);
 
 void	free_pipeline(t_pipeline *pipeline);
+
+// signal.c
+void	setup_prompt_signal(void);
+void	setup_exec_signal(void);
+void	setup_child_signal(void);
 
 #endif

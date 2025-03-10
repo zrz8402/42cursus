@@ -12,24 +12,6 @@ t_redir	*create_redirection(enum e_ltype type, const char *file)
 	return (redir);
 }
 
-// t_pipeline *parse_pipeline(char *input)
-// {
-// 	t_pipeline	*pipeline = malloc(sizeof(t_pipeline));
-
-// 	char		*args1[] = {"exit", "9", NULL};
-// 	t_command	*cmd1 = create_command(args1, 1, NULL);
-
-
-// 	char *args2[] = {"ls", "-l", NULL};
-// 	t_command *cmd2 = create_command(args2, 1, NULL);
-// 	pipeline->cmd = cmd1;
-
-// 	cmd1->next = cmd2;
-// 	pipeline->num_cmds = 2;
-
-// 	return pipeline;
-// }
-
 t_command *create_command(char *args[], int num_args, t_redir *redirs)
 {
 	t_command	*cmd = malloc(sizeof(t_command));
@@ -123,6 +105,7 @@ t_pipeline *parse_pipeline(char *input)
 	pipeline->num_cmds = num_cmds;
 	return pipeline;
 }
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_program	minishell = {NULL, envp, NULL, 0};
@@ -130,17 +113,24 @@ int	main(int argc, char **argv, char **envp)
 	char		*input;
 
 	init_env(&minishell);
+	setup_prompt_signal();
 	while (1) {
 		input = readline("minishell$ ");
-		if (input == NULL) {
-			printf("\nExiting minishell...\n");
+		if (!input)
+		{
+			free_lst(minishell.envlst);
+			printf("exit\n");
 			break;
 		}
 		if (*input)
 			add_history(input);
-		pipeline = parse_pipeline(input);
-		process_pipeline(pipeline, &minishell);
-		free(input);
+		if (*input)
+		{
+			pipeline = parse_pipeline(input);
+			process_pipeline(pipeline, &minishell);
+			free(input);
+		}
+		setup_exec_signal();
 	}
 	return (0);
 }

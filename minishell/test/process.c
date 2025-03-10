@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 16:04:30 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/10 16:04:36 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	close_fds(t_pipex *p)
 
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p)
 {
+	setup_child_signal();
 	if (process_redirections(cmd->redirections, minishell))
 		return (close_fds(p));
 	if (p->i != 0)

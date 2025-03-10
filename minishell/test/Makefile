@@ -9,7 +9,9 @@ LIBS = -lreadline libft.a
 
 SRCS = main.c env.c env_utils.c unset.c \
 		cd.c  echo.c  exit.c  export.c pwd.c \
-		builtin.c process.c  redir.c  execute.c  
+		builtin.c process.c  redir.c  execute.c \
+		signal.c
+
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
