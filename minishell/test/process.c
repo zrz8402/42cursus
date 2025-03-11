@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/11 14:25:41 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/11 20:06:11 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,18 @@
 
 void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell, t_command *cmd)
 {
+	int	saved_in;
+	int	saved_out;
+
+	saved_in = dup(STDIN_FILENO);
+	saved_out = dup(STDOUT_FILENO);
 	if (process_redirections(cmd->redirections, minishell))
 		return ;
 	exec_builtin(cmd->args, minishell, pipeline->num_cmds);
+	dup2(saved_in, STDIN_FILENO);
+	dup2(saved_out, STDOUT_FILENO);
+	close(saved_in);
+	close(saved_out);
 }
 
 void	close_fds(t_pipex *p)
@@ -43,7 +52,7 @@ void	close_fds(t_pipex *p)
 
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p)
 {
-	setup_child_signal();
+	// setup_child_signal();
 	if (process_redirections(cmd->redirections, minishell))
 		return (close_fds(p));
 	if (p->i != 0)
@@ -75,6 +84,7 @@ void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd)
 		close(p->cur_pipefd[1]);
 	}
 	*cur_cmd = (*cur_cmd)->next;
+	// setup_exec_signal();
 }
 
 void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
@@ -103,7 +113,6 @@ void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 	}
 }
 
-
 void	process_pipeline(t_pipeline *pipeline, t_program *minishell)
 {
 	t_pipex	p;
@@ -125,24 +134,28 @@ void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 {
 	int	i;
 	int	status;
+	int	sig;
 
 	i = -1;
 	status = 0;
 	while (++i < pipeline->num_cmds)
 	{	
 		waitpid(p->pids[i], &status, 0);
-		if (WIFEXITED(status))
-			minishell->status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
+	}
+	if (WIFEXITED(status))
+		minishell->status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGINT)
 		{
-			int	sig = WTERMSIG(status);
-			if (sig == SIGINT)
-				write(1, "\n", 1);
-			else if (sig == SIGQUIT)
-			{
-				write(1, "Quit (core dumped)\n", 19);
-				minishell->status = sig + 128;	
-			}
+			write(1, "\n", 1);
+			minishell->status = sig;	
+		}
+		else if (sig == SIGQUIT)
+		{
+			write(1, "Quit (core dumped)\n", 19);
+			minishell->status = sig + 128;	
 		}
 	}
 	free(p->pids);
