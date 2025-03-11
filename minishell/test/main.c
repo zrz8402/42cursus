@@ -130,7 +130,6 @@ int	main(int argc, char **argv, char **envp)
 			process_pipeline(pipeline, &minishell);
 			free(input);
 		}
-		setup_exec_signal();
 	}
 	return (0);
 }

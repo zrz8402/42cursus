@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/10 16:04:36 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/10 16:29:45 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,11 +128,20 @@ void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 	i = -1;
 	status = 0;
 	while (++i < pipeline->num_cmds)
+	{	
 		waitpid(p->pids[i], &status, 0);
+		if (WIFEXITED(status))
+			minishell->status = WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+		{
+			int	sig = WTERMSIG(status);
+			if (sig == SIGINT)
+				write(1, "\n", 1);
+			else if (sig == SIGQUIT)
+				write(1, "Quit (core dumped)\n", 19);
+			minishell->status = sig + 128;
+		}
+	}
 	free(p->pids);
 	free_pipeline(pipeline);
-	if (WIFEXITED(status))
-		minishell->status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-		minishell->status = WTERMSIG(status) + 128;
 }
