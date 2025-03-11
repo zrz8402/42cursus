@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:10:32 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/10 16:40:58 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/11 11:45:48 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 void	sigint_handler(int sig)
 {
 	(void) sig;
+	if (!g_is_running)
+		return ;
 	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
 	rl_replace_line("", 0);
+	rl_on_new_line();
 	rl_redisplay();
 }
 
@@ -49,18 +51,17 @@ void	setup_prompt_signal(void)
 	sigaction(SIGTERM, &sa, NULL);
 }
 
-void	setup_heredoc_signal(void)
-{
-	struct sigaction	sa;
+// void	setup_heredoc_signal(void)
+// {
+// 	struct sigaction	sa;
 
-	ft_memset(&sa, 0, sizeof(struct sigaction));
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sa.sa_handler = handle_heredoc_signal;
-	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
-}
+// 	sigemptyset(&sa.sa_mask);
+// 	sa.sa_flags = 0;
+// 	sa.sa_handler = handle_heredoc_signal;
+// 	sigaction(SIGINT, &sa, NULL);
+// 	sa.sa_handler = SIG_IGN;
+// 	sigaction(SIGQUIT, &sa, NULL);
+// }
 
 
 void	handle_exec_signal(int sig)

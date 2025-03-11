@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/10 16:29:45 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/11 12:50:29 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd)
 		close(p->cur_pipefd[1]);
 	}
 	*cur_cmd = (*cur_cmd)->next;
+	// g_is_running = 1;
 }
 
 void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
@@ -132,14 +133,16 @@ void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 		waitpid(p->pids[i], &status, 0);
 		if (WIFEXITED(status))
 			minishell->status = WEXITSTATUS(status);
-		if (WIFSIGNALED(status))
+		else if (WIFSIGNALED(status))
 		{
 			int	sig = WTERMSIG(status);
 			if (sig == SIGINT)
 				write(1, "\n", 1);
 			else if (sig == SIGQUIT)
+			{
 				write(1, "Quit (core dumped)\n", 19);
-			minishell->status = sig + 128;
+				minishell->status = sig + 128;	
+			}
 		}
 	}
 	free(p->pids);

@@ -106,6 +106,8 @@ t_pipeline *parse_pipeline(char *input)
 	return pipeline;
 }
 
+int	g_is_running = 1;
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_program	minishell = {NULL, envp, NULL, 0};
@@ -113,8 +115,9 @@ int	main(int argc, char **argv, char **envp)
 	char		*input;
 
 	init_env(&minishell);
-	setup_prompt_signal();
-	while (1) {
+	while (1)
+	{
+		setup_prompt_signal();
 		input = readline("minishell$ ");
 		if (!input)
 		{
