@@ -1,107 +1,57 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <string.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "minishell.h"
 
-#define PROMPT "minishell> "
-
-/* Signal handler for SIGINT (Ctrl+C) in the main shell */
-void	handle_sigint(int sig)
+void	setup_child_signal(void)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	rl_replace_line("", 0); // Clear the current input line
-	rl_on_new_line();       // Move to a new prompt line
-	rl_redisplay();         // Redisplay the prompt
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+void	sigint_handler(int sig)
+{
+	(void) sig;
+	write(STDOUT_FILENO, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-/* Setup signal handlers */
-void	setup_signals(void)
+void	setup_exec_signal(void)
 {
-	struct sigaction sa;
-
-	sa.sa_handler = handle_sigint;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-
-	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-/* Reset signals before executing a child process */
-void	reset_signals(void)
+void	setup_prompt_signal(void)
 {
-	struct sigaction sa;
-
-	sa.sa_handler = SIG_DFL;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-/* Execute a command using fork and execve */
-void	execute_command(char *cmd)
+int	main(int argc, char **argv, char **envp)
 {
-	pid_t	pid;
-	int		status;
-	char	*args[] = {cmd, NULL};
+	t_program	minishell = {NULL, envp, NULL, 0};
+	t_pipeline	*pipeline;
+	char		*input;
 
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork");
-		return;
-	}
-	if (pid == 0) // Child process
-	{
-		reset_signals();
-		if (execvp(cmd, args) == -1)
-		{
-			perror("execvp");
-			exit(127);
-		}
-	}
-	else // Parent process
-	{
-		waitpid(pid, &status, 0);
-		if (WIFSIGNALED(status))
-		{
-			int sig = WTERMSIG(status);
-			if (sig == SIGINT)
-				write(1, "\n", 1);
-			else if (sig == SIGQUIT)
-				write(1, "Quit (core dumped)\n", 19);
-		}
-	}
-}
-
-int	main(void)
-{
-	char	*cmd;
-
-	setup_signals();
+	init_env(&minishell);
 	while (1)
 	{
-		cmd = readline(PROMPT);
-		if (!cmd) // Handle Ctrl+D (EOF)
+		setup_prompt_signal();
+		input = readline("minishell$ ");
+		if (!input)
 		{
-			write(1, "exit\n", 5);
+			free_lst(minishell.envlst);
+			printf("exit\n");
 			break;
 		}
-		if (*cmd)
+		if (*input)
+			add_history(input);
+		if (*input)
 		{
-			add_history(cmd); // Store command in history
-			execute_command(cmd);
+			setup_exec_signal();
+			pipeline = parse_pipeline(input);
+			process_pipeline(pipeline, &minishell);
+			free(input);
 		}
-		free(cmd);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/11 12:50:29 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/11 14:25:41 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell, t_command *cmd)
+{
+	if (process_redirections(cmd->redirections, minishell))
+		return ;
+	exec_builtin(cmd->args, minishell, pipeline->num_cmds);
+}
 
 void	close_fds(t_pipex *p)
 {
@@ -68,7 +75,6 @@ void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd)
 		close(p->cur_pipefd[1]);
 	}
 	*cur_cmd = (*cur_cmd)->next;
-	// g_is_running = 1;
 }
 
 void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
@@ -97,12 +103,6 @@ void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 	}
 }
 
-void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell, t_command *cmd)
-{
-	if (process_redirections(cmd->redirections, minishell))
-		return ;
-	exec_builtin(cmd->args, minishell, pipeline->num_cmds);
-}
 
 void	process_pipeline(t_pipeline *pipeline, t_program *minishell)
 {

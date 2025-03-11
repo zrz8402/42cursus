@@ -106,8 +106,6 @@ t_pipeline *parse_pipeline(char *input)
 	return pipeline;
 }
 
-int	g_is_running = 1;
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_program	minishell = {NULL, envp, NULL, 0};
@@ -129,6 +127,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(input);
 		if (*input)
 		{
+			setup_exec_signal();
 			pipeline = parse_pipeline(input);
 			process_pipeline(pipeline, &minishell);
 			free(input);

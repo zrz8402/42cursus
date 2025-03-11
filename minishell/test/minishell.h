@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/11 11:34:17 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/11 14:26:50 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 
 # define LONG_MAX 9223372036854775807
 # define LONG_MIN -9223372036854775807
-
-extern int	g_is_running;
 
 enum	e_ltype
 {
