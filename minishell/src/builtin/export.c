@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:16:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 12:34:02 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 18:23:10 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,66 @@ int	is_valid_key(char *s)
 	return (1);
 }
 
-char	*extract_key(char *s)
+void	sort_env_list(t_env *head) {
+
+}
+
+void	export_list(t_env *envlst)
+{
+	t_env	*tmp;
+	
+	tmp = envlst;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, "_"))
+		{
+			ft_putstr_fd("declare -x ", STDOUT_FILENO);
+			ft_putstr_fd(tmp->key, STDOUT_FILENO);
+			if (tmp->value)
+			{
+				ft_putstr_fd("=\"", STDOUT_FILENO);
+				ft_putstr_fd(tmp->value, STDOUT_FILENO);
+				ft_putendl_fd("\"", STDOUT_FILENO);
+			}
+			else
+				write(1, "\n", 1);
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	export_var(char *s, t_env *envlst)
 {
 	char	*equal;
 	char	*key;
+	char	*value;
 
 	equal = ft_strchr(s, '=');
+	value = NULL;
 	if (equal)
+	{
 		key = ft_substr(s, 0, equal - s);
+		value = ft_strdup(equal + 1);
+	}
 	else
 		key = ft_strdup(s);
-	return (key);
-}
-
-char	*extract_value(char *s)
-{
-	return (NULL);
+	update_envlst(&envlst, key, value, 0);
+	free(key);
+	if (value)
+		free(value);
 }
 
 void	run_export(char **args, t_program *minishell)
 {
 	int		i;
-	char	*key;
-	char	*value;
 
 	i = 0;
+	if (!args[1])
+	{
+		sort_env_list(minishell->envlst);
+		export_list(minishell->envlst);
+		return ;
+	}
 	while (args[++i])
 	{
 		if (!is_valid_key(args[i]))
@@ -63,13 +98,7 @@ void	run_export(char **args, t_program *minishell)
 			minishell->status = 1;
 		}
 		else
-		{
-			key = extract_key(args[i]);
-			value = extract_value(args[i]);
-			update_envlst(&minishell->envlst, key, value, 0);
-			free(key);
-			free(value);
-		}
+			export_var(args[i], minishell->envlst);
 	}
 	return ;
 }

@@ -109,12 +109,14 @@ t_pipeline *parse_pipeline(char *input)
 	return pipeline;
 }
 
-int	main(int argc, char **argv, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	char		*input;
 	t_program	minishell;
 	t_pipeline	*pipeline;
 
+	(void)ac;
+	(void)av;
 	init(&minishell, envp);
 	while (1)
 	{
@@ -124,7 +126,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			free_program(&minishell);
 			ft_putendl_fd("exit", STDOUT_FILENO);
-			break;
+			break ;
 		}
 		if (*input)
 		{

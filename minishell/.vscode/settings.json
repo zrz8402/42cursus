@@ -9,6 +9,8 @@
 		"type_traits": "c",
 		"utility": "c",
 		"history.h": "c",
-		"*.tcc": "c"
+		"*.tcc": "c",
+		"optional": "c",
+		"system_error": "c"
 	}
 }
