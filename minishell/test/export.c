@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:16:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 15:34:55 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 12:34:02 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	run_export(char **args, t_program *minishell)
 		{
 			key = extract_key(args[i]);
 			value = extract_value(args[i]);
-			update_envlst(minishell, key, value, 0);
+			update_envlst(&minishell->envlst, key, value, 0);
 			free(key);
 			free(value);
 		}

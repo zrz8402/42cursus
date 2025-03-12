@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 12:37:36 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/02 14:14:18 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 13:36:16 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,4 @@ void	append_node(t_env **envlst, t_env *new)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
-}
-
-void	free_lst(t_env *envlst)
-{
-	t_env	*tmp;
-
-	while (envlst)
-	{
-		tmp = envlst;
-		envlst = envlst->next;
-		free(tmp->key);
-		if (tmp->value)
-			free(tmp->value);
-		free(tmp);
-	}
 }

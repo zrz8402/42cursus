@@ -82,8 +82,8 @@ t_pipeline *parse_pipeline(char *input)
 	// t_redir		*redir1 = redir_out;
 
 	// t_redir		*redir_in = create_redirection(RED_IN, "Makefile");
-	t_redir		*redir_append = create_redirection(APPEND, "append.txt");
-	t_redir		*redir1 = redir_append;
+	// t_redir		*redir_append = create_redirection(APPEND, "append.txt");
+	// t_redir		*redir1 = redir_append;
 
 	for (int i = 0; i < num_cmds; i++) {
 		char *args[100];
@@ -94,8 +94,8 @@ t_pipeline *parse_pipeline(char *input)
 			args[num_args++] = cmd_args_str;
 			cmd_args_str = strtok(NULL, " ");
 		}
-		t_command *cmd = create_command(args, num_args, redir1);
-		// t_command *cmd = create_command(args, num_args, NULL);
+		// t_command *cmd = create_command(args, num_args, redir1);
+		t_command *cmd = create_command(args, num_args, NULL);
 		if (prev_cmd == NULL) {
 			pipeline->cmd = cmd;
 		} else {
@@ -111,26 +111,24 @@ t_pipeline *parse_pipeline(char *input)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_program	minishell = {NULL, envp, NULL, 0};
-	t_pipeline	*pipeline;
 	char		*input;
+	t_program	minishell;
+	t_pipeline	*pipeline;
 
-	init_env(&minishell);
+	init(&minishell, envp);
 	while (1)
 	{
-		// setup_prompt_signal();
+		setup_prompt_signal();
 		input = readline("minishell$ ");
 		if (!input)
 		{
-			free_lst(minishell.envlst);
-			printf("exit\n");
+			free_program(&minishell);
+			ft_putendl_fd("exit", STDOUT_FILENO);
 			break;
 		}
 		if (*input)
-			add_history(input);
-		if (*input)
 		{
-			// setup_exec_signal();
+			add_history(input);
 			pipeline = parse_pipeline(input);
 			process_pipeline(pipeline, &minishell);
 			free(input);

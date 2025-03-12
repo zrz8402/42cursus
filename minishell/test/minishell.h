@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/11 14:26:50 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 13:49:04 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,25 @@ typedef struct s_program
 	char		**envp;
 	t_env		*envlst;
 	int			status;
+	int			exit;
 }	t_program;
+
+// init.c
+void	init(t_program *minishell, char **envp);
+
+// util.c
+void	free_arr(char **arr);
+void	free_envlst(t_env *envlst);
+void	free_program(t_program *minishell);
+
+// signal.c
+void	setup_prompt_signal(void);
+void	setup_exec_signal(void);
+void	setup_child_signal(void);
 
 // env.c
 void	init_env(t_program *minishell);
-void	update_envlst(t_program *minishell, char *key, char *value, int append);
+void	update_envlst(t_env **envlst, char *key, char *value, int append);
 char	*get_var_value(char *key, t_env *envlst);
 t_env	*create_node(char *key, char *value);
 void	append_node(t_env **envlst, t_env *new);
@@ -133,10 +147,5 @@ int		check_exec_with_path(char **args, t_program *minishell);
 void	execute(t_program *minishell, char **args);
 
 void	free_pipeline(t_pipeline *pipeline);
-
-// signal.c
-void	setup_prompt_signal(void);
-void	setup_exec_signal(void);
-void	setup_child_signal(void);
 
 #endif

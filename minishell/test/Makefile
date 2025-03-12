@@ -7,10 +7,18 @@ RM = rm -rf
 HEADERS = -I . -I ../lib/libft
 LIBS = -lreadline libft.a
 
-SRCS = main.c env.c env_utils.c unset.c \
+MAIN = main.c init.c utils.c
+SIG = signal.c
+PARSE = 
+EXEC = builtin.c process.c  redir.c  execute.c
+BUILTIN = env.c env_utils.c unset.c \
+		cd.c  echo.c  exit.c  export.c pwd.c
+
+SRCS = main.c init.c utils.c\
+		signal.c \
+		env.c env_utils.c unset.c \
 		cd.c  echo.c  exit.c  export.c pwd.c \
-		builtin.c process.c  redir.c  execute.c \
-		signal.c
+		builtin.c process.c redir.c  execute.c \
 
 OBJS = $(SRCS:.c=.o)
 

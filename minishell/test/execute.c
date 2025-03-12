@@ -38,22 +38,6 @@ char	*join_str(char const *s1, char const *s2)
 	return (str);
 }
 
-void	free_paths(char **arr)
-{
-	char	**tmp;
-
-	tmp = arr;
-	if (arr)
-	{
-		while (*arr)
-		{
-			free(*arr);
-			arr++;
-		}
-		free(tmp);
-	}
-}
-
 int	check_execute(char **args, char **paths, t_program *minishell)
 {
 	if (access(args[0], F_OK) == 0)
@@ -61,14 +45,14 @@ int	check_execute(char **args, char **paths, t_program *minishell)
 		if (access(args[0], X_OK) == -1)
 		{
 			ft_putendl_fd("Command no permission", 2);
-			free_paths(paths);
+			free_arr(paths);
 			minishell->status = 126;
 			return (1);
 		}
 		if (execve(args[0], args, minishell->envp) == -1)
 		{
 			ft_putendl_fd("Command no permission", 2);
-			free_paths(paths);
+			free_arr(paths);
 			minishell->status = 1;
 			return (1);
 		}
@@ -95,7 +79,7 @@ int	check_exec_with_path(char **args, t_program *minishell)
 	ft_putendl_fd("Command not found", 2);
 	minishell->status = 127;
 	args[0] = tmp;
-	free_paths(paths);
+	free_arr(paths);
 	return (0);
 }
 

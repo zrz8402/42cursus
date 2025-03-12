@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/11 20:06:11 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 13:44:12 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell, t_command *cmd
 	dup2(saved_out, STDOUT_FILENO);
 	close(saved_in);
 	close(saved_out);
+	if (minishell->exit)
+		exit(minishell->status);
 }
 
 void	close_fds(t_pipex *p)
@@ -52,7 +54,7 @@ void	close_fds(t_pipex *p)
 
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p)
 {
-	// setup_child_signal();
+	setup_child_signal();
 	if (process_redirections(cmd->redirections, minishell))
 		return (close_fds(p));
 	if (p->i != 0)
@@ -70,7 +72,7 @@ void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t
 		exec_builtin(cmd->args, minishell, pipeline->num_cmds);
 	else
 		execute(minishell, cmd->args);
-	free_lst(minishell->envlst);
+	free_envlst(minishell->envlst);
 	exit(minishell->status);
 }
 
@@ -84,7 +86,7 @@ void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd)
 		close(p->cur_pipefd[1]);
 	}
 	*cur_cmd = (*cur_cmd)->next;
-	// setup_exec_signal();
+	setup_exec_signal();
 }
 
 void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
@@ -158,6 +160,7 @@ void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 			minishell->status = sig + 128;	
 		}
 	}
+	// close_fds(p);
 	free(p->pids);
 	free_pipeline(pipeline);
 }

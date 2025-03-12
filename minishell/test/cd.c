@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 15:50:05 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 13:01:46 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 12:33:55 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	cd_home(t_program *minishell)
 {
 	char	*home;
 
-	update_envlst(minishell, "OLDPWD",
+	update_envlst(&minishell->envlst, "OLDPWD",
 		get_var_value("PWD", minishell->envlst), 0);
 	home = get_var_value("HOME", minishell->envlst);
 	if (!home)
@@ -31,16 +31,16 @@ void	cd_home(t_program *minishell)
 		minishell->status = 1;
 		return ;
 	}
-	update_envlst(minishell, "PWD", home, 0);
+	update_envlst(&minishell->envlst, "PWD", home, 0);
 }
 
-void	cd_pwd(t_program *minishell)
+void	cd_pwd(t_env *envlst)
 {
 	char	*cwd;
 	char	buf[1024];
 
 	cwd = getcwd(buf, sizeof(buf));
-	update_envlst(minishell, "PWD", cwd, 0);
+	update_envlst(&envlst, "PWD", cwd, 0);
 }
 
 void	run_cd(char **args, t_program *minishell)
@@ -63,8 +63,8 @@ void	run_cd(char **args, t_program *minishell)
 			minishell->status = 1;
 			return ;
 		}
-		update_envlst(minishell, "OLDPWD",
+		update_envlst(&minishell->envlst, "OLDPWD",
 			get_var_value("PWD", minishell->envlst), 0);
-		cd_pwd(minishell);
+		cd_pwd(minishell->envlst);
 	}
 }
