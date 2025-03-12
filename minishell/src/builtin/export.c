@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:16:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 18:23:10 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 18:52:45 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	is_valid_key(char *s)
 	return (1);
 }
 
-void	sort_env_list(t_env *head) {
+void	sort_env_list(t_env *envlst)
+{
 
 }
 
@@ -83,11 +84,7 @@ void	run_export(char **args, t_program *minishell)
 
 	i = 0;
 	if (!args[1])
-	{
-		sort_env_list(minishell->envlst);
-		export_list(minishell->envlst);
-		return ;
-	}
+		return (export_list(merge_sort(minishell->envlst)));
 	while (args[++i])
 	{
 		if (!is_valid_key(args[i]))

@@ -29,7 +29,7 @@ MAIN_FILES = main.c init.c utils.c
 SIG_FILES = signal.c
 PARSE_FILES = 
 EXEC_FILES = process.c redir.c execute.c builtin.c cleanup.c
-BUILTIN_FILES = env.c unset.c cd.c echo.c exit.c export.c pwd.c
+BUILTIN_FILES = env.c unset.c cd.c echo.c exit.c export.c pwd.c merge_sort.c
 
 # Combine Source Files
 MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 15:45:06 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 18:49:49 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void	run_echo(char **args, t_program *minishell);
 void	run_cd(char **args, t_program *minishell);
 void	run_pwd(t_program *minishell);
 void	run_export(char **args, t_program *minishell);
+t_env	*merge_sort(t_env *envlst);
 void	run_unset(char **args, t_env *envlst);
 void	run_env(t_env *envlst);
 void	run_exit(char **args, t_program *minishell, int num_cmds);
