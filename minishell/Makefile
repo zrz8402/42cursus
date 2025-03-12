@@ -73,7 +73,7 @@ $(OBJ_DIR):
 
 # Clean Object Files and Dependency Files
 clean:
-	@$(RM) $(OBJ_DIR) $(DEPS)
+	@$(RM) $(OBJ_DIR)
 	@make fclean  -C $(LIBFT_PATH)
 	@echo "Object files, dependency files, and $(OBJ_DIR) removed!"
 
