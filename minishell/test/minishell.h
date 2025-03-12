@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 13:49:04 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 15:37:47 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include <string.h>
 # include <signal.h>
 # include <sys/wait.h>
 # include "../lib/libft/libft.h"
@@ -99,27 +98,35 @@ void	init(t_program *minishell, char **envp);
 void	free_arr(char **arr);
 void	free_envlst(t_env *envlst);
 void	free_program(t_program *minishell);
+int		ft_strcmp(const char *s1, const char *s2);
+
+// env.c
+void	update_envlst(t_env **envlst, char *key, char *value, int append);
+char	*get_var_value(char *key, t_env *envlst);
 
 // signal.c
 void	setup_prompt_signal(void);
 void	setup_exec_signal(void);
 void	setup_child_signal(void);
 
-// env.c
-void	init_env(t_program *minishell);
-void	update_envlst(t_env **envlst, char *key, char *value, int append);
-char	*get_var_value(char *key, t_env *envlst);
-t_env	*create_node(char *key, char *value);
-void	append_node(t_env **envlst, t_env *new);
-void	free_lst(t_env *envlst);
-
 // process.c
 void	process_pipeline(t_pipeline *pipeline, t_program *minishell);
 void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
-
-void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p);
 void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd);
-void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
+void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p);
+
+// redir.c
+int		process_redirections(t_redir *redir, t_program *minishell);
+int		process_in(char *file);
+int		process_out(char *file);
+int		process_append(char *file);
+int		process_heredoc(int heredoc_fd);
+
+// execute.c
+void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell);
+void	execute(t_program *minishell, char **args);
+int		check_execute(char **args, char **paths, t_program *minishell);
+int		check_exec_with_path(char **args, t_program *minishell);
 
 // builtin.c
 int		is_builtin(char *arg);
@@ -133,19 +140,9 @@ void	run_unset(char **args, t_env *envlst);
 void	run_env(t_env *envlst);
 void	run_exit(char **args, t_program *minishell, int num_cmds);
 
-// redir.c
-int		process_in(char *file);
-int		process_out(char *file);
-int		process_append(char *file);
-int		process_heredoc(int heredoc_fd);
-int		process_redirections(t_redir *redir, t_program *minishell);
-
-// execute.c
-char	*join_str(char const *s1, char const *s2);
-int		check_execute(char **args, char **paths, t_program *minishell);
-int		check_exec_with_path(char **args, t_program *minishell);
-void	execute(t_program *minishell, char **args);
-
+// cleanup
+void	close_fds(t_pipex *p);
 void	free_pipeline(t_pipeline *pipeline);
+void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
 
 #endif

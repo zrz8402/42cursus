@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:23:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/07 15:01:54 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 15:39:41 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	unset_var(t_env **envlst, char *key)
 	cur = *envlst;
 	while (cur)
 	{
-		if (ft_strncmp(key, cur->key, ft_strlen(key)) == 0)
+		if (ft_strcmp(key, cur->key) == 0)
 		{
 			if (prev)
 				prev->next = cur->next;

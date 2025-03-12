@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:13:14 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 13:44:00 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 15:36:50 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,3 +60,15 @@ void	free_program(t_program *minishell)
 // 		arr++;
 // 	}
 // }
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && *s2)
+	{
+		if (*s1 != *s2)
+			return ((unsigned char)*s1 - (unsigned char)*s2);;
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
+}

@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell)
+{
+	int	saved_in;
+	int	saved_out;
+
+	saved_in = dup(STDIN_FILENO);
+	saved_out = dup(STDOUT_FILENO);
+	if (process_redirections(pipeline->cmd->redirections, minishell))
+		return ;
+	exec_builtin(pipeline->cmd->args, minishell, pipeline->num_cmds);
+	dup2(saved_in, STDIN_FILENO);
+	dup2(saved_out, STDOUT_FILENO);
+	close(saved_in);
+	close(saved_out);
+	if (minishell->exit)
+		exit(minishell->status);
+}
+
 char	*join_str(char const *s1, char const *s2)
 {
 	char	*str;

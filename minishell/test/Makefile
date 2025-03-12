@@ -10,15 +10,13 @@ LIBS = -lreadline libft.a
 MAIN = main.c init.c utils.c
 SIG = signal.c
 PARSE = 
-EXEC = builtin.c process.c  redir.c  execute.c
-BUILTIN = env.c env_utils.c unset.c \
-		cd.c  echo.c  exit.c  export.c pwd.c
+EXEC = process.c redir.c execute.c builtin.c cleanup.c
+BUILTIN = env.c unset.c cd.c echo.c exit.c export.c pwd.c
 
-SRCS = main.c init.c utils.c\
+SRCS = main.c init.c utils.c \
 		signal.c \
-		env.c env_utils.c unset.c \
-		cd.c  echo.c  exit.c  export.c pwd.c \
-		builtin.c process.c redir.c  execute.c \
+		process.c redir.c execute.c builtin.c cleanup.c \
+		env.c unset.c cd.c echo.c exit.c export.c pwd.c \
 
 OBJS = $(SRCS:.c=.o)
 
