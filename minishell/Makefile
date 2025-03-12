@@ -1,40 +1,92 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = 
+DEPFLAGS = -MMD -MP
+
 RM = rm -rf
+MKDIR = mkdir -p
 
+# Library Paths
+LIBFT_PATH = ./lib/libft
+LIBFT_A = $(LIBFT_PATH)/libft.a
 
-HEADERS = -I . -I ../lib/libft
-LIBS = -lreadline libft.a
+# Include Directories
+HEADERS = -I ./inc -I $(LIBFT_PATH)
 
-MAIN = main.c init.c utils.c
-SIG = signal.c
-PARSE = 
-EXEC = process.c redir.c execute.c builtin.c cleanup.c
-BUILTIN = env.c unset.c cd.c echo.c exit.c export.c pwd.c
+# Libraries to Link
+LIBS = -lreadline $(LIBFT_A)
 
-SRCS = main.c init.c utils.c \
-		signal.c \
-		process.c redir.c execute.c builtin.c cleanup.c \
-		env.c unset.c cd.c echo.c exit.c export.c pwd.c \
+# Source Directories
+MAIN_DIR = src
+SIG_DIR = src/signal
+PARSE_DIR = 
+EXEC_DIR = src/exec
+BUILTIN_DIR = src/builtin
 
-OBJS = $(SRCS:.c=.o)
+# Source Files
+MAIN_FILES = main.c init.c utils.c
+SIG_FILES = signal.c
+PARSE_FILES = 
+EXEC_FILES = process.c redir.c execute.c builtin.c cleanup.c
+BUILTIN_FILES = env.c unset.c cd.c echo.c exit.c export.c pwd.c
 
+# Combine Source Files
+MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))
+SIG = $(addprefix $(SIG_DIR)/, $(SIG_FILES))
+PARSE = $(addprefix $(PARSE_DIR)/, $(PARSE_FILES))
+EXEC = $(addprefix $(EXEC_DIR)/, $(EXEC_FILES))
+BUILTIN = $(addprefix $(BUILTIN_DIR)/, $(BUILTIN_FILES))
+
+# All Source Files
+SRCS = $(MAIN) $(SIG) $(PARSE) $(EXEC) $(BUILTIN)
+
+# Object Files Directory
+OBJ_DIR = obj
+
+# Object Files
+OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
+
+# Dependency Files
+DEPS = $(OBJS:.o=.d)
+
+# Default Target
 all: $(NAME)
 
+# Link Object Files and Libraries to Create Executable
 $(NAME): $(OBJS) $(LIBFT_A)
-	@$(CC) $(HEADERS) $(OBJS) $(LIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+	@echo "$(NAME) compiled successfully!"
 
-%.o: %.c Makefile
-	@$(CC) $(HEADERS) -c $< -o $@
+# Build libft Library
+$(LIBFT_A):
+	@make -C $(LIBFT_PATH)
 
+# Compile Source Files into Object Files
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	@$(MKDIR) $(dir $@)
+	@$(CC) $(CFLAGS) $(DEPFLAGS) $(HEADERS) -c $< -o $@
+
+# Create Object Directory
+$(OBJ_DIR):
+	@$(MKDIR) $(OBJ_DIR)
+
+# Clean Object Files and Dependency Files
 clean:
-	@$(RM) $(OBJS)
+	@$(RM) $(OBJ_DIR) $(DEPS)
+	@make fclean  -C $(LIBFT_PATH)
+	@echo "Object files, dependency files, and $(OBJ_DIR) removed!"
 
+# Clean Everything (Object Files and Executable)
 fclean: clean
 	@$(RM) $(NAME)
+	@echo "$(NAME) removed!"
 
+# Rebuild Project
 re: fclean all
 
+# Include Dependency Files
+-include $(DEPS)
+
+# Phony Targets
 .PHONY: all clean fclean re

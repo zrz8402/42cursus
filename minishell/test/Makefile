@@ -3,7 +3,6 @@ NAME = test
 CC = cc
 RM = rm -rf
 
-
 HEADERS = -I . -I ../lib/libft
 LIBS = -lreadline libft.a
 
