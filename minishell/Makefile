@@ -60,7 +60,7 @@ $(NAME): $(OBJS) $(LIBFT_A)
 
 # Build libft Library
 $(LIBFT_A):
-	@make -C $(LIBFT_PATH)
+	@make -s -C $(LIBFT_PATH)
 
 # Compile Source Files into Object Files
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
@@ -74,7 +74,7 @@ $(OBJ_DIR):
 # Clean Object Files and Dependency Files
 clean:
 	@$(RM) $(OBJ_DIR)
-	@make fclean  -C $(LIBFT_PATH)
+	@make fclean -s -C $(LIBFT_PATH)
 	@echo "Object files, dependency files, and $(OBJ_DIR) removed!"
 
 # Clean Everything (Object Files and Executable)
