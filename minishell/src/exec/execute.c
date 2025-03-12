@@ -12,38 +12,22 @@
 
 #include "minishell.h"
 
-void	check_execute(char **args, char **envp, char **paths, t_pipex *p)
+void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell)
 {
-	if (access(args[0], F_OK) == 0)
-	{
-		if (access(args[0], X_OK) == -1)
-		{
-			ft_putendl_fd("Command no permission", 2);
-			cleanup();
-			exit(126);
-		}
-		if (execve(args[0], args, envp) == -1)
-		{
-			ft_putendl_fd("Command no permission", 2);
-			cleanup();
-			exit(1);
-		}
-	}
-}
+	int	saved_in;
+	int	saved_out;
 
-char	**parse_path(t_env *envlst, t_pipex *p)
-{
-	char	**paths;
-
-	paths = NULL;
-	paths = ft_split(get_var_value("PATH", envlst), ':');
-	if (!paths || !*paths)
-	{
-		ft_putendl_fd("Command not found", 2);
-		cleanup();
-		exit(127);
-	}
-	return (paths);
+	saved_in = dup(STDIN_FILENO);
+	saved_out = dup(STDOUT_FILENO);
+	if (process_redirections(pipeline->cmd->redirections, minishell))
+		return ;
+	exec_builtin(pipeline->cmd->args, minishell, pipeline->num_cmds);
+	dup2(saved_in, STDIN_FILENO);
+	dup2(saved_out, STDOUT_FILENO);
+	close(saved_in);
+	close(saved_out);
+	if (minishell->exit)
+		exit(minishell->status);
 }
 
 char	*join_str(char const *s1, char const *s2)
@@ -72,28 +56,69 @@ char	*join_str(char const *s1, char const *s2)
 	return (str);
 }
 
-void	execute(t_program *minishell, t_pipeline *pipeline, char **args, t_pipex *p)
+int	check_execute(char **args, char **paths, t_program *minishell)
 {
-	char	**args;
+	if (access(args[0], F_OK) == 0)
+	{
+		if (access(args[0], X_OK) == -1)
+		{
+			ft_putendl_fd("Command no permission", 2);
+			free_arr(paths);
+			minishell->status = 126;
+			return (1);
+		}
+		if (execve(args[0], args, minishell->envp) == -1)
+		{
+			ft_putendl_fd("Command no permission", 2);
+			free_arr(paths);
+			minishell->status = 1;
+			return (1);
+		}
+	}
+	return (0);
+}
+
+int	check_exec_with_path(char **args, t_program *minishell)
+{
 	char	**paths;
 	int		i;
+	char	*tmp;
+
+	paths = NULL;
+	paths = ft_split(get_var_value("PATH", minishell->envlst), ':');
+	i = -1;
+	tmp = ft_strdup(args[0]);
+	while (paths[++i])
+	{
+		free(args[0]);
+		args[0] = join_str(paths[i], tmp);
+		check_execute(args, paths, minishell);
+	}
+	ft_putendl_fd("Command not found", 2);
+	minishell->status = 127;
+	args[0] = tmp;
+	free_arr(paths);
+	return (0);
+}
+
+void	execute(t_program *minishell, char **args)
+{
+	char	*path;
 
 	if ((!args || !*args) && (access("", F_OK) == -1))
 	{
 		ft_putendl_fd("Command not found", 2);
-		cleanup();
-		exit(127);
+		minishell->status = 127;
+		return ;
 	}
-	check_execute(args, minishell->envp, NULL, p);
-	paths = parse_path(minishell->envlst, p);
-	i = -1;
-	while (paths[++i])
+	if (check_execute(args, NULL, minishell))
+		return ;
+	path = get_var_value("PATH", minishell->envlst);
+	if (!path || !*path)
 	{
-		free(args[0]);
-		args[0] = join_str(paths[i], args[0]);
-		check_execute(args, minishell->envp, paths, p);
+		ft_putendl_fd("Command not found", 2);
+		minishell->status = 127;
+		return ;
 	}
-	ft_putendl_fd("Command not found", 2);
-	cleanup();
-	exit(127);
+	check_exec_with_path(args, minishell);
 }

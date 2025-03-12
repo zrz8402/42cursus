@@ -1,36 +1,39 @@
 NAME = minishell
 
 CC = cc
-CFLAGS =
+CFLAGS = -Wall -Werror -Wextra
 RM = rm -rf
 
-LIBFT = ./lib/libft
 
-LIBFT_A = $(LIBFT)/libft.a
+HEADERS = -I . -I ../lib/libft
+LIBS = -lreadline libft.a
 
-HEADERS = -I ./inc -I $(LIBFT)
+MAIN = main.c init.c utils.c
+SIG = signal.c
+PARSE = 
+EXEC = process.c redir.c execute.c builtin.c cleanup.c
+BUILTIN = env.c unset.c cd.c echo.c exit.c export.c pwd.c
 
-SRCS = main.c utils.c process.c
+SRCS = main.c init.c utils.c \
+		signal.c \
+		process.c redir.c execute.c builtin.c cleanup.c \
+		env.c unset.c cd.c echo.c exit.c export.c pwd.c \
+
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_A)
-	@$(CC) $(CFLAGS) $(HEADERS) $(OBJS) $(LIBFT)/libft.a -o $(NAME)
-
-$(LIBFT_A):
-	@make -C $(LIBFT)
+	@$(CC) $(HEADERS) $(OBJS) $(LIBS) -o $(NAME)
 
 %.o: %.c Makefile
-	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	@$(CC) $(HEADERS) -c $< -o $@
 
 clean:
 	@$(RM) $(OBJS)
-	@make clean -C $(LIBFT)
 
 fclean: clean
 	@$(RM) $(NAME)
-	@make fclean -C $(LIBFT)
 
 re: fclean all
 

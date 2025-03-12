@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/07 14:25:40 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/12 15:22:06 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,65 +24,50 @@
 
 #include "minishell.h"
 
-void	exec_one_cmd(t_pipeline *pipeline, t_program *minishell)
-{
-	process_redirections(pipeline, minishell);
-	if (is_builtin(pipeline->cmd->args[0]))
-		exec_builtin(pipeline->cmd, minishell);
-	else
-		execute(minishell, pipeline, pipeline->cmd->args, NULL);
-	cleanup();
-}
-
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p)
 {
-	process_redirections();
-	if (p->i > 0)
+	setup_child_signal();
+	if (process_redirections(cmd->redirections, minishell))
+		return (close_fds(p));
+	if (p->i != 0)
+	{
 		dup2(p->prev_fd, STDIN_FILENO);
-	if (p->i < pipeline->num_cmds -1)
-		dup2(p->cur_pipefd[1], STDIN_FILENO);
-	close(p->cur_pipefd[0]);
-	close(p->cur_pipefd[1]);
+		close(p->prev_fd);
+	}
+	if (p->i != pipeline->num_cmds -1)
+	{
+		dup2(p->cur_pipefd[1], STDOUT_FILENO);
+		close(p->cur_pipefd[0]);
+		close(p->cur_pipefd[1]);
+	}
 	if (is_builtin(cmd->args[0]))
-		exec_builtin(cmd, minishell);
+		exec_builtin(cmd->args, minishell, pipeline->num_cmds);
 	else
-		execute(minishell, pipeline, cmd->args, p);
+		execute(minishell, cmd->args);
+	free_envlst(minishell->envlst);
+	exit(minishell->status);
 }
 
 void	parent_process(t_pipex *p, int num_cmds, t_command **cur_cmd)
 {
 	if (p->i != 0)
-	{
 		close(p->prev_fd);
+	if (p->i != num_cmds - 1)
+	{
+		p->prev_fd = p->cur_pipefd[0];
 		close(p->cur_pipefd[1]);
 	}
-	if (p->i != num_cmds)
-		p->prev_fd = p->cur_pipefd[0];
 	*cur_cmd = (*cur_cmd)->next;
+	setup_exec_signal();
 }
 
-void	wait_and_status()
-{
-	// int	i;
-	// int	status;
-
-	// i = -1;
-	// while (++i < p.num_cmds)
-	// 	waitpid(p.pids[i], &status, 0);
-
-	// if (WIFEXITED(status))
-	// 	exitcode = WEXITSTATUS(status);
-	// else if (WIFSIGNALED(status))
-	// 	exitcode = WTERMSIG(status) + 128;
-}
-                                                                                                                                               
 void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 {
-	int	i;
-	t_command *cur_cmd;
+	int			i;
+	t_command	*cur_cmd;
 
 	p->i = -1;
-	p->prev_fd = 0;
+	p->prev_fd = -1;
 	p->pids = malloc(pipeline->num_cmds * sizeof(pid_t));
 	cur_cmd = pipeline->cmd;
 	while (++p->i < pipeline->num_cmds)
@@ -93,23 +78,28 @@ void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 		p->pids[i] = fork();
 		if (p->pids[i] < 0)
 		{
-			error("Fork failed", 1, pipeline);
-			cleanup();
+			ft_putendl_fd("Fork failed", STDOUT_FILENO);
 			exit(1);
 		}
 		if (p->pids[i] == 0)
-			child_process(pipeline, minishell, cur_cmd, p);	
+			child_process(pipeline, minishell, cur_cmd, p);
 		parent_process(p, pipeline->num_cmds, &cur_cmd);
 	}
 }
 
-void	run(t_pipeline *pipeline, t_program *minishell)
+void	process_pipeline(t_pipeline *pipeline, t_program *minishell)
 {
 	t_pipex	p;
 
-	if (pipeline->num_cmds == 1)
-		return (exec_one_cmd(pipeline, minishell));
+	p.prev_fd = -1;
+	p.cur_pipefd[0] = -1;
+	p.cur_pipefd[1] = -1;
+	if (pipeline->num_cmds == 1 && is_builtin(pipeline->cmd->args[0]))
+	{
+		exec_one_builtin(pipeline, minishell);
+		free_pipeline(pipeline);
+		return ;
+	}
 	process(pipeline, minishell, &p);
-	wait_and_status();
-	cleanup();
+	wait_and_clean(pipeline, minishell, &p);
 }
