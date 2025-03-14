@@ -58,18 +58,18 @@ char	*join_str(char const *s1, char const *s2)
 
 int	check_execute(char **args, char **paths, t_program *minishell)
 {
-	if (access(args[0], F_OK) == 0)
+	if (access(args[0], F_OK) == 0) // add is_file/is_directory
 	{
 		if (access(args[0], X_OK) == -1)
 		{
-			ft_putendl_fd("Command no permission", 2);
+			ft_putendl_fd(" Permission denied", 2);
 			free_arr(paths);
 			minishell->status = 126;
 			return (1);
 		}
 		if (execve(args[0], args, minishell->envp) == -1)
 		{
-			ft_putendl_fd("Command no permission", 2);
+			ft_putendl_fd(" Permission denied", 2);
 			free_arr(paths);
 			minishell->status = 1;
 			return (1);
@@ -94,7 +94,7 @@ int	check_exec_with_path(char **args, t_program *minishell)
 		args[0] = join_str(paths[i], tmp);
 		check_execute(args, paths, minishell);
 	}
-	ft_putendl_fd("Command not found", 2);
+	ft_putendl_fd(" command not found", 2);
 	minishell->status = 127;
 	args[0] = tmp;
 	free_arr(paths);
@@ -107,7 +107,7 @@ void	execute(t_program *minishell, char **args)
 
 	if ((!args || !*args) && (access("", F_OK) == -1))
 	{
-		ft_putendl_fd("Command not found", 2);
+		ft_putendl_fd(" command not found", 2);
 		minishell->status = 127;
 		return ;
 	}
@@ -116,7 +116,7 @@ void	execute(t_program *minishell, char **args)
 	path = get_var_value("PATH", minishell->envlst);
 	if (!path || !*path)
 	{
-		ft_putendl_fd("Command not found", 2);
+		ft_putendl_fd(" command not found", 2);
 		minishell->status = 127;
 		return ;
 	}

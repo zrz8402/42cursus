@@ -21,6 +21,7 @@ LIBS = -lreadline $(LIBFT_A)
 MAIN_DIR = src
 SIG_DIR = src/signal
 PARSE_DIR = 
+REDIR_DIR = src/redir
 EXEC_DIR = src/exec
 BUILTIN_DIR = src/builtin
 
@@ -28,18 +29,20 @@ BUILTIN_DIR = src/builtin
 MAIN_FILES = main.c init.c utils.c
 SIG_FILES = signal.c
 PARSE_FILES = 
-EXEC_FILES = process.c redir.c execute.c builtin.c cleanup.c
+REDIR_FILES = redir.c redir_in.c redir_out.c append.c heredoc.c
+EXEC_FILES = process.c execute.c builtin.c cleanup.c
 BUILTIN_FILES = env.c unset.c cd.c echo.c exit.c export.c pwd.c merge_sort.c
 
 # Combine Source Files
 MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))
 SIG = $(addprefix $(SIG_DIR)/, $(SIG_FILES))
 PARSE = $(addprefix $(PARSE_DIR)/, $(PARSE_FILES))
+REDIR = $(addprefix $(REDIR_DIR)/, $(REDIR_FILES))
 EXEC = $(addprefix $(EXEC_DIR)/, $(EXEC_FILES))
 BUILTIN = $(addprefix $(BUILTIN_DIR)/, $(BUILTIN_FILES))
 
 # All Source Files
-SRCS = $(MAIN) $(SIG) $(PARSE) $(EXEC) $(BUILTIN)
+SRCS = $(MAIN) $(SIG) $(PARSE) $(REDIR) $(EXEC) $(BUILTIN)
 
 # Object Files Directory
 OBJ_DIR = obj

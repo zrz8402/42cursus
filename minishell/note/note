@@ -169,7 +169,7 @@ exit status codes:
 		— For example, in Bash, exit 2 might be used when the command syntax is wrong.
 	126: Command invoked cannot execute 
 		— This could happen if a command doesn't have execute permission.
-	127: Command not found 
+	127:  command not found 
 		— This is a typical exit code if a command doesn't exist in the system's path.
 	128: Invalid argument to exit 
 		— This exit code is used when the exit function is used incorrectly.

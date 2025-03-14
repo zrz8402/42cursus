@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 18:49:49 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/14 13:40:15 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,13 @@
 # include <signal.h>
 # include <sys/wait.h>
 
+// range of exit
 # define LONG_MAX 9223372036854775807
 # define LONG_MIN -9223372036854775807
+
+# define FILE_NOT_FOUND "No such file or directory"
+# define CMD_NOT_FOUND "command not found"
+# define IS_DIR "Is a directory"
 
 enum	e_ltype
 {

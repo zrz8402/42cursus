@@ -35,4 +35,4 @@ ONLY change pwd and oldpwd in both envp and envlst
 export -> change envlst
 
 
-valgrind -q --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --error-limit=no --suppressions=valgrind.supp ./test
+valgrind -q --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --error-limit=no --suppressions=valgrind.supp ./minishell

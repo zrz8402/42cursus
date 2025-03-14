@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:27:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 11:27:49 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/14 08:41:39 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	run_exit(char **args, t_program *minishell, int num_cmds)
 	{
 		if (!valid_arg(args[1]))
 		{
-			ft_putendl_fd("exit", STDERR_FILENO);
+			ft_putendl_fd("exit", STDOUT_FILENO);
 			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 			ft_putstr_fd(args[1], STDERR_FILENO);
 			ft_putendl_fd(": numeric argument required", STDERR_FILENO);
@@ -63,9 +63,9 @@ void	run_exit(char **args, t_program *minishell, int num_cmds)
 		}
 		if (args[2])
 		{
-			ft_putendl_fd("exit", STDERR_FILENO);
+			ft_putendl_fd("exit", STDOUT_FILENO);
 			ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
-			minishell->status = 2;
+			minishell->status = 1;
 			minishell->exit = 0;
 			return ;
 		}

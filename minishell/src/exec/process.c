@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 15:22:06 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/14 11:21:35 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t_pipex *p)
 {
 	setup_child_signal();
-	if (process_redirections(cmd->redirections, minishell))
-		return (close_fds(p));
 	if (p->i != 0)
 	{
 		dup2(p->prev_fd, STDIN_FILENO);
@@ -40,6 +38,8 @@ void	child_process(t_pipeline *pipeline, t_program *minishell, t_command *cmd, t
 		close(p->cur_pipefd[0]);
 		close(p->cur_pipefd[1]);
 	}
+	if (process_redirections(cmd->redirections, minishell))
+		return ;
 	if (is_builtin(cmd->args[0]))
 		exec_builtin(cmd->args, minishell, pipeline->num_cmds);
 	else

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:16:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 18:52:45 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/14 08:44:42 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,11 @@ int	is_valid_key(char *s)
 	{
 		if (*s == '=')
 			break ;
-		if (!ft_isalnum(*s) || *s != '_')
+		if (!ft_isalnum(*s) && *s != '_')
 			return (0);
 		s++;
 	}
 	return (1);
-}
-
-void	sort_env_list(t_env *envlst)
-{
-
 }
 
 void	export_list(t_env *envlst)
