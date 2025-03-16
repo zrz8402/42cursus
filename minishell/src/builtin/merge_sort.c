@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:36:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 18:52:29 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/16 12:57:14 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_env	*merge(t_env *left, t_env *right)
 		else
 		{
 			tail->next = right;
-			right = right->next;			
+			right = right->next;
 		}
 		tail = tail->next;
 	}
@@ -69,7 +69,6 @@ t_env	*merge_sort(t_env *envlst)
 	left = envlst;
 	right = mid->next;
 	mid->next = NULL;
-	
 	left = merge_sort(left);
 	right = merge_sort(right);
 	return (merge(left, right));

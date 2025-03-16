@@ -1,51 +1,38 @@
-NAME = minishell
+NAME = run_test 
 
 CC = cc
-CFLAGS = 
+CFLAGS = -g -O0
 DEPFLAGS = -MMD -MP
 
 RM = rm -rf
 MKDIR = mkdir -p
 
 # Library Paths
-LIBFT_PATH = ./lib/libft
+LIBFT_PATH = ../../lib/libft
 LIBFT_A = $(LIBFT_PATH)/libft.a
 
 # Include Directories
-HEADERS = -I ./inc -I $(LIBFT_PATH)
+HEADERS = -I ../../inc -I $(LIBFT_PATH)
 
 # Libraries to Link
 LIBS = -lreadline $(LIBFT_A)
 
 # Source Directories
-MAIN_DIR = src
-SIG_DIR = src/signal
-PARSE_DIR = src/parse
-REDIR_DIR = src/redir
-EXEC_DIR = src/exec
-BUILTIN_DIR = src/builtin
+PARSE_DIR = .
 
 # Source Files
-MAIN_FILES = main.c init.c utils.c
-SIG_FILES = signal.c
 PARSE_FILES = parse_pipeline.c lex_make.c tokenize.c token_utils.c type_check_lex.c command_make.c command_arg_utils.c command_redir_utils.c
-REDIR_FILES = redir.c redir_in.c redir_out.c append.c heredoc.c
-EXEC_FILES = process.c execute.c builtin.c cleanup.c
-BUILTIN_FILES = env.c unset.c cd.c echo.c exit.c export.c pwd.c merge_sort.c
+TEST_FILES = a_test.c
 
 # Combine Source Files
-MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))
-SIG = $(addprefix $(SIG_DIR)/, $(SIG_FILES))
 PARSE = $(addprefix $(PARSE_DIR)/, $(PARSE_FILES))
-REDIR = $(addprefix $(REDIR_DIR)/, $(REDIR_FILES))
-EXEC = $(addprefix $(EXEC_DIR)/, $(EXEC_FILES))
-BUILTIN = $(addprefix $(BUILTIN_DIR)/, $(BUILTIN_FILES))
+TEST = $(addprefix $(PARSE_DIR)/, $(TEST_FILES))
 
 # All Source Files
-SRCS = $(MAIN) $(SIG) $(PARSE) $(REDIR) $(EXEC) $(BUILTIN)
+SRCS = $(PARSE) $(TEST)
 
 # Object Files Directory
-OBJ_DIR = obj
+OBJ_DIR = ../../obj
 
 # Object Files
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)

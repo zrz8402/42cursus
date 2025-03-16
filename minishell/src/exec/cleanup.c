@@ -6,21 +6,11 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:19:16 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 15:19:46 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/16 15:13:08 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	close_fds(t_pipex *p)
-{
-	if (p->prev_fd > -1)
-		close(p->prev_fd);
-	if (p->cur_pipefd[0] > -1)
-		close(p->cur_pipefd[0]);
-	if (p->cur_pipefd[1] > -1)
-		close(p->cur_pipefd[1]);
-}
 
 void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 {
@@ -48,6 +38,32 @@ void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 			minishell->status = sig + 128;
 		}
 	}
-	free(p->pids);
-	free_pipeline(pipeline);
+	cleanup(NULL, pipeline, p);
+}
+
+void	cleanup(t_program *minishell, t_pipeline *pipeline, t_pipex *p)
+{
+	if (p)
+	{
+		if (p->prev_fd != -1)
+			close(p->prev_fd);
+		if (p->cur_pipefd[0] != -1)
+			close(p->cur_pipefd[0]);
+		if (p->cur_pipefd[1] != -1)
+			close(p->cur_pipefd[1]);
+		if (p->pids)
+			free(p->pids);
+	}
+	if (pipeline)
+		free_command_pipe(pipeline);
+	if (minishell)
+		free_program(minishell);
+}
+
+void	ft_error(char *name, char *message, t_program *minishell, int status)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(name, 2);
+	ft_putendl_fd(message, 2);
+	minishell->status = status;
 }

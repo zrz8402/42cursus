@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:16:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/14 08:44:42 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/16 12:55:33 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_valid_key(char *s)
 void	export_list(t_env *envlst)
 {
 	t_env	*tmp;
-	
+
 	tmp = envlst;
 	while (tmp)
 	{

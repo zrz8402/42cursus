@@ -1,34 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 12:26:3q3 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/06 12:53:37 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/03/03 12:26:03 by  ruzhang          #+#    #+#             */
+/*   Updated: 2025/03/16 15:01:01 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell)
-{
-	int	saved_in;
-	int	saved_out;
-
-	saved_in = dup(STDIN_FILENO);
-	saved_out = dup(STDOUT_FILENO);
-	if (process_redirections(pipeline->cmd->redirections, minishell))
-		return ;
-	exec_builtin(pipeline->cmd->args, minishell, pipeline->num_cmds);
-	dup2(saved_in, STDIN_FILENO);
-	dup2(saved_out, STDOUT_FILENO);
-	close(saved_in);
-	close(saved_out);
-	if (minishell->exit)
-		exit(minishell->status);
-}
 
 char	*join_str(char const *s1, char const *s2)
 {
@@ -56,25 +38,33 @@ char	*join_str(char const *s1, char const *s2)
 	return (str);
 }
 
-int	check_execute(char **args, char **paths, t_program *minishell)
+int	is_dir(char *path)
 {
-	if (access(args[0], F_OK) == 0) // add is_file/is_directory
+	struct stat	info;
+
+	if (stat(path, &info))
+		return (0);
+	if (S_ISDIR(info.st_mode))
+		return (1);
+	return (0);
+}
+
+int	check_execute(char **args, t_program *minishell)
+{
+	if (ft_strncmp(args[0], "./", 2) == 0 || ft_strncmp(args[0], "/", 1) == 0)
 	{
+		if (access(args[0], F_OK) == -1)
+			return (ft_error(args[0], FILE_NOT_FOUND, minishell, 127), 1);
+		if (is_dir(args[0]))
+			return (ft_error(args[0], IS_DIR, minishell, 126), 1);
 		if (access(args[0], X_OK) == -1)
-		{
-			ft_putendl_fd(" Permission denied", 2);
-			free_arr(paths);
-			minishell->status = 126;
-			return (1);
-		}
+			return (ft_error(args[0], NO_PERMISSION, minishell, 126), 1);
 		if (execve(args[0], args, minishell->envp) == -1)
-		{
-			ft_putendl_fd(" Permission denied", 2);
-			free_arr(paths);
-			minishell->status = 1;
-			return (1);
-		}
+			return (ft_error(args[0], CMD_NOT_FOUND, minishell, 127), 1);
 	}
+	if (access(args[0], F_OK) == 0
+		&& execve(args[0], args, minishell->envp) == -1)
+		return (ft_error(args[0], CMD_NOT_FOUND, minishell, 127), 1);
 	return (0);
 }
 
@@ -92,12 +82,13 @@ int	check_exec_with_path(char **args, t_program *minishell)
 	{
 		free(args[0]);
 		args[0] = join_str(paths[i], tmp);
-		check_execute(args, paths, minishell);
+		if (access(args[0], F_OK) == 0
+			&& execve(args[0], args, minishell->envp) == -1)
+			break ;
 	}
-	ft_putendl_fd(" command not found", 2);
-	minishell->status = 127;
 	args[0] = tmp;
 	free_arr(paths);
+	ft_error(args[0], CMD_NOT_FOUND, minishell, 127);
 	return (0);
 }
 
@@ -105,20 +96,14 @@ void	execute(t_program *minishell, char **args)
 {
 	char	*path;
 
-	if ((!args || !*args) && (access("", F_OK) == -1))
-	{
-		ft_putendl_fd(" command not found", 2);
-		minishell->status = 127;
+	if (!args || !*args)
 		return ;
-	}
-	if (check_execute(args, NULL, minishell))
+	if (ft_strcmp(args[0], "") == 0)
+		return (ft_error("", CMD_NOT_FOUND, minishell, 127));
+	if (check_execute(args, minishell))
 		return ;
 	path = get_var_value("PATH", minishell->envlst);
 	if (!path || !*path)
-	{
-		ft_putendl_fd(" command not found", 2);
-		minishell->status = 127;
-		return ;
-	}
+		return (ft_error(args[0], CMD_NOT_FOUND, minishell, 127));
 	check_exec_with_path(args, minishell);
 }

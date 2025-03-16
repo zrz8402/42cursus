@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 09:37:47 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 15:40:14 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/16 14:37:36 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,22 @@ void	exec_builtin(char **args, t_program *minishell, int num_cmds)
 		run_env(minishell->envlst);
 	else if (ft_strcmp(args[0], "exit") == 0)
 		run_exit(args, minishell, num_cmds);
+}
+
+void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell)
+{
+	int	saved_in;
+	int	saved_out;
+
+	saved_in = dup(STDIN_FILENO);
+	saved_out = dup(STDOUT_FILENO);
+	if (process_redirections(pipeline->cmd->redirections, minishell))
+		return ;
+	exec_builtin(pipeline->cmd->args, minishell, pipeline->num_cmds);
+	restore_fds(saved_in, saved_out);
+	if (minishell->exit)
+	{
+		cleanup(minishell, pipeline, NULL);
+		exit(minishell->status);
+	}
 }
