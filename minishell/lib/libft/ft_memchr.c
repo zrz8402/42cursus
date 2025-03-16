@@ -3,26 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 14:58:39 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/09/04 08:56:43 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/02/26 21:36:36 by kmartin           #+#    #+#             */
+/*   Updated: 2024/03/01 02:46:17 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
 
+// FUNCTION ft_memchr (recreate libc function)
+/**
+ * @brief Scan memory area for first instance of a character.
+ * 
+ * The original function is part of the <string.h> standard library.
+ * 
+ * @param s A pointer to the memory area to search.
+ * @param c An int representing the character to search for.
+ * @param n The number of bytes of memory to search.
+ * @return A pointer to the matching byte or NULL if the character does not
+ *  occur in the given memory area.
+ * 
+ * @note No external dependencies allowed.
+ */
+//void	*memchr(const void *s, int c, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	unsigned char	*sh;
+	size_t			i;
+	unsigned char	s_char;
 
-	sh = (unsigned char *)s ;
-	while (n > 0)
+	i = 0;
+	while (i < n)
 	{
-		if (*sh == (unsigned char)c)
-			return ((void *)sh);
-		sh++;
-		n--;
+		s_char = (unsigned char)((char *)s)[i];
+		if (s_char == (unsigned char)c)
+			return ((void *)s + i);
+		i++;
 	}
-	return (NULL);
+	return (0);
 }

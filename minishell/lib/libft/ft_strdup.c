@@ -3,29 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/26 13:59:26 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/09 15:46:18 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/02/26 21:38:03 by kmartin           #+#    #+#             */
+/*   Updated: 2024/03/11 13:58:23 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include <stddef.h>
 #include "libft.h"
 
+// FUNCTION ft_strdup (recreate libc function)
+/**
+ * @brief Duplicate a string.
+ * 
+ * The original function is part of the <string.h> standard library.
+ * Memory for the duplicate string is obtained with malloc(), and can be freed
+ *  with free().
+ * 
+ * @param s A pointer to a string.
+ * @return A pointer to a new string which is a duplicate of the string s.
+ * @return If insufficient memory is available, returns NULL and sets errno to
+ *  indicate the cause of the error (‘ENOMEM’; insufficient memory available to
+ *  allocate duplicate string).
+ * 
+ * @note Depends on malloc() from <stdlib.h>.
+ */
+//char *strdup(const char *s);
 char	*ft_strdup(const char *s)
 {
-	char	*dst;
-	size_t	i;
+	char	*dupstr;
+	size_t	len;
 
-	dst = malloc(ft_strlen(s) + 1);
-	if (!dst)
-		return (NULL);
-	i = 0;
-	while (s[i])
-	{
-		dst[i] = s[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
+	len = ft_strlen(s);
+	dupstr = malloc(len + 1);
+	if (dupstr == 0)
+		return (0);
+	ft_strlcpy(dupstr, s, len + 1);
+	return (dupstr);
 }

@@ -3,26 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 13:44:33 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/09/29 11:39:15 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/02/26 21:37:55 by kmartin           #+#    #+#             */
+/*   Updated: 2024/03/11 13:14:02 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
 
+// FUNCTION ft_strchr (recreate libc function)
+/**
+ * @brief Locate single-byte character in string (first occurrence).
+ * 
+ * The original function is part of the <string.h> standard library.
+ * 
+ * @param s Pointer to a string.
+ * @param c Int representing the character to search for (ASCII byte value).
+ * @return NULL if the character is not found.
+ * @return A pointer to the matched character. The terminating null byte is
+ *  considered part of the string, so that if c is specified as '\0' it will
+ *  return a pointer to the terminator.
+ * 
+ * @note No external dependencies allowed.
+ */
+//char *strchr(const char *s, int c);
 char	*ft_strchr(const char *s, int c)
 {
-	if (!s)
-		return (NULL);
-	while (*s)
+	size_t		i;
+
+	i = 0;
+	while (s[i] != 0)
 	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
+		if ((unsigned char)s[i] == (unsigned char)c)
+		{
+			return ((char *)s + i);
+		}
+		i = i + 1;
 	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (NULL);
+	if ((unsigned char)c == 0)
+		return ((char *)s + i);
+	return (0);
 }

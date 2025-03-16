@@ -3,16 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/24 14:54:25 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/09/15 13:50:37 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/02/26 21:35:38 by kmartin           #+#    #+#             */
+/*   Updated: 2024/02/26 21:39:42 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+// FUNCTION ft_isalpha (recreate libc function)
+/**
+ * @brief Checks for an alphabetic character.
+ * 
+ * The original function is part of the <ctype.h> standard library. 
+ * Equivalent to (isupper(c) || islower(c)).
+ * 
+ * @param c An int; must have the value of an unsigned char or EOF.
+ * @return The values returned are nonzero if the character c falls into the
+ *  tested class.
+ * @return  Zero if not.
+ * 
+ * @note No external dependencies allowed.
+ */
+//int isalpha(int c);
 int	ft_isalpha(int c)
 {
-	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+		return (1024);
+	return (0);
 }

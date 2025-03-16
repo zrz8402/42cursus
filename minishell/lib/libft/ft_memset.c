@@ -3,21 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 09:03:15 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/09/29 14:24:25 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/02/26 21:37:08 by kmartin           #+#    #+#             */
+/*   Updated: 2024/03/01 17:22:20 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
 
+// FUNCTION ft_memset (recreate libc function)
+/**
+ * @brief Fill memory with a constant byte.
+ * 
+ * The original function is part of the <string.h> standard library.
+ * The memset() function fills the first n bytes of the memory area pointed to
+ *  by s with the constant byte c.
+ * 
+ * @param s A pointer.
+ * @param c An int that represents the constant byte to use.
+ * @param n The number of bytes of memory to fill.
+ * @return A pointer to the memory area s.
+ * 
+ * @note No external dependencies allowed.
+ */
+//void	*memset(void *s, int c, size_t n);
 void	*ft_memset(void *s, int c, size_t n)
 {
-	unsigned char	*dst;
+	size_t	i;
 
-	dst = (unsigned char *)s;
-	while (n--)
-		*dst++ = (unsigned char)c;
+	i = 0;
+	while (i < n)
+	{
+		((char *)s)[i] = c;
+		i++;
+	}
 	return (s);
 }

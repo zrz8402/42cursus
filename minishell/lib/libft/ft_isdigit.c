@@ -3,16 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/24 15:19:15 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/09/15 13:51:04 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/02/26 21:36:20 by kmartin           #+#    #+#             */
+/*   Updated: 2024/02/26 21:39:42 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+// FUNCTION ft_isdigit (recreate libc function)
+/**
+ * @brief Checks for a digit (0 through 9).
+ * 
+ * The original function is part of the <ctype.h> standard library.
+ * 
+ * @param c An int; must have value of an unsigned char or EOF.
+ * @return The values returned are nonzero if the character c falls into the
+ *  tested class.
+ * @return  Zero if not.
+ * 
+ * @note No external dependencies allowed.
+ */
+//int isdigit(int c);
 int	ft_isdigit(int c)
 {
-	return (c >= '0' && c <= '9');
+	if (c >= '0' && c <= '9')
+		return (2048);
+	return (0);
 }

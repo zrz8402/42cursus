@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 11:15:40 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/08/28 11:29:12 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/04/23 23:09:42 by kmartin           #+#    #+#             */
+/*   Updated: 2024/04/29 13:48:27 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// FUNCTION ft_lstlast
+/**
+ * @brief Returns the last node of the list.
+ *
+ * @param lst The beginning of the list.
+ * @return Last node of the list
+ *
+ * @note No external dependencies.
+ */
 t_list	*ft_lstlast(t_list *lst)
 {
-	if (!lst)
-		return (NULL);
-	while (lst->next)
+	t_list	*ptr;
+
+	ptr = lst;
+	while (ptr)
 	{
-		lst = lst->next;
+		if (!ptr->next)
+			break ;
+		ptr = ptr->next;
 	}
-	return (lst);
+	return (ptr);
 }

@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 11:32:39 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/08/29 14:51:47 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/04/23 23:35:32 by kmartin           #+#    #+#             */
+/*   Updated: 2024/05/02 12:01:37 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// FUNCTION ft_lstadd_back
+/*
+ * @brief Adds the node `new` at the end of the list.
+ *
+ * @param lst The address of a pointer to the first link of a list.
+ * @param new The address of a pointer to the node to be added to the list.
+ * @return None.
+ *
+ * @note No external dependencies.
+ */
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*last;
 
-	if (!new || !lst)
-		return ;
 	if (!*lst)
-	{
 		*lst = new;
-		return ;
+	else
+	{
+		last = ft_lstlast(*lst);
+		last->next = new;
 	}
-	last = ft_lstlast(*lst);
-	last->next = new;
 }

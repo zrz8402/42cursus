@@ -3,33 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 12:28:31 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/09/04 08:53:06 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/02/26 21:37:02 by kmartin           #+#    #+#             */
+/*   Updated: 2024/03/01 16:49:19 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stddef.h>
 
+// FUNCTION ft_memmove (recreate libc function)
+/**
+ * @brief Copy memory area (overlaps allowed).
+ * 
+ * The original function is part of the <string.h> standard library.
+ * The  memmove()  function  copies  n bytes from memory area src to memory area
+ *  dest. 
+ * The memory areas may overlap: copying takes place as though the bytes in src
+ *  are first copied into a temporary array that does not overlap src or dest,
+ *  and the bytes are then copied from the temporary array to dest.
+ * 
+ * @param dest A pointer to the destination memory area.
+ * @param src A pointer to the source memory area.
+ * @param n The number of byte to copy from src to dest.
+ * @return A pointer to the dest memory area.
+ * 
+ * @note No external dependencies allowed.
+ */
+//void	*memmove(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char		*n_dst;
-	const unsigned char	*n_src;
+	size_t	i;
 
-	n_dst = (unsigned char *)dest;
-	n_src = (const unsigned char *)src;
-	if (n_src == n_dst)
+	if (src < dest && (src + n) > dest)
+	{
+		i = n;
+		while (i > 0)
+		{
+			((char *)dest)[i - 1] = ((char *)src)[i - 1];
+			i--;
+		}
 		return (dest);
-	if (n_src > n_dst)
-	{
-		while (n--)
-			*n_dst++ = *n_src++;
 	}
-	else
-	{
-		while (n--)
-			*(n_dst + n) = *(n_src + n);
-	}
-	return (dest);
+	return (ft_memcpy(dest, src, n));
 }

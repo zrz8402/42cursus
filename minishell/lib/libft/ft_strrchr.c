@@ -3,27 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 14:37:42 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/09/11 14:31:42 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/02/26 21:38:54 by kmartin           #+#    #+#             */
+/*   Updated: 2024/03/11 13:41:05 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stddef.h>
 
+// FUNCTION ft_strrchr (recreate libc function)
+/**
+ * @brief Locate single-byte character in string (last occurrence).
+ * 
+ * The original function is part of the <string.h> standard library.
+ * 
+ * @param s Pointer to a string.
+ * @param c Int representing the character to search for (ASCII byte value).
+ * @return NULL if the character is not found.
+ * @return A pointer to the matched character. The terminating null byte is
+ *  considered part of the string, so that if c is specified as '\0' it will
+ *  return a pointer to the terminator.
+ * 
+ * @note No external dependencies allowed.
+ * 
+ */
+//char *strrchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c)
 {
-	int		i;
+	size_t	strlen;
+	int		i ;
 
-	i = ft_strlen(s);
-	if (s[i] == (char)c)
-		return ((char *) &s[i]);
-	while (i > 0)
+	strlen = ft_strlen(s);
+	i = strlen;
+	while (i >= 0)
 	{
-		i--;
-		if (s[i] == (char)c)
-			return ((char *) &s[i]);
+		if ((unsigned char)s[i] == (unsigned char)c)
+			return ((char *)s + i);
+		i = i - 1;
 	}
-	return (NULL);
+	return (0);
 }

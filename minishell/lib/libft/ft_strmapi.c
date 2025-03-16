@@ -3,37 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin <kmartin@student.42bangkok.co      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/27 12:33:17 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/08/28 12:50:49 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/02/28 23:26:36 by kmartin           #+#    #+#             */
+/*   Updated: 2024/02/29 00:51:36 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
+// FUNCTION ft_strmapi (novel function)
+/**
+ * @brief Applies another function to each character of a string,  returning a
+ *  new string.
+ * 
+ * Applies the function ‘f’ to each character of the string ‘s’, and passing its
+ *  index as first argument to create a new string with malloc() resulting from
+ *  successive applications of ‘f’.
+ * 
+ * @param s The string on which to iterate.
+ * f The function to apply to each character.
+ * @return The string created from the successive applications of ‘f’.
+ * @return NULL if the allocation fails.
+ * 
+ * @note Depends on malloc() from <stdlib.h>.
+ */
+//char *ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char			*strmap;
+	char			*newstr;
+	int				strlen;
 	unsigned int	i;
 
-	strmap = malloc ((ft_strlen(s) + 1) * sizeof(char));
-	if (!strmap)
-		return (NULL);
+	strlen = ft_strlen(s);
+	newstr = (char *)malloc(sizeof(char) * (strlen + 1));
+	if (newstr == 0)
+		return (0);
 	i = 0;
-	while (s[i])
+	while (s[i] != 0)
 	{
-		strmap[i] = f(i, s[i]);
+		newstr[i] = f(i, s[i]);
 		i++;
 	}
-	strmap[i] = '\0';
-	return (strmap);
+	newstr[i] = 0;
+	return (newstr);
 }
-
-// char	isodd_tolower(unsigned int i, char c)
-// {
-// 	if (i % 2 == 0)
-// 		return (ft_toupper(c));
-// 	else
-// 		return (ft_tolower(c));
-// }

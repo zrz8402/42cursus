@@ -1,25 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 10:54:56 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/08/28 16:37:16 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/04/22 02:03:01 by kmartin           #+#    #+#             */
+/*   Updated: 2024/04/29 13:48:36 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft.h" // for bonus functions and node struct
+#include <stdlib.h> // for malloc
 
+// FUNCTION ft_lstnew
+/**
+ * @brief Creates a new node in a linked list.
+ *
+ * Allocates (with malloc(3)) and returns a new node.
+ *
+ * The member variable `content` is initialized with the value of the parameter 
+ * `content`. The variable `next` is initialized to NULL
+ *
+ * @param content The content to create the node with.
+ * @return The new node.
+ *
+ * @note Depends on malloc.
+ */
 t_list	*ft_lstnew(void *content)
 {
-	t_list	*new;
+	t_list	*new_node;
 
-	new = malloc(sizeof(t_list));
-	if (!new)
+	new_node = (t_list *)malloc(sizeof(t_list));
+	if (!new_node)
 		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	new_node->content = content;
+	new_node->next = NULL;
+	return (new_node);
 }

@@ -3,41 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kmartin < kmartin@student.42bangkok.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/26 13:05:31 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/09/26 13:16:15 by ruzhang          ###   ########.fr       */
+/*   Created: 2024/02/26 21:28:13 by kmartin           #+#    #+#             */
+/*   Updated: 2024/03/11 16:50:05 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stddef.h>
 
-static int	ft_isspace(char c)
+// FUNCTION ft_atoi (recreate libc function)
+/**
+ * @brief Convert an ASCII string of numbers to an integer.
+ * 
+ * The original function is part of the <stdlib.h> standard library.
+ * Converts the initial portion of the string pointed to by nptr (stopping at
+ *  the null-terminator or the first non-digit character) to int.
+ * The string may begin with an arbitrary amount of white space (as determined by
+ *  isspace(3)) followed by a single optional '+' or '-' sign.
+ * No checks for overflow or underflow are done.
+ * Only base-10 input can be converted.
+ * 
+ * @param nptr A pointer to a string.
+ * @return The converted value.
+ * @return 0 on error (note there is no way to distinguish between 0 as an error
+ *  and as a converted value).
+ * 
+ * @note No external dependencies allowed.
+ */
+//int		atoi(const char *nptr);
+int	ft_atoi(const char *str)
 {
-	return (c == 32 || (c >= 9 && c <= 13));
-}
+	int		integer;
+	int		sig;
+	size_t	i;
 
-int	ft_atoi(const char *nptr)
-{
-	int	i;
-	int	sign;
-	int	result;
-
+	integer = 0;
+	sig = 1;
 	i = 0;
-	sign = 1;
-	result = 0;
-	while (ft_isspace(nptr[i]))
+	while (str[i] != 0
+		&& ((str[i] >= 9 && str[i] <= 13) || str[i] == 32))
 		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (nptr[i] == '-')
-			sign = -1;
+		if (str[i] == '-')
+			sig = -1;
 		i++;
 	}
-	while (ft_isdigit(nptr[i]))
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result = result * 10 + (nptr[i] - '0');
+		integer = integer * 10 + (str[i] - '0');
 		i++;
 	}
-	return (result * sign);
+	return (integer * sig);
 }
