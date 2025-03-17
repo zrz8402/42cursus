@@ -27,7 +27,7 @@ BUILTIN_DIR = src/builtin
 
 # Source Files
 MAIN_FILES = main.c init.c utils.c
-SIG_FILES = signal.c
+SIG_FILES = signal.c handler.c
 PARSE_FILES = parse_pipeline.c lex_make.c tokenize.c token_utils.c type_check_lex.c command_make.c command_arg_utils.c command_redir_utils.c
 REDIR_FILES = redir.c redir_in.c redir_out.c append.c heredoc.c
 EXEC_FILES = process.c execute.c builtin.c cleanup.c

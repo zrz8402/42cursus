@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   command_redir_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmartin <kmartin@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 12:50:45 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/12 17:18:30 by kmartin          ###   ########.fr       */
+/*   Updated: 2025/03/17 17:25:07 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
+#include "minishell.h"
 
 t_redir	*init_redir_node(enum e_ltype type, t_lex *tok_ptr);
  
@@ -66,11 +67,14 @@ t_redir	*init_redir_node(enum e_ltype type, t_lex *tok_ptr)
 		printf("ERROR in add_command_redirs: EXIT GRACEFULLY!!\n");
 
 	new_redir->type = type;
+	new_redir->heredoc_fd = -1;
+	new_redir->file = NULL;
 	if (type == HEREDOC)
-		new_redir->file = NULL;
+	{
+		new_redir->heredoc_fd = handle_heredoc(tok_ptr->next_lex->value);
+	}
 	else
 		new_redir->file = ft_strdup(tok_ptr->next_lex->value);
-	new_redir->heredoc_fd = -1;
 	new_redir->next = NULL;
 
 	return (new_redir);
@@ -91,6 +95,8 @@ t_redir	*free_command_redirs(t_redir **redir_list)
 	while (redir_ptr)
 	{
 		redir_ptr = redir_ptr->next;
+		if ((*redir_list)->heredoc_fd != -1)
+			close((*redir_list)->heredoc_fd);
 		if ((*redir_list)->file)
 			free((*redir_list)->file);
 		(*redir_list)->file = NULL;

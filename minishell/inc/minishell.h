@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/16 15:14:38 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/17 16:37:48 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@
 # define FILE_NOT_FOUND ": No such file or directory"
 # define NO_PERMISSION ": Permission denied"
 # define CMD_NOT_FOUND ": command not found"
+# define HEREDOC_EOF_WARNING "minishell: warning: here-document at line 1 delimited by end-of-file (wanted `EOF')"
+
+extern volatile sig_atomic_t	g_signal;
 
 typedef struct s_pipex
 {
@@ -77,6 +80,12 @@ char	*get_var_value(char *key, t_env *envlst);
 void	setup_prompt_signal(void);
 void	setup_exec_signal(void);
 void	setup_child_signal(void);
+void	setup_heredoc_signal(void);
+
+// handler.c
+void	sigint_handler(int sig);
+void	heredoc_handler(int sig);
+void	exec_handler(int sig);
 
 // process.c
 void	process_pipeline(t_pipeline *pipeline, t_program *minishell);
@@ -94,6 +103,7 @@ int		process_in(char *file, t_program *minishell);
 int		process_out(char *file, t_program *minishell);
 int		process_append(char *file, t_program *minishell);
 int		process_heredoc(int heredoc_fd, t_program *minishell);
+int		handle_heredoc(char *delimiter);
 
 // execute.c
 void	execute(t_program *minishell, char **args);

@@ -6,11 +6,13 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:03:36 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/16 15:07:31 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/17 14:48:44 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+volatile sig_atomic_t g_signal = 0;
 
 void	run_shell(t_program *minishell)
 {
@@ -27,8 +29,14 @@ void	run_shell(t_program *minishell)
 			free_program(minishell);
 			break ;
 		}
+		if (g_signal == SIGINT)
+		{
+			minishell->status = g_signal + 128;
+			g_signal = 0;
+		}
 		if (*input)
 		{
+			setup_exec_signal();
 			add_history(input);
 			if (ft_strcmp(input, "echo $?") == 0)
 			{
@@ -40,8 +48,12 @@ void	run_shell(t_program *minishell)
 			{
 				pipeline = parse_pipeline(&input);
 				free(input);
+				g_signal = 0;
+				setup_exec_signal();
 				minishell->status = 0;
 				process_pipeline(pipeline, minishell);
+				if (g_signal == SIGINT)
+					write(1, "\n", 1);
 			}
 		}
 	}
