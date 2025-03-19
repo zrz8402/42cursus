@@ -1,0 +1,35 @@
+Tasks:
+1. Parsing input
+
+2. Ray tracing part
+	geometric objects: plane, sphere, cylinder
+	handle possible intersections and the insides of the objects
+	resize properties of objects: 
+			sphere: diameter
+			cylinder: width & height
+	apply translation and rotation transformations to objects, lights, and cameras
+	Light management:
+		spot brightness
+		hard shadows
+		ambient lighting
+		diffuse lighting
+
+
+3. MLX42
+	key variables and functions:
+		mlx_t		*mlx;
+		mlx_image_t	*img;
+		mlx_init();
+		mlx_new_image();
+		mlx_image_to_window();
+		mlx_delete_image();
+		mlx_close_window();
+		mlx_terminate();
+		mlx_key_hook();
+		mlx_scroll_hook();
+		mlx_loop();
+
+	using hook
+		Pressing ESC / Clicking on the red cross,
+		close the window & quit the program
+
