@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 14:46:03 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/17 16:36:54 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/03/16 16:53:39 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/03/20 13:24:54 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	sigint_handler(int sig)
 
 void	heredoc_handler(int sig)
 {
-	write(STDOUT_FILENO, "\n", 1);
+	write(1, "\n", 1);
 	g_signal = sig;
 	close(STDIN_FILENO);
 }

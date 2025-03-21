@@ -18,18 +18,34 @@ HEADERS = -I ../../inc -I $(LIBFT_PATH)
 LIBS = -lreadline $(LIBFT_A)
 
 # Source Directories
+MAIN_DIR = ../
+SIG_DIR = ../signal
 PARSE_DIR = .
+REDIR_DIR = ../redir
+EXEC_DIR = ../exec
+BUILTIN_DIR = ../builtin
 
 # Source Files
-PARSE_FILES = parse_pipeline.c lex_make.c tokenize.c token_utils.c type_check_lex.c command_make.c command_arg_utils.c command_redir_utils.c
 TEST_FILES = a_test.c
+# MAIN_FILES = main.c init.c utils.c
+MAIN_FILES = init.c utils.c
+SIG_FILES = signal.c handler.c
+PARSE_FILES = parse_pipeline.c lex_make.c tokenize.c token_utils.c type_check_lex.c command_make.c command_arg_utils.c command_redir_utils.c
+REDIR_FILES = redir.c redir_in.c redir_out.c append.c heredoc.c
+EXEC_FILES = process.c execute.c builtin.c cleanup.c
+BUILTIN_FILES = env.c unset.c cd.c echo.c exit.c export.c merge_sort.c pwd.c
 
 # Combine Source Files
-PARSE = $(addprefix $(PARSE_DIR)/, $(PARSE_FILES))
 TEST = $(addprefix $(PARSE_DIR)/, $(TEST_FILES))
+MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))
+SIG = $(addprefix $(SIG_DIR)/, $(SIG_FILES))
+PARSE = $(addprefix $(PARSE_DIR)/, $(PARSE_FILES))
+REDIR = $(addprefix $(REDIR_DIR)/, $(REDIR_FILES))
+EXEC = $(addprefix $(EXEC_DIR)/, $(EXEC_FILES))
+BUILTIN = $(addprefix $(BUILTIN_DIR)/, $(BUILTIN_FILES))
 
 # All Source Files
-SRCS = $(PARSE) $(TEST)
+SRCS = $(TEST) $(MAIN) $(SIG) $(PARSE) $(REDIR) $(EXEC) $(BUILTIN)
 
 # Object Files Directory
 OBJ_DIR = ../../obj

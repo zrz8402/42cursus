@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:19:16 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/17 14:50:42 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/21 16:41:17 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,6 @@ void	cleanup(t_program *minishell, t_pipeline *pipeline, t_pipex *p)
 {
 	if (p)
 	{
-		if (p->prev_fd != -1)
-			close(p->prev_fd);
-		if (p->cur_pipefd[0] != -1)
-			close(p->cur_pipefd[0]);
-		if (p->cur_pipefd[1] != -1)
-			close(p->cur_pipefd[1]);
 		if (p->pids)
 			free(p->pids);
 	}

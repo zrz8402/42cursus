@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 14:35:25 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/16 14:54:53 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/21 16:01:06 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	with_option(char *s)
 {
 	int	i;
 
-	if (s[0] != '-')
+	if (strncmp(s, "-n", 2) != 0)
 		return (0);
-	i = 1;
+	i = 2;
 	while (s[i])
 	{
 		if (s[i] != 'n')

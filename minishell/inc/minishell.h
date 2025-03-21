@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/17 16:37:48 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/21 19:13:49 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,6 @@ typedef struct s_pipex
 	pid_t	*pids;
 }	t_pipex;
 
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
-typedef struct s_program
-{
-	t_lex		*lex_list;
-	char		**envp;
-	t_env		*envlst;
-	int			status;
-	int			exit;
-}	t_program;
-
 // init.c
 void	init(t_program *minishell, char **envp);
 void	set_envp(char **envp, t_program *minishell);
@@ -92,18 +76,20 @@ void	process_pipeline(t_pipeline *pipeline, t_program *minishell);
 void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p);
 void	parent_process(t_command **cur_cmd, t_pipex *p, int num_cmds);
 void	child_process(t_program *minishell,
-			t_command *cmd, t_pipex *p, int num_cmds);
+			t_command *cmd, t_pipex *p, t_pipeline *pipeline);
 
 // redir.c
 int		process_redirections(t_redir *redir, t_program *minishell);
-void	close_fdup(int saved_in, int saved_out);
+void	close_fds(int saved_in, int saved_out);
 void	restore_fds(int saved_in, int saved_out);
+void	close_current_heredocfd(t_command *cmd);
+void	close_heredocfd(t_command *cmd);
 
 int		process_in(char *file, t_program *minishell);
 int		process_out(char *file, t_program *minishell);
 int		process_append(char *file, t_program *minishell);
 int		process_heredoc(int heredoc_fd, t_program *minishell);
-int		handle_heredoc(char *delimiter);
+int		handle_heredoc(char *delimiter, t_program *minishell);
 
 // execute.c
 void	execute(t_program *minishell, char **args);

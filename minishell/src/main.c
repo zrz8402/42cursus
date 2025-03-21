@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:03:36 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/17 14:48:44 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/21 19:01:05 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,14 @@ void	run_shell(t_program *minishell)
 		{
 			setup_exec_signal();
 			add_history(input);
-			if (ft_strcmp(input, "echo $?") == 0)
-			{
-				char *status = ft_itoa(minishell->status);
-				ft_putendl_fd(status, STDOUT_FILENO);
-				free(status);
-			}
-			else
-			{
-				pipeline = parse_pipeline(&input);
-				free(input);
-				g_signal = 0;
-				setup_exec_signal();
-				minishell->status = 0;
+			pipeline = parse_pipeline(&input, minishell);
+			if (input)
+				free(input); // redundant - input should be freed and set to NULL inside parse_pipeline
+			g_signal = 0;
+			setup_exec_signal();
+			minishell->status = 0;
+			if (pipeline)
 				process_pipeline(pipeline, minishell);
-				if (g_signal == SIGINT)
-					write(1, "\n", 1);
-			}
 		}
 	}
 }

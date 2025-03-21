@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 12:26:03 by  ruzhang          #+#    #+#             */
-/*   Updated: 2025/03/16 15:01:01 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/21 19:34:12 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,10 @@ int	check_exec_with_path(char **args, t_program *minishell)
 			&& execve(args[0], args, minishell->envp) == -1)
 			break ;
 	}
-	args[0] = tmp;
+	free(args[0]);
 	free_arr(paths);
-	ft_error(args[0], CMD_NOT_FOUND, minishell, 127);
+	ft_error(tmp, CMD_NOT_FOUND, minishell, 127);
+	free(tmp);
 	return (0);
 }
 

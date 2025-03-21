@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/16 15:06:03 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/21 19:26:48 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,16 @@
 #include "minishell.h"
 
 void	child_process(t_program *minishell,
-	t_command *cmd, t_pipex *p, int num_cmds)
+	t_command *cmd, t_pipex *p, t_pipeline *pipeline)
 {
 	setup_child_signal();
+	close_heredocfd(cmd->next);
 	if (p->i != 0)
 	{
 		dup2(p->prev_fd, STDIN_FILENO);
 		close(p->prev_fd);
 	}
-	if (p->i != num_cmds -1)
+	if (p->i != pipeline->num_cmds -1)
 	{
 		dup2(p->cur_pipefd[1], STDOUT_FILENO);
 		close(p->cur_pipefd[0]);
@@ -41,8 +42,8 @@ void	child_process(t_program *minishell,
 	}
 	if (process_redirections(cmd->redirections, minishell))
 		exit(minishell->status);
-	if (is_builtin(cmd->args[0]))
-		exec_builtin(cmd->args, minishell, num_cmds);
+	if (cmd->args && is_builtin(cmd->args[0]))
+		exec_builtin(cmd->args, minishell, pipeline->num_cmds);
 	else
 		execute(minishell, cmd->args);
 	free_envlst(minishell->envlst);
@@ -58,6 +59,7 @@ void	parent_process(t_command **cur_cmd, t_pipex *p, int num_cmds)
 		p->prev_fd = p->cur_pipefd[0];
 		close(p->cur_pipefd[1]);
 	}
+	close_current_heredocfd(*cur_cmd);
 	*cur_cmd = (*cur_cmd)->next;
 	setup_exec_signal();
 }
@@ -81,7 +83,7 @@ void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 			exit(1);
 		}
 		if (p->pids[i] == 0)
-			child_process(minishell, cur_cmd, p, pipeline->num_cmds);
+			child_process(minishell, cur_cmd, p, pipeline);
 		parent_process(&cur_cmd, p, pipeline->num_cmds);
 	}
 }
@@ -101,8 +103,10 @@ int	init_pipex(t_pipex *p, int num_cmds)
 void	process_pipeline(t_pipeline *pipeline, t_program *minishell)
 {
 	t_pipex	p;
+	char	**args;
 
-	if (pipeline->num_cmds == 1 && is_builtin(pipeline->cmd->args[0]))
+	args = pipeline->cmd->args;
+	if (pipeline->num_cmds == 1 && args && is_builtin(args[0]))
 	{
 		exec_one_builtin(pipeline, minishell);
 		free_command_pipe(pipeline);
@@ -115,4 +119,6 @@ void	process_pipeline(t_pipeline *pipeline, t_program *minishell)
 	}
 	process(pipeline, minishell, &p);
 	wait_and_clean(pipeline, minishell, &p);
+	if (g_signal == SIGINT)
+		write(1, "\n", 1);
 }

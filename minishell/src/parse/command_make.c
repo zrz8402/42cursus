@@ -6,21 +6,21 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 12:50:45 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/15 15:05:04 by kmartin          ###   ########.fr       */
+/*   Updated: 2025/03/19 21:13:47 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-t_command	*init_command_node(char **args, t_redir *redirs, t_command *next);
-void		append_command(t_command **cmd_pipe, t_command *new_cmd);
+t_command	*init_command_node(t_program *minishell);
+void		append_command(t_command **cmd_list, t_command *new_cmd);
 
 // FUNCTION get_commands
-// Processes a lex list of typed instruction tokens into a command pipeline.
+// Processes a lex list of typed instruction tokens into a command list.
 //
-// A command pipeline is a linked list with the following node members:
+// A command list is a linked list with the following node members:
 // - char **args = 2d array of arguments, starting with command
-// - t_redir *redirs = linked list of redirections
+// - t_redir *redirections = linked list of redirections
 // - t_command *next = pointer to next command node
 //
 // Redirections are represented as a linked list with the following members:
@@ -29,10 +29,15 @@ void		append_command(t_command **cmd_pipe, t_command *new_cmd);
 // - int heredoc_fd = the fd for a HEREDOC (-1 for non-HEREDOC)
 // - t_redir *next = pointer to next redirection
 //
-// @param t_lex linked list of typed instruction tokens
+// If there are any errors in allocating memory for arguments or redirections
+// the minishell status is set to != 0, and the command list is returned
+// as NULL for downstream error handling.
 //
-// @return a pointer to a t_command command pipeline
-t_command	*get_commands(t_lex *input_lex)
+// @param input_lex = t_lex linked list of typed instruction tokens
+// @param minishell = minishell struct containing status
+//
+// @return a pointer to a t_command command list 
+t_command	*get_commands(t_lex *input_lex, t_program *minishell)
 {
 	int			num_cmds;
 	t_lex		*cmd_tokens;
@@ -43,29 +48,33 @@ t_command	*get_commands(t_lex *input_lex)
 	cmd_list = NULL;
 	num_cmds = count_commands(input_lex);
 
-	// printf("num_cmds = %i\n\n", num_cmds);
-
-	while (cmd_tokens && num_cmds--)
+	while (!(minishell->status) && cmd_tokens && num_cmds--)
 	{
-		new_cmd = init_command_node(NULL, NULL, NULL);
+		new_cmd = init_command_node(minishell);
+		if (!new_cmd)
+			return (free_command_list(cmd_list));
 		append_command(&cmd_list, new_cmd);
-		add_command_args(new_cmd, cmd_tokens);
-		add_command_redirs(new_cmd, cmd_tokens);
+		add_cmd_args(new_cmd, cmd_tokens, minishell);
+		add_cmd_redirs(new_cmd, cmd_tokens, minishell);
 		while (cmd_tokens && cmd_tokens->type != PIPE)
 			cmd_tokens = cmd_tokens->next_lex;
 		if (cmd_tokens && cmd_tokens->type == PIPE)
 			cmd_tokens = cmd_tokens->next_lex;
 	}
+	if (minishell->status != 0)
+		return (free_command_list(cmd_list));
 	return (cmd_list);
 }
 
 // FUNCTION count_commands
 // Use number of pipes as a proxy for the number of commands; some
-// instructions might have no COMMAND type token...?
+// instructions might have no COMMAND type tokens (e.g. `<< EOF`).
 int	count_commands(t_lex *input_lex)
 {
 	int	num_cmds;
 
+	if (!input_lex)
+		return (0);
 	num_cmds = 1;
 	while (input_lex->next_lex)
 	{
@@ -78,58 +87,62 @@ int	count_commands(t_lex *input_lex)
 
 // FUNCTION init_command_node
 // Initialize a new t_command node
-t_command	*init_command_node(char **args, t_redir *redirs, t_command *next)
+//
+// @return the new node if successful
+// @return NULL (and set minishell status to 1) if memory allocation fails
+t_command	*init_command_node(t_program *minishell)
 {
 	t_command	*new_cmd;
 
 	new_cmd = (t_command *)malloc(sizeof(t_command));
 	if (!new_cmd)
-		printf("Error in init_command_node: EXIT GRACEFULLY!!\n");
-
-	new_cmd->args = args,
-	new_cmd->redirections = redirs;
-	new_cmd->next = next;
-
+	{
+		minishell->status = 1;
+		return (NULL);
+	}
+	new_cmd->args = NULL;
+	new_cmd->redirections = NULL;
+	new_cmd->next = NULL;
 	return (new_cmd);
 }
 
 // FUNCTION append_command
-// Append a new t_command node to the end of a command pipeline linked list.
-void	append_command(t_command **cmd_pipe, t_command *new_cmd)
+// Append a new t_command node to the end of a command linked list.
+void	append_command(t_command **cmd_list, t_command *new_cmd)
 {
 	t_command	*cmd_ptr;
 
-	if (!(*cmd_pipe))
+	if (!(*cmd_list))
 	{
-		(*cmd_pipe) = new_cmd;
+		(*cmd_list) = new_cmd;
 		return ;
 	}
-	cmd_ptr = (*cmd_pipe);
+	cmd_ptr = (*cmd_list);
 	while (cmd_ptr->next)
 		cmd_ptr = cmd_ptr->next;
 	cmd_ptr->next = new_cmd;
 }
 
-// FUNCTION free_command_pipe
-// Free memory allocated to a command pipe linked list (including the two
+// FUNCTION free_command_list
+// Free memory allocated to a command linked list (including the two
 // members of each node that can contain allocated memory:
 // - char **args = 2d array of arguments, starting with command
 // - t_redir *redirs = linked list of redirections
 //
 // Set the t_command argument to NULL and return it once all memory is freed.
-t_command	*free_command_list(t_command *cmd_pipe)
+t_command	*free_command_list(t_command *cmd_list)
 {
 	t_command	*cmd_ptr;
 
-	cmd_ptr = cmd_pipe;
+	cmd_ptr = cmd_list;
 	while (cmd_ptr)
 	{
-		free_command_args(cmd_ptr);
-		cmd_ptr->redirections = free_command_redirs(&(cmd_ptr->redirections)); // tidy up - pass cmd_ptr instead and NULL there
+		free_command_args(cmd_ptr->args);
+		free_command_redirs(cmd_ptr->redirections);
 		cmd_ptr = cmd_ptr->next;
-		free(cmd_pipe);
-		cmd_pipe = cmd_ptr;
+		free(cmd_list);
+		cmd_list = cmd_ptr;
 	}
-	return (cmd_pipe);
+	return (cmd_list);
 }
 

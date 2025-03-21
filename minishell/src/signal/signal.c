@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:10:32 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/17 15:23:52 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/21 18:25:05 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	setup_exec_signal(void)
 
 void	setup_child_signal(void)
 {
-	signal(SIGINT, SIG_DFL); 
+	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 }
 

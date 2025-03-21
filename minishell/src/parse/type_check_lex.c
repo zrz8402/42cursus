@@ -6,7 +6,7 @@
 /*   By: kmartin <kmartin@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:52:34 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/12 17:27:15 by kmartin          ###   ########.fr       */
+/*   Updated: 2025/03/21 11:46:36 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,33 @@
 // FUNCTION type_check_lex
 // Finalize token typing, and check for invalid instructions
 //
+// When an invalid instruction is found, the error message for the first error
+// is printed, and the rest of the instruction is ignored.
+//
+// NB: Assumes that *input and *input_lex are both non-NULL (caller checks).
+//
 // @param input_lex = lex list containing tokens - all typed except COMMAND
-void	type_check_lex(t_lex **input_lex)
+void	type_check_lex(char **input, t_lex **input_lex, t_program *minishell)
 {
 	int	error;
 
+	if (*input && !(*input_lex)) // input only consists of spaces?
+	{
+		minishell->status = 0;
+		return ;
+	}
 	assign_command_type(*input_lex);
 	error = 0;	
 	
-	// run checks for errors in instructions:
-	// - no argument after redirection
-	// - double pipe ignores all instructions after
+	// run checks for errors in instructions
+	// - must have argument after redirection
+	// - must be something before and after pipes
+	// - double pipe is OR.. treat as double pipe with nothing between: error status 2 
 	// - `< <` and `< "<"` treated differently (both errors, but different)
 
 	if (error)
 	{
-		free_lex_list(*input_lex);
+		free_null_lex_list(input_lex);
 		*input_lex = NULL;
 	}
 }
@@ -52,7 +63,8 @@ void	assign_command_type(t_lex *lex)
 	{
 		if (lex->type != ARGUMENT && (lex->value[0] == '>' || lex->value[0] == '<'))
 		{
-			lex = lex->next_lex;
+			if (lex->next_lex)
+				lex = lex->next_lex;
 			if (!lex->next_lex)
 				return ;
 			lex = lex->next_lex;

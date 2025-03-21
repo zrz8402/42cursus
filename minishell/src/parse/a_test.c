@@ -3,33 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   a_test.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmartin <kmartin@student.42bangkok.com>    +#+  +:+       +#+        */
+/*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 03:00:50 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/14 12:23:04 by kmartin          ###   ########.fr       */
+/*   Updated: 2025/03/20 13:36:44 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "minishell.h"
+
+volatile sig_atomic_t g_signal = 0;
 
 char	*lex_type_to_string(enum e_ltype type);
-void	print_command_pipe(t_command *cmd_pipe);
+void	print_command_list(t_command *cmd_list);
 
 // Run test_case function to test parsing test cases;
-int	main()
+// 
+// input is freed inside parse_pipeline
+int	main(int argc, char **argv, char **envp)
 {
 	char		*input;
+	t_program	minishell;
 	t_pipeline	*cmd_pipe;
 
+	init(&minishell, envp);
 	input = readline("$ ");
-
-	cmd_pipe = parse_pipeline(&input);
-	free(input);
-
-	print_command_pipe(cmd_pipe->cmd);
-
-	free_command_pipe(cmd_pipe);
-
+	cmd_pipe = parse_pipeline(&input, &minishell);
+	if (!cmd_pipe)
+	{
+		printf("\nCommand pipe returned as NULL.\n\n");
+	}
+	else
+	{
+		print_command_list(cmd_pipe->cmd);
+		free_command_pipe(cmd_pipe);
+		cmd_pipe = NULL;
+	}
+	printf("Minishell status: %i\n\n", minishell.status);
+	free_program(&minishell);
 	return (0);
 }
 
@@ -61,31 +72,31 @@ char	*lex_type_to_string(enum e_ltype type)
 	return (str_type);
 }
 
-// FUNCTION print_command_pipe
-// Helper function to print a visualization of a command pipe
-void	print_command_pipe(t_command *cmd_pipe)
+// FUNCTION print_command_list
+// Helper function to print a visualization of a command list
+void	print_command_list(t_command *cmd_list)
 {
 	int		cmd;
 	int		i;
 	t_redir	*redir;
 	char	*str_type;
 
-	if (!cmd_pipe)
-		printf("cmd_pipe NULL\n\n");
+	if (!cmd_list)
+		printf("cmd_list NULL\n\n");
 	cmd = 1;
-	while (cmd_pipe)
+	while (cmd_list)
 	{
 		printf("\nCOMMAND %i:\n", cmd++);
 		printf("\nArgs:\n");
 		i = 0;
-		while (cmd_pipe->args && cmd_pipe->args[i])
+		while (cmd_list->args && cmd_list->args[i])
 		{
-			printf("arg %i: %s\n", i + 1, cmd_pipe->args[i]);
+			printf("arg %i: %s\n", i + 1, cmd_list->args[i]);
 			i++;
 		}
 		printf("\nRedirections:\n");
 		i = 1;
-		redir = cmd_pipe->redirections;
+		redir = cmd_list->redirections;
 		while (redir)
 		{
 			str_type = lex_type_to_string(redir->type);
@@ -95,6 +106,6 @@ void	print_command_pipe(t_command *cmd_pipe)
 			redir = redir->next;
 		}
 		printf("\n");
-		cmd_pipe = cmd_pipe->next;
+		cmd_list = cmd_list->next;
 	}
 }

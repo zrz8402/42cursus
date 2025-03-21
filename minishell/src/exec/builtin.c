@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 09:37:47 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/16 14:37:36 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/21 19:19:31 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_builtin(char *arg)
 {
-	if (!arg)
+	if (!arg || !*arg)
 		return (0);
 	else if (!ft_strcmp(arg, "echo") || !ft_strcmp(arg, "cd")
 		|| !ft_strcmp(arg, "pwd") || !ft_strcmp(arg, "export")
