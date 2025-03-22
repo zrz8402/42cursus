@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:46:28 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/21 19:11:25 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/22 12:55:54 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	get_heredocfd(char *delimiter, int *heredoc_fd, t_program *minishell)
 	int		savedin;
 	char	*line;
 
+	(void) minishell;
 	savedin = dup(STDIN_FILENO);
 	while (1)
 	{
@@ -66,6 +67,7 @@ int	handle_heredoc(char *delimiter, t_program *minishell)
 
 int	process_heredoc(int heredoc_fd, t_program *minishell)
 {
+	(void) minishell;
 	dup2(heredoc_fd, STDIN_FILENO);
 	close(heredoc_fd);
 	return (0);

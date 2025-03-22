@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:27:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/16 13:47:41 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/22 12:58:12 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ If 1 arg, but not numeric, return 2 and exit shell
 If > 1 arg, first is numeric, return 1 and do not exit shell
 If VALUE(arg) out of range (0-255): undefined
 */
-void	run_exit(char **args, t_program *minishell, int num_cmds)
+void	run_exit(char **args, t_program *minishell)
 {
 	minishell->status = 0;
 	minishell->exit = 1;

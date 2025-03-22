@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 09:37:47 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/21 19:19:31 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/22 12:59:46 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	is_builtin(char *arg)
 	return (0);
 }
 
-void	exec_builtin(char **args, t_program *minishell, int num_cmds)
+void	exec_builtin(char **args, t_program *minishell)
 {
 	if (ft_strcmp(args[0], "echo") == 0)
-		run_echo(args, minishell);
+		run_echo(args);
 	else if (ft_strcmp(args[0], "cd") == 0)
 		run_cd(args, minishell);
 	else if (ft_strcmp(args[0], "pwd") == 0)
@@ -39,7 +39,7 @@ void	exec_builtin(char **args, t_program *minishell, int num_cmds)
 	else if (ft_strcmp(args[0], "env") == 0)
 		run_env(minishell->envlst);
 	else if (ft_strcmp(args[0], "exit") == 0)
-		run_exit(args, minishell, num_cmds);
+		run_exit(args, minishell);
 }
 
 void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell)
@@ -51,7 +51,7 @@ void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell)
 	saved_out = dup(STDOUT_FILENO);
 	if (process_redirections(pipeline->cmd->redirections, minishell))
 		return ;
-	exec_builtin(pipeline->cmd->args, minishell, pipeline->num_cmds);
+	exec_builtin(pipeline->cmd->args, minishell);
 	restore_fds(saved_in, saved_out);
 	if (minishell->exit)
 	{

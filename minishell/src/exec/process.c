@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/21 19:26:48 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/22 12:59:25 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	child_process(t_program *minishell,
 	if (process_redirections(cmd->redirections, minishell))
 		exit(minishell->status);
 	if (cmd->args && is_builtin(cmd->args[0]))
-		exec_builtin(cmd->args, minishell, pipeline->num_cmds);
+		exec_builtin(cmd->args, minishell);
 	else
 		execute(minishell, cmd->args);
 	free_envlst(minishell->envlst);

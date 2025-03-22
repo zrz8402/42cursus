@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/21 19:13:49 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/22 12:59:11 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,17 +99,17 @@ int		is_dir(char *path);
 
 // builtin.c
 int		is_builtin(char *arg);
-void	exec_builtin(char **args, t_program *minishell, int num_cmds);
+void	exec_builtin(char **args, t_program *minishell);
 void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell);
 
-void	run_echo(char **args, t_program *minishell);
+void	run_echo(char **args);
 void	run_cd(char **args, t_program *minishell);
 void	run_pwd(t_program *minishell);
 void	run_export(char **args, t_program *minishell);
 t_env	*merge_sort(t_env *envlst);
 void	run_unset(char **args, t_env *envlst);
 void	run_env(t_env *envlst);
-void	run_exit(char **args, t_program *minishell, int num_cmds);
+void	run_exit(char **args, t_program *minishell);
 
 // cleanup
 void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p);

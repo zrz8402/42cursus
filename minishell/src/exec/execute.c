@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 12:26:03 by  ruzhang          #+#    #+#             */
-/*   Updated: 2025/03/21 19:34:12 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/22 13:26:55 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,8 @@ int	check_execute(char **args, t_program *minishell)
 		if (execve(args[0], args, minishell->envp) == -1)
 			return (ft_error(args[0], CMD_NOT_FOUND, minishell, 127), 1);
 	}
-	if (access(args[0], F_OK) == 0
-		&& execve(args[0], args, minishell->envp) == -1)
-		return (ft_error(args[0], CMD_NOT_FOUND, minishell, 127), 1);
+	if (access(args[0], F_OK) == 0)
+		execve(args[0], args, minishell->envp);
 	return (0);
 }
 
@@ -82,9 +81,8 @@ int	check_exec_with_path(char **args, t_program *minishell)
 	{
 		free(args[0]);
 		args[0] = join_str(paths[i], tmp);
-		if (access(args[0], F_OK) == 0
-			&& execve(args[0], args, minishell->envp) == -1)
-			break ;
+		if (access(args[0], F_OK) == 0)
+			execve(args[0], args, minishell->envp);
 	}
 	free(args[0]);
 	free_arr(paths);

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:03:36 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/21 19:01:05 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/22 12:54:10 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ void	run_shell(t_program *minishell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*input;
 	t_program	minishell;
 
+	(void) argc;
+	(void) argv;
 	init(&minishell, envp);
 	run_shell(&minishell);
 	return (0);

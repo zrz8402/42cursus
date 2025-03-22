@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 14:35:25 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/21 16:01:06 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/22 12:57:21 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	with_option(char *s)
 {
 	int	i;
 
-	if (strncmp(s, "-n", 2) != 0)
+	if (ft_strncmp(s, "-n", 2) != 0)
 		return (0);
 	i = 2;
 	while (s[i])
@@ -28,7 +28,7 @@ int	with_option(char *s)
 	return (1);
 }
 
-void	run_echo(char **args, t_program *minishell)
+void	run_echo(char **args)
 {
 	int	i;
 	int	option;
