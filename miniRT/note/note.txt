@@ -33,3 +33,16 @@ Tasks:
 		Pressing ESC / Clicking on the red cross,
 		close the window & quit the program
 
+
+
+geometric objects: plane, sphere, cylinder
+handle possible intersections(chapter 5, ray-sphere intersections) and the insides of the objects
+resize properties of objects: 
+		sphere: diameter
+		cylinder: width & height
+apply translation and rotation transformations to objects, lights, and cameras
+Light management: (chapter 6, light and shading)
+	spot brightness
+	hard shadows
+	ambient lighting
+	diffuse lighting
