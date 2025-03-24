@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 15:23:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/24 11:18:08 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/03/24 11:15:21 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/03/24 11:17:52 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "minirt.h"
 
-# define WIDTH 1280
-# define HEIGHT 720
-# define BPP sizeof(int32_t)
-
-# include "include/MLX42/MLX42.h"
-# include <math.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <string.h>
-
-typedef struct s_rt
+int	init_rt(t_rt *rt)
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-}	t_rt;
-
-int	init_rt(t_rt *rt);
-
-#endif
+	rt->mlx = mlx_init(WIDTH, HEIGHT, "new", false);
+	if (!rt->mlx)
+	{
+		perror("Error initiating mlx\n");
+		return (-1);
+	}
+	rt->img = mlx_new_image(rt->mlx, WIDTH, HEIGHT);
+	if (!rt->img)
+	{
+		mlx_terminate(rt->mlx);
+		perror("Error creating image\n");
+		return (1);
+	}
+	return (0);
+}

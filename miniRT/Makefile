@@ -21,7 +21,7 @@ LIBS = $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 MAIN_DIR = src
 
 # Source Files
-MAIN_FILES = main.c
+MAIN_FILES = main.c init.c
 
 # Combine Source Files
 MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))
@@ -48,7 +48,7 @@ $(NAME): $(OBJS) $(MLX_A)
 
 # Build libft Library
 $(MLX_A):
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -s -C $(LIBMLX)/build -j4
+	@cmake $(LIBMLX) -B $(LIBMLX)/build > /dev/null 2>&1 && make -s -C $(LIBMLX)/build -j4 > /dev/null 2>&1
 
 # Compile Source Files into Object Files
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)

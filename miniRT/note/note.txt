@@ -22,11 +22,31 @@ Tasks:
 
 	key variables and functions:
 		mlx_t	*mlx;
+		typedef struct mlx
+		{
+			void*		window;		// window itself
+			void*		context;	// Abstracted opengl data
+			int32_t		width;		// width of the window
+			int32_t		height;		// height of the window
+			double		delta_time; // time difference between the previous frame and the current frame.
+		}	mlx_t;
+
 		mlx_t* 	mlx_init(int32_t width, int32_t height, const char* title, bool resize);
 			Initializes a new MLX42 Instance.
 			Returns: Ptr to the MLX handle or null on failure.
 
 		mlx_image_t		*img;
+		typedef struct mlx_image
+		{
+			const uint32_t	width;		// width of the image
+			const uint32_t	height;		// height of the image
+			uint8_t*		pixels;		// literal pixel data
+			mlx_instance_t*	instances;	// instance carrying the X, Y and Z location data
+			size_t			count;		// element count of the instances array
+			bool			enabled;	// If true the image is drawn onto the screen, else it's not
+			void*			context;	// Abstracted OpenGL data
+		}	mlx_image_t;
+
 		mlx_image_t*	mlx_new_image(mlx_t* mlx, uint32_t width, uint32_t height);
 			Creates and allocates a new image buffer.
 			Returns: Pointer to the image buffer, if it failed to allocate then NULL.
