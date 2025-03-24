@@ -19,15 +19,18 @@ LIBS = $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 # Source Directories
 MAIN_DIR = src
+TUPLE_OPS_DIR = src/tuple_ops
 
 # Source Files
-MAIN_FILES = main.c test.c operations.c
+MAIN_FILES = main.c test.c
+TUPLE_OPS_FILES = operations.c test_tuple_ops.c
 
 # Combine Source Files
 MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))
+TUPLE_OPS = $(addprefix $(TUPLE_OPS_DIR)/, $(TUPLE_OPS_FILES))
 
 # All Source Files
-SRCS = $(MAIN)
+SRCS = $(MAIN) $(TUPLE_OPS)
 
 # Object Files Directory
 OBJ_DIR = obj
