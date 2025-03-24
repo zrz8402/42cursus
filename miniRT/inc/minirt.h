@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 15:23:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/24 11:18:08 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/24 15:12:40 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@ typedef struct s_rt
 	mlx_image_t	*img;
 }	t_rt;
 
+
+typedef struct s_point
+{
+	float	x;
+	float	y;
+	float	z;
+	float	w; // 1 for point, 0 for vector
+}	t_point;
+
+typedef struct s_ray
+{
+	t_point	origin;		// 1
+	t_point	direction;	// 0
+}	t_ray;
+
+// init.c
 int	init_rt(t_rt *rt);
 
 #endif
