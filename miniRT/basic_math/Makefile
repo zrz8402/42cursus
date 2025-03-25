@@ -20,17 +20,24 @@ LIBS = $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 # Source Directories
 MAIN_DIR = src
 TUPLE_OPS_DIR = src/tuple_ops
+MATRIX_DIR = src/matrix
+RAY_SPHERE_DIR = src/ray_sphere
 
 # Source Files
-MAIN_FILES = main.c test.c
-TUPLE_OPS_FILES = operations.c test_tuple_ops.c
+MAIN_FILES = main.c
+TUPLE_OPS_FILES = operations.c test_tuple_ops.c test_overall_tuple_ops.c
+MATRIX_FILES = matrix.c
+RAY_SPHERE_FILES = ray.c test_ray_sphere.c
 
 # Combine Source Files
 MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))
 TUPLE_OPS = $(addprefix $(TUPLE_OPS_DIR)/, $(TUPLE_OPS_FILES))
+MATRIX = $(addprefix $(MATRIX_DIR)/, $(MATRIX_FILES))
+RAY_SPHERE = $(addprefix $(RAY_SPHERE_DIR)/, $(RAY_SPHERE_FILES))
+
 
 # All Source Files
-SRCS = $(MAIN) $(TUPLE_OPS)
+SRCS = $(MAIN) $(TUPLE_OPS) $(MATRIX) $(RAY_SPHERE)
 
 # Object Files Directory
 OBJ_DIR = obj

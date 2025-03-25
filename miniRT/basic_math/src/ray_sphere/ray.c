@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 15:22:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/25 13:22:26 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/03/25 12:45:38 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/03/25 12:45:48 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "operation.h"
 
-int	main(void)
+t_ray	create_ray(t_point origin, t_point direction)
 {
-	test_tuple_ops();
-	test_overall_tuples_ops();
-	test_ray_sphere();
-	return (0);
+	t_ray	ray;
+
+	ray.origin = origin;
+	ray.direction = direction;
+	return (ray);
+}
+
+t_point	position(t_ray ray, float t)
+{
+	return ((t_point)add_tuples(ray.origin, multiply_tuple(ray.direction, t)));
 }
