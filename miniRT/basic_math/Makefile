@@ -27,7 +27,7 @@ RAY_SPHERE_DIR = src/ray_sphere
 MAIN_FILES = main.c
 TUPLE_OPS_FILES = operations.c test_tuple_ops.c test_overall_tuple_ops.c
 MATRIX_FILES = matrix.c
-RAY_SPHERE_FILES = ray.c sphere.c test_ray.c test_sphere.c
+RAY_SPHERE_FILES = ray.c intersection.c test_ray.c test_intersection.c
 
 # Combine Source Files
 MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))

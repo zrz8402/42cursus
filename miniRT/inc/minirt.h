@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 15:23:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/25 13:17:24 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:08:34 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <string.h>
+
+typedef	enum	e_obj_id
+{
+	AMBIENT,	// 0
+	CAMERA,		// 1
+	LIGHT,		// 2
+	SPHERE,		// 3
+	PLANE,		// 4
+	CYLINDER	// 5
+}	t_obj_id;
+
 
 typedef struct s_rt
 {
@@ -52,16 +63,22 @@ typedef struct s_ray
 	t_point	direction;	// 0
 }	t_ray;
 
-typedef struct s_intersect
+typedef struct s_intersection
 {
-	int		count;
-	float	t1;
-	float	t2;
-}	t_intersect;
+	float	t;
+	int		obj_id;
+}	t_intersection;
+
+typedef struct s_intersections
+{
+	int					count;
+	t_intersection		i1;
+	t_intersection		i2;
+}	t_intersections;
 
 typedef struct s_sphere
 {
-	int		id;			// sp
+	int		obj_id;		// sp
 	t_point	center;
 	float	diameter;
 	t_color	color;

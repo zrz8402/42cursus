@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:31:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/25 13:43:12 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:15:14 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	test_ray(void)
 
 void	test_ray_sphere(void)
 {
-	printf("\n--------test ray_sphere---------\n");
+	printf("\n----test ray_sphere intersections----\n");
 	test_ray();
-	test_sphere();
+	test_intersection();
 	printf("\n");
 }

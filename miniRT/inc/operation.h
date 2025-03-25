@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:42:01 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/25 13:53:23 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:14:10 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	test_overall_tuples_ops(void);
 t_ray	create_ray(t_point origin, t_point direction);
 t_point	position(t_ray ray, float t);
 
-// sphere.c
-t_intersect	intersect(t_sphere sphere, t_ray ray);
+// intersection.c
+t_intersections	intersect(t_sphere sphere, t_ray ray);
 
 // test
 void	test_ray_sphere(void);
 void	test_ray(void);
-void	test_sphere(void);
+void	test_intersection(void);
 
 #endif
