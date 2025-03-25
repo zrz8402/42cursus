@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_ray_sphere.c                                  :+:      :+:    :+:   */
+/*   test_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:31:00 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/25 13:25:50 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/25 13:43:12 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,17 @@ void	test_position(void)
 	printf("position: (%.6g, %.6g, %.6g)\n", pos.x, pos.y, pos.z);
 }
 
+void	test_ray(void)
+{
+	test_create_ray();
+	test_position();
+	printf("\n");
+}
+
 void	test_ray_sphere(void)
 {
 	printf("\n--------test ray_sphere---------\n");
-	test_create_ray();
-	test_position();
+	test_ray();
+	test_sphere();
 	printf("\n");
 }
