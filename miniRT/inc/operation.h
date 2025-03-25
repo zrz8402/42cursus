@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:42:01 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/24 17:13:51 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/25 11:14:35 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_point	cross_product(t_point a, t_point b);
 
 // test_tuple_ops.c
 void	test_tuple_ops(void);
+void	test_overall_tuples_ops(void);
 
 void	test_creating_ray(void);
 
