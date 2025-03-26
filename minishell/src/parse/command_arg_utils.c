@@ -6,16 +6,15 @@
 /*   By: kmartin <kmartin@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 12:50:45 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/20 15:13:39 by kmartin          ###   ########.fr       */
+/*   Updated: 2025/03/25 18:29:17 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-int		count_args(t_lex *tok_ptr);
 char	**get_cmd_args(t_lex *tok_ptr, char **args, int num_args);
 
-// FUNCTION add_cmd_args
+// FUNCTION add_args
 // Add a char** array of arguments (including the command as the first element)
 // as the arg member of a t_command node, if the t_command node exists.
 //
@@ -27,7 +26,7 @@ char	**get_cmd_args(t_lex *tok_ptr, char **args, int num_args);
 // @param cmd_node = pointer to t_command node
 // @param tok_ptr = pointer to t_lex node at start of series of command tokens
 // @param mshell = pointer to minishell struct containing status
-void	add_cmd_args(t_command *cmd_node, t_lex *tok_ptr, t_program *mshell)
+void	add_args(t_command *cmd_node, t_lex *tok_ptr, t_program *mshell)
 {
 	int		num_args;
 

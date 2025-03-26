@@ -31,7 +31,7 @@ SIG_FILES = signal.c handler.c
 PARSE_FILES = parse_pipeline.c lex_make.c tokenize.c token_utils.c type_check_lex.c command_make.c command_arg_utils.c command_redir_utils.c
 REDIR_FILES = redir.c redir_in.c redir_out.c append.c heredoc.c
 EXEC_FILES = process.c execute.c builtin.c cleanup.c
-BUILTIN_FILES = env.c unset.c cd.c echo.c exit.c export.c merge_sort.c pwd.c
+BUILTIN_FILES = env.c unset.c cd.c echo.c exit.c export.c export2.c pwd.c
 
 # Combine Source Files
 MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))

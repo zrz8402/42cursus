@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:46:28 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/22 12:55:54 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/26 23:57:46 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,48 @@ int	eof(char *line, char *delimiter)
 {
 	if (!line)
 	{
-		ft_putendl_fd(HEREDOC_EOF_WARNING, STDOUT_FILENO);
+		ft_putendl_fd("minishell: warning: "
+			"here-document at line 1 delimited by end-of-file"
+			" (wanted `EOF')", STDOUT_FILENO);
 		return (1);
 	}
 	if (!ft_strcmp(line, delimiter))
 		return (1);
 	return (0);
+}
+
+// FUNCTION expand_heredoc_var
+// Expands variables in a heredoc line; variables with no value are removed
+// from the returned line.
+//
+// If variables are (successfully) expanded, the original input string is
+// freed and a replacement string is returned; if there are no variables,
+// or there is an error with expanding any variables, the original input
+// string is returned.
+//
+// @param input = input line from heredoc
+// @param minishell = struct containing status
+//
+// @return a new string with variables expanded if successful
+void	expand_heredoc_var(char **input, t_program *minishell)
+{
+	int		i;
+	char	*temp_line;
+
+	temp_line = ft_strdup(*input);
+	i = 0;
+	while (temp_line && temp_line[i])
+	{
+		if (temp_line[i] == '$')
+			expand_inp(&temp_line, &i, 0, minishell);
+		else
+			i++;
+	}
+	if (temp_line)
+	{
+		free(*input);
+		*input = temp_line;
+	}
 }
 
 int	get_heredocfd(char *delimiter, int *heredoc_fd, t_program *minishell)
@@ -43,7 +79,7 @@ int	get_heredocfd(char *delimiter, int *heredoc_fd, t_program *minishell)
 		}
 		if (eof(line, delimiter))
 			break ;
-		// expand_heredoc_variable();
+		expand_heredoc_var(&line, minishell);
 		write(heredoc_fd[1], line, ft_strlen(line));
 		write(heredoc_fd[1], "\n", 1);
 		free(line);
@@ -52,7 +88,7 @@ int	get_heredocfd(char *delimiter, int *heredoc_fd, t_program *minishell)
 	return (heredoc_fd[0]);
 }
 
-int	handle_heredoc(char *delimiter, t_program *minishell)
+int	handle_hdoc(char *delimiter, t_program *minishell)
 {
 	int		fd;
 	int		heredoc_fd[2];

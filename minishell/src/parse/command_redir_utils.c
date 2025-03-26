@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 12:50:45 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/21 18:34:07 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/26 17:17:05 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_redir	*init_redir_node(enum e_ltype type, t_lex *tok_ptr, t_program *mshell);
 // @param cmd_node = pointer to t_command node
 // @param tok_ptr = pointer to t_lex node at start of series of command tokens 
 // @param mshell = pointer to minishell struct containing status
-void	add_cmd_redirs(t_command *cmd_node, t_lex *tok_ptr, t_program *mshell)
+void	add_redirs(t_command *cmd_node, t_lex *tok_ptr, t_program *mshell)
 {
 	enum e_ltype	ty;
 	t_redir			*new_redir;
@@ -84,7 +84,7 @@ t_redir	*init_redir_node(enum e_ltype type, t_lex *tok_ptr, t_program *mshell)
 	new_redir->file = NULL;
 	new_redir->heredoc_fd = -1;
 	if (type == HEREDOC)
-		new_redir->heredoc_fd = handle_heredoc(tok_ptr->next_lex->value, mshell); //replace with handle_heredoc function
+		new_redir->heredoc_fd = handle_hdoc(tok_ptr->next_lex->value, mshell);
 	else
 	{
 		new_redir->file = ft_strdup(tok_ptr->next_lex->value);

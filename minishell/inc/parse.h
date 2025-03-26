@@ -6,7 +6,7 @@
 /*   By: kmartin <kmartin@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:54:52 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/21 13:04:40 by kmartin          ###   ########.fr       */
+/*   Updated: 2025/03/26 09:47:21 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,32 +89,35 @@ typedef struct s_pipeline
 
 // MAKE_LEX
 
-int		append_lex(t_lex **root, enum e_ltype ltype, char *lex, int lex_len);
-void	free_null_lex_list(t_lex **head);
+int			add_lex(t_lex **root, enum e_ltype ltype, char *lex, int lex_len);
+void		free_null_lex_list(t_lex **head);
+int			space_pipe_redir(char input_char);
+int			token_has_quotes(char *input, int tok_start);
 
 // PARSE_PIPELINE
 
 t_pipeline	*parse_pipeline(char **input, t_program *minishell);
 void		free_null_input(char **input);
-void		*exit_parsing_status(int stat, t_program *mshell, char **inp, t_lex **lex);
+void		print_syntax_error(char *token, char *redir);
+void		*parse_exit(int stat, t_program *mshell, char **inp, t_lex **lex);
 t_pipeline	*free_command_pipe(t_pipeline *cmd_pipe);
 
 // TOKENIZE
 
-t_lex	*tokenize(char **input, t_program *minishell);
+t_lex		*tokenize(char **input, t_program *minishell);
 
 // TOKEN_UTILS
 
-int		valid_redir_len(char *in_ptr, enum e_ltype *rtype);
-int		count_var_len(char *input, int i);
-int		expand_replace_input(char **input, int *i, int tok_len, t_program *mshell);
-char	*expand_variable(char *in_ptr, t_program *mshell);
-void	replace_input(char **new_str, char *input, int i, char *exp_var);
+int			valid_redir_len(char *in_ptr, enum e_ltype *rtype);
+int			count_var_len(char *input, int i);
+int			expand_inp(char **input, int *i, int tok_len, t_program *mshell);
+char		*expand_variable(char *in_ptr, t_program *mshell);
+void		replace_input(char **new_str, char *input, int i, char *exp_var);
 
 // TYPE_CHECK_LEX
 
-void	type_check_lex(char **input, t_lex **input_lex, t_program *minishell);
-void	assign_command_type(t_lex *input_lex);
+void		type_check(char **input, t_lex **input_lex, t_program *minishell);
+void		assign_command_type(t_lex *input_lex);
 
 // COMMAND_MAKE
 
@@ -124,15 +127,13 @@ t_command	*free_command_list(t_command *cmd_pipe);
 
 // COMMAND_ARG_UTILS
 
-void		add_cmd_args(t_command *cmd_node, t_lex *tok_ptr, t_program *mshell);
+int			count_args(t_lex *tok_ptr);
+void		add_args(t_command *cmd_node, t_lex *tok_ptr, t_program *mshell);
 char		**free_command_args(char **cmd_args);
 
 // COMMAND_REDIR_UTILS
 
-void		add_cmd_redirs(t_command *cmd_node, t_lex *tok_ptr, t_program *mshell);
+void		add_redirs(t_command *cmd_node, t_lex *tok_ptr, t_program *mshell);
 t_redir		*free_command_redirs(t_redir *redir_list);
-
-//
-
 
 #endif // PARSE_H

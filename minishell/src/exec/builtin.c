@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 09:37:47 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/22 12:59:46 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 00:09:54 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,17 @@ void	exec_builtin(char **args, t_program *minishell)
 	else if (ft_strcmp(args[0], "export") == 0)
 		run_export(args, minishell);
 	else if (ft_strcmp(args[0], "unset") == 0)
-		run_unset(args, minishell->envlst);
+		run_unset(args, minishell);
 	else if (ft_strcmp(args[0], "env") == 0)
 		run_env(minishell->envlst);
 	else if (ft_strcmp(args[0], "exit") == 0)
 		run_exit(args, minishell);
 }
 
+/*
+If cmd is a single built-in cmd, do not create child process
+Duplicate STDIN and STDOUT in case something goes wrong
+*/
 void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell)
 {
 	int	saved_in;
@@ -50,7 +54,7 @@ void	exec_one_builtin(t_pipeline *pipeline, t_program *minishell)
 	saved_in = dup(STDIN_FILENO);
 	saved_out = dup(STDOUT_FILENO);
 	if (process_redirections(pipeline->cmd->redirections, minishell))
-		return ;
+		return (close_fds(saved_in, saved_out));
 	exec_builtin(pipeline->cmd->args, minishell);
 	restore_fds(saved_in, saved_out);
 	if (minishell->exit)

@@ -6,7 +6,7 @@
 /*   By: kmartin <kmartin@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:52:34 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/21 12:49:44 by kmartin          ###   ########.fr       */
+/*   Updated: 2025/03/25 18:01:41 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 // @param char** string received from readline
 //
 // @return command pipeline with arguments and redirections
-t_pipeline	*parse_pipeline(char **input, t_program *minishell) 
+t_pipeline	*parse_pipeline(char **input, t_program *minishell)
 {
 	t_lex		*input_lex;
 	t_pipeline	*cmd_pipe;
@@ -33,7 +33,7 @@ t_pipeline	*parse_pipeline(char **input, t_program *minishell)
 	cmd_pipe = (t_pipeline *)malloc(sizeof(t_pipeline));
 	if (!cmd_pipe)
 	{
-		exit_parsing_status(1, minishell, input, &input_lex);
+		parse_exit(1, minishell, input, &input_lex);
 		return (NULL);
 	}
 	else
@@ -45,7 +45,7 @@ t_pipeline	*parse_pipeline(char **input, t_program *minishell)
 	if (cmd_pipe && !cmd_pipe->cmd)
 	{
 		cmd_pipe = free_command_pipe(cmd_pipe);
-		exit_parsing_status(1, minishell, input, &input_lex);
+		parse_exit(1, minishell, input, &input_lex);
 	}
 	free_null_input(input);
 	return (cmd_pipe);
@@ -60,7 +60,42 @@ void	free_null_input(char **input)
 	*input = NULL;
 }
 
-// FUNCTION exit_parsing_status
+// FUNCTION print_syntax_error
+// Print a Bash-style syntax error, including the relevant token.
+//
+// In the case of a redirection syntax error, print up to 2 characters
+// as the token (assuming both characters are either '>' or '<').
+//
+// @param tok = the token to be included in the error message
+// @param redir = any string in the case of a redirection, NULL otherwise
+void	print_syntax_error(char *tok, char *redir)
+{
+	ft_putstr_fd("mshell: syntax error near unexpected token `", 2);
+	if (redir)
+	{
+		if (tok[0] != tok[1])
+		{
+			if (tok[2] && (tok[2] == '>' || tok[2] == '<'))
+				tok[3] = '\0';
+			else
+				tok[2] = '\0';
+			ft_putstr_fd(tok + 1, 2);
+		}
+		else
+		{
+			if (tok[3] && (tok[3] == '>' || tok[3] == '<'))
+				tok[4] = '\0';
+			else
+				tok[3] = '\0';
+			ft_putstr_fd(tok + 2, 2);
+		}
+	}
+	else
+		ft_putstr_fd(tok, 2);
+	ft_putstr_fd("'\n", 2);
+}
+
+// FUNCTION parse_exit
 // Frees parsing-related memory is freed and set to NULL:
 // - the input string (original or modified)
 // - the t_lex list containing typed tokens
@@ -69,7 +104,7 @@ void	free_null_input(char **input)
 // ... if it is not currently 0, the existing status is left unchanged.
 //
 // @return NULL pointer (cast to type as needed)
-void	*exit_parsing_status(int stat, t_program *mshell, char **inp, t_lex **lex)
+void	*parse_exit(int stat, t_program *mshell, char **inp, t_lex **lex)
 {
 	if (*inp)
 		free_null_input(inp);
@@ -90,4 +125,3 @@ t_pipeline	*free_command_pipe(t_pipeline *cmd_pipe)
 	free(cmd_pipe);
 	return (NULL);
 }
-

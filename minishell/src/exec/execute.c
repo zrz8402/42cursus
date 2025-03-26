@@ -6,13 +6,13 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 12:26:03 by  ruzhang          #+#    #+#             */
-/*   Updated: 2025/03/22 13:26:55 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/26 23:06:41 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*join_str(char const *s1, char const *s2)
+char	*join_str(char const *s1, char const *s2, char sign)
 {
 	char	*str;
 	char	*tmp;
@@ -28,7 +28,7 @@ char	*join_str(char const *s1, char const *s2)
 		while (*s1)
 			*tmp++ = *s1++;
 	}
-	*tmp++ = '/';
+	*tmp++ = sign;
 	if (s2)
 	{
 		while (*s2)
@@ -49,6 +49,11 @@ int	is_dir(char *path)
 	return (0);
 }
 
+/*
+When it does not start with ./ or /, treated as a cmd
+IF we cannot find the cmd, try to add path
+If it starts with ./ or /, following the error order
+*/
 int	check_execute(char **args, t_program *minishell)
 {
 	if (ft_strncmp(args[0], "./", 2) == 0 || ft_strncmp(args[0], "/", 1) == 0)
@@ -67,6 +72,11 @@ int	check_execute(char **args, t_program *minishell)
 	return (0);
 }
 
+/*
+Add path and see if cmd exists
+After tring all path options
+If not Found, error -CMD_NOT_FOUND
+*/
 int	check_exec_with_path(char **args, t_program *minishell)
 {
 	char	**paths;
@@ -80,7 +90,7 @@ int	check_exec_with_path(char **args, t_program *minishell)
 	while (paths[++i])
 	{
 		free(args[0]);
-		args[0] = join_str(paths[i], tmp);
+		args[0] = join_str(paths[i], tmp, '/');
 		if (access(args[0], F_OK) == 0)
 			execve(args[0], args, minishell->envp);
 	}
@@ -91,6 +101,12 @@ int	check_exec_with_path(char **args, t_program *minishell)
 	return (0);
 }
 
+/*
+If no cmd, skip
+If cmd is empty string, CMD_NOT_FOUND
+Check cmd
+If not exist, try to check with add path
+*/
 void	execute(t_program *minishell, char **args)
 {
 	char	*path;

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:36:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/16 12:57:14 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/26 22:59:18 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,48 @@ t_env	*merge_sort(t_env *envlst)
 	left = merge_sort(left);
 	right = merge_sort(right);
 	return (merge(left, right));
+}
+
+void	duplicate_envlst(t_env *envlst, t_env **new)
+{
+	if (!envlst)
+		return ;
+	while (envlst)
+	{
+		update_envlst(new, envlst->key, envlst->value, 1);
+		envlst = envlst->next;
+	}
+}
+
+/*
+Function to print result of export
+Using merge_sort to sort the list
+*/
+void	export_list(t_env *envlst)
+{
+	t_env	*tmp;
+	t_env	*temp;
+
+	tmp = NULL;
+	duplicate_envlst(envlst, &tmp);
+	temp = merge_sort(tmp);
+	tmp = temp;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, "_"))
+		{
+			ft_putstr_fd("declare -x ", STDOUT_FILENO);
+			ft_putstr_fd(tmp->key, STDOUT_FILENO);
+			if (tmp->value)
+			{
+				ft_putstr_fd("=\"", STDOUT_FILENO);
+				ft_putstr_fd(tmp->value, STDOUT_FILENO);
+				ft_putendl_fd("\"", STDOUT_FILENO);
+			}
+			else
+				write(1, "\n", 1);
+		}
+		tmp = tmp->next;
+	}
+	free_envlst(temp);
 }

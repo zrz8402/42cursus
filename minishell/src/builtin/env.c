@@ -6,12 +6,17 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:07:13 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/16 14:54:45 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/26 22:57:37 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+Loop env list
+If env var is found, return its value
+If not found, return NULL
+*/
 char	*get_var_value(char *key, t_env *envlst)
 {
 	while (envlst)
@@ -78,6 +83,8 @@ void	update_envlst(t_env **envlst, char *key, char *value, int append)
 	append_node(envlst, create_node(key, value));
 }
 
+// env: print out all env variables(with value)
+// do not check env with args
 void	run_env(t_env *envlst)
 {
 	t_env	*tmp;

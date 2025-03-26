@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 12:50:45 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/19 21:13:47 by kmartin          ###   ########.fr       */
+/*   Updated: 2025/03/26 17:15:01 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,14 @@ t_command	*get_commands(t_lex *input_lex, t_program *minishell)
 	cmd_tokens = input_lex;
 	cmd_list = NULL;
 	num_cmds = count_commands(input_lex);
-
 	while (!(minishell->status) && cmd_tokens && num_cmds--)
 	{
 		new_cmd = init_command_node(minishell);
 		if (!new_cmd)
 			return (free_command_list(cmd_list));
 		append_command(&cmd_list, new_cmd);
-		add_cmd_args(new_cmd, cmd_tokens, minishell);
-		add_cmd_redirs(new_cmd, cmd_tokens, minishell);
+		add_args(new_cmd, cmd_tokens, minishell);
+		add_redirs(new_cmd, cmd_tokens, minishell);
 		while (cmd_tokens && cmd_tokens->type != PIPE)
 			cmd_tokens = cmd_tokens->next_lex;
 		if (cmd_tokens && cmd_tokens->type == PIPE)
@@ -145,4 +144,3 @@ t_command	*free_command_list(t_command *cmd_list)
 	}
 	return (cmd_list);
 }
-

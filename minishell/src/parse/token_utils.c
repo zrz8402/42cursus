@@ -6,7 +6,7 @@
 /*   By: kmartin <kmartin@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:52:34 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/21 14:54:21 by kmartin          ###   ########.fr       */
+/*   Updated: 2025/03/26 09:52:29 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	count_var_len(char *input, int i)
 	return (var_len);
 }
 
-// FUNCTION expand_replace_input 
+// FUNCTION expand_inp 
 // Handle variables - both individual tokens and as parts of larger tokens.
 //
 // Create a new string that includes the expanded variable (variables without
@@ -109,7 +109,7 @@ int	count_var_len(char *input, int i)
 // @param mshell = struct containing the previous command status and envp
 //
 // @return the updated token length
-int	expand_replace_input(char **input, int *i, int tok_len, t_program *mshell)
+int	expand_inp(char **input, int *i, int tok_len, t_program *mshell)
 {
 	int		exp_var_len;
 	int		new_str_len;

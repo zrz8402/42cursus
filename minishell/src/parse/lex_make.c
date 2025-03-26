@@ -6,7 +6,7 @@
 /*   By: kmartin <kmartin@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 12:50:45 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/18 12:06:02 by kmartin          ###   ########.fr       */
+/*   Updated: 2025/03/26 09:53:33 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_lex	*init_lex_node(enum e_ltype ltype, char *lex, int lex_len);
 
-// FUNCTION append_lex
+// FUNCTION add_lex
 // Add t_lex struct (containing lexeme type and value) to end of list,
 //   where the linear linked list is connected using the next_lex member.
 //
@@ -30,11 +30,11 @@ t_lex	*init_lex_node(enum e_ltype ltype, char *lex, int lex_len);
 // @return 0 if the t_lex node was correctly appended to the list
 //
 // Note that lexeme->value is dynamically allocated (=> must be freed)
-int	append_lex(t_lex **root, enum e_ltype ltype, char *lex, int lex_len)
+int	add_lex(t_lex **root, enum e_ltype ltype, char *lex, int lex_len)
 {
 	t_lex	*ptr;
 	t_lex	*newn;
-	
+
 	ptr = NULL;
 	newn = init_lex_node(ltype, lex, lex_len);
 	if (!newn)
@@ -75,7 +75,7 @@ t_lex	*init_lex_node(enum e_ltype ltype, char *lex, int lex_len)
 		return (NULL);
 	newn->type = ltype;
 	if (lex_len == -1)
-		lex_len = ft_strlen(lex); 
+		lex_len = ft_strlen(lex);
 	newn->value = ft_substr(lex, 0, lex_len);
 	if (!newn->value)
 	{
@@ -107,3 +107,54 @@ void	free_null_lex_list(t_lex **root)
 	*root = NULL;
 }
 
+// FUNCTION space_pipe_redir
+// Check if a character is a space, pipe, or redirect.
+//
+// @param input_char = character in input string being checked
+//
+// @return 1 if the character is a space, pipe or redirect.
+// @return 0 if it is not.
+int	space_pipe_redir(char input_char)
+{
+	if (input_char == ' ')
+		return (1);
+	if (input_char == '|')
+		return (1);
+	if (input_char == '>')
+		return (1);
+	if (input_char == '<')
+		return (1);
+	return (0);
+}
+
+// FUNCTION token_has_quotes 
+// Checks if a token contains quotes
+//
+// Note that if a token contained quotes with nothing between them, or
+// double-quotes surrounding a variable without a value (that expands
+// to nothing), the quotes will have been removed, leaving only the 
+// following space or the end of the input string.
+//
+// This function is to check for quotes in a token before they are 
+// stripped out, in order to distinguish between the following cases:
+// - `$EMPTY echo something` # two tokens created
+// - `"$EMPTY" echo something` # three tokens created (first empty string)
+//
+// @param input = input string
+// @param tok_start = start index of the token in the input
+//
+// @return 1 if the token contains single or double quotes
+// @return 0 if the token doesn't contain quotes
+int	token_has_quotes(char *input, int tok_start)
+{
+	int	i;
+
+	i = tok_start;
+	while (input && input[i] != ' ' && input[i] != '\0')
+	{
+		if (input[i] == '"' || input[i] == 39)
+			return (1);
+		i++;
+	}
+	return (0);
+}

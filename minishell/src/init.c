@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:31:37 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/12 15:39:54 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 00:25:39 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ void	init_env(t_program *minishell)
 			free(value);
 			free(key);
 		}
+	}
+	if (!get_var_value("SHLVL", minishell->envlst))
+	{
+		update_envlst(&minishell->envlst, "SHLVL", "1", 1);
+		update_envp(minishell);
 	}
 }
 

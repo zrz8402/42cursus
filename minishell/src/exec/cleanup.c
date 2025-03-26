@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:19:16 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/21 16:41:17 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/26 23:03:15 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,11 @@ void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 	else if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
+		minishell->status = sig + 128;
 		if (sig == SIGINT)
-			minishell->status = sig;
-		else if (sig == SIGQUIT)
-		{
+			write(1, "\n", 1);
+		if (sig == SIGQUIT)
 			write(1, "Quit (core dumped)\n", 19);
-			minishell->status = sig + 128;
-		}
 	}
 	cleanup(NULL, pipeline, p);
 }

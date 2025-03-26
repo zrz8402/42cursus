@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:27:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/22 12:58:12 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/26 22:58:18 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	valid_arg(char *s)
 /*
 If no arg, return exit status of last command and exit shell
 If 1 arg, but not numeric, return 2 and exit shell
+IF VALUE(arg) is beyond LONG_MAX and AND LONG_MIN, also not numeric
 If > 1 arg, first is numeric, return 1 and do not exit shell
 If VALUE(arg) out of range (0-255): undefined
 */

@@ -6,12 +6,20 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 16:53:39 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/20 13:24:54 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/26 23:07:25 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+rl_replace_line("", 0);
+	Clear the current line in the Readline buffer
+rl_on_new_line();
+	Move to a new line, to ensure that the prompt starts on the next line
+rl_redisplay();
+	Re-render the prompt after clearing the line
+*/
 void	sigint_handler(int sig)
 {
 	g_signal = sig;

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 14:35:25 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/22 12:57:21 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/26 22:57:07 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ int	with_option(char *s)
 	return (1);
 }
 
+/*
+echo -n args
+	print without adding new line at the end
+	-n flag needs to be right after echo
+	echo -n = echo -nnnn = echo -n -n
+*/
 void	run_echo(char **args)
 {
 	int	i;

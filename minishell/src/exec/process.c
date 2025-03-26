@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/22 12:59:25 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/26 23:55:32 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@
 
 #include "minishell.h"
 
+/*
+
+Close heredoc_fd in cmd chunks after current(if any)
+Check redirections first
+If rediction fails, exit the child process
+Else, execute cmd
+If success, do not need to free things
+If not, free newly allocated memory in child process
+*/
 void	child_process(t_program *minishell,
 	t_command *cmd, t_pipex *p, t_pipeline *pipeline)
 {
@@ -41,15 +50,27 @@ void	child_process(t_program *minishell,
 		close(p->cur_pipefd[1]);
 	}
 	if (process_redirections(cmd->redirections, minishell))
+	{
+		free_program(minishell);
 		exit(minishell->status);
+	}
 	if (cmd->args && is_builtin(cmd->args[0]))
 		exec_builtin(cmd->args, minishell);
 	else
 		execute(minishell, cmd->args);
-	free_envlst(minishell->envlst);
+	free_program(minishell);
 	exit(minishell->status);
 }
 
+/*
+i = 0: first command, no prev_fd
+i = num_cmds - 1:
+	last command, no new created pipefd
+	need to close prev_fd
+Close heredoc_fd within that cmd chunk(if any)
+So it won't be inherited by next chunk
+Especially it's not needed
+*/
 void	parent_process(t_command **cur_cmd, t_pipex *p, int num_cmds)
 {
 	if (p->i != 0)
@@ -64,6 +85,12 @@ void	parent_process(t_command **cur_cmd, t_pipex *p, int num_cmds)
 	setup_exec_signal();
 }
 
+/*
+fork(): create a child process
+pipe(): enables inter-process communication
+	pipefd[0]: fd for reading from the pipe
+	pipefd[1]: fd for writing to the pipe
+*/
 void	process(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 {
 	int			i;
@@ -119,6 +146,4 @@ void	process_pipeline(t_pipeline *pipeline, t_program *minishell)
 	}
 	process(pipeline, minishell, &p);
 	wait_and_clean(pipeline, minishell, &p);
-	if (g_signal == SIGINT)
-		write(1, "\n", 1);
 }

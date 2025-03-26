@@ -6,7 +6,7 @@
 /*   By: kmartin <kmartin@student.42bangkok.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:52:34 by kmartin           #+#    #+#             */
-/*   Updated: 2025/03/21 15:05:32 by kmartin          ###   ########.fr       */
+/*   Updated: 2025/03/26 09:56:06 by kmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ t_lex	*tokenize(char **input, t_program *minishell)
 		else if ((*input)[i])
 			i = handle_other(input, i, &input_lex, minishell);
 		if (!(*input))
-			return (exit_parsing_status(1, minishell, input, &input_lex));
+			return (parse_exit(1, minishell, input, &input_lex));
 	}
 	if (input_lex)
-		type_check_lex(input, &input_lex, minishell);
+		type_check(input, &input_lex, minishell);
 	return (input_lex);
 }
 
@@ -78,16 +78,16 @@ t_lex	*tokenize(char **input, t_program *minishell)
 // If quotes are found, they are removed, and sequential quoted strings without
 // intervening spaces are concatenated.
 //
-// If variables are found within a space-delimited token, they are processed (and
-// the input string is replaced with a new string, with variables expanded); this
-// doesn't happen in `'`-quoted string segments.
+// If variables are found within a space-delimited token, they are processed:
+// the input string is replaced with a new string, with variables expanded
+// (this doesn't happen in `'`-quoted string segments).
 //
 // If there is a problem expanding and replacing input, input is set to NULL.
 //
-// If there is a problem with appending to the lex list, input_lex is set to NULL,
-// and input is set to NULL (all memory is freed).
+// If there is a problem with appending to the lex list, input_lex is set to
+// NULL, and input is set to NULL (all memory is freed).
 //
-// @param input = pointer to the input string (replace as variables are expanded)
+// @param input = input string (replace as variables are expanded)
 // @param i = index to the start character of the current token being processed
 // @param input_lex = the lex list for tokens to be added to as nodes
 // @param minishell = a struct containing minishell exit status and env vars
@@ -97,15 +97,15 @@ int	handle_other(char **input, int i, t_lex **input_lex, t_program *mshell)
 {
 	int	tok_ind;
 	int	tok_len;
+	int	quotes;
 
+	quotes = token_has_quotes(*input, i);
 	tok_ind = i;
 	tok_len = 0;
-	while (*input && (*input)[i] && (*input)[i] != ' ')
+	while (*input && (*input)[i] && !(space_pipe_redir((*input)[i])))
 	{
-		if ((*input)[i] == '|' || (*input)[i] == '>' || (*input)[i] == '<')
-			break ;
 		if ((*input)[i] == '$')
-			tok_len = expand_replace_input(input, &i, tok_len, mshell);
+			tok_len = expand_inp(input, &i, tok_len, mshell);
 		else if ((*input)[i] == '"' || (*input)[i] == 39)
 			tok_len = remove_quotes(input, &i, tok_len, mshell);
 		else
@@ -114,8 +114,8 @@ int	handle_other(char **input, int i, t_lex **input_lex, t_program *mshell)
 			i++;
 		}
 	}
-	if (*input && tok_len)
-		append_lex(input_lex, ARGUMENT, *input + tok_ind, tok_len);
+	if (*input && (tok_len != 0 || quotes))
+		add_lex(input_lex, ARGUMENT, *input + tok_ind, tok_len);
 	if (!(*input_lex) && tok_len)
 		free_null_input(input);
 	return (i);
@@ -127,14 +127,17 @@ int	handle_other(char **input, int i, t_lex **input_lex, t_program *mshell)
 // Shift the characters in the string to the left, once at the start quote, and
 // again at the end quote (if it is found in the string). 
 //
-// If variables are found within a space-delimited token, they are processed (and
-// the input string is replaced with a new string, with variables expanded); this
-// doesn't happen in `'`-quoted string segments.
+// If variables are found within a space-delimited token, they are processed:
+// the input string is replaced with a new string, with variables expanded
+// (this doesn't happen in `'`-quoted string segments).
 //
-// If unclosed quotes are found, or if there is an error with expanding variables,
-// the input string is freed and set to NULL.
+// If unclosed quotes are found, or if there is an error with expanding 
+// variables, the input string is freed and set to NULL.
 //
-// @param input = pointer to the input string (replace as variables are expanded)
+// If the token being processed contains quotes and is 0-length after being
+// processed, a token with an empty-string value is created.
+//
+// @param input = input string (replace as variables are expanded)
 // @param i = index to the start character of the current token being processed
 // @param tok_len = the number of characters in the current token so far 
 // @param minishell = a struct containing minishell exit status and env vars
@@ -149,7 +152,7 @@ int	remove_quotes(char **input, int *i, int tok_len, t_program *mshell)
 	while (*input && (*input)[*i] && (*input)[*i] != start_quote)
 	{
 		if (start_quote == '"' && (*input)[*i] == '$')
-			tok_len = expand_replace_input(input, i, tok_len, mshell);
+			tok_len = expand_inp(input, i, tok_len, mshell);
 		else
 		{
 			tok_len++;
@@ -181,15 +184,15 @@ int	handle_pipe(char **input, int i, t_lex **input_lex)
 
 	tok_ind = i;
 	tok_len = 1;
-	append_lex(input_lex, PIPE, *input + tok_ind, tok_len);
+	add_lex(input_lex, PIPE, *input + tok_ind, tok_len);
 	if (!(*input_lex))
 		free_null_input(input);
 	return (tok_ind + tok_len);
 }
 
 // FUNCTION handle_redir
-// Handle tokens that start with a redirection character (< or >) - create a t_lex
-// node with a type reflecting the type of redirection (e.g. RED_IN, APPEND, etc).
+// Handle tokens that start with a redirection character (< or >): create t_lex
+// node with the redirection type (e.g. RED_IN, APPEND, etc).
 //
 // @param input = pointer to the input string
 // @param i = index to the start of the current token being processed
@@ -207,18 +210,13 @@ int	handle_redir(char **input, int i, t_lex **input_lex, t_program *mshell)
 	tok_len = 0;
 	if (valid_redir_len(*input + i, &rtype))
 		tok_len = valid_redir_len(*input + i, &rtype);
-	else if ((*input)[i] != (*input)[i + 1])
-		printf("mshell: syntax error near unexpected token `%c'\n", (*input)[i + 1]);
-	else if ((*input)[i] == (*input)[i + 1] && (*input)[i + 2] == '>')
-		printf("mshell: syntax error near unexpected token `%c'\n", (*input)[i + 2]);
-	else if ((*input)[i] == (*input)[i + 1] && (*input)[i + 2] == '<')
-		printf("mshell: syntax error near unexpected token `%c'\n", (*input)[i + 2]);
+	else
+		print_syntax_error(*input + i, "redir");
 	if (tok_len == 0)
-		exit_parsing_status(2, mshell, input, input_lex);
+		parse_exit(2, mshell, input, input_lex);
 	if (*input)
-		append_lex(input_lex, rtype, *input + tok_ind, tok_len);
+		add_lex(input_lex, rtype, *input + tok_ind, tok_len);
 	if (!(*input_lex))
 		free_null_input(input);
 	return (tok_ind + tok_len);
 }
-
