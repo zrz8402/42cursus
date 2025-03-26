@@ -6,29 +6,51 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 11:17:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/25 12:32:35 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/26 15:21:26 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "operation.h"
 
-// void	multiple_matrixes(int a[4][4], int b[4][4], int result[4][4])
-// {
-	
-// }
+void	initialize_matrix(t_matrix *matrix, float values[4][4])
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+			matrix->m[i][j] = values[i][j];
+	}
+}
 
-// void	matrix(void)
-// {
-// 	int	matrixA[4][4] = {
-// 		{1, 2, 3, 4},
-// 		{5, 6, 7, 8},
-// 		{9, 8, 7, 6},
-// 		{5, 4, 3, 2}};
+void	print_matrix(t_matrix matrix)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+			printf("%.6g ", matrix.m[i][j]);
+		printf("\n");
+	}
+}
 
-// 	int	matrixb[4][4] = {
-// 		{2, 1, 2, 3},
-// 		{3, 2, 1, -1},
-// 		{4, 3, 6, 5},
-// 		{1, 2, 7, 8}};
-// }
+t_matrix	multiple_matrix(t_matrix A, t_matrix B)
+{
+	int			i;
+	int			j;
+	int			k;
+	t_matrix	result;
+
+	i = -1;
+	memset(&result, 0, sizeof(t_matrix));
+	while (++i < 4)
+	{
+		j = -1;
+		while (++j < 4)
+		{
+			k = -1;
+			while (++k < 4)
+				result.m[i][j] += A.m[i][k] * B.m[k][j];
+		}
+	}
+	return (result);
+}
+

@@ -26,7 +26,7 @@ RAY_SPHERE_DIR = src/ray_sphere
 # Source Files
 MAIN_FILES = main.c
 TUPLE_OPS_FILES = operations.c test_tuple_ops.c test_overall_tuple_ops.c
-MATRIX_FILES = matrix.c
+MATRIX_FILES = matrix.c test_matrix.c
 RAY_SPHERE_FILES = ray.c intersection.c test_ray.c test_intersection.c
 
 # Combine Source Files
