@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:23:49 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/27 00:22:44 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 13:34:37 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void	run_unset(char **args, t_program *minishell)
 		return ;
 	i = 0;
 	while (args[++i])
-	{
 		unset_var(&minishell->envlst, args[i]);
-		update_envp(minishell);
-	}
+	update_envp(minishell);
 }

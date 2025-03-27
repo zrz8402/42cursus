@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/26 23:55:32 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 13:38:36 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	parent_process(t_command **cur_cmd, t_pipex *p, int num_cmds)
 	}
 	close_current_heredocfd(*cur_cmd);
 	*cur_cmd = (*cur_cmd)->next;
+	g_signal = 0;
 	setup_exec_signal();
 }
 

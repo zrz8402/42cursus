@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:10:32 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/21 18:25:05 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 13:59:12 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	setup_prompt_signal(void)
 
 void	setup_exec_signal(void)
 {
-	signal(SIGINT, exec_handler);
+	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
 

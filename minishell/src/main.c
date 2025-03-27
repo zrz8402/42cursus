@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:03:36 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/26 23:08:53 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 13:43:39 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,17 @@
 
 volatile sig_atomic_t	g_signal = 0;
 
-void	magic_shell(t_program *minishell, char *input)
+void	check_sig(t_program *minishell)
 {
-	t_pipeline	*pipeline;
-
-	setup_exec_signal();
-	add_history(input);
-	pipeline = parse_pipeline(&input, minishell);
-	setup_exec_signal();
-	if (pipeline)
-		process_pipeline(pipeline, minishell);
+	if (g_signal == SIGINT)
+		minishell->status = g_signal + 128;
+	g_signal = 0;
 }
 
 void	run_shell(t_program *minishell)
 {
 	char		*input;
+	t_pipeline	*pipeline;
 
 	while (1)
 	{
@@ -40,11 +36,15 @@ void	run_shell(t_program *minishell)
 			free_program(minishell);
 			break ;
 		}
-		if (g_signal == SIGINT)
-			minishell->status = g_signal + 128;
-		g_signal = 0;
+		check_sig(minishell);
+		setup_exec_signal();
 		if (*input)
-			magic_shell(minishell, input);
+		{
+			add_history(input);
+			pipeline = parse_pipeline(&input, minishell);
+			if (pipeline)
+				process_pipeline(pipeline, minishell);
+		}
 		else
 			free(input);
 	}

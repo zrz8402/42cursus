@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:46:28 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/26 23:57:46 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 14:24:45 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ int	get_heredocfd(char *delimiter, int *heredoc_fd, t_program *minishell)
 	int		savedin;
 	char	*line;
 
-	(void) minishell;
 	savedin = dup(STDIN_FILENO);
 	while (1)
 	{
+		setup_heredoc_signal();
 		line = readline("> ");
 		if (g_signal == SIGINT)
 		{
@@ -95,8 +95,8 @@ int	handle_hdoc(char *delimiter, t_program *minishell)
 
 	fd = -1;
 	pipe(heredoc_fd);
-	setup_heredoc_signal();
 	fd = get_heredocfd(delimiter, heredoc_fd, minishell);
+	g_signal = 0;
 	setup_exec_signal();
 	return (fd);
 }

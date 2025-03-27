@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:16:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/26 23:13:54 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 13:33:17 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	export_var(char *s, t_program *minishell)
 	else
 		key = ft_strdup(s);
 	update_envlst(&minishell->envlst, key, value, 0);
-	update_envp(minishell);
 	free(key);
 	if (value)
 		free(value);
@@ -114,5 +113,6 @@ void	run_export(char **args, t_program *minishell)
 		else
 			export_var(args[i], minishell);
 	}
+	update_envp(minishell);
 	return ;
 }

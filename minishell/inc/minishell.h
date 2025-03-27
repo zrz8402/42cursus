@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/27 00:10:11 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 13:32:38 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	setup_heredoc_signal(void);
 // handler.c
 void	sigint_handler(int sig);
 void	heredoc_handler(int sig);
-void	exec_handler(int sig);
 
 // process.c
 void	process_pipeline(t_pipeline *pipeline, t_program *minishell);

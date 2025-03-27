@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 16:53:39 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/26 23:07:25 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 14:18:34 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,4 @@ void	heredoc_handler(int sig)
 	write(1, "\n", 1);
 	g_signal = sig;
 	close(STDIN_FILENO);
-}
-
-void	exec_handler(int sig)
-{
-	g_signal = sig;
 }

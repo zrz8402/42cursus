@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:19:16 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/26 23:03:15 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 13:50:00 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	wait_and_clean(t_pipeline *pipeline, t_program *minishell, t_pipex *p)
 			write(1, "Quit (core dumped)\n", 19);
 	}
 	cleanup(NULL, pipeline, p);
+	g_signal = 0;
 }
 
 void	cleanup(t_program *minishell, t_pipeline *pipeline, t_pipex *p)
