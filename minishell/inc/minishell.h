@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 12:36:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/27 13:32:38 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/28 08:36:04 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,31 @@
 # define NO_PERMISSION ": Permission denied"
 # define CMD_NOT_FOUND ": command not found"
 
+/*
+extern: 
+tells the compiler that the variable g_signal is declared elsewhere 
+(outside this file). 
+It does not allocate memory or define the variable; 
+it just informs the compiler that the variable exists, 
+and its definition can be found in another source file.
+
+volatile: 
+used to indicate that a variable can be changed at any time 
+by something outside the current code flow 
+(e.g., hardware, signals, or interrupt handlers). 
+Without volatile, the compiler might optimize or cache the value of the variable, 
+assuming it won't change unexpectedly.
+
+sig_atomic_t: 
+special type used for variables that need to be accessed atomically
+in the context of signal handling. 
+It is defined in <signal.h>. 
+The type is usually an integer type (like int or volatile int)
+that can safely be read or modified by signal handlers. 
+Signal handlers can interrupt the normal program flow,
+ and atomic operations are necessary to ensure 
+ that updates to the variable are not interrupted.
+*/
 extern volatile sig_atomic_t	g_signal;
 
 typedef struct s_pipex
