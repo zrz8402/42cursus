@@ -159,26 +159,341 @@
 [0m[0;33mTest 145: ✅[38;5;244m $? 
 [0m[0;33mTest 146: ✅[38;5;244m README.md 
 [0m[0;31m———————————— parse
-[0;33mTest 147: ✅[38;5;244m | 
-[0m[0;33mTest 148: ✅[38;5;244m | echo oi 
-[0m[0;33mTest 149: ✅[38;5;244m | | 
-[0m[0;33mTest 150: ✅[38;5;244m | $ 
-[0m[0;33mTest 151: ✅[38;5;244m | > 
-[0m[0;33mTest 152: ✅[38;5;244m > 
-[0m[0;33mTest 153: ✅[38;5;244m >> 
-[0m[0;33mTest 154: ✅[38;5;244m >>> 
-[0m[0;33mTest 155: ✅[38;5;244m < 
-[0m[0;33mTest 156: ✅[38;5;244m << 
-[0m[0;33mTest 157: ✅[38;5;244m echo hi < 
-[0m[0;33mTest 158: ✅[38;5;244m cat    <| ls 
-[0m[0;33mTest 159: ✅[38;5;244m echo hi | > 
-[0m[0;33mTest 160: ✅[38;5;244m echo hi | > >> 
-[0m[0;33mTest 161: ✅[38;5;244m echo hi | < | 
-[0m[0;33mTest 162: ✅[38;5;244m echo hi |   | 
-[0m[0;33mTest 163: ✅[38;5;244m echo hi |  "|" 
-[0m[0;33mTest 164: ✅[38;5;244m < Makefile | wc -l 
-[0m[0;33mTest 165: ✅[38;5;244m  
-[0m[0;35m[1m165/165
+[0;33mTest 147: ✅[38;5;244m < Makefile | wc -l 
+[0m[0;33mTest 148: ✅[38;5;244m $EMPTY echo something 
+[0m[0;33mTest 149: ✅[38;5;244m "$EMPTY" echo something 
+[0m[0;33mTest 150: ✅[38;5;244m echo - "" " " hello 
+[0m[0;31m———————————— syntax
+[0;33mTest 151: ✅[38;5;244m | 
+[0m[0;33mTest 152: ✅[38;5;244m | echo oi 
+[0m[0;33mTest 153: ✅[38;5;244m | | 
+[0m[0;33mTest 154: ✅[38;5;244m | $ 
+[0m[0;33mTest 155: ✅[38;5;244m | > 
+[0m[0;33mTest 156: ✅[38;5;244m > 
+[0m[0;33mTest 157: ✅[38;5;244m >> 
+[0m[0;33mTest 158: ✅[38;5;244m >>> 
+[0m[0;33mTest 159: ✅[38;5;244m < 
+[0m[0;33mTest 160: ✅[38;5;244m << 
+[0m[0;33mTest 161: ✅[38;5;244m echo hi < 
+[0m[0;33mTest 162: ✅[38;5;244m cat    <| ls 
+[0m[0;33mTest 163: ✅[38;5;244m echo hi | > 
+[0m[0;33mTest 164: ✅[38;5;244m echo hi | > >> 
+[0m[0;33mTest 165: ✅[38;5;244m echo hi | < | 
+[0m[0;33mTest 166: ✅[38;5;244m echo hi |   | 
+[0m[0;33mTest 167: ✅[38;5;244m echo hi |  "|" 
+[0m[0;31m———————————— aomont
+[0;33mTest 168: ✅[38;5;244m echo bonjour ; | 
+[0m[0;33mTest 169: ✅[38;5;244m echo bonjour | | 
+[0m[0;33mTest 170: ✅[38;5;244m | 
+[0m[0;33mTest 171: ✅[38;5;244m echo bonjour > test 1 
+[0m[0;33mTest 172: ✅[38;5;244m cd $HOME/Documents 
+[0m[0;33mTest 173: ✅[38;5;244m echo > 
+[0m[0;33mTest 174: ✅[38;5;244m unset var1 
+[0m[0;33mTest 175: ✅[38;5;244m echo test > file test1 
+[0m[0;33mTest 176: ✅[38;5;244m $ 
+[0m[0;33mTest 177: ✅[38;5;244m echo bonjour >>> test 
+[0m[0;33mTest 178: ✅[38;5;244m echo bonjour > > out 
+[0m[0;33mTest 179: ✅[38;5;244m echo 2 >> out1 > out2 
+[0m[0;33mTest 180: ✅[38;5;244m echo 2 > out1 >> out2 
+[0m[0;33mTest 181: ✅[38;5;244m cat < test 
+[0m[0;33mTest 182: ✅[38;5;244m file_name_in_current_dir 
+[0m[0;33mTest 183: ✅[38;5;244m $bla 
+[0m[0;33mTest 184: ✅[38;5;244m export var ="cat Makefile | grep >" 
+[0m[0;33mTest 185: ✅[38;5;244m export "test=ici"=coucou 
+[0m[0;33mTest 186: ✅[38;5;244m c$var Makefile 
+[0m[0;33mTest 187: ✅[38;5;244m $LESS$VAR 
+[0m[0;33mTest 188: ✅[38;5;244m /bin/echo bonjour 
+[0m[0;33mTest 189: ✅[38;5;244m not_cmd 
+[0m[0;33mTest 190: ✅[38;5;244m echo bonjour > w/ t 
+[0m[0;33mTest 191: ✅[38;5;244m "exit retour a la ligne" 
+[0m[0;33mTest 192: ✅[38;5;244m minishell 
+[0m[0;33mTest 193: ✅[38;5;244m cat diufosgid 
+[0m[0;33mTest 194: ✅[38;5;244m exit 
+[0m[0;33mTest 195: ✅[38;5;244m exit -10 
+[0m[0;33mTest 196: ✅[38;5;244m exit +10 
+[0m[0;33mTest 197: ✅[38;5;244m echo "$HOME" 
+[0m[0;33mTest 198: ✅[38;5;244m echo '$HOME' 
+[0m[0;33mTest 199: ✅[38;5;244m echo $HOME 
+[0m[0;33mTest 200: ✅[38;5;244m > log echo coucou 
+[0m[0;33mTest 201: ✅[38;5;244m echo hudifg d | | hugdfihd 
+[0m[0;33mTest 202: ✅[38;5;244m echo 
+[0m[0;33mTest 203: ✅[38;5;244m echo simple 
+[0m[0;33mTest 204: ✅[38;5;244m echo '' 
+[0m[0;33mTest 205: ✅[38;5;244m echo "" 
+[0m[0;33mTest 206: ✅[38;5;244m echo "" 
+[0m[0;33mTest 207: ✅[38;5;244m echo "n n n" 
+[0m[0;33mTest 208: ✅[38;5;244m cd 
+[0m[0;33mTest 209: ✅[38;5;244m cd . 
+[0m[0;33mTest 210: ✅[38;5;244m cd / 
+[0m[0;33mTest 211: ✅[38;5;244m cd no_file 
+[0m[0;33mTest 212: ✅[38;5;244m cd a b c d 
+[0m[0;33mTest 213: ✅[38;5;244m pwd a 
+[0m[0;33mTest 214: ✅[38;5;244m pwd a b c d 
+[0m[0;33mTest 215: ✅[38;5;244m export LOL=lala ROR=rara 
+[0m[0;33mTest 216: ✅[38;5;244m unset LOL ROR 
+[0m[0;33mTest 217: ✅[38;5;244m export "HI= hi" 
+[0m[0;33mTest 218: ✅[38;5;244m export "HI =hi" 
+[0m[0;33mTest 219: ✅[38;5;244m /bin/ls 
+[0m[0;33mTest 220: ✅[38;5;244m echo $? 
+[0m[0;33mTest 221: ✅[38;5;244m l^Ds 
+[0m[0;33mTest 222: ✅⚠️ [38;5;244m echo | 
+[0mmini error = ( syntax error near unexpected token `|')
+bash error = ( unexpected end of file)
+[0;33mTest 223: ✅[38;5;244m | echo 
+[0m[0;33mTest 224: ✅[38;5;244m cat < > 
+[0m[0;33mTest 225: ✅[38;5;244m cat < < 
+[0m[0;33mTest 226: ✅[38;5;244m cat > > 
+[0m[0;33mTest 227: ✅[38;5;244m > a ls > b < Makefile 
+[0m[0;33mTest 228: ✅[38;5;244m echo > a Hello World! 
+[0m[0;33mTest 229: ✅[38;5;244m > a echo Hello World! 
+[0m[0;33mTest 230: ✅[38;5;244m cat < Makefile | grep gcc > output 
+[0m[0;33mTest 231: ✅[38;5;244m exit 0 | exit 1 
+[0m[0;33mTest 232: ✅[38;5;244m exit 1 | exit 0 
+[0m[0;33mTest 233: ✅[38;5;244m  
+[0m[0;33mTest 234: ✅[38;5;244m cd 
+[0m[0;33mTest 235: ✅[38;5;244m cd .. 
+[0m[0;33mTest 236: ✅[38;5;244m cd . 
+[0m[0;33mTest 237: ✅[38;5;244m cd /Users 
+[0m[0;33mTest 238: ✅[38;5;244m cd // 
+[0m[0;33mTest 239: ✅[38;5;244m cd '//' 
+[0m[0;33mTest 240: ✅[38;5;244m cd ////// 
+[0m[0;33mTest 241: ✅[38;5;244m cd ./././ 
+[0m[0;33mTest 242: ✅[38;5;244m cd / 
+[0m[0;33mTest 243: ✅[38;5;244m cd '/etc' 
+[0m[0;33mTest 244: ✅[38;5;244m cd '/var' 
+[0m[0;33mTest 245: ✅[38;5;244m cd ./././var 
+[0m[0;33mTest 246: ✅[38;5;244m cd /./././var 
+[0m[0;33mTest 247: ✅[38;5;244m cd "$PWD/prompt" 
+[0m[0;33mTest 248: ✅[38;5;244m cd "doesntexist" 
+[0m[0;33mTest 249: ✅[38;5;244m cd ../../.. 
+[0m[0;33mTest 250: ✅[38;5;244m cd .. 
+[0m[0;33mTest 251: ✅[38;5;244m cd + 
+[0m[0;33mTest 252: ✅[38;5;244m cd _ 
+[0m[0;33mTest 253: ✅[38;5;244m cd bark bark 
+[0m[0;33mTest 254: ✅[38;5;244m cd '/' 
+[0m[0;33mTest 255: ✅[38;5;244m cd $PWD/file_tests 
+[0m[0;33mTest 256: ✅[38;5;244m cd $OLDPWD/builtins 
+[0m[0;33mTest 257: ✅[38;5;244m echo 
+[0m[0;33mTest 258: ✅[38;5;244m echo echo 
+[0m[0;33mTest 259: ✅[38;5;244m eCho 
+[0m[0;33mTest 260: ✅[38;5;244m eChO 
+[0m[0;33mTest 261: ✅[38;5;244m eCHO 
+[0m[0;33mTest 262: ✅[38;5;244m echo $ 
+[0m[0;33mTest 263: ✅[38;5;244m echo $ $ 
+[0m[0;33mTest 264: ✅[38;5;244m ECHO 
+[0m[0;33mTest 265: ✅[38;5;244m echo rhobebou 
+[0m[0;33mTest 266: ✅[38;5;244m echo stop barking 
+[0m[0;33mTest 267: ✅[38;5;244m echo "bonjour" 
+[0m[0;33mTest 268: ✅[38;5;244m echo bonjour 
+[0m[0;33mTest 269: ✅[38;5;244m echo 'bonjour' 
+[0m[0;33mTest 270: ✅[38;5;244m echo $USER 
+[0m[0;33mTest 271: ✅[38;5;244m echo "$USER" 
+[0m[0;33mTest 272: ✅[38;5;244m echo "'$USER'" 
+[0m[0;33mTest 273: ✅[38;5;244m echo " '$USER' " 
+[0m[0;33mTest 274: ✅[38;5;244m echo text"$USER" 
+[0m[0;33mTest 275: ✅[38;5;244m echo text"'$USER'" ' $USER ' 
+[0m[0;33mTest 276: ✅[38;5;244m echo "text" "$USER" "$USER" 
+[0m[0;33mTest 277: ✅[38;5;244m echo ' $USER ' 
+[0m[0;33mTest 278: ✅[38;5;244m echo text "$USER" "$USER"text 
+[0m[0;33mTest 279: ✅[38;5;244m echo ''''''''''$USER'''''''''' 
+[0m[0;33mTest 280: ✅[38;5;244m echo """"""""$USER"""""""" 
+[0m[0;33mTest 281: ✅[38;5;244m echo $USER'$USER'text oui oui oui oui $USER oui $USER '' 
+[0m[0;33mTest 282: ✅[38;5;244m echo $USER '' $USER $USER '' $USER '' $USER '' $USER -n $USER 
+[0m[0;33mTest 283: ✅[38;5;244m echo "$USER""$USER""$USER" 
+[0m[0;33mTest 284: ✅[38;5;244m echo text"$USER"test 
+[0m[0;33mTest 285: ✅[38;5;244m echo '$USER' "$USER" "text ' text" 
+[0m[0;33mTest 286: ✅[38;5;244m echo '$USER' 
+[0m[0;33mTest 287: ✅[38;5;244m echo $USER " " 
+[0m[0;33mTest 288: ✅[38;5;244m echo "$USER""Users/$USER/file""'$USER'"'$USER' 
+[0m[0;33mTest 289: ✅[38;5;244m echo "$USER$USER$USER" 
+[0m[0;33mTest 290: ✅[38;5;244m echo '$USER'"$USER"'$USER' 
+[0m[0;33mTest 291: ✅[38;5;244m echo '"$USER"''$USER'"""$USER" 
+[0m[0;33mTest 292: ✅[38;5;244m echo " $USER "'$PWD' 
+[0m[0;33mTest 293: ✅[38;5;244m echo " $USER $ "'$PWD' 
+[0m[0;33mTest 294: ✅[38;5;244m echo $USER=4 
+[0m[0;33mTest 295: ✅[38;5;244m echo $USER=thallard 
+[0m[0;33mTest 296: ✅[38;5;244m echo $USER 
+[0m[0;33mTest 297: ✅[38;5;244m echo $? 
+[0m[0;33mTest 298: ✅[38;5;244m echo $PWD/file 
+[0m[0;33mTest 299: ✅[38;5;244m echo "$PWD/file" 
+[0m[0;33mTest 300: ✅[38;5;244m echo "text" "text$USER" ... "$USER" 
+[0m[0;33mTest 301: ✅[38;5;244m echo $PWD 
+[0m[0;33mTest 302: ✅[38;5;244m exit 0 0 
+[0m[0;33mTest 303: ✅[38;5;244m exit 42 42 
+[0m[0;33mTest 304: ✅[38;5;244m exit -42 -24 
+[0m[0;33mTest 305: ✅[38;5;244m exit 42 
+[0m[0;33mTest 306: ✅[38;5;244m exit 42 53 68 
+[0m[0;33mTest 307: ✅[38;5;244m exit 259 
+[0m[0;33mTest 308: ✅[38;5;244m exit -12030 
+[0m[0;33mTest 309: ✅[38;5;244m exit --1239312 
+[0m[0;33mTest 310: ✅[38;5;244m exit ++++1203020103 
+[0m[0;33mTest 311: ✅[38;5;244m exit +0 
+[0m[0;33mTest 312: ✅[38;5;244m exit azerty 
+[0m[0;33mTest 313: ✅[38;5;244m exit kewkwqke 
+[0m[0;33mTest 314: ✅[38;5;244m exit a 
+[0m[0;33mTest 315: ✅[38;5;244m exit z 
+[0m[0;33mTest 316: ✅[38;5;244m exit "1" 
+[0m[0;33mTest 317: ✅[38;5;244m exit "2" 
+[0m[0;33mTest 318: ✅[38;5;244m exit "+102" 
+[0m[0;33mTest 319: ✅[38;5;244m exit "1230" 
+[0m[0;33mTest 320: ✅[38;5;244m exit "+++1230" 
+[0m[0;33mTest 321: ✅[38;5;244m exit "1"23 
+[0m[0;33mTest 322: ✅[38;5;244m exit "2"32"32" 
+[0m[0;33mTest 323: ✅[38;5;244m exit "'42'" 
+[0m[0;33mTest 324: ✅[38;5;244m exit '42'"42"42 
+[0m[0;33mTest 325: ✅[38;5;244m exit +'42'"42"42 
+[0m[0;33mTest 326: ✅[38;5;244m exit -'42'"42"42 
+[0m[0;33mTest 327: ✅[38;5;244m exit 9223372036854775807 
+[0m[0;33mTest 328: ✅[38;5;244m exit 9223372036854775808 
+[0m[0;33mTest 329: ✅[38;5;244m exit -4 
+[0m[0;33mTest 330: ✅[38;5;244m exit 1 
+[0m[0;33mTest 331: ✅[38;5;244m exit -1 
+[0m[0;33mTest 332: ✅[38;5;244m exit 42 
+[0m[0;33mTest 333: ✅[38;5;244m exit 0 
+[0m[0;33mTest 334: ✅[38;5;244m exit --000 
+[0m[0;33mTest 335: ✅[38;5;244m exit +++++++000 
+[0m[0;33mTest 336: ✅[38;5;244m exit ++++3193912939 
+[0m[0;33mTest 337: ✅[38;5;244m exit ---31232103012 
+[0m[0;33mTest 338: ✅[38;5;244m exit "something" 
+[0m[0;33mTest 339: ✅[38;5;244m exit echo 
+[0m[0;33mTest 340: ✅[38;5;244m exit cd .. 
+[0m[0;33mTest 341: ✅[38;5;244m exit 0 0 
+[0m[0;33mTest 342: ✅[38;5;244m exit 42 42 42 42 42 
+[0m[0;33mTest 343: ✅[38;5;244m exit echo something 
+[0m[0;33mTest 344: ✅[38;5;244m exit exit 
+[0m[0;33mTest 345: ✅[38;5;244m export | grep "SHLVL" 
+[0m[0;33mTest 346: ✅[38;5;244m export | grep "OLDPWD" 
+[0m[0;33mTest 347: ✅[38;5;244m export | grep "PWD" 
+[0m[0;33mTest 348: ✅[38;5;244m export $? 
+[0m[0;33mTest 349: ✅[38;5;244m export TEST 
+[0m[0;33mTest 350: ✅[38;5;244m export TEST= 
+[0m[0;33mTest 351: ✅[38;5;244m export TEST=123 
+[0m[0;33mTest 352: ✅[38;5;244m export ___TEST=123 
+[0m[0;33mTest 353: ✅[38;5;244m export ""="" 
+[0m[0;33mTest 354: ✅[38;5;244m export ''='' 
+[0m[0;33mTest 355: ✅[38;5;244m export "="="=" 
+[0m[0;33mTest 356: ✅[38;5;244m export '='='=' 
+[0m[0;33mTest 357: ✅[38;5;244m export TE-ST=100 
+[0m[0;33mTest 358: ✅[38;5;244m export TEST-=100 
+[0m[0;33mTest 359: ✅[38;5;244m export _TEST=100 
+[0m[0;33mTest 360: ✅[38;5;244m export TEST 
+[0m[0;33mTest 361: ✅[38;5;244m export ========== 
+[0m[0;33mTest 362: ✅[38;5;244m export 1TEST= 
+[0m[0;33mTest 363: ✅[38;5;244m export TEST 
+[0m[0;33mTest 364: ✅[38;5;244m export ""="" 
+[0m[0;33mTest 365: ✅[38;5;244m export TES=T="" 
+[0m[0;33mTest 366: ✅[38;5;244m export TE+S=T="" 
+[0m[0;33mTest 367: ✅[38;5;244m export TES.T=123 
+[0m[0;33mTest 368: ✅[38;5;244m export TES$T=123 
+[0m[0;33mTest 369: ✅[38;5;244m export TES.T=123 
+[0m[0;33mTest 370: ✅[38;5;244m export TES+T=123 
+[0m[0;33mTest 371: ✅[38;5;244m export TES=T=123 
+[0m[0;33mTest 372: ✅[38;5;244m export TES}T=123 
+[0m[0;33mTest 373: ✅[38;5;244m export TES{T=123 
+[0m[0;33mTest 374: ✅[38;5;244m export TES-T=123 
+[0m[0;33mTest 375: ✅[38;5;244m export _TEST=123 
+[0m[0;33mTest 376: ✅[38;5;244m export TES_T=123 
+[0m[0;33mTest 377: ✅[38;5;244m export TEST_=123 
+[0m[0;33mTest 378: ✅[38;5;244m export TE*ST=123 
+[0m[0;33mTest 379: ✅[38;5;244m export TES#T=123 
+[0m[0;33mTest 380: ✅[38;5;244m export TES@T=123 
+[0m[0;33mTest 381: ✅[38;5;244m export TES!T=123 
+[0m[0;33mTest 382: ✅[38;5;244m export TES$?T=123 
+[0m[0;33mTest 383: ✅[38;5;244m export =============123 
+[0m[0;33mTest 384: ✅[38;5;244m export +++++++=123 
+[0m[0;33mTest 385: ✅[38;5;244m export ________=123 
+[0m[0;33mTest 386: ✅[38;5;244m export export 
+[0m[0;33mTest 387: ✅[38;5;244m export echo 
+[0m[0;33mTest 388: ✅[38;5;244m export pwd 
+[0m[0;33mTest 389: ✅[38;5;244m export cd 
+[0m[0;33mTest 390: ✅[38;5;244m export export 
+[0m[0;33mTest 391: ✅[38;5;244m export unset 
+[0m[0;33mTest 392: ✅[38;5;244m export sudo 
+[0m[0;33mTest 393: ✅[38;5;244m export TES^T=123 
+[0m[0;33mTest 394: ✅[38;5;244m export TES!T=123 
+[0m[0;33mTest 395: ✅[38;5;244m export TES~T=123 
+[0m[0;33mTest 396: ✅[38;5;244m echo oui | cat -e 
+[0m[0;33mTest 397: ✅[38;5;244m echo oui | echo non | echo something | grep oui 
+[0m[0;33mTest 398: ✅[38;5;244m echo oui | echo non | echo something | grep non 
+[0m[0;33mTest 399: ✅[38;5;244m echo oui | echo non | echo something | grep something 
+[0m[0;33mTest 400: ✅[38;5;244m cd .. | echo "something" 
+[0m[0;33mTest 401: ✅[38;5;244m cd .. | echo "something" 
+[0m[0;33mTest 402: ✅[38;5;244m cd / | echo "something" 
+[0m[0;33mTest 403: ✅[38;5;244m cd .. | pwd 
+[0m[0;33mTest 404: ✅[38;5;244m ifconfig | grep ":" 
+[0m[0;33mTest 405: ✅[38;5;244m ifconfig | grep nothing 
+[0m[0;33mTest 406: ✅[38;5;244m whoami | grep $USER 
+[0m[0;33mTest 407: ✅[38;5;244m cat Makefile | grep "FLAGS" 
+[0m[0;33mTest 408: ✅[38;5;244m cat Makefile | cat -e | cat -e 
+[0m[0;33mTest 409: ✅[38;5;244m cat Makefile | grep "FLAGS" | grep "FLAGS" | cat -e 
+[0m[0;33mTest 410: ✅[38;5;244m export TEST=123 | cat -e | cat -e 
+[0m[0;33mTest 411: ✅[38;5;244m unset TEST | cat -e 
+[0m[0;33mTest 412: ✅[38;5;244m echo test | cat -e | cat -e | cat -e 
+[0m[0;33mTest 413: ✅[38;5;244m whereis ls | cat -e | cat -e > test 
+[0m[0;33mTest 414: ✅[38;5;244m echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e 
+[0m[0;33mTest 415: ✅[38;5;244m ls -la | grep "." 
+[0m[0;33mTest 416: ✅[38;5;244m whereis grep > tmp/file 
+[0m[0;33mTest 417: ✅[38;5;244m whereis grep > tmp/file 
+[0m[0;33mTest 418: ✅[38;5;244m ls -la > tmp/file 
+[0m[0;33mTest 419: ✅[38;5;244m ls -la > tmp/file 
+[0m[0;33mTest 420: ✅[38;5;244m unset 
+[0m[0;33mTest 421: ✅[38;5;244m export TEST=100 
+[0m[0;33mTest 422: ✅[38;5;244m unset doesntexist 
+[0m[0;33mTest 423: ✅[38;5;244m unset PWD 
+[0m[0;33mTest 424: ✅[38;5;244m unset PWD 
+[0m[0;33mTest 425: ✅[38;5;244m unset OLDPWD 
+[0m[0;33mTest 426: ✅[38;5;244m unset PATH 
+[0m[0;33mTest 427: ✅[38;5;244m unset PATH 
+[0m[0;33mTest 428: ✅[38;5;244m unset PATH 
+[0m[0;33mTest 429: ✅[38;5;244m unset TES\T 
+[0m[0;33mTest 430: ✅[38;5;244m unset TES.T 
+[0m[0;33mTest 431: ✅[38;5;244m unset TES+T 
+[0m[0;33mTest 432: ✅[38;5;244m unset TES=T 
+[0m[0;33mTest 433: ✅[38;5;244m unset TES}T 
+[0m[0;33mTest 434: ✅[38;5;244m unset TES{T 
+[0m[0;33mTest 435: ✅[38;5;244m unset TES-T 
+[0m[0;33mTest 436: ✅[38;5;244m unset _TEST 
+[0m[0;33mTest 437: ✅[38;5;244m unset TES_T 
+[0m[0;33mTest 438: ✅[38;5;244m unset TEST_ 
+[0m[0;33mTest 439: ✅[38;5;244m unset TE*ST 
+[0m[0;33mTest 440: ✅[38;5;244m unset TES#T 
+[0m[0;33mTest 441: ✅[38;5;244m unset TES@T 
+[0m[0;33mTest 442: ✅[38;5;244m unset TES!T 
+[0m[0;33mTest 443: ✅[38;5;244m unset TES$?T 
+[0m[0;33mTest 444: ✅[38;5;244m unset ============ 
+[0m[0;33mTest 445: ✅[38;5;244m unset +++++++ 
+[0m[0;33mTest 446: ✅[38;5;244m unset ________ 
+[0m[0;33mTest 447: ✅[38;5;244m unset export 
+[0m[0;33mTest 448: ✅[38;5;244m unset echo 
+[0m[0;33mTest 449: ✅[38;5;244m unset pwd 
+[0m[0;33mTest 450: ✅[38;5;244m unset cd 
+[0m[0;33mTest 451: ✅[38;5;244m unset unset 
+[0m[0;33mTest 452: ✅[38;5;244m unset sudo 
+[0m[0;33mTest 453: ✅[38;5;244m unset TES^T 
+[0m[0;33mTest 454: ✅[38;5;244m unset TES!T 
+[0m[0;33mTest 455: ✅[38;5;244m unset TES~T 
+[0m[0;33mTest 456: ✅[38;5;244m echo $PWD 
+[0m[0;33mTest 457: ✅[38;5;244m echo $PWD|cat -e 
+[0m[0;33mTest 458: ✅[38;5;244m echo $PWD hallo | cat -e 
+[0m[0;33mTest 459: ✅[38;5;244m echo '$PWD hallo | cat -e' 
+[0m[0;33mTest 460: ✅[38;5;244m echo "$PWD hallo | cat -e" 
+[0m[0;33mTest 461: ✅[38;5;244m export TEST=1 test=2 sup= 
+[0m[0;33mTest 462: ✅[38;5;244m wc < Makefile -l | cat -e > outfile | echo hello | rev > outfile2 
+[0m[0;33mTest 463: ✅[38;5;244m < test.txt < Makefile<README.md wc -l|cat -e | rev 
+[0m[0;33mTest 464: ✅[38;5;244m env | rev | head -5 | cat -e | rev 
+[0m[0;33mTest 465: ✅[38;5;244m < in1 <in2 <in3 < Makefile rev | head -5 | cat -e | rev > out > out2 > out3 >> out4 
+[0m[0;33mTest 466: ✅[38;5;244m echo ok"hello"ok1"mfg" == echo ok'hello'ok1'mfg' 
+[0m[0;33mTest 467: ✅[38;5;244m echo okhellook1"mfg" == echo okhellook1'mfg' 
+[0m[0;33mTest 468: ✅[38;5;244m echo "o""k "hellook1 == echo 'o''k 'hellook1 
+[0m[0;33mTest 469: ✅[38;5;244m ***hello*** 
+[0m[0;33mTest 470: ✅[38;5;244m ***hello*** 
+[0m[0;33mTest 471: ✅[38;5;244m echo ok"'hello'"ok1"hello1"ok2 
+[0m[0;33mTest 472: ✅[38;5;244m echo "text" "$USER" "$USER" 
+[0m[0;33mTest 473: ✅[38;5;244m echo """"""""$USER"""""""" 
+[0m[0;33mTest 474: ✅[38;5;244m echo "-n -n -n"-n bonjour 
+[0m[0;33mTest 475: ✅[38;5;244m echo "'$USER'" 
+[0m[0;33mTest 476: ✅[38;5;244m < in 
+[0m[0;35m[1m476/476
 [0m🎊 🎊 🎊
 😎 😎 😎
 🎉 🎉 🎉

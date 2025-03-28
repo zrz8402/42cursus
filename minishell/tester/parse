@@ -1,19 +1,4 @@
-|
-| echo oi
-| |
-| $
-| >
->
->>
->>>
-<
-<<
-echo hi <
-cat    <| ls
-echo hi | >
-echo hi | > >>
-echo hi | < |
-echo hi |   |
-echo hi |  "|"
 < Makefile | wc -l
-
+$EMPTY echo something
+"$EMPTY" echo something
+echo - "" " " hello

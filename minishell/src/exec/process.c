@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:53:24 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/27 13:38:36 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:02:04 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 #include "minishell.h"
 
 /*
-
 Close heredoc_fd in cmd chunks after current(if any)
 Check redirections first
 If rediction fails, exit the child process

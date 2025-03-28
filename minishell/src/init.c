@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:31:37 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/27 00:25:39 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:02:31 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,3 @@ void	init(t_program *minishell, char **envp)
 	set_envp(envp, minishell);
 	init_env(minishell);
 }
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	t_program	minishell;
-
-// 	(void)ac;
-// 	(void)av;
-// 	init(&minishell, envp);
-// 	free_program(&minishell);
-// }

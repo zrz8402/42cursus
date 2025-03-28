@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:13:14 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/16 15:14:16 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:02:40 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,3 @@ void	free_program(t_program *minishell)
 	free_arr(minishell->envp);
 	free_envlst(minishell->envlst);
 }
-
-// void	print_arr(char **arr)
-// {
-// 	if (arr == NULL)
-// 		return;
-// 	while (*arr) 
-// 	{
-// 		printf("%s\n", *arr);
-// 		arr++;
-// 	}
-// }
