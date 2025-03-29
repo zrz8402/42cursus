@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:04:27 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/03 17:31:06 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/29 16:49:06 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,13 @@ void	Harl::complain( std::string level ) {
 	{
 		case 0:
 			debug();
+			std::cout << std::endl;
 		case 1:
 			info();
+			std::cout << std::endl;
 		case 2:
 			warning();
+			std::cout << std::endl;
 		case 3:
 			error();
 			break;
