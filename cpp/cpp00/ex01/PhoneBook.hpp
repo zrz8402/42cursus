@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:25:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2024/12/04 12:35:59 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/29 14:09:45 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 #define __PHONEBOOK_HPP__
 
 #include "Contact.hpp"
+#include <cstdlib>
 
 class PhoneBook {
 
 private:
-	Contact     phonebook[8];
+	Contact		contacts[8];
 	int			size;
-	int         index;
+	int	    	index;
 
 public:
 	PhoneBook();
@@ -28,7 +29,7 @@ public:
 
 	void	add();
 	void	search();
-	void    displayContact(int i);
+	void	displayContact(int i);
 };
 
 #endif

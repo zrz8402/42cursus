@@ -1,7 +1,7 @@
 NAME = phonebook
 
 CXX = c++
-CXXFLAGS = -Wall -Werror -Wextra -std=c++11
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 RM = rm -f
 
 HEADERS = -I .
