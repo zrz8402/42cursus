@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 16:17:37 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/03 17:12:34 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/30 09:43:58 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	Harl::error( void ) {
 				<< std::endl;
 }
 
+// ReturnType (ClassName::*PointerName)(ParameterTypes) = &ClassName::FunctionName;
 void	Harl::complain( std::string level ) {
 	std::string levels[] = { "debug", "info", "warning", "error" };
 	void (Harl::*funcs[])() = { &Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
