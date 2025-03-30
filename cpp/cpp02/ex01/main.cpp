@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 14:05:10 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/08 11:03:41 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/30 13:08:45 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,25 @@ int main( void ) {
 
 	a = Fixed( 1234.4321f );
 
+	// std::cout << std::endl;
 	// std::cout << "a is " << a.toFloat() << std::endl;
 	// std::cout << "a is " << b.toFloat() << std::endl;
 	// std::cout << "a is " << c.toFloat() << std::endl;
 	// std::cout << "a is " << d.toFloat() << std::endl;
-	
+
+	std::cout << std::endl;
 	std::cout << "a is " << a << std::endl;
 	std::cout << "b is " << b << std::endl;
 	std::cout << "c is " << c << std::endl;
 	std::cout << "d is " << d << std::endl;
 
+	std::cout << std::endl;
 	std::cout << "a is " << a.toInt() << " as integer" << std::endl;
 	std::cout << "b is " << b.toInt() << " as integer" << std::endl;
 	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
 	std::cout << "d is " << d.toInt() << " as integer" << std::endl;
+
+	std::cout << std::endl;
 	return 0;
 }
 

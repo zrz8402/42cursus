@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 14:05:10 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/04 15:56:55 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/30 12:15:19 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ Default constructor called
 
 ->Fixed b( a );
 Copy constructor called
-Copy assignment operator called  <-- This line may be missing depending on your implementation
+Copy assignment operator called
+	<-- This line may be missing depending on your implementation
 getRawBits member function called
 
 ->Fixed c;

@@ -6,12 +6,14 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 12:10:19 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/08 14:22:10 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/30 14:12:00 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __FIXED_HPP__
 #define __FIXED_HPP__
+
+#define EPSILON 0.000001
 
 #include <iostream>
 
@@ -27,11 +29,12 @@ public:
 	Fixed& operator=(const Fixed &other );
 	~Fixed();
 	
+	int		getRawBits( void ) const;
+	void	setRawBits( int const raw );
+
 	Fixed( const float value );
 	Fixed( const Fixed &other );
 	
-	int		getRawBits( void ) const;
-	void	setRawBits( int const raw );
 	float	toFloat( void ) const;
 	int		toInt( void ) const;
 

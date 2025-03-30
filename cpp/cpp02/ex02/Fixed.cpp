@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 14:04:07 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/09 11:49:09 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/30 14:07:19 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@ Fixed& Fixed::operator=(const Fixed &other ) {
 
 Fixed::~Fixed() {}
 
-Fixed::Fixed( const int value ) : value(value << FRACTIONAL_BITS) {}
-
-Fixed::Fixed( const float value ) : value(roundf(value * (1 << FRACTIONAL_BITS))) {}
-
 int	Fixed::getRawBits( void ) const {
 	return value;
 }
@@ -38,12 +34,16 @@ void	Fixed::setRawBits( int const raw ) {
 	value = raw;
 }
 
+Fixed::Fixed( const int value ) : value(value << FRACTIONAL_BITS) {}
+
+Fixed::Fixed( const float value ) : value(roundf(value * (1 << FRACTIONAL_BITS))) {}
+
 float	Fixed::toFloat( void ) const{
 	return (float)value / (1 << FRACTIONAL_BITS);
 }
 
 int		Fixed::toInt( void ) const{
-	return value >> FRACTIONAL_BITS;
+	return value / (1 << FRACTIONAL_BITS);
 }
 
 std::ostream& operator<<(std::ostream& os, const Fixed &obj) {
@@ -58,15 +58,19 @@ bool Fixed::operator<(const Fixed &other ) const {
 bool Fixed::operator<=(const Fixed &other ) const {
 	return this->value <= other.value;
 }
+
 bool Fixed::operator>(const Fixed &other ) const {
 	return this->value > other.value;
 }
+
 bool Fixed::operator>=(const Fixed &other ) const {
 	return this->value >= other.value;
 }
+
 bool Fixed::operator==(const Fixed &other ) const {
 	return this->value == other.value;
 }
+
 bool Fixed::operator!=(const Fixed &other ) const {
 	return this->value != other.value;
 }
@@ -84,11 +88,11 @@ Fixed Fixed::operator*(const Fixed &other ) const {
 }
 
 Fixed Fixed::operator/(const Fixed &other ) const {
-	if (other.toFloat() != 0)
-		return Fixed(this->toFloat() / other.toFloat());
-	else {
-		std::cout << "Divided by zero" << std::endl;
+	if (std::abs(other.toFloat()) < EPSILON) {
+		std::cerr << "Error: Division by zero or near-zero value." << std::endl;
 		return Fixed(0);
+	} else {
+		return Fixed(this->toFloat() / other.toFloat());
 	}	
 }
 

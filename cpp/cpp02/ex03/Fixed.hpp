@@ -6,12 +6,14 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 12:10:19 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/08 14:34:30 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/30 14:15:16 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __FIXED_HPP__
 #define __FIXED_HPP__
+
+#define EPSILON 0.000001
 
 #include <iostream>
 
