@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 11:53:29 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 18:08:15 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/30 16:44:29 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 #include <iomanip>
 
 void	print_status(FragTrap &name) {
-	std::cout << "Current status:" << std::endl;
+	std::cout << GREEN << "Current status:" << std::endl;
 	std::cout << name.getName() 
 				<< std::setw(7) << "hp: " << name.getHitPoints()
 				<< std::setw(7) << "ep: " << name.getEnergyPoints()
 				<< std::setw(10) << "damage: " << name.getAttackDamage()
-				<< std::endl;	
+				<< RESET << std::endl;	
 }
 
 int main() {

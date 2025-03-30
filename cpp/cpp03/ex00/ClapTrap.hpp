@@ -6,12 +6,19 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 10:36:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/10 17:17:05 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/30 15:29:14 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __CLAPTRAP_HPP__
 #define __CLAPTRAP_HPP__
+
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
 
 #include <iostream>
 
