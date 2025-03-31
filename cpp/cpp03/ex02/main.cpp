@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 11:53:29 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/30 16:44:29 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/31 12:11:37 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ int main() {
 	print_status(rocket);
 	rocket.attack("Adam");
 	rocket.beRepaired(10);
-	rocket.setHitPoints(10);
+	rocket.setHitPoints(20);
+	rocket.setEnergyPoints(1);
+	print_status(rocket);
 	rocket.attack("Adam");
 	rocket.attack("Adam");
 	print_status(rocket);
