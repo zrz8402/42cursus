@@ -12,7 +12,7 @@ HEADERS = -I ./inc
 
 SRC_DIR = src
 SRC_FILES = main.cpp Animal.cpp Dog.cpp Cat.cpp \
-			Brain.cpp
+			WrongAnimal.cpp WrongCat.cpp
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
 OBJ_DIR = obj

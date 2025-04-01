@@ -6,12 +6,19 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:00:22 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/13 13:01:12 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/01 15:58:01 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __WRONGANIMAL_HPP__
 #define __WRONGANIMAL_HPP__
+
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
 
 #include <iostream>
 

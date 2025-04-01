@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 17:20:33 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/13 17:42:28 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/01 17:48:03 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ class AMateria;
 class ICharacter {
 
 public:
-	virtual ~ICharacter( void ) {}
+	virtual ~ICharacter( void ) {}	// provided
 
-	virtual std::string const & getName( void ) const = 0;
+	virtual std::string const & getName( void ) const = 0;	// provided
 
-	virtual void	equip( AMateria* m ) = 0;
-	virtual void	unequip( int idx ) = 0;
-	virtual void	use( int idx, ICharacter& target ) = 0;
+	virtual void	equip( AMateria* m ) = 0;	// provided
+	virtual void	unequip( int idx ) = 0;	// provided
+	virtual void	use( int idx, ICharacter& target ) = 0;	// provided
 };
 
 #endif

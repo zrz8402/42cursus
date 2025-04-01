@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:13:11 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/13 17:10:31 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/01 17:35:08 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "Dog.hpp"
 
 Dog::Dog( void ) : AAnimal("Dog") {
-	std::cout << "Dog default constructor was called." << std::endl;
+	std::cout << BLUE << "Dog default constructor was called." << RESET << std::endl;
 	brain = new Brain();
 }
 
 Dog::Dog( const Dog &other ) : AAnimal(other.type) {
-	std::cout << "Dog copy constructor was called." << std::endl;
+	std::cout << BLUE << "Dog copy constructor was called." << RESET << std::endl;
 	if (other.brain) {
 		brain = new Brain(*other.brain);
 	} else {
@@ -29,7 +29,7 @@ Dog::Dog( const Dog &other ) : AAnimal(other.type) {
 
 Dog& Dog::operator=( const Dog &other ) {
 	if (this != &other) {
-		std::cout << "Dog assignment operator was called." << std::endl;
+		std::cout << BLUE << "Dog assignment operator was called." << RESET << std::endl;
 
 		AAnimal::operator=(other);
 		
@@ -45,10 +45,11 @@ Dog& Dog::operator=( const Dog &other ) {
 }
 	
 Dog::~Dog( void ) {
-	std::cout << "Dog destructor was called." << std::endl;
+	std::cout << BLUE << "Dog destructor was called." << RESET << std::endl;
 	delete brain;
 }
+
 void	Dog::makeSound( void ) const {
-	std::cout << "Dog barks: Woofffff!" << std::endl;
+	std::cout << BLUE << "Dog barks: Woofffff!" << RESET << std::endl;
 }
 	

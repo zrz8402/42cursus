@@ -6,36 +6,36 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:04:51 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/13 15:26:18 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/01 16:30:01 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "WrongCat.hpp"
 
 WrongCat::WrongCat( void ) : WrongAnimal("WrongCat") {
-	std::cout << "WrongCat default constructor was called." << std::endl;
+	std::cout << RED << "WrongCat default constructor was called." << RESET << std::endl;
 }
 
 WrongCat::WrongCat( std::string type ) : WrongAnimal(type) {
-	std::cout << "WrongCat parametric constructor was called." << std::endl;
+	std::cout << RED << "WrongCat parametric constructor was called." << RESET << std::endl;
 }
 
 WrongCat::WrongCat( const WrongCat &other ) : WrongAnimal(other.type) {
-	std::cout << "WrongCat copy constructor was called." << std::endl;
+	std::cout << RED << "WrongCat copy constructor was called." << RESET << std::endl;
 }
 
 WrongCat& WrongCat::operator=( const WrongCat &other ) {
 	if (this != &other) {
-		std::cout << "WrongCat assignment operator was called." << std::endl;
+		std::cout << RED << "WrongCat assignment operator was called." << RESET << std::endl;
 		WrongAnimal::operator=(other);
 	}
 	return *this;
 }
 	
 WrongCat::~WrongCat( void ) {
-	std::cout << "WrongCat destructor was called." << std::endl;
+	std::cout << RED << "WrongCat destructor was called." << RESET << std::endl;
 }
 
 void	WrongCat::makeSound( void ) const {
-	std::cout << "WrongCat says: mow!" << std::endl;
+	std::cout << RED << "WrongCat says: mow!" << RESET << std::endl;
 }

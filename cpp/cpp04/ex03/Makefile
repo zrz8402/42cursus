@@ -1,36 +1,49 @@
-NAME = animal
+NAME = material
 
 CXX = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
-RM = rm -rdf
 
-I = inc
-S = src
-O = obj
+DEPFLAGS = -MMD -MP
 
-INC = -I $(I)
+RM = rm -rf
+MKDIR = mkdir -p
 
-SRCS = $(S)/main.cpp $(S)/AMateria.cpp $(S)/ICharacter.cpp $(S)/Ice.cpp $(S)/Cure.cpp
+HEADERS = -I ./inc
 
-OBJS = $(SRCS:$(S)/%.cpp=$(O)/%.o)
+SRC_DIR = src
+SRC_FILES = main.cpp \
+			Character.cpp MateriaSource.cpp \
+			AMateria.cpp \
+			Ice.cpp Cure.cpp
+SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+
+OBJ_DIR = obj
+OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+DEPS = $(OBJS:.o=.d)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(INC) $(OBJS) -o $(NAME)
+	@$(CXX) $(CXXFLAGS) $(HEADERS) $(OBJS) -o $(NAME)
+	@echo "$(NAME) compiled successfully!"
 
-$(O)/%.o: $(S)/%.cpp | $(O)
-	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
+	@$(MKDIR) $(dir $@)
+	@$(CXX) $(CXXFLAGS) $(HEADERS) $(DEPFLAGS) -c $< -o $@
 
-$(O):
-	@mkdir -p $(O)
+$(OBJ_DIR):
+	@$(MKDIR) $(OBJ_DIR)
 
 clean:
-	$(RM) $(O)
+	@$(RM) $(OBJ_DIR)
+	@echo "Object files, dependency files, and $(OBJ_DIR) removed!"
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
+	@echo "$(NAME) removed!"
 
 re: fclean all
+
+-include $(DEPS)
 
 .PHONY: all clean fclean re

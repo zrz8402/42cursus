@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 17:40:15 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/01/13 17:42:04 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/01 18:01:51 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 class IMateriaSource {
 
 public:
-	virtual ~IMateriaSource( void ) {}
+	virtual ~IMateriaSource( void ) {}	// provided
 
-	virtual void		learnMateria( AMateria* ) = 0;
-	virtual AMateria*	createMateria( std::string const & type ) = 0;
+	virtual void		learnMateria( AMateria* ) = 0;	// provided
+	virtual AMateria*	createMateria( std::string const & type ) = 0;	// provided
 };
 
 #endif
