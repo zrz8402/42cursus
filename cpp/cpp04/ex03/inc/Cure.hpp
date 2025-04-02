@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:04:30 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/02 11:16:28 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 14:42:38 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ public:
 	Cure( void );
 	Cure( const Cure &other);
 	Cure& operator=( const Cure &other );
-	~Cure( void );
+	virtual	~Cure( void );
 	
 	Cure*	clone( void ) const;
 	void	use(ICharacter& target);

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:04:33 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/02 11:16:42 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 14:43:09 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ public:
 	Ice( void );
 	Ice( const Ice &other);
 	Ice& operator=( const Ice &other );
-	~Ice( void );
+	virtual	~Ice( void );
 	
-	virtual Ice*	clone( void ) const;
-	virtual void	use(ICharacter& target);
+	Ice*	clone( void ) const;
+	void	use(ICharacter& target);
 };
 
 #endif

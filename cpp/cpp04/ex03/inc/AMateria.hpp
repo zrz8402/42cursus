@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 17:17:57 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/02 11:16:15 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 14:33:26 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ public:
 	AMateria( const std::string & type );	// provided
 	AMateria( const AMateria &other);
 	AMateria& operator=( const AMateria &other );
-	~AMateria( void );
+	virtual	~AMateria( void );
 
 	// Returns the materia type
 	std::string const & getType( void ) const;	// provided; 
