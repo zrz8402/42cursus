@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 11:28:09 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 17:30:26 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 13:14:23 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #define MAGENTA "\033[35m"
 
 #include <iostream>
+#include "Brain.hpp"
 
 class AAnimal {
 
@@ -36,6 +37,7 @@ public:
 
 	std::string		getType( void ) const;
 	virtual void	makeSound( void ) const = 0;
+	virtual Brain*	getBrain( void ) const = 0;
 };
 
 #endif

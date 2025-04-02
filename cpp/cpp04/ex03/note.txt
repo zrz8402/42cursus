@@ -1,9 +1,0 @@
-~AMateria
-~Cure
-~Ice
-
-Character
-~ICharacter
-
-MateriaSource
-~IMateriaSource

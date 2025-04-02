@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 11:29:10 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 16:42:38 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:32:49 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #define MAGENTA "\033[35m"
 
 #include "Animal.hpp"
+#include <iostream>
 
 class Cat : public Animal {
 

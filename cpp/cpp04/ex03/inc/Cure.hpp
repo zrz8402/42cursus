@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:04:30 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 18:44:39 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:16:28 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,16 @@
 
 class ICharacter;
 
-class Cure : AMateria{
-
-protected:
-	std::string	type;
+class Cure : public AMateria{
 
 public:
 	Cure( void );
 	Cure( const Cure &other);
 	Cure& operator=( const Cure &other );
 	~Cure( void );
-
-	std::string const & getType( void ) const;
 	
-	virtual Cure*	clone( void ) const;
-	virtual void	use(ICharacter& target);
+	Cure*	clone( void ) const;
+	void	use(ICharacter& target);
 };
 
 #endif

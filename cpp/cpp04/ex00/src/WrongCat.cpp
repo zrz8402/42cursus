@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:04:51 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 16:30:01 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:31:27 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 WrongCat::WrongCat( void ) : WrongAnimal("WrongCat") {
 	std::cout << RED << "WrongCat default constructor was called." << RESET << std::endl;
-}
-
-WrongCat::WrongCat( std::string type ) : WrongAnimal(type) {
-	std::cout << RED << "WrongCat parametric constructor was called." << RESET << std::endl;
 }
 
 WrongCat::WrongCat( const WrongCat &other ) : WrongAnimal(other.type) {

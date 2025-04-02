@@ -6,15 +6,15 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:08:02 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 18:42:08 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:20:36 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cure.hpp"
 
-Cure::Cure( void ) : type("cure") {}
+Cure::Cure( void ) : AMateria("cure") {}
 
-Cure::Cure( const Cure &other) : type(other.type) {}
+Cure::Cure( const Cure &other) : AMateria(other.type) {}
 
 Cure& Cure::operator=( const Cure &other ) {
 	if (this != &other) {
@@ -24,10 +24,6 @@ Cure& Cure::operator=( const Cure &other ) {
 }
 
 Cure::~Cure( void ) {}
-
-std::string const & Cure::getType( void ) const {
-	return type;
-}
 
 Cure*	Cure::clone( void ) const {
 	return new Cure(*this);

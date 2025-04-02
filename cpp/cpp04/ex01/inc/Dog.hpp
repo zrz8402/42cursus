@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 11:29:13 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 16:39:46 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 12:08:33 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #define BLUE    "\033[34m"
 #define MAGENTA "\033[35m"
 
+#include <iostream>
 #include "Animal.hpp"
 #include "Brain.hpp"
 
@@ -35,6 +36,7 @@ public:
 	virtual ~Dog( void );
 
 	void	makeSound( void ) const;
+	Brain*	getBrain( void ) const;
 };
 
 #endif

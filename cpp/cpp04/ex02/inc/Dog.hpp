@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 11:29:13 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 17:31:10 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 13:11:20 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ public:
 	virtual ~Dog( void );
 
 	void	makeSound( void ) const;
+	Brain*	getBrain( void ) const;
 };
 
 #endif

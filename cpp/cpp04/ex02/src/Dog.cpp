@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:13:11 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 17:35:08 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 13:11:43 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,7 @@ Dog::~Dog( void ) {
 void	Dog::makeSound( void ) const {
 	std::cout << BLUE << "Dog barks: Woofffff!" << RESET << std::endl;
 }
-	
+
+Brain*	Dog::getBrain( void ) const {
+	return this->brain;
+}

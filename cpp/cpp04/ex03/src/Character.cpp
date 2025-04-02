@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:07:59 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 18:43:20 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:24:17 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	Character::unequip( int idx ) {
 	
 }
 
-void	Character::use( int idx, Character& target ) {
+void	Character::use( int idx, ICharacter& target ) {
 	
 }

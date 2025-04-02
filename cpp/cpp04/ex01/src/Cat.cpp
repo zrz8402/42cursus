@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:23:48 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 16:49:31 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 12:16:21 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,8 @@ Cat::~Cat( void ) {
 
 void	Cat::makeSound( void ) const {
 	std::cout << GREEN << "Cat says: Meow meow!" << RESET << std::endl;
+}
+
+Brain*	Cat::getBrain( void ) const {
+	return this->brain;
 }

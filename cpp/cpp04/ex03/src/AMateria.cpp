@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 17:17:45 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 18:34:03 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:22:52 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ std::string const & AMateria::getType( void ) const {
 }
 
 void	AMateria::use(ICharacter& target) {
-	std::cout << "something about: " << target.getName() << std::endl;
+	(void) target;
+	std::cout << "Virtual function; Replace display messages in derived classes." << std::endl;
 }

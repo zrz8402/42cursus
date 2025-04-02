@@ -6,15 +6,15 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:08:06 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 18:41:56 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 11:19:32 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Ice.hpp"
 
-Ice::Ice( void ) : type("ice") {}
+Ice::Ice( void ) : AMateria("ice") {}
 
-Ice::Ice( const Ice &other) : type(other.type) {}
+Ice::Ice( const Ice &other) : AMateria(other) {}
 
 Ice& Ice::operator=( const Ice &other ) {
 	if (this != &other) {
@@ -24,10 +24,6 @@ Ice& Ice::operator=( const Ice &other ) {
 }
 
 Ice::~Ice( void ) {}
-
-std::string const & Ice::getType( void ) const {
-	return type;
-}
 
 Ice*	Ice::clone( void ) const {
 	return new Ice(*this);

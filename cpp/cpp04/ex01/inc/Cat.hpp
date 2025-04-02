@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 11:29:10 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/01 16:37:19 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/02 12:15:27 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@
 #define BLUE    "\033[34m"
 #define MAGENTA "\033[35m"
 
+#include <iostream>
 #include "Animal.hpp"
 #include "Brain.hpp"
 
 class Cat : public Animal {
- 
+
 private:
 	Brain	*brain;
 
@@ -35,6 +36,7 @@ public:
 	virtual ~Cat( void );
 
 	void	makeSound( void ) const;
+	Brain*	getBrain( void ) const;
 };
 
 #endif
