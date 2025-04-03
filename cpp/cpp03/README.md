@@ -139,3 +139,10 @@ Inheritance is a fundamental concept in object-oriented programming, and C++ sup
 To resolve this issue, C++ provides **virtual inheritance**, which ensures that only one instance of the common base class is shared among the derived classes.
 
 By understanding the Diamond Problem and using virtual inheritance appropriately, developers can write cleaner, more maintainable code that avoids issues related to multiple inheritance.
+
+
+## Extra
+### -Wshadow and -Wno-shadow
+In C++, the -Wshadow and -Wno-shadow compiler flags work in the same way as they do in C, but with additional nuances due to the features of C++ such as classes, namespaces, and templates. These flags help control warnings related to variable shadowing, which occurs when a local variable in a narrower scope (like inside a function or block) has the same name as a variable in an outer scope, such as a class member, global variable, or variable in an outer function.
+### virtual destructor
+When an object of a derived class is deleted through a pointer to its base class, if the base class destructor is not virtual, the destructor of the base class will be called, and the derived class's destructor will not be invoked. This can lead to resource leaks or improper cleanup in derived classes.

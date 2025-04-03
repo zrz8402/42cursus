@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:29:59 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/31 13:50:30 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/31 14:04:10 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,15 @@ std::string	colorizeScav(const std::string& color, const std::string& str) {
 ScavTrap::ScavTrap( void ) : ClapTrap() {
 	std::cout << colorizeScav(BLUE, "ScavTrap") << " default constructor was called." << std::endl;
 	energyPoints = 50;
+	hitPoints = 100;
+	attackDamage = 20;
 }
 
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
 	std::cout << colorizeScav(BLUE, "ScavTrap") << " parametric constructor was called." << std::endl;
 	energyPoints = 50;
+	hitPoints = 100;
+	attackDamage = 20;
 }
 
 ScavTrap::ScavTrap( const ScavTrap &other ) : ClapTrap(other) {

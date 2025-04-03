@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:14:25 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/31 13:55:45 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/31 14:05:34 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ std::string	colorizeDiamond(const std::string& color, const std::string& str) {
 DiamondTrap::DiamondTrap( void ) : name("Unnamed") {
 	ClapTrap::name = name + "_clap_name";
 	std::cout << colorizeDiamond(BLUE, "DiamondTrap") << " default constructor was called." << std::endl;
+	hitPoints = 100;
+	energyPoints = 50;
+	attackDamage = 30;
 }
 
 /*
@@ -30,8 +33,10 @@ FragTrap::hitPoints; ScavTrap::energyPoints; FragTrap::attackDamage;
 Diamondtrap hp(100) ep(50) damage(30)
 */
 DiamondTrap::DiamondTrap( std::string name ) : ClapTrap(name + "_clap_name"), ScavTrap(name), FragTrap(name), name(name) {
-	this->name = name;
 	std::cout << colorizeDiamond(BLUE, "DiamondTrap") << " parametric constructor was called." << std::endl;
+	hitPoints = 100;
+	energyPoints = 50;
+	attackDamage = 30;
 	// std::cout << name 
 	// 		<< std::setw(7) << "hp: " << hitPoints
 	// 		<< std::setw(7) << "ep: " << energyPoints

@@ -1,7 +1,7 @@
 NAME = diamondtrap
 
 CXX = c++
-CXXFLAG = -Wall -Werror -Wextra -std=c++98 -Wshadow -Wno-shadow
+CXXFLAG = -Wall -Werror -Wextra -std=c++98
 RM = rm -f
 
 HEADER = -I .

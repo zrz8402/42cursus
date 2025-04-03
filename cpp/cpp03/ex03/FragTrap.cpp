@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:29:59 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/31 13:50:14 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/03/31 14:04:24 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ FragTrap::FragTrap( void ) {
 	std::cout << colorizeFrag(BLUE, "FragTrap") << " default constructor was called." << std::endl;
 	hitPoints = 100;
 	attackDamage = 30;
+	energyPoints = 100;
 }
 
 FragTrap::FragTrap(std::string name) : ClapTrap(name) {
 	std::cout << colorizeFrag(BLUE, "FragTrap") << " parametric constructor was called." << std::endl;
 	hitPoints = 100;
 	attackDamage = 30;
+	energyPoints = 100;
 }
 
 FragTrap::FragTrap( const FragTrap &other ) : ClapTrap(other) {
