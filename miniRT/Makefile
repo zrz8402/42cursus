@@ -1,7 +1,7 @@
 NAME = minirt
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS =
 DEPFLAGS = -MMD -MP
 
 RM = rm -rf
@@ -19,15 +19,18 @@ LIBS = $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 # Source Directories
 MAIN_DIR = src
+RAY_INTERSECT_DIR = src
 
 # Source Files
-MAIN_FILES = main.c init.c
+MAIN_FILES = main.c init.c ops.c
+RAY_INTERSECT_FILES = ray.c intersect.c
 
 # Combine Source Files
 MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))
+RAY_INTERSECT = $(addprefix $(RAY_INTERSECT_DIR)/, $(RAY_INTERSECT_FILES))
 
 # All Source Files
-SRCS = $(MAIN)
+SRCS = $(MAIN) $(RAY_INTERSECT)
 
 # Object Files Directory
 OBJ_DIR = obj
