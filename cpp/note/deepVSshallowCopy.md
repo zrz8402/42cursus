@@ -1,8 +1,5 @@
 # README: Deep Copy vs. Shallow Copy in C++
 
-## Introduction
-In C++, copying objects can be done in different ways, most commonly through **shallow copy** and **deep copy**. The way copying is done can have a significant impact on your program's behavior and performance. Understanding the difference between shallow and deep copying is essential to manage resources properly, especially when dealing with dynamic memory allocation.
-
 ## Table of Contents
 1. [Shallow Copy](#shallow-copy)
 2. [Deep Copy](#deep-copy)

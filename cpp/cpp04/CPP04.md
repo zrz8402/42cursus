@@ -1,11 +1,5 @@
 # C++ Polymorphism, Abstract Class, and Interface (C++04)
 
-## Overview
-
-This document explains the concepts of **Polymorphism**, **Abstract Classes**, and **Interfaces** in **C++04**. These are fundamental principles in **Object-Oriented Programming (OOP)** and are widely used to create flexible, reusable, and maintainable code.
-
----
-
 ## 1. **Polymorphism**
 
 Polymorphism in C++ allows objects of different derived classes to be treated as objects of a common base class. It enables one interface to be used for different underlying forms (data types). Polymorphism can be achieved through **inheritance** and **virtual functions**.
