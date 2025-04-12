@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:25:05 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/03/29 14:36:54 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/12 19:02:58 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ PhoneBook::~PhoneBook(){
 	
 }
 
-std::string	getInput(const std::string& prompt)
+std::string	getInput()
 {
 	std::string	input;
 
 	while (true) {
-		std::cout << prompt;
 
 		if (!std::getline(std::cin, input)) {
 			exit(0);
@@ -44,25 +43,83 @@ std::string	getInput(const std::string& prompt)
 
 void	PhoneBook::add()
 {
-	std::string firstName = getInput("Enter first name: ");
+	std::cout << "Enter first name: ";
+	std::string firstName = getInput();
 	contacts[index].setFirstName(firstName);
 
-	std::string lastName = getInput("Enter last name: ");
+	std::cout << "Enter last name: ";
+	std::string lastName = getInput();
 	contacts[index].setLastName(lastName);
 
-	std::string nickname = getInput("Enter nickname: ");
+	std::cout << "Enter nickname: ";
+	std::string nickname = getInput();
 	contacts[index].setNickname(nickname);
 
-	std::string phoneNumber = getInput("Enter phone number: ");
+	std::cout << "Enter phone number: ";
+	std::string phoneNumber = getInput();
 	contacts[index].setPhoneNumber(phoneNumber);
 
-	std::string darkestSecret = getInput("Enter darkest secret: ");
+	std::cout << "Enter darkest secret: ";
+	std::string darkestSecret = getInput();
 	contacts[index].setDarkestSecret(darkestSecret);
 
 	if (size < 8)
 		size++;
 	index = (index + 1) % 8;
 }
+
+// std::string	getInput(const std::string &prompt)
+// {
+// 	std::string	input;
+
+// 	while (true) {
+// 		std::cout << prompt;
+
+// 		if (!std::getline(std::cin, input)) {
+// 			if(std::cin.eof()) {
+// 				return "";
+// 			}
+// 		}
+
+// 		if (!input.empty()) {
+// 			return input;
+// 		} else {
+// 			std::cout << "Input cannot be empty. Please try again." << std::endl;
+// 		}
+// 	}
+// }
+
+// void	PhoneBook::add()
+// {
+// 	std::string firstName = getInput("Enter first name: ");
+// 	if (firstName.empty())
+// 		exit(0);
+// 	contacts[index].setFirstName(firstName);
+
+// 	std::string lastName = getInput("Enter last name: ");
+// 	if (lastName.empty())
+// 		exit(0);
+// 	contacts[index].setLastName(lastName);
+
+// 	std::string nickname = getInput("Enter nickname: ");
+// 	if (nickname.empty())
+// 		exit(0);
+// 	contacts[index].setNickname(nickname);
+
+// 	std::string phoneNumber = getInput("Enter phone number: ");
+// 	if (phoneNumber.empty())
+// 		exit(0);
+// 	contacts[index].setPhoneNumber(phoneNumber);
+
+// 	std::string darkestSecret = getInput("Enter darkest secret: ");
+// 	if (darkestSecret.empty())
+// 		exit(0);
+// 	contacts[index].setDarkestSecret(darkestSecret);
+
+// 	if (size < 8)
+// 		size++;
+// 	index = (index + 1) % 8;
+// }
 
 bool	validEntry(std::string entry, int limit)
 {
