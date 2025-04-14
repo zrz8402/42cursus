@@ -6,53 +6,55 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:41:27 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/14 12:56:39 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/14 16:58:36 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
-void	testSignForm() {
-	std::cout << "Test signForm\n";
+void	testPP() {
+	std::cout << "Testing PresidentialPardonForm" << std::endl;
+	
 	{
-		Form	jerry("Jerry", 80, 70);
-		std::cout << jerry;
+		Bureaucrat b("Tom", 1);
+		PresidentialPardonForm ron("Ron");
+		b.signForm(ron);
+		b.executeForm(ron);
 		std::cout << std::endl;
-
-		Bureaucrat tom("Tom", 20);
-		std::cout << tom;
-		tom.signForm(jerry);
-		std::cout << std::endl;
-
-		Bureaucrat mike("Mike", 90);
-		std::cout << mike;
-		mike.signForm(jerry);
 	}
 }
 
-void	testForm()
-{
-	std::cout << "Test Form\n";
-	{
-		try {
-			Form	jerry("Jerry", 151, 70);
-		} catch(std::exception &e) {
-			std::cerr << RED << "Error: " << e.what() << RESET << std::endl;
-		}
-	}
+void	testRR() {
+	std::cout << "Testing RobotomyRequestForm" << std::endl;
 
 	{
-		try {
-			Form	jerry("Jerry", 100, 0);
-		} catch(std::exception &e) {
-			std::cerr << RED << "Error: " << e.what() << RESET << std::endl;
-		}
+		Bureaucrat b("Tom", 1);
+		RobotomyRequestForm ron("Ron");
+		b.signForm(ron);
+		b.executeForm(ron);
+		std::cout << std::endl;
+	}
+}
+
+void	testSC() {
+	std::cout << "Testing ShrubberyCreationForm" << std::endl;
+
+	{
+		Bureaucrat b("Tom", 1);
+		ShrubberyCreationForm ron("Ron");
+		b.signForm(ron);
+		b.executeForm(ron);
 	}
 }
 
 int	main() {
-	testForm();
+	testPP();
 	std::cout << std::endl;
-	testSignForm();
+	testRR();
+	std::cout << std::endl;
+	testSC();
 }

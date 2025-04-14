@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:41:32 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/13 17:18:09 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/14 15:39:44 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,18 @@
 #define MAGENTA "\033[35m"
 
 #include <iostream>
+#include "Form.hpp"
 
 #define	LOWEST	150
 #define HIGHEST	1
 #define DEFAULT	20
 
+class Form;
+
 class Bureaucrat {
 
 private:
-	const std::string	name;
+	std::string const	name;
 	int					grade;
 
 	void	setGrade( int const grade );
@@ -47,34 +50,22 @@ public:
 	void		increment( void );
 	void		decrement( void );
 
-	class GradeTooHighException : public std::exception {
-	
-	public:
-		const char* what() const throw();
+	void		signForm(Form &form) const;
+
+	class GradeTooHighException : public std::exception
+	{
+		public:
+			const char* what() const throw();
 	};
 
-	class GradeTooLowException : public std::exception {
-	
-	public:
-		const char* what() const throw();
+	class GradeTooLowException : public std::exception
+	{
+		public:
+			const char* what() const throw();
 	};
 	
 };
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat &obj);
-
-/*
-`const char* what() const throw();`
-const char*: Return type;
-what():
-	It’s called what, by convention and standard (defined in std::exception).
-	It returns a description of the exception.
-throw():
-	C++98-style exception specification
-	It means: "This function is guaranteed not to throw any exceptions."
-	This allows the compiler to optimize and enforce exception safety
-	Modern C++ replaces this with noexcept
-	`const char* what() const noexcept override;`
-*/
 
 #endif

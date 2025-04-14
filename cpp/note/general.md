@@ -205,3 +205,10 @@ In C++, the `const` keyword is essential for ensuring immutability, preventing u
 - **Choose the right string type** (`std::string`, `char*`, or `char[]`) based on your needs for safety, memory management, and functionality.
 - **Understand the differences between stack and heap memory** to allocate memory appropriately based on the lifespan and size requirements of your objects.
 ```
+
+
+```cpp
+int const* ptr;   // pointer to const int
+int* const ptr;   // const pointer to int
+int const* const ptr; // const pointer to const int
+```

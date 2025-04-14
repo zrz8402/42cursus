@@ -1,4 +1,4 @@
-NAME = form
+NAME = forms
 
 CXX = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
@@ -11,7 +11,10 @@ MKDIR = mkdir -p
 HEADERS = -I ./inc
 
 SRC_DIR = src
-SRC_FILES = main.cpp Bureaucrat.cpp Form.cpp
+SRC_FILES = main.cpp Bureaucrat.cpp AForm.cpp \
+			ShrubberyCreationForm.cpp \
+			RobotomyRequestForm.cpp \
+			PresidentialPardonForm.cpp
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
 OBJ_DIR = obj
