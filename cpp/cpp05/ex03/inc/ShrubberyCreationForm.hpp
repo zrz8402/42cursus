@@ -1,43 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RobotomyRequestForm.hpp                            :+:      :+:    :+:   */
+/*   ShrubberyCreationForm.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 13:28:51 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/15 15:18:16 by ruzhang          ###   ########.fr       */
+/*   Created: 2025/04/14 13:07:43 by ruzhang           #+#    #+#             */
+/*   Updated: 2025/04/14 16:57:33 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __ROBOTOMYREQUESTFORM_HPP__
-#define __ROBOTOMYREQUESTFORM_HPP__
+#ifndef __SHRUBBERYCREATIONFORM_HPP__
+#define __SHRUBBERYCREATIONFORM_HPP__
 
+#include <fstream>
 #include <iostream>
 #include "AForm.hpp"
 #include "Bureaucrat.hpp"
-#include <cstdlib>
-#include <ctime>
 
-#define DEFAULT_RRNAME	"RobotomyRequestForm"
-#define DEFAULT_RRSIGN	72
-#define DEFAULT_RREXEC	45
+#define DEFAULT_SCNAME	"ShrubberyCreationForm"
+#define DEFAULT_SCSIGN	145
+#define DEFAULT_SCEXEC	137
 
 class Bureaucrat;
 
-class RobotomyRequestForm : public AForm {
+class ShrubberyCreationForm : public AForm {
 
 private:
 	std::string const	target;
 
-	void	robotomize() const;
+	void	writeFile() const;
 
 public:
-	RobotomyRequestForm( void );
-	RobotomyRequestForm( std::string const target );
-	RobotomyRequestForm( const RobotomyRequestForm &other );
-	RobotomyRequestForm& operator=( const RobotomyRequestForm &other );
-	virtual ~RobotomyRequestForm(void);
+	ShrubberyCreationForm( void );
+	ShrubberyCreationForm( std::string const target);
+	ShrubberyCreationForm( const ShrubberyCreationForm &other );
+	ShrubberyCreationForm& operator=( const ShrubberyCreationForm &other );
+	virtual ~ShrubberyCreationForm(void);
 
 	void	execute(Bureaucrat const & executor) const;
 };
