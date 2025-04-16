@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:54:45 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/15 16:53:13 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/16 12:57:32 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ AForm*	Intern::makeForm( std::string formName, std::string target ) {
 	std::cout << RED << "Error: Intern is unable to creates " << formName << RESET << std::endl;
 	return NULL;
 }
+
+/*
+Reason for making the following functions static:
+Member function pointers always require an instance of the class (the this pointer),
+so they cannot be used like normal function pointers that don't require an object.
+*/
 
 AForm*	Intern::makePresidentialPardonForm( std::string const target ) {
 	return new PresidentialPardonForm(target);
