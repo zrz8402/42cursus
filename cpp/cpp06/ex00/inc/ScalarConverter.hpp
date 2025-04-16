@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:23:17 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/16 15:38:07 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/16 16:28:59 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <cmath>
 #include <limits>
 #include <iomanip>
+#include <sstream>
 
 class ScalarConverter {
 
