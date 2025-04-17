@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:23:19 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/16 16:40:24 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/17 15:54:24 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,9 @@ void	ScalarConverter::convert( std::string const &literal ) {
 	if (literal.length() == 1 && !std::isdigit(literal[0])) {
 		value = static_cast<double>(literal[0]);
 	} else {
-		if (upperLiteral[upperLiteral.length() - 1] == 'F') {
-			value = std::strtod(upperLiteral.substr(0, upperLiteral.length() - 1).c_str(), &end);
-		} else {
-			value = std::strtod(upperLiteral.c_str(), &end);
-		}
-
-		if (*end != '\0') {
+		value = std::strtod(upperLiteral.c_str(), &end);
+		
+		if ((*end == 'F' && (*end++) != '\0') && *end != '\0') {
 			std::cout << "char: impossible" << std::endl;
 			std::cout << "int: impossible" << std::endl;
 			std::cout << "float: impossible" << std::endl;
@@ -66,7 +62,7 @@ void	ScalarConverter::convertToChar(double value) {
 	if (std::isnan(value) || value < 0 || value > 127) {
 		std::cout << "impossible" << std::endl;
 	} else if (!std::isprint(static_cast<char>(value))) {
-		std::cout << "non diaplayable" << std::endl;
+		std::cout << "non displayable" << std::endl;
 	} else {
 		std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
 	}
