@@ -14,6 +14,12 @@
 #include <iostream>
 #include <cmath>
 
+/*
+A generic function blueprint using template <typename T>
+Creating a specific version like myFunc<int>
+	printValue<std::string>
+	printValue<int>
+*/
 template <typename T>
 void	printValue(const T &value) {
 	std::cout << value << std::endl;

@@ -32,10 +32,23 @@ public:
 
 	unsigned int	getSize( void ) const;
 
+	
+	// The non-const version allows modifying elements.
 	T& operator[]( unsigned int idx );
+	// The const version is for read-only access when the Array itself is const.
 	const T& operator[]( unsigned int idx ) const;
 };
 
+/*
+Why we include .tpp at the end of .hpp file?
+Template implementations must be visible to the compiler at the time of instantiation.
+🧩 What does that mean?
+Template classes are not compiled into .o (object) files on their own.
+Instead, the compiler needs to see the full implementation 
+	whenever it creates a version of the template 
+	for a specific type (like Array<int> or Array<std::string>).
+So you can’t put the implementation only in a .cpp or .o file like with normal classes.
+*/
 #include "Array.tpp"
 
 #endif
