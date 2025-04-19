@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 10:57:36 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/19 11:13:44 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/19 14:36:24 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ private:
 
 public:
 	SpellBook();
-	SpellBook(std::string const &name, std::string const &effects);
 	virtual	~SpellBook();
 
 	void	learnSpell(ASpell* spell);
 	void	forgetSpell(std::string const &name);
-	ASpell*	generateSpell(std::string const &name);
+	ASpell*	createSpell(std::string const &name);
 };
 
 #endif

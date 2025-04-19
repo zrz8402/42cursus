@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:49:17 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/19 11:21:52 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/19 14:35:05 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int main(void)
 	richard.introduce();
 	richard.launchSpell("Polymorph", *wall);
 	richard.launchSpell("Fireball", *wall);
-}
 
-// g++ -Wall -Wextra -Werror -std=c++98 ASpell.cpp  ATarget.cpp  BrickWall.cpp  Dummy.cpp  Fireball.cpp  Fwoosh.cpp  main.cpp  Polymorph.cpp  SpellBook.cpp  TargetGenerator.cpp  Warlock.cpp -o ex02
+	delete polymorph;
+	delete fireball;
+}

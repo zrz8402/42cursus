@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:43:13 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/19 11:13:50 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/19 14:54:04 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 SpellBook::SpellBook() {}
 
 SpellBook::~SpellBook() {
-	std::vector<ASpell*>::iterator ite = spells.end();
-	for (std::vector<ASpell*>::iterator it = spells.begin(); it != ite; it++) {
+	for (std::vector<ASpell*>::iterator it = spells.begin(); it != spells.end(); ++it) {
 		delete *it;
 	}
 	spells.clear();
@@ -25,8 +24,7 @@ SpellBook::~SpellBook() {
 
 void	SpellBook::learnSpell(ASpell* spell) {
 	if (spell) {
-		std::vector<ASpell*>::iterator ite = spells.end();
-		for (std::vector<ASpell*>::iterator it = spells.begin(); it != ite; it++) {
+		for (std::vector<ASpell*>::iterator it = spells.begin(); it != spells.end(); ++it) {
 			if ((*it)->getName() == spell->getName()) {
 				return ;
 			}
@@ -36,18 +34,17 @@ void	SpellBook::learnSpell(ASpell* spell) {
 }
 
 void	SpellBook::forgetSpell(std::string const &name) {
-	std::vector<ASpell*>::iterator ite = spells.end();
-	for (std::vector<ASpell*>::iterator it = spells.begin(); it != ite; it++) {
-		if ((*it)->getName() == name) {
-			delete *it;
-			it = spells.erase(it);
-		}
-	}
+    for (std::vector<ASpell*>::iterator it = spells.begin(); it != spells.end(); ++it) {
+        if ((*it)->getName() == name) {
+            delete *it;
+            spells.erase(it);
+			return ;
+        }
+    }
 }
 
-ASpell*	SpellBook::generateSpell(std::string const &name) {
-	std::vector<ASpell*>::iterator ite = spells.end();
-	for (std::vector<ASpell*>::iterator it = spells.begin(); it != ite; it++) {
+ASpell*	SpellBook::createSpell(std::string const &name) {
+	for (std::vector<ASpell*>::iterator it = spells.begin(); it != spells.end(); ++it) {
 		if ((*it)->getName() == name) {
 			return (*it);
 		}

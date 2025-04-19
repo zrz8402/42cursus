@@ -6,36 +6,24 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:49:17 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/18 19:19:22 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/19 14:31:24 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Warlock.hpp"
-#include "Fwoosh.hpp"
-#include "Dummy.hpp"
 
-int main(void)
+int main()
 {
-
-	Warlock richard("Richard", "the Titled");
-	//Richard: This looks like another boring day.$
-
-	Dummy bob;
-	Fwoosh* fwoosh = new Fwoosh();
-
-	richard.learnSpell(fwoosh);
-
+	Warlock const richard("Richard", "Mistress of Magma");
 	richard.introduce();
-	// Richard: I am Richard, the Titled!$
-	richard.launchSpell("Fwoosh", bob);
-	// Target Practice Dummy has been fwooshed!$
+	std::cout << richard.getName() << " - " << richard.getTitle() << std::endl;
 
-	richard.forgetSpell("Fwoosh");
-	richard.launchSpell("Fwoosh", bob);
+	Warlock* jack = new Warlock("Jack", "the Long");
+	jack->introduce();
+	jack->setTitle("the Mighty");
+	jack->introduce();
 
-	// Richard: My job here is done!$
+	delete jack;
 
 	return (0);
 }
-
-// g++ -Wall -Wextra -Werror -std=c++98 ASpell.cpp ATarget.cpp Dummy.cpp Fwoosh.cpp Warlock.cpp main.cpp -o ex01

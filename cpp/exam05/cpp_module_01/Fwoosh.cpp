@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fireball.cpp                                       :+:      :+:    :+:   */
+/*   Fwoosh.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:43:13 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/19 10:52:54 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/19 14:32:07 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Fireball.hpp"
+#include "Fwoosh.hpp"
 
-Fireball::Fireball() : ASpell("Fireball", "burnt to a crisp") {}
+Fwoosh::Fwoosh() : ASpell("Fwoosh", "fwooshed") {}
 
-Fireball::~Fireball() {}
+Fwoosh::~Fwoosh() {}
 
-ASpell*	Fireball::clone() const {
-	return new Fireball(*this);
+ASpell*	Fwoosh::clone() const {
+	return new Fwoosh();
 }

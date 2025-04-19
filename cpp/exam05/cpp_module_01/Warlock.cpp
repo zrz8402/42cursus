@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:43:13 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/19 11:16:54 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/19 14:54:15 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ Warlock::Warlock(std::string const &name, std::string const &title) : name(name)
 // <NAME>: My job here is done!
 Warlock::~Warlock() {
 	std::cout  << name << ": My job here is done!" << std::endl;
+	for (std::vector<ASpell*>::iterator it = spells.begin(); it != spells.end(); ++it) {
+		delete *it;
+	}
+	spells.clear();
 }
 
 const std::string&	Warlock::getName() const {
@@ -39,16 +43,31 @@ void	Warlock::introduce() const {
 }
 
 void	Warlock::learnSpell(ASpell* spell) {
-	spellBook.learnSpell(spell);
+	if (spell) {
+		for (std::vector<ASpell*>::iterator it = spells.begin(); it != spells.end(); ++it) {
+			if ((*it)->getName() == spell->getName()) {
+				return ;
+			}
+		}
+		spells.push_back(spell->clone());
+	}
 }
 
 void	Warlock::forgetSpell(std::string const &name) {
-	spellBook.forgetSpell(name);
+	for (std::vector<ASpell*>::iterator it = spells.begin(); it != spells.end(); ++it) {
+		if ((*it)->getName() == name) {
+			delete *it;
+			spells.erase(it);
+			break;
+		}
+	}
 }
 
 void	Warlock::launchSpell(std::string const &name, ATarget &target) {
-	ASpell *spell = spellBook.generateSpell(name);
-	if (spell) {
-		spell->launch(target);
+	for (std::vector<ASpell*>::iterator it = spells.begin(); it != spells.end(); ++it) {
+		if ((*it)->getName() == name) {
+			(*it)->launch(target);
+			break;
+		}
 	}
 }

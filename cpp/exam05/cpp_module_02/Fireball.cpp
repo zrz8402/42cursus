@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dummy.cpp                                          :+:      :+:    :+:   */
+/*   Fireball.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:43:13 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/18 18:39:04 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/19 14:32:29 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dummy.hpp"
+#include "Fireball.hpp"
 
-Dummy::Dummy() : ATarget("Target Practice Dummy") {}
+Fireball::Fireball() : ASpell("Fireball", "burnt to a crisp") {}
 
-Dummy::~Dummy() {}
+Fireball::~Fireball() {}
 
-ATarget*	Dummy::clone() const {
-	return new Dummy(*this);
+ASpell*	Fireball::clone() const {
+	return new Fireball();
 }

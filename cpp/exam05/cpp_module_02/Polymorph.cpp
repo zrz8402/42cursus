@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fwoosh.cpp                                         :+:      :+:    :+:   */
+/*   Polymorph.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:43:13 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/18 18:36:16 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/19 17:15:45 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Fwoosh.hpp"
+#include "Polymorph.hpp"
 
-Fwoosh::Fwoosh() : ASpell("Fwoosh", "fwooshed") {}
+Polymorph::Polymorph() : ASpell("Polymorph", "turned into a critter") {}
 
-Fwoosh::~Fwoosh() {}
+Polymorph::~Polymorph() {}
 
-ASpell*	Fwoosh::clone() const {
-	return new Fwoosh(*this);
+ASpell*	Polymorph::clone() const {
+	return new Polymorph();
 }

@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Polymorph.cpp                                      :+:      :+:    :+:   */
+/*   BrickWall.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:43:13 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/19 10:52:24 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/19 14:32:25 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Polymorph.hpp"
+#include "BrickWall.hpp"
 
-Polymorph::Polymorph() : ASpell("Polymorph", "turned into critter") {}
+BrickWall::BrickWall() : ATarget("Inconspicuous Red-brick Wall") {}
 
-Polymorph::~Polymorph() {}
+BrickWall::~BrickWall() {}
 
-ASpell*	Polymorph::clone() const {
-	return new Polymorph(*this);
+ATarget*	BrickWall::clone() const {
+	return new BrickWall();
 }
