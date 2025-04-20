@@ -78,7 +78,7 @@ bool HTTPRequest::parse_header_line(const std::string &line) {
     std::string key = line.substr(0, delimiter_pos);
     std::string value = line.substr(delimiter_pos + 1);
 
-    value = ServerConfigUtils::strip_whitespaces(value);
+    value = ServerConfigUtils::trim(value);
     this->headers[key] = value;
 
     return true;
@@ -270,7 +270,7 @@ bool HTTPRequest::parse_header(ServerConfig::ServerConfigData config, std::strin
 
         if (colon_pos != std::string::npos) {
             std::string key = line.substr(0, colon_pos);
-            std::string value = ServerConfigUtils::strip_whitespaces(line.substr(colon_pos + 1));
+            std::string value = ServerConfigUtils::trim(line.substr(colon_pos + 1));
             this->set_header(key, value, false);
         }
 
@@ -280,7 +280,7 @@ bool HTTPRequest::parse_header(ServerConfig::ServerConfigData config, std::strin
 
         size_t content_length_value = std::atoi(this->headers["Content-Length"].c_str());
 
-        if (content_length_value > config.max_body_size) {
+        if (content_length_value > config.client_max_body_size) {
             throw RequestException(TOO_LARGE);
         }
 

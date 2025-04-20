@@ -1,4 +1,4 @@
-# include "Connection.hpp"
+#include "Connection.hpp"
 
 Connection::Connection(int fd, ServerConfig::ServerConfigData &server_config): config(server_config) {
 
@@ -7,7 +7,7 @@ Connection::Connection(int fd, ServerConfig::ServerConfigData &server_config): c
     this->is_ready = false;
     this->body_length = 0;
     this->expires_time = time(NULL) + CONNECTION_TIMEOUT;
-    this->route_configs = this->config.route_config_lists;
+    this->route_configs = this->config.locations;
 
     set_nonblock_mode();
     raw_post_body.clear();
@@ -168,7 +168,7 @@ bool Connection::join_request_buffer(char *buffer, size_t length, std::vector<Se
                         ++iter
                     ) {
 
-                        std::string full_hostname = iter->host + ":" + to_string(iter->port);
+                        std::string full_hostname = iter->host + ":" + to_string(iter->listen_port);
 
                         if (full_hostname.find(hostname) != std::string::npos) {
                             Logger::debug("Overwriting server host to: " + iter->host);
@@ -231,7 +231,7 @@ bool Connection::parse_request(HTTPRequest &request) {
     Logger::debug("Processing request...");
 
     request.parse_header(this->config, this->request_buffer);
-    ServerConfig::RouteConfigData *target_route = Router::find_route_from_path(this->route_configs, request.get_path());
+    ServerConfig::LocationConfig *target_route = Router::find_route_from_path(this->route_configs, request.get_path());
 
     HTTPResponse response;
 
@@ -247,8 +247,8 @@ bool Connection::parse_request(HTTPRequest &request) {
         t_status_code status_code = target_route->redirect_status;
 
         if (status_code >= 300 && status_code <= 399) {
-            if (!target_route->redirect_target.empty()) {
-                throw HTTPRequest::RequestException(status_code, target_route->redirect_target);
+            if (!target_route->redirect.empty()) {
+                throw HTTPRequest::RequestException(status_code, target_route->redirect);
             }
         }
 

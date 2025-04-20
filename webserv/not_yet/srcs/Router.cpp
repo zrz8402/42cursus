@@ -4,10 +4,10 @@ Router::Router() {}
 
 Router::~Router() {}
 
-ServerConfig::RouteConfigData *Router::find_route_from_path(std::vector<ServerConfig::RouteConfigData> &routes, const std::string &target_path) {
+ServerConfig::LocationConfig *Router::find_route_from_path(std::vector<ServerConfig::LocationConfig> &routes, const std::string &target_path) {
 
     for (
-        std::vector<ServerConfig::RouteConfigData>::iterator it = routes.begin();
+        std::vector<ServerConfig::LocationConfig>::iterator it = routes.begin();
         it != routes.end();
         ++it
     ) {
@@ -20,10 +20,10 @@ ServerConfig::RouteConfigData *Router::find_route_from_path(std::vector<ServerCo
     Logger::debug("Exact match not found, looking for similar route...");
 
     size_t best_match_len = 0;
-    ServerConfig::RouteConfigData *best_match = NULL;
+    ServerConfig::LocationConfig *best_match = NULL;
 
     for (
-        std::vector<ServerConfig::RouteConfigData>::iterator it = routes.begin();
+        std::vector<ServerConfig::LocationConfig>::iterator it = routes.begin();
         it != routes.end();
         ++it
     ) {

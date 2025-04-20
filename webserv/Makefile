@@ -1,7 +1,7 @@
 NAME = webserv
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+CXXFLAGS = -std=c++98 -pedantic
 DEPFLAGS = -MMD -MP
 
 RM = rm -rf
@@ -15,7 +15,10 @@ endif
 HEADERS = -I ./inc
 
 MAIN_DIR = srcs
-MAIN_FILES = main.cpp ServerConfig.cpp ServerConfigUtils.cpp Logger.cpp Router.cpp
+MAIN_FILES = main.cpp \
+			ServerConfig.cpp ServerConfigUtils.cpp \
+			Logger.cpp 
+
 MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))
 SRCS = $(MAIN)
 

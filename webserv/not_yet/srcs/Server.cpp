@@ -38,7 +38,7 @@ bool Server::setup_sockets(ConnectionManager &manager) {
         ++iter
     ) {
 
-        port = iter->port;
+        port = iter->listen_port;
 
         if (used_ports.find(port) != used_ports.end()) {
             Logger::warning("Port " + to_string(port) + " has already been binded");
@@ -69,10 +69,11 @@ bool Server::setup_sockets(ConnectionManager &manager) {
             std::memset(&server_address, 0, sizeof(sockaddr_in));
             server_address.sin_family = AF_INET;
             server_address.sin_addr.s_addr = INADDR_ANY;
-            server_address.sin_port = htons(iter->port);
+            server_address.sin_port = htons(iter->listen_port);
 
             if (bind(fd, (struct sockaddr *) &server_address, sizeof(server_address)) < 0) {
-                throw std::runtime_error("Failed to bind to port " + iter->port);
+                // throw std::runtime_error("Failed to bind to port " + iter->listen_port);
+                throw std::runtime_error("Failed to bind to port ");
             }
 
             if (listen(fd, MAX_CONNECTION) < 0) {
@@ -100,7 +101,7 @@ bool Server::setup_sockets(ConnectionManager &manager) {
         iter != tmp.end();
         ++iter
     ) {
-        Logger::info("Listening on http://" + iter->second.host + ":" + to_string(iter->second.port));
+        Logger::info("Listening on http://" + iter->second.host + ":" + to_string(iter->second.listen_port));
     }
 
     return n_success > 0;
@@ -185,7 +186,7 @@ void Server::start() {
                     socklen_t error_length = sizeof(error_code);
 
                     getsockopt(active_fd, SOL_SOCKET, SO_ERROR, &error_code, &error_length);
-                    Logger::error(error_length);
+                    // Logger::error(error_length);
 
                     close(active_fd);
                     epoll_ctl(epoll_fd, EPOLL_CTL_DEL, active_fd, NULL);

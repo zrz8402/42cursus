@@ -1,0 +1,80 @@
+#ifndef CONSTANTS_HPP
+#define CONSTANTS_HPP
+
+#include <map>
+
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[0m"
+#define BLUE "\033[34m"
+#define PURPLE "\033[35m"
+#define YELLOW "\033[33m"
+#define CYAN "\033[36m"
+
+#define MiB 1024 * 1024
+
+#define MAX_CONNECTION 100
+#define CONNECTION_TIMEOUT 60
+#define SOCKET_TIMEOUT_S 5
+#define SOCKET_TIMEOUT_MS 1000
+#define CONCURRENT_EVENT_MAX 1024
+#define SOCKET_WRITE_SIZE 4096
+#define SOCKET_READ_BUFFER_SIZE 4001
+#define DEFAULT_MAX_BODY_SIZE 8 * MiB
+
+typedef enum e_status_code {
+
+    // 1xx Informational
+    CONTINUE = 100,
+    SWITCHING_PROTOCOLS = 101,
+
+    // 2xx Success
+    OK = 200,
+    CREATED = 201,
+    ACCEPTED = 202,
+    NO_CONTENT = 204,
+
+    // 3xx Redirection
+    MOVED_PERMANENTLY = 301,
+    FOUND = 302,
+    NOT_MODIFIED = 304,
+
+    // 4xx Client Errors
+    BAD_REQUEST = 400,
+    UNAUTHORIZED = 401,
+    FORBIDDEN = 403,
+    NOT_FOUND = 404,
+    METHOD_NOT_ALLOWED = 405,
+    REQUEST_TIMEOUT = 408,
+    CONFLICT = 409,
+    LENGTH_REQUIRED = 411,
+    TOO_LARGE = 413,
+    TEAPOT = 418,
+    TOO_MANY_REQUEST = 429, 
+
+    // 5xx Server Errors
+    INTERNAL_SERVER_ERROR = 500,
+    NOT_IMPLEMENTED = 501,
+    BAD_GATEWAY = 502,
+    SERVICE_UNAVAILABLE = 503,
+    GATEWAY_TIMEOUT = 504
+    
+} t_status_code;
+
+typedef enum e_config_directive {
+    DIRECTIVE_LISTEN,
+    DIRECTIVE_HOST,
+    DIRECTIVE_SERVER_NAME,
+    DIRECTIVE_ERROR_PAGE,
+    DIRECTIVE_CLIENT_MAX_BODY_SIZE,
+    DIRECTIVE_ALLOWED_METHODS,
+    DIRECTIVE_AUTOINDEX,
+    DIRECTIVE_ROOT,
+    DIRECTIVE_INDEX,
+    DIRECTIVE_CGI_PASS,
+    DIRECTIVE_CGI_EXTENSION,
+    DIRECTIVE_UPLOAD_STORE,
+    DIRECTIVE_RETURN
+} t_config_directive;
+
+#endif

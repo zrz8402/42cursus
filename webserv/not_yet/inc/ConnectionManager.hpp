@@ -28,7 +28,7 @@ class ConnectionManager {
         bool socket_write(int fd);
 
         std::map<int, ServerConfig::ServerConfigData> get_server_data();
-        ServerConfig::ServerConfigData *ConnectionManager::get_server_from_fd(int fd);
+        ServerConfig::ServerConfigData *get_server_from_fd(int fd);
         Connection *get_connection_from_fd(int fd);
 
         static void set_epoll_socket(int epoll_fd);

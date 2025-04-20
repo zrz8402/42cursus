@@ -34,7 +34,7 @@ class Connection {
         
         time_t expires_time;
         ServerConfig::ServerConfigData config;
-        std::vector<ServerConfig::RouteConfigData> route_configs;
+        std::vector<ServerConfig::LocationConfig> route_configs;
 
         void set_nonblock_mode();
 

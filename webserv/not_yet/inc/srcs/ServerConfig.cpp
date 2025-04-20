@@ -238,20 +238,22 @@ void ServerConfig::display_config_lists() {
     const std::vector<ServerConfig::ServerConfigData> servers_configs = this->config_lists;
 
     for (size_t idx = 0; idx < servers_configs.size(); idx++) {
+
         std::cout << "\nServer #" << idx + 1 << ":\n" << std::endl;
-
+        std::cout << "\tHost: " << servers_configs[idx].host << std::endl;
         std::cout << "\tListen_port: " << servers_configs[idx].listen_port << std::endl;
+        std::cout << "\tMax body size: " << servers_configs[idx].client_max_body_size << std::endl;
 
-        std::cout << "\tServer Name: ";
+
+        std::cout << "\tServer Names: ";
+
         for (size_t name_idx = 0; name_idx < servers_configs[idx].server_name_lists.size(); name_idx++) {
             std::cout << servers_configs[idx].server_name_lists[name_idx] << " ";
         }
+
         std::cout << std::endl;
-
-        std::cout << "\tHost: " << servers_configs[idx].host << std::endl;
-        std::cout << "\tClient max body size: " << servers_configs[idx].client_max_body_size << std::endl;
-
         std::cout << "\tError pages: " << std::endl;
+
         for (
             std::map<t_status_code, std::string>::const_iterator iterator = servers_configs[idx].error_pages.begin();
             iterator != servers_configs[idx].error_pages.end();
@@ -259,16 +261,17 @@ void ServerConfig::display_config_lists() {
         ) {
             std::cout << "\t\t- " << iterator->first << ": " << iterator->second << std::endl;
         }
-        std::cout << std::endl;
 
-        std::cout << "\tLocation: " << std::endl;
+        std::cout << std::endl;
+        std::cout << "\tRoutes: " << std::endl;
+
         for (size_t route_idx = 0; route_idx < servers_configs[idx].locations.size(); route_idx++) {    
             std::cout << "\t\tPath: " << servers_configs[idx].locations[route_idx].path << std::endl;
             std::cout << "\t\tRoot: " << servers_configs[idx].locations[route_idx].root << std::endl;
             std::cout << "\t\tIndex: " << servers_configs[idx].locations[route_idx].index << std::endl;
-            std::cout << "\t\tClient max body size: " << servers_configs[idx].locations[route_idx].max_body_size << std::endl;
             
             std::cout << "\t\tMethods: " << std::endl;
+
             for (
                 size_t method_idx = 0;
                 method_idx < servers_configs[idx].locations[route_idx].allowed_methods.size();
@@ -303,6 +306,7 @@ void ServerConfig::display_config_lists() {
 
             std::cout << "\t\tUpload Store: " << servers_configs[idx].locations[route_idx].upload_store << std::endl;
             std::cout << "\t\tAuto Index: " << (servers_configs[idx].locations[route_idx].auto_index ? "on" : "off") << std::endl;
+            std::cout << "\t\tMax body size: " << servers_configs[idx].locations[route_idx].max_body_size << std::endl;
         }
 
     }

@@ -12,8 +12,8 @@ class Router {
         Router();
         ~Router();
 
-        static ServerConfig::RouteConfigData *find_route_from_path(
-            std::vector<ServerConfig::RouteConfigData> &routes, 
+        static ServerConfig::LocationConfig *find_route_from_path(
+            std::vector<ServerConfig::LocationConfig> &routes, 
             const std::string &target_path
         );
 
