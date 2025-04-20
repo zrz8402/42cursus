@@ -1,8 +1,26 @@
 #include "Request.hpp"
 #include <sstream>
 #include <algorithm>
+#include <cctype>
 
-Request::Request() : _state(START_LINE), _content_length(0) {}
+/*
+Structure:
+1.State Management:
+The Request class uses a state machine to handle parsing stages
+(START_LINE, HEADERS, BODY, COMPLETE, ERROR).
+It progresses through different states as the request is parsed.
+2.Buffer Accumulation:
+The parse method accumulates the buffer content, reading line by line,
+and handles parsing accordingly based on the current state.
+3.Header Parsing:
+Headers are parsed in the parse_header_line method,
+and certain headers (like Host) are specifically processed.
+4.Body Parsing:
+The body is parsed in chunks and 
+the content length is checked against the accumulated body size.
+*/
+
+Request::Request() : _state(START_LINE), _content_length(0), _port(80) {}
 
 bool Request::parse(const std::string& buffer) {
     _raw_request += buffer;
@@ -29,8 +47,8 @@ bool Request::parse(const std::string& buffer) {
                 parse_header_line(line);
             }
         } else if (_state == BODY) {
-            parse_body(stream.str().substr(stream.tellg()));
-            if (_body.size() >= _content_length) {
+            parse_body(line);
+            if (_body.size() >= static_cast<size_t>(_content_length)) {
                 _state = COMPLETE;
                 return true;
             }
@@ -40,6 +58,7 @@ bool Request::parse(const std::string& buffer) {
 
     return _state == COMPLETE;
 }
+
 bool Request::is_complete() const {
     return _state == COMPLETE;
 }
@@ -65,9 +84,9 @@ void Request::parse_header_line(const std::string& line) {
     if (colon != std::string::npos) {
         std::string key = line.substr(0, colon);
         std::string value = line.substr(colon + 1);
-        key.erase(key.find_last_not_of(" \t\r") + 1);
-        value.erase(0, value.find_first_not_of(" \t"));
-        value.erase(value.find_last_not_of(" \t\r") + 1);
+
+        trim(key);
+        trim(value);
 
         _headers[key] = value;
 
@@ -77,8 +96,6 @@ void Request::parse_header_line(const std::string& line) {
             if (colon_pos != std::string::npos) {
                 _port = std::atoi(_host.substr(colon_pos + 1).c_str());
                 _host = _host.substr(0, colon_pos);
-            } else {
-                _port = 80;
             }
         }
     }
@@ -86,6 +103,19 @@ void Request::parse_header_line(const std::string& line) {
 
 void Request::parse_body(const std::string& chunk) {
     _body += chunk;
+}
+
+void Request::trim(std::string& str) const {
+    // Trim leading whitespace
+    size_t start = str.find_first_not_of(" \t\r\n");
+    if (start != std::string::npos) {
+        str.erase(0, start);
+    }
+    // Trim trailing whitespace
+    size_t end = str.find_last_not_of(" \t\r\n");
+    if (end != std::string::npos) {
+        str.erase(end + 1);
+    }
 }
 
 const std::string& Request::get_method() const { return _method; }

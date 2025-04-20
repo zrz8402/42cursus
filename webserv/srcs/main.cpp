@@ -7,27 +7,36 @@
 #include "Router.hpp"
 #include "Request.hpp"
 #include "Response.hpp"
+#include <iostream>
+#include <stdexcept>
+#include "Server.hpp"
+#include "ConfigurationManager.hpp"
 
 int main(int argc, char **argv) {
+    // Ensure proper usage of the program
     if (argc != 2) {
         std::cerr << "Usage: " << argv[0] << " <config_file.conf>" << std::endl;
         return 1;
     }
 
-    std::string config_path = argv[1];
-    ServerConfig config;
+    std::string config_path = argv[1]; // Path to the config file
 
     try {
-        config.parse_config(config_path);
-        const std::vector<ServerConfig::ServerConfigData>& server_configs = config.get_config_lists();
+        // Initialize ConfigurationManager with the given config file
+        ConfigurationManager config_manager(config_path);
 
-        // Debug print of parsed config
-        // ServerConfigUtils::display_config_lists(server_configs);
+        // Load the configuration
+        config_manager.load_config();
 
-        Server server(server_configs);
-        server.run();
-    }
-    catch (const std::exception& e) {
+        // Validate the configuration
+        config_manager.validate_config();
+
+        // Pass the loaded configuration to the server
+        Server server(config_path);
+        server.start(); // Start the server
+
+    } catch (const std::exception& e) {
+        // Handle any exceptions thrown during the process
         std::cerr << "[ERROR] " << e.what() << std::endl;
         return 1;
     }

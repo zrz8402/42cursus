@@ -1,7 +1,7 @@
 NAME = webserv
 
 CXX = c++
-CXXFLAGS = -std=c++98 -pedantic
+CXXFLAGS = -std=c++11 -pedantic
 DEPFLAGS = -MMD -MP
 
 RM = rm -rf
@@ -21,7 +21,11 @@ MAIN_FILES = main.cpp \
 			Router.cpp \
 			Request.cpp \
 			Response.cpp \
-			Logger.cpp
+			Logger.cpp \
+			ConfigurationManager.cpp \
+			RequestParser.cpp \
+			ResponseBuilder.cpp \
+			ConnectionHandler.cpp
 
 MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))
 SRCS = $(MAIN)

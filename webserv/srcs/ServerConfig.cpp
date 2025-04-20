@@ -6,10 +6,32 @@ ServerConfig::ServerConfig() {}
 
 ServerConfig::~ServerConfig() {}
 
+/*
+Returns the config_lists vector, which holds the configuration data.
+*/
 std::vector<ServerConfig::ServerConfigData> &ServerConfig::get_config_lists() {
     return this->config_lists;
 }
 
+/*
+It reads the config file line by line, processes each line,
+and fills in the configuration data structures
+(ServerConfigData and LocationConfig).
+It identifies the start of blocks (server, location),
+processes the directives (e.g., listen, host, server_name, etc.),
+and adds data to config_lists.
+It uses Logger::debug() to output debug information,
+which helps trace the config parsing process.
+
+Improvements:
+Error Handling:
+Consider adding more robust error handling for invalid configurations
+(e.g., incorrect values for port, missing required directives).
+You can throw exceptions when encountering an invalid config line or missing fields.
+Configuration Validation:
+It would be beneficial to add a step for validating the entire config once it’s parsed
+(ensuring that necessary directives are present and values are valid).
+*/
 void ServerConfig::parse_config(const std::string &config_path) {
     std::ifstream filestream(config_path.c_str());
     std::string line;
@@ -34,7 +56,7 @@ void ServerConfig::parse_config(const std::string &config_path) {
 
             in_server_block = true;
             current_server_config = ServerConfig::ServerConfigData();
-            Logger::debug("Server block found at line " + to_string(line_num));
+            Logger::debug("Server block found at line " + std::to_string(line_num));
             continue;
         }
 
@@ -75,6 +97,12 @@ void ServerConfig::parse_config(const std::string &config_path) {
     this->config_lists = server_config_lists;
 }
 
+/*
+Check if a line marks the start of a new server block or location block.
+Improvements:
+These could be expanded to handle more edge cases,
+such as unexpected whitespace or comments in the block declaration.
+*/
 bool ServerConfig::is_start_of_server_block(const std::string &line) {
     return line.find("server") == 0 && line.find("{") != std::string::npos;
 }
@@ -83,6 +111,12 @@ bool ServerConfig::is_start_of_location_block(const std::string &line) {
     return line.find("location") == 0 && line.find("{") != std::string::npos;
 }
 
+/*
+Extract the path from a location block definition.
+Improvements:
+You can add additional checks to ensure the path is valid 
+and doesn’t contain illegal characters.
+*/
 std::string ServerConfig::extract_location_path(const std::string &line) {
     std::string path = line.substr(8);
     path = ServerConfigUtils::trim(path);
@@ -92,6 +126,14 @@ std::string ServerConfig::extract_location_path(const std::string &line) {
     return ServerConfigUtils::trim(path);
 }
 
+/*
+Finalizing a location or server block when the block ends (when encountering }).
+It ensures that location configurations are added to their parent server config,
+and server configs are added to the main config list.
+Improvements:
+You may want to ensure that each block is correctly closed and 
+handle cases where a block ends unexpectedly (e.g., missing a closing }).
+*/
 void ServerConfig::finalize_location_block(bool &in_location_block,
                                            ServerConfig::ServerConfigData &server,
                                            ServerConfig::LocationConfig &route) {
@@ -108,12 +150,24 @@ void ServerConfig::finalize_server_block(bool &in_server_block,
     if (in_server_block) {
         if (!server.locations.empty() || !server.server_name_lists.empty() || server.listen_port != 0) {
             servers.push_back(server);
-            Logger::debug("Added server with " + to_string(server.locations.size()) + " routes");
+            Logger::debug("Added server with " + std::to_string(server.locations.size()) + " routes");
         }
         in_server_block = false;
     }
 }
 
+/*
+Handle different directives within a server or location block.
+Each directive is parsed and applied to the appropriate data structure
+(ServerConfigData for server-level directives,
+LocationConfig for location-level directives).
+Improvements:
+For more flexibility, consider adding support for custom directives
+or unknown directives with proper error handling
+(e.g., logging an error message instead of throwing an exception).
+You can add validation to ensure that directives are not misconfigured
+(e.g., listen without a valid port).
+*/
 void ServerConfig::handle_server_directive(t_config_directive directive,
                                            const std::string &value,
                                            ServerConfigData &config) {
@@ -131,7 +185,7 @@ void ServerConfig::handle_server_directive(t_config_directive directive,
             }
 
             if (config.listen_port < 0 || config.listen_port > 65535) {
-                throw std::runtime_error("Port " + to_string(config.listen_port) + " is out of range. (Please use a port in range between 0 and 65535)");
+                throw std::runtime_error("Port " + std::to_string(config.listen_port) + " is out of range. (Please use a port in range between 0 and 65535)");
             }
             break;
 

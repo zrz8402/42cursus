@@ -1,7 +1,12 @@
 #include "ServerConfig.hpp"
 #include <stdexcept>
 
-// Match Host + Port to the appropriate server block
+/*
+Match a server block based on the provided host and port.
+It first tries to match both the host and port,
+and if no match is found based on the host,
+it will fallback to matching just the port.
+*/
 const ServerConfig::ServerConfigData& get_matching_server_config(
     int port,
     const std::string& host,
@@ -28,7 +33,13 @@ const ServerConfig::ServerConfigData& get_matching_server_config(
     // throw std::runtime_error("No matching server config found for host " + host + ", port " + std::to_string(port));
 }
 
-// Match the URI to the best location block
+
+/*
+Find the most appropriate location block 
+for a given URI from the server’s configuration.
+It iterates through the available location blocks and 
+selects the one with the longest matching path prefix.
+*/
 const ServerConfig::LocationConfig& get_matching_route(
     const std::string& uri,
     const ServerConfig::ServerConfigData& server

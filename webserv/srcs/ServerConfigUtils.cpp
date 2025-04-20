@@ -11,7 +11,6 @@ std::vector<std::string> ServerConfigUtils::split(const std::string& str) {
     return result;
 }
 
-
 std::string ServerConfigUtils::trim(const std::string &s) {
     std::string::size_type start = s.find_first_not_of(" \t");
     if (start == std::string::npos)
