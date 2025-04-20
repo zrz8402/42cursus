@@ -36,11 +36,15 @@ int Server::createServerSocket(const std::string& host, int port) {
     addr.sin_port = htons(port);
     addr.sin_addr.s_addr = (host == "0.0.0.0") ? INADDR_ANY : inet_addr(host.c_str());
 
-    if (bind(sockfd, (struct sockaddr*)&addr, sizeof(addr)) < 0)
-        throw std::runtime_error("Failed to bind to " + host + ":" + std::to_string(port));
+    if (bind(sockfd, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
+        throw std::runtime_error("Failed to bind to " + host);
+        // throw std::runtime_error("Failed to bind to " + host + ":" + std::to_string(port));
+    }
 
-    if (listen(sockfd, SOMAXCONN) < 0)
-        throw std::runtime_error("Listen failed on port " + std::to_string(port));
+    if (listen(sockfd, SOMAXCONN) < 0) {
+        throw std::runtime_error("Listen failed on port ");
+        // throw std::runtime_error("Listen failed on port " + std::to_string(port));
+    }
 
     fcntl(sockfd, F_SETFL, O_NONBLOCK);
 

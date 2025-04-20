@@ -11,10 +11,9 @@ bool Request::parse(const std::string& buffer) {
     std::string line;
 
     while (std::getline(stream, line)) {
-        // Remove '\r' if present
-        if (!line.empty() && line.back() == '\r') {
-            line.pop_back();
-        }
+        if (!line.empty() && line[line.size() - 1] == '\r') {
+            line.erase(line.size() - 1);
+    }
 
         if (_state == START_LINE) {
             if (!parse_start_line(line)) {
@@ -25,7 +24,8 @@ bool Request::parse(const std::string& buffer) {
         } else if (_state == HEADERS) {
             if (line.empty()) {
                 if (_headers.count("Content-Length")) {
-                    _content_length = std::stoi(_headers["Content-Length"]);
+                    std::istringstream iss(_headers["Content-Length"]);
+                    iss >> _content_length;
                     _state = BODY;
                 } else {
                     _state = COMPLETE;

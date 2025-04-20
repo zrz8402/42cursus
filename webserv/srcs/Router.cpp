@@ -24,7 +24,8 @@ const ServerConfig::ServerConfigData& get_matching_server_config(
             return server;
     }
 
-    throw std::runtime_error("No matching server config found for host " + host + ", port " + std::to_string(port));
+    throw std::runtime_error("No matching server config found for host " + host);
+    // throw std::runtime_error("No matching server config found for host " + host + ", port " + std::to_string(port));
 }
 
 // Match the URI to the best location block
