@@ -17,7 +17,11 @@ HEADERS = -I ./inc
 MAIN_DIR = srcs
 MAIN_FILES = main.cpp \
 			ServerConfig.cpp ServerConfigUtils.cpp \
-			Logger.cpp 
+			Server.cpp \
+			Router.cpp \
+			Request.cpp \
+			Response.cpp \
+			Logger.cpp
 
 MAIN = $(addprefix $(MAIN_DIR)/, $(MAIN_FILES))
 SRCS = $(MAIN)

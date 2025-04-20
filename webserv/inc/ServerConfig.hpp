@@ -72,13 +72,6 @@ private:
     void handle_location_directive(t_config_directive directive,
                                 const std::string &value,
                                 LocationConfig &config);
-
-    void print_server_config(const ServerConfigData& config, size_t idx);
-    void print_server_names(const std::vector<std::string>& names);
-    void print_error_pages(const std::map<t_status_code, std::string>& pages);
-    void print_methods(const std::vector<std::string>& methods);
-    void print_cgi(const std::map<std::string, std::string>& cgi);
-    void print_location(const LocationConfig& loc);
 };
 
 #endif

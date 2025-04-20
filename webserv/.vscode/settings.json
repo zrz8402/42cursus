@@ -57,6 +57,22 @@
         "streambuf": "cpp",
         "cfenv": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "__bit_reference": "cpp",
+        "__locale": "cpp",
+        "__node_handle": "cpp",
+        "__split_buffer": "cpp",
+        "__tree": "cpp",
+        "ios": "cpp",
+        "mutex": "cpp",
+        "__hash_table": "cpp",
+        "__threading_support": "cpp",
+        "__verbose_abort": "cpp",
+        "bitset": "cpp",
+        "execution": "cpp",
+        "locale": "cpp",
+        "print": "cpp",
+        "ratio": "cpp",
+        "variant": "cpp"
     }
 }
