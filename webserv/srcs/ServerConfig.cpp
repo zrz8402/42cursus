@@ -233,78 +233,63 @@ void ServerConfig::handle_location_directive(t_config_directive directive,
     }
 }
 
-void ServerConfig::display_config_lists() {
+void ServerConfig::print_server_names(const std::vector<std::string>& names) {
+    std::cout << "\tServer Name: ";
+    for (size_t i = 0; i < names.size(); ++i)
+        std::cout << names[i] << " ";
+    std::cout << std::endl;
+}
 
-    const std::vector<ServerConfig::ServerConfigData> servers_configs = this->config_lists;
+void ServerConfig::print_error_pages(const std::map<t_status_code, std::string>& pages) {
+    std::cout << "\tError pages:\n";
+    for (std::map<t_status_code, std::string>::const_iterator it = pages.begin(); it != pages.end(); ++it)
+        std::cout << "\t\t- " << it->first << ": " << it->second << std::endl;
+}
 
-    for (size_t idx = 0; idx < servers_configs.size(); idx++) {
-        std::cout << "\nServer #" << idx + 1 << ":\n" << std::endl;
+void ServerConfig::print_methods(const std::vector<std::string>& methods) {
+    std::cout << "\t\tMethods:\n";
+    for (size_t i = 0; i < methods.size(); ++i)
+        std::cout << "\t\t\t- " << methods[i] << std::endl;
+}
 
-        std::cout << "\tListen_port: " << servers_configs[idx].listen_port << std::endl;
-
-        std::cout << "\tServer Name: ";
-        for (size_t name_idx = 0; name_idx < servers_configs[idx].server_name_lists.size(); name_idx++) {
-            std::cout << servers_configs[idx].server_name_lists[name_idx] << " ";
-        }
-        std::cout << std::endl;
-
-        std::cout << "\tHost: " << servers_configs[idx].host << std::endl;
-        std::cout << "\tClient max body size: " << servers_configs[idx].client_max_body_size << std::endl;
-
-        std::cout << "\tError pages: " << std::endl;
-        for (
-            std::map<t_status_code, std::string>::const_iterator iterator = servers_configs[idx].error_pages.begin();
-            iterator != servers_configs[idx].error_pages.end();
-            iterator++
-        ) {
-            std::cout << "\t\t- " << iterator->first << ": " << iterator->second << std::endl;
-        }
-        std::cout << std::endl;
-
-        std::cout << "\tLocation: " << std::endl;
-        for (size_t route_idx = 0; route_idx < servers_configs[idx].locations.size(); route_idx++) {    
-            std::cout << "\t\tPath: " << servers_configs[idx].locations[route_idx].path << std::endl;
-            std::cout << "\t\tRoot: " << servers_configs[idx].locations[route_idx].root << std::endl;
-            std::cout << "\t\tIndex: " << servers_configs[idx].locations[route_idx].index << std::endl;
-            std::cout << "\t\tClient max body size: " << servers_configs[idx].locations[route_idx].max_body_size << std::endl;
-            
-            std::cout << "\t\tMethods: " << std::endl;
-            for (
-                size_t method_idx = 0;
-                method_idx < servers_configs[idx].locations[route_idx].allowed_methods.size();
-                method_idx++
-            ) {
-                std::cout 
-                    << "\t\t\t- "
-                    << servers_configs[idx].locations[route_idx].allowed_methods[method_idx]
-                    << std::endl;
-            }
-            std::cout << std::endl;
-
-            if (servers_configs[idx].locations[route_idx].cgi_extensions.size() == 0) {
-                std::cout << "\t\tCGI Extensions: (none)" << std::endl;
-            } else {
-                std::cout << "\t\tCGI Extensions:" << std::endl;
-
-                std::map<std::string, std::string> cgi = servers_configs[idx].locations[route_idx].cgi_extensions;
-                
-                for (
-                    std::map<std::string, std::string>::iterator iter = cgi.begin();
-                    iter != cgi.end();
-                    ++iter
-                ) {
-                    std::cout
-                        << "\t\t\t- "
-                        << iter->first << " -> " << iter->second
-                        << std::endl;
-                }
-            }
-            std::cout << std::endl;
-
-            std::cout << "\t\tUpload Store: " << servers_configs[idx].locations[route_idx].upload_store << std::endl;
-            std::cout << "\t\tAuto Index: " << (servers_configs[idx].locations[route_idx].auto_index ? "on" : "off") << std::endl;
-        }
-
+void ServerConfig::print_cgi(const std::map<std::string, std::string>& cgi) {
+    if (cgi.empty()) {
+        std::cout << "\t\tCGI Extensions: (none)\n";
+        return;
     }
+
+    std::cout << "\t\tCGI Extensions:\n";
+    for (std::map<std::string, std::string>::const_iterator it = cgi.begin(); it != cgi.end(); ++it)
+        std::cout << "\t\t\t- " << it->first << " -> " << it->second << std::endl;
+}
+
+void ServerConfig::print_location(const LocationConfig& loc) {
+    std::cout << "\t\tPath: " << loc.path << std::endl;
+    std::cout << "\t\tRoot: " << loc.root << std::endl;
+    std::cout << "\t\tIndex: " << loc.index << std::endl;
+    std::cout << "\t\tClient max body size: " << loc.max_body_size << std::endl;
+    print_methods(loc.allowed_methods);
+    print_cgi(loc.cgi_extensions);
+    std::cout << "\t\tUpload Store: " << loc.upload_store << std::endl;
+    std::cout << "\t\tAuto Index: " << (loc.auto_index ? "on" : "off") << std::endl;
+    std::cout << std::endl;
+}
+
+void ServerConfig::print_server_config(const ServerConfigData& config, size_t idx) {
+    std::cout << "\nServer #" << idx + 1 << ":\n";
+    std::cout << "\tListen_port: " << config.listen_port << std::endl;
+    print_server_names(config.server_name_lists);
+    std::cout << "\tHost: " << config.host << std::endl;
+    std::cout << "\tClient max body size: " << config.client_max_body_size << std::endl;
+    print_error_pages(config.error_pages);
+
+    std::cout << "\tLocation:\n";
+    for (size_t i = 0; i < config.locations.size(); ++i)
+        print_location(config.locations[i]);
+}
+
+void ServerConfig::display_config_lists() {
+    for (size_t i = 0; i < config_lists.size(); ++i)
+        print_server_config(config_lists[i], i);
     std::cout << std::endl;
 }
