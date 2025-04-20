@@ -28,6 +28,9 @@ public:
     const std::map<std::string, std::string>& get_headers() const;
     const std::string& get_body() const;
 
+    const std::string& get_host() const;
+    int get_port() const;
+
 private:
     ParseState _state;
 
@@ -36,6 +39,9 @@ private:
     std::string _http_version;
     std::map<std::string, std::string> _headers;
     std::string _body;
+
+    std::string _host;
+    int _port;
 
     size_t _content_length;
     std::string _raw_request;

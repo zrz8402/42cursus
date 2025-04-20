@@ -54,14 +54,20 @@ int Server::createServerSocket(const std::string& host, int port) {
 void Server::run() {
     while (true) {
         int ret = poll(&pollFds[0], pollFds.size(), -1);
-        if (ret < 0) throw std::runtime_error("poll() failed");
+        if (ret < 0) {
+            throw std::runtime_error("poll() failed");
+        }
 
         for (size_t i = 0; i < pollFds.size(); ++i) {
             int fd = pollFds[i].fd;
 
-            if (serverSockets.count(fd) && pollFds[i].revents & POLLIN) {
-                acceptClient(fd);
-            } else if (pollFds[i].revents & POLLIN) {
+            // Handle new incoming connection (server socket)
+            if (serverSockets.count(fd) && (pollFds[i].revents & POLLIN)) {
+                acceptClient(fd);  // Accept new client connection
+            }
+            // Handle incoming data from clients
+            else if (pollFds[i].revents & POLLIN) {
+                // Read the request and handle it
                 handleClient(fd, i);
             }
         }
@@ -82,19 +88,43 @@ void Server::acceptClient(int serverFd) {
 }
 
 void Server::handleClient(int clientFd, size_t index) {
-    char buffer[BUFFER_SIZE];
-    ssize_t n = read(clientFd, buffer, BUFFER_SIZE);
+    char buffer[8192];
+    ssize_t bytesRead = recv(clientFd, buffer, sizeof(buffer) - 1, 0);
 
-    if (n <= 0) {
+    if (bytesRead <= 0) {
         closeClient(clientFd, index);
-    } else {
-        clientBuffers[clientFd] += std::string(buffer, n);
-        if (clientBuffers[clientFd].find("\r\n\r\n") != std::string::npos) {
-            std::string response = "HTTP/1.1 200 OK\r\nContent-Length: 13\r\n\r\nHello, world!";
-            write(clientFd, response.c_str(), response.size());
-            closeClient(clientFd, index);
-        }
+        return;
     }
+
+    buffer[bytesRead] = '\0';
+    clientBuffers[clientFd] += buffer;
+
+    Request request;
+    if (!request.parse(clientBuffers[clientFd])) {
+        closeClient(clientFd, index);
+        return;
+    }
+
+    try {
+        const ServerConfig::ServerConfigData& server = get_matching_server_config(
+            request.get_port(), request.get_host(), configs
+        );
+
+        const ServerConfig::LocationConfig& location = get_matching_route(
+            request.get_path(), server
+        );
+
+        Response response(request, server, location);
+        std::string httpResponse = response.build_response();
+
+        send(clientFd, httpResponse.c_str(), httpResponse.size(), 0);
+    } catch (const std::exception& e) {
+        std::cerr << "[ERROR] " << e.what() << std::endl;
+        std::string errResp = "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 0\r\n\r\n";
+        send(clientFd, errResp.c_str(), errResp.size(), 0);
+    }
+
+    closeClient(clientFd, index);
 }
 
 void Server::closeClient(int fd, size_t index) {
@@ -102,4 +132,57 @@ void Server::closeClient(int fd, size_t index) {
     pollFds.erase(pollFds.begin() + index);
     clientBuffers.erase(fd);
     std::cout << "[-] Closed connection: " << fd << std::endl;
+}
+
+bool Server::is_directory(const char* path) {
+    struct stat statbuf;
+    if (stat(path, &statbuf) != 0) {
+        return false;
+    }
+    return S_ISDIR(statbuf.st_mode);
+}
+
+void Server::generate_autoindex(const char* dir_path, char* buffer) {
+    DIR* dir = opendir(dir_path);
+    if (dir == NULL) {
+        strcpy(buffer, "<p>Error reading directory</p>");
+        return;
+    }
+
+    struct dirent* entry;
+    strcpy(buffer, "<html><body><h1>Directory Listing</h1><ul>");
+
+    while ((entry = readdir(dir)) != NULL) {
+        if (entry->d_name[0] == '.') continue;
+        strcat(buffer, "<li><a href=\"");
+        strcat(buffer, entry->d_name);
+        strcat(buffer, "\">");
+        strcat(buffer, entry->d_name);
+        strcat(buffer, "</a></li>");
+    }
+
+    closedir(dir);
+    strcat(buffer, "</ul></body></html>");
+}
+
+void Server::execute_cgi_script(const char* script_path, const std::map<std::string, std::string>& headers, int clientFd) {
+    // Build command line for CGI script
+    std::string command = script_path;
+    for (std::map<std::string, std::string>::const_iterator it = headers.begin(); it != headers.end(); ++it) {
+        command += " " + it->first + "=" + it->second;
+    }
+
+    // Execute CGI script
+    FILE* fp = popen(command.c_str(), "r");
+    if (fp == NULL) {
+        std::cerr << "Error executing CGI script: " << command << std::endl;
+        return;
+    }
+
+    char buffer[1024];
+    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+        send(clientFd, buffer, strlen(buffer), 0);
+    }
+
+    fclose(fp);
 }
