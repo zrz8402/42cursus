@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:11:39 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/18 16:50:34 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/22 15:08:38 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ public:
 	~Span( void );
 
 	void	addNumber( int n );
+
 	template <typename T>
 	void	addMultipleNum( T begin, T end ) {
 		if (static_cast<unsigned int>(std::distance(begin, end)) > (capacity - elements.size())) {
