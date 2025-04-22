@@ -47,6 +47,13 @@ void	Span::addNumber( int n ) {
 	elements.push_back(n);
 }
 
+void	Span::addMultipleNum( std::vector<int>::iterator begin, std::vector<int>::iterator end ) {
+	if (static_cast<unsigned int>(std::distance(begin, end)) > (capacity - elements.size())) {
+		throw std::length_error("Not enough space.");
+	}
+	elements.insert(elements.end(), begin, end);
+}
+
 int	Span::shortestSpan( void ) const {
 	if (elements.size() < 2) {
 		throw std::logic_error("Not enough elements to calculate a span");

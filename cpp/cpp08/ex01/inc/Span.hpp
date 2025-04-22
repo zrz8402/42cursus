@@ -35,13 +35,8 @@ public:
 
 	void	addNumber( int n );
 
-	template <typename T>
-	void	addMultipleNum( T begin, T end ) {
-		if (static_cast<unsigned int>(std::distance(begin, end)) > (capacity - elements.size())) {
-			throw std::length_error("Not enough space.");
-		}
-		elements.insert(elements.end(), begin, end);
-	}
+
+	void	addMultipleNum( std::vector<int>::iterator begin, std::vector<int>::iterator end  );
 
 	int		shortestSpan( void ) const;
 	int		longestSpan( void ) const;
