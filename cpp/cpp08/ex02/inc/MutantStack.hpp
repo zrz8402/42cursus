@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:01:56 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/22 15:34:21 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/23 10:52:35 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,21 @@
 #include <stack>
 #include <iostream>
 #include <deque>
+
+/*
+template <typename T, typename Container = std::deque<T>>
+class stack {
+protected:
+    Container c;  // <- THIS is the underlying container
+
+public:
+    void push(const T& value) { c.push_back(value); }
+    void pop() { c.pop_back(); }
+    T& top() { return c.back(); }
+		std::cout << *it << std::endl;als at both ends.
+std::vector would require shifting elements if popping from the front,
+so it’s less efficient for certain stack operations.
+*/
 
 template <typename T>
 class MutantStack : public std::stack<T> {
@@ -33,12 +48,12 @@ public:
 
     iterator                begin();
     iterator                end();
-    const_iterator          begin() const;
-    const_iterator          end() const;
+    const_iterator          cbegin() const;
+    const_iterator          cend() const;
     reverse_iterator        rbegin();
     reverse_iterator        rend();
-    const_reverse_iterator  rbegin() const;
-    const_reverse_iterator  rend() const;
+    const_reverse_iterator  crbegin() const;
+    const_reverse_iterator  crend() const;
 
 };
 

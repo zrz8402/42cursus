@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:34:23 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/22 15:34:31 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/23 10:52:44 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ typename MutantStack<T>::iterator MutantStack<T>::end() {
 }
 
 template <typename T>
-typename MutantStack<T>::const_iterator MutantStack<T>::begin() const{
+typename MutantStack<T>::const_iterator MutantStack<T>::cbegin() const{
     return this->c.begin();
 }
 
 template <typename T>
-typename MutantStack<T>::const_iterator MutantStack<T>::end() const{
+typename MutantStack<T>::const_iterator MutantStack<T>::cend() const{
     return this->c.end();
 }
 
@@ -60,11 +60,11 @@ typename MutantStack<T>::reverse_iterator MutantStack<T>::rend() {
 }
 
 template <typename T>
-typename MutantStack<T>::const_reverse_iterator MutantStack<T>::rbegin() const{
+typename MutantStack<T>::const_reverse_iterator MutantStack<T>::crbegin() const{
     return this->c.begin();
 }
 
 template <typename T>
-typename MutantStack<T>::const_reverse_iterator MutantStack<T>::rend() const{
+typename MutantStack<T>::const_reverse_iterator MutantStack<T>::crend() const{
     return this->c.end();
 }
