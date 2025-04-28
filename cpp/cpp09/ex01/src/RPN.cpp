@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:35:39 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/28 10:11:38 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/28 10:21:24 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void RPN::process_expression(const std::string &expr) {
     std::cout << stack.top() << std::endl;
 }
 /*
+Another example:
 "1 2 * 2 / 2 * 2 4 - +"
 
 process:

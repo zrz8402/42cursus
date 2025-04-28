@@ -20,7 +20,7 @@ DEPS = $(OBJS:.o=.d)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) Makefile
 	@$(CXX) $(CXXFLAGS) $(HEADERS) $(OBJS) -o $(NAME)
 	@echo "$(NAME) compiled successfully!"
 
