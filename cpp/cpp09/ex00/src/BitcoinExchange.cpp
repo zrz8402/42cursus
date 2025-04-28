@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:35:25 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/27 14:39:09 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/28 09:55:46 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ bool BitcoinExchange::isValidDate(const std::string& date) const {
 bool BitcoinExchange::isValidValue(const std::string& valueStr, float& value) const {
     std::istringstream iss(valueStr);
     double tmp_value;
+    std::string remaining;
 
-    // add check extra 
-    if (!(iss >> tmp_value)) {
+    if (!(iss >> tmp_value) || iss >> remaining) {
         std::cerr << "Error: non-numeric value." << std::endl;
         return false;
     }

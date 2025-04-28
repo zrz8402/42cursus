@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:35:33 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/26 10:37:45 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/28 09:56:18 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <stack>
 #include <stdexcept>
 
 class RPN {
