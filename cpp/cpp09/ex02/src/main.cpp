@@ -6,11 +6,14 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:38:39 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/28 13:49:12 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/28 14:37:02 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+#include <ctime>
+#include <sstream>
+#include <algorithm>
 
 bool    isPositive(const std::string &str, int &result) {
     std::istringstream iss(str);
@@ -20,11 +23,8 @@ bool    isPositive(const std::string &str, int &result) {
     if (!(iss >> num) || (iss >> extra)) {
         return false;
     }
-    if (num <= 0) {
-        return false;
-    }
     result = num;
-    return true;
+    return result > 0;
 }
 
 double  getElapseTime(clock_t start, clock_t end) {
@@ -61,8 +61,8 @@ int main(int ac, char** av) {
     // std::cout << "Before: ";
     // PmergeMe::printDeque(numsDeque);
     // std::cout << "After: ";
-    // PmergeMe::printDeque(sortedDeque);
-    std::cout << "Time to process a range of " << ac - 1 <<" elements with [std::deque]: " << getElapseTime(dequeStart, dequeEnd) << " us" << std::endl;
+    PmergeMe::printDeque(sortedDeque);
+    // std::cout << "Time to process a range of " << ac - 1 <<" elements with [std::deque]: " << getElapseTime(dequeStart, dequeEnd) << " us" << std::endl;
     // std::cout << "Time to process a range of" << ac <<" elements with [std::deque] :" << getElapseTime(dequeStart, dequeEnd) << " us" << std::endl;
 
     return 0;
