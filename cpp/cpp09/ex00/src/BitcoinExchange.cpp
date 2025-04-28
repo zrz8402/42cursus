@@ -15,12 +15,12 @@
 BitcoinExchange::BitcoinExchange() {}
 
 BitcoinExchange::BitcoinExchange(BitcoinExchange const &other) {
-    _data = other._data;
+    data = other.data;
 }
 
 BitcoinExchange& BitcoinExchange::operator=(BitcoinExchange const &other) {
     if (this != &other) {
-        _data = other._data;
+        data = other.data;
     }
     return *this;
 }
@@ -78,6 +78,7 @@ bool BitcoinExchange::isValidValue(const std::string& valueStr, float& value) co
     std::istringstream iss(valueStr);
     double tmp_value;
 
+    // add check extra 
     if (!(iss >> tmp_value)) {
         std::cerr << "Error: non-numeric value." << std::endl;
         return false;
@@ -105,11 +106,11 @@ void BitcoinExchange::trim(std::string& str) const {
 }
 
 float BitcoinExchange::getRate(const std::string& date) const {
-    std::map<std::string, float>::const_iterator it = _data.lower_bound(date);
-    if (it != _data.end() && it->first == date) {
+    std::map<std::string, float>::const_iterator it = data.lower_bound(date);
+    if (it != data.end() && it->first == date) {
         return it->second;
     }
-    if (it == _data.begin()) {
+    if (it == data.begin()) {
         return 0.0f;
     }
     --it;
@@ -147,7 +148,7 @@ bool BitcoinExchange::loadDatabase(const std::string& filename) {
             continue;
         }
     
-        _data[date] = rate;
+        data[date] = rate;
     }
     infile.close();
     return true;

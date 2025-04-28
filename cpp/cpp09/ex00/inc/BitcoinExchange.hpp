@@ -20,13 +20,12 @@
 #include <limits>
 #include <cstdlib>
 #include <cctype>
-
-#define MAX_VALID_INPUT = 1000000.0f
+#include <stdexcept>
 
 class BitcoinExchange {
 
 private:
-    std::map<std::string, float> _data;
+    std::map<std::string, float> data;
 
     bool isLeapYear(int year) const;
     bool isValidDate(const std::string& date) const;
