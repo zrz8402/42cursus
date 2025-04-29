@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:35:25 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/28 12:19:37 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/29 12:06:25 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,20 @@ bool BitcoinExchange::isValidDate(const std::string& date) const {
 
 bool BitcoinExchange::isValidValue(const std::string& valueStr, float& value) const {
     std::istringstream iss(valueStr);
-    double tmp_value;
     char extra;
 
-    if (!(iss >> tmp_value) || (iss >> extra)) {
+    if (!(iss >> value) || (iss >> extra)) {
         std::cerr << "Error: non-numeric value." << std::endl;
         return false;
     }
-    if (tmp_value < 0.0) {
+    if (value < 0.0) {
         std::cerr << "Error: not a positive number." << std::endl;
         return false;
     }
-    if (tmp_value > std::numeric_limits<int>::max()) {
+    if (value > 1000.0) {
         std::cerr << "Error: too large a number." << std::endl;
         return false;
     }
-    value = static_cast<float>(tmp_value);
     return true;
 }
 

@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:38:39 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/29 10:01:25 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/29 10:37:47 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <ctime>
 #include <sstream>
 #include <algorithm>
+#include <iomanip>
 
 bool    isPositive(const std::string &str, int &result) {
     std::istringstream iss(str);
@@ -94,8 +95,6 @@ int main(int ac, char** av) {
     sortedList = PmergeMe::sortList(numsList);
     listEnd = clock();
 
-
-
     std::cout << "Before: ";
     PmergeMe::printDeque(numsDeque);
     std::cout << "After: ";
@@ -115,8 +114,8 @@ int main(int ac, char** av) {
     std::cout << std::endl;
 
     std::cout << "Time to process a range of " << ac - 1 <<" elements with [std::deque]: " << getElapseTime(dequeStart, dequeEnd) << " us" << std::endl;
-    std::cout << "Time to process a range of" << ac <<" elements with [std::vector]: " << getElapseTime(vectorStart, vectorEnd) << " us" << std::endl;
-    std::cout << "Time to process a range of" << ac <<" elements with [std::list]: " << getElapseTime(listStart, listEnd) << " us" << std::endl;
+    std::cout << "Time to process a range of " << ac -1 <<" elements with [std::vector]: " << std::fixed << std::setprecision(5) << getElapseTime(vectorStart, vectorEnd) << " us" << std::endl;
+    std::cout << "Time to process a range of " << ac - 1 <<" elements with [std::list]: " << std::fixed << std::setprecision(5) << getElapseTime(listStart, listEnd) << " us" << std::endl;
 
     return 0;
 }

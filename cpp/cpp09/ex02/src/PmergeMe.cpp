@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:38:57 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/29 09:57:36 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/29 10:05:07 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ std::deque<int> PmergeMe::sortDeque(const std::deque<int> &numbers) {
     return (sorted);
 }
 
-void    PmergeMe::printVector(std::vector<int> numbers) {
-    for (std::vector<int>::const_iterator it = numbers.begin(); it != numbers.end(); ++it) {
+void    PmergeMe::printDeque(std::deque<int> numbers) {
+    for (std::deque<int>::const_iterator it = numbers.begin(); it != numbers.end(); ++it) {
         std::cout << *it << ((it + 1 == numbers.end()) ? "" : " ");
     }
     std::cout << std::endl;
@@ -125,8 +125,8 @@ std::vector<int> PmergeMe::sortVector(const std::vector<int> &numbers) {
     return (sorted);
 }
 
-void    PmergeMe::printDeque(std::deque<int> numbers) {
-    for (std::deque<int>::const_iterator it = numbers.begin(); it != numbers.end(); ++it) {
+void    PmergeMe::printVector(std::vector<int> numbers) {
+    for (std::vector<int>::const_iterator it = numbers.begin(); it != numbers.end(); ++it) {
         std::cout << *it << ((it + 1 == numbers.end()) ? "" : " ");
     }
     std::cout << std::endl;
