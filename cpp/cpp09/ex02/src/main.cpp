@@ -6,7 +6,7 @@
 /*   By: ruzhang <ruzhang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:38:39 by ruzhang           #+#    #+#             */
-/*   Updated: 2025/04/28 14:37:02 by ruzhang          ###   ########.fr       */
+/*   Updated: 2025/04/29 10:01:25 by ruzhang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,67 @@ int main(int ac, char** av) {
     sortedDeque = PmergeMe::sortDeque(numsDeque);
     dequeEnd = clock();
 
+    // vector
+    std::vector<int> numsVector;
+    std::vector<int> sortedVector;
+
+    clock_t vectorStart;
+    clock_t vectorEnd;
+
+    vectorStart = clock();
+    for (int i = 1; i < ac; ++i) {
+        int value;
+        if (!isPositive(av[i], value)) {
+            std::cerr << "Error: invalid input" << std::endl;
+            return 1;
+        }
+        numsVector.push_back(value);
+    }
+    sortedVector = PmergeMe::sortVector(numsVector);
+    vectorEnd = clock();
+
+    // list
+    std::list<int> numsList;
+    std::list<int> sortedList;
+
+    clock_t listStart;
+    clock_t listEnd;
+
+    listStart = clock();
+    for (int i = 1; i < ac; ++i) {
+        int value;
+        if (!isPositive(av[i], value)) {
+            std::cerr << "Error: invalid input" << std::endl;
+            return 1;
+        }
+        numsList.push_back(value);
+    }
+    sortedList = PmergeMe::sortList(numsList);
+    listEnd = clock();
 
 
-    // std::cout << "Before: ";
-    // PmergeMe::printDeque(numsDeque);
-    // std::cout << "After: ";
+
+    std::cout << "Before: ";
+    PmergeMe::printDeque(numsDeque);
+    std::cout << "After: ";
     PmergeMe::printDeque(sortedDeque);
-    // std::cout << "Time to process a range of " << ac - 1 <<" elements with [std::deque]: " << getElapseTime(dequeStart, dequeEnd) << " us" << std::endl;
-    // std::cout << "Time to process a range of" << ac <<" elements with [std::deque] :" << getElapseTime(dequeStart, dequeEnd) << " us" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Before: ";
+    PmergeMe::printVector(numsVector);
+    std::cout << "After: ";
+    PmergeMe::printVector(sortedVector);
+    std::cout << std::endl;
+
+    std::cout << "Before: ";
+    PmergeMe::printList(numsList);
+    std::cout << "After: ";
+    PmergeMe::printList(sortedList);
+    std::cout << std::endl;
+
+    std::cout << "Time to process a range of " << ac - 1 <<" elements with [std::deque]: " << getElapseTime(dequeStart, dequeEnd) << " us" << std::endl;
+    std::cout << "Time to process a range of" << ac <<" elements with [std::vector]: " << getElapseTime(vectorStart, vectorEnd) << " us" << std::endl;
+    std::cout << "Time to process a range of" << ac <<" elements with [std::list]: " << getElapseTime(listStart, listEnd) << " us" << std::endl;
 
     return 0;
 }
